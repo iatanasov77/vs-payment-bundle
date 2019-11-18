@@ -1,0 +1,5 @@
+form:
+    credit_card:
+        acct: 'Card Number'
+        exp_date: 'Expiration Date'
+        cvv2: 'CVV2'
