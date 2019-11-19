@@ -1,0 +1,36 @@
+{% if options is not empty %}
+	<fieldset class="fieldset-project-fields" style="width: 100%;">
+	    <legend class="w-auto">Gateway Config Options</legend>
+		
+	    {% for key,value in options if key not in ['factory', 'sandbox'] %}
+		    <div class="form-group">
+		    	<label class="control-label col-lg-2">{{ key }}</label>
+		    	
+		        <div class="col-lg-10">
+		        	<input type="text" id="gateway_config_config_{{ key }}" name="gateway_config[config][{{ key }}]" value="{{ value }}" required="required" size="100">
+		        </div>
+		    </div>
+		{% endfor %}
+		        
+		{% if options.sandbox is defined %}
+			<div class="form-group"></div>
+			    
+			<div class="card">
+			    <div class="card-header">Sandbox Config</div>
+			    <div class="card-body">
+			        <blockquote class="blockquote mb-0">
+			            {% for key,value in options if key not in ['factory', 'sandbox'] %}
+						    <div class="form-group">
+						    	<label class="control-label col-lg-2">{{ key }}</label>
+						    	
+						        <div class="col-lg-10">
+						        	<input type="text" id="gateway_config_sandbox_{{ key }}" name="gateway_config[sandboxConfig][{{ key }}]" value="{{ value }}" size="100" />
+						        </div>
+						    </div>
+						{% endfor %}
+			        </blockquote>
+			    </div>
+			</div>
+		{% endif %}
+	</fieldset>
+{% endif %}
