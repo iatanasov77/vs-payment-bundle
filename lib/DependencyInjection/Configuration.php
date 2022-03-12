@@ -25,6 +25,9 @@ class Configuration implements ConfigurationInterface
         
         $rootNode
             ->children()
+                ->scalarNode( 'orm_driver' )
+                    ->defaultValue( SyliusResourceBundle::DRIVER_DOCTRINE_ORM )->cannotBeEmpty()
+                ->end()
         //             ->arrayNode('payment_accounts')->isRequired()
         //             ->prototype('variable')
         //             ->treatNullLike(array())
@@ -34,6 +37,7 @@ class Configuration implements ConfigurationInterface
         //             ->arrayNode('payment_methods')->isRequired()
         //                 ->prototype('variable')
         //                 ->treatNullLike(array())
+            ->end()
         ;
         $this->addResourcesSection( $rootNode );
 
