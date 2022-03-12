@@ -46,6 +46,15 @@ class Configuration implements ConfigurationInterface
     
     private function addResourcesSection( ArrayNodeDefinition $node ): void
     {
-        
+        $node
+            ->children()
+                ->arrayNode( 'resources' )
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                    
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }
