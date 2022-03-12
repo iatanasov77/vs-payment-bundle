@@ -1,6 +1,6 @@
 <?php
 
-namespace IA\PaymentBundle\Model;
+namespace Vankosoft\PaymentBundle\Model;
 
 interface CheckoutOrderInterface
 {

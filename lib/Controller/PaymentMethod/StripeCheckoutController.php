@@ -1,4 +1,4 @@
-<?php  namespace IA\PaymentBundle\Controller\PaymentMethod;
+<?php  namespace Vankosoft\PaymentBundle\Controller\PaymentMethod;
 
 use Symfony\Component\HttpFoundation\Request;
 

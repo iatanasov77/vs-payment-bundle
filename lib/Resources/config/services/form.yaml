@@ -1,0 +1,7 @@
+services:
+    vs_users_subscriptions.resources.mailchimp_audiences.form:
+        class: Vankosoft\PaymentBundle\Form\MailchimpAudienceForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.mailchimp_audiences.class%'

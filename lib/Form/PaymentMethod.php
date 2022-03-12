@@ -1,4 +1,4 @@
-<?php namespace IA\PaymentBundle\Form;
+<?php namespace Vankosoft\PaymentBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,8 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-use IA\PaymentBundle\Entity\PaymentMethod as PaymentMethodData;
-use IA\PaymentBundle\Entity\GatewayConfig;
+use Vankosoft\PaymentBundle\Entity\PaymentMethod as PaymentMethodData;
+use Vankosoft\PaymentBundle\Entity\GatewayConfig;
 
 /**
  * Credit Card Form Type for PayPal Pro Direct Payments

@@ -1,11 +1,11 @@
-<?php namespace IA\PaymentBundle\Component\Payment;
+<?php namespace Vankosoft\PaymentBundle\Component\Payment;
 
 use Payum\Core\Payum;
 use Payum\Core\Request\GetCurrency;
 
-use IA\PaymentBundle\Entity\Agreement;
-use IA\PaymentBundle\Entity\Payment;
-use IA\PaymentBundle\Entity\GatewayConfig;
+use Vankosoft\PaymentBundle\Entity\Agreement;
+use Vankosoft\PaymentBundle\Entity\Payment;
+use Vankosoft\PaymentBundle\Entity\GatewayConfig;
 
 /*
  * When execute action Payum\Paypal\ExpressCheckout\Nvp\Action\ConvertPaymentAction

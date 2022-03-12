@@ -1,11 +1,10 @@
-parameters:
-    payment_methods:
-        # payment_method: gateway_factory
-#        paypal_pro_checkout: paypal_pro_checkout
-#        paypal_express_checkout_recurring_payment: paypal_express_checkout
-            
+imports:
+    - { resource: services/form.yaml }
+    - { resource: services/payment.yaml }
 
 services:
-#    ia_payment.example:
-#        class: %ia_payment.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+

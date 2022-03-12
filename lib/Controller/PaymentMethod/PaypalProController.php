@@ -1,7 +1,7 @@
-<?php namespace IA\PaymentBundle\Controller\PaymentMethod;
+<?php namespace Vankosoft\PaymentBundle\Controller\PaymentMethod;
 
 use Symfony\Component\HttpFoundation\Request;
-use IA\PaymentBundle\Form\CreditCard as CreditCardForm;
+use Vankosoft\PaymentBundle\Form\CreditCard as CreditCardForm;
 
 /*
  * TEST CARDS

@@ -1,4 +1,4 @@
-<?php namespace IA\PaymentBundle\Controller\PaymentMethod;
+<?php namespace Vankosoft\PaymentBundle\Controller\PaymentMethod;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Payum\Core\Request\Cancel;

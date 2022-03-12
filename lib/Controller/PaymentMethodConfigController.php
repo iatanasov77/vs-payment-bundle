@@ -1,10 +1,10 @@
-<?php namespace IA\PaymentBundle\Controller;
+<?php namespace Vankosoft\PaymentBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 
-use IA\PaymentBundle\Form\PaymentMethod as PaymentMethodForm;
-use IA\PaymentBundle\Entity\PaymentMethod;
+use Vankosoft\PaymentBundle\Form\PaymentMethod as PaymentMethodForm;
+use Vankosoft\PaymentBundle\Entity\PaymentMethod;
 
 class PaymentMethodConfigController extends PayumController
 {

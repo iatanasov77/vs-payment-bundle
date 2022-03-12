@@ -1,6 +1,6 @@
 <?php
 
-namespace IA\PaymentBundle\Tests\Controller;
+namespace Vankosoft\PaymentBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

@@ -1,6 +1,4 @@
-<?php
-
-namespace IA\PaymentBundle\Form;
+<?php namespace Vankosoft\PaymentBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,12 +12,12 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
-use IA\PaymentBundle\Form\Type\GatewayConfigType;
+use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
 
 /**
  * Credit Card Form Type for PayPal Pro Direct Payments
  */
-class GatewayConfig extends AbstractType
+class GatewayConfigForm extends AbstractType
 {
 
     public function getName()
@@ -68,7 +66,7 @@ class GatewayConfig extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'IA\PaymentBundle\Entity\GatewayConfig'
+            'data_class' => 'Vankosoft\PaymentBundle\Entity\GatewayConfig'
         ));
     }
 

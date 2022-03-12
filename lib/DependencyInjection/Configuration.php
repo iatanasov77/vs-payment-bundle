@@ -2,6 +2,11 @@
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+
+use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Factory\Factory;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -15,21 +20,28 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-//         $rootNode = $treeBuilder->root('ia_payment');
-
-//         $rootNode->children()
-//             ->arrayNode('payment_accounts')->isRequired()
-//             ->prototype('variable')
-//             ->treatNullLike(array())
-//         ;
+        $treeBuilder    = new TreeBuilder( 'vs_payment' );
+        $rootNode       = $treeBuilder->getRootNode();
         
-//         $rootNode->children()
-//             ->arrayNode('payment_methods')->isRequired()
-//                 ->prototype('variable')
-//                 ->treatNullLike(array())
-//         ;
+        $rootNode
+            ->children()
+        //             ->arrayNode('payment_accounts')->isRequired()
+        //             ->prototype('variable')
+        //             ->treatNullLike(array())
+        //         ;
+        
+        //         $rootNode->children()
+        //             ->arrayNode('payment_methods')->isRequired()
+        //                 ->prototype('variable')
+        //                 ->treatNullLike(array())
+        ;
+        $this->addResourcesSection( $rootNode );
 
         return $treeBuilder;
+    }
+    
+    private function addResourcesSection( ArrayNodeDefinition $node ): void
+    {
+        
     }
 }

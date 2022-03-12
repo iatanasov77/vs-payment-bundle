@@ -1,13 +1,13 @@
 <?php
 
-namespace IA\PaymentBundle\Controller;
+namespace Vankosoft\PaymentBundle\Controller;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Symfony\Component\HttpFoundation\Request;
 
-use IA\PaymentBundle\Entity\GatewayConfig as GatewayConfigEntity;
-use IA\PaymentBundle\Form\GatewayConfig;
-use IA\PaymentBundle\Form\Type\GatewayConfigType;
+use Vankosoft\PaymentBundle\Entity\GatewayConfig as GatewayConfigEntity;
+use Vankosoft\PaymentBundle\Form\GatewayConfig;
+use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
 
 use Payum\Core\Bridge\Doctrine\Storage\DoctrineStorage;
 
@@ -23,7 +23,7 @@ class GatewayConfigController extends PayumController
     
     public function configAction( $gatewayName, Request $request )
     {
-        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'IA\PaymentBundle\Entity\GatewayConfig' );
+        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'Vankosoft\PaymentBundle\Entity\GatewayConfig' );
         $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
         $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
         
@@ -59,7 +59,7 @@ class GatewayConfigController extends PayumController
     
     public function gatewayConfigAction( Request $request )
     {
-        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'IA\PaymentBundle\Entity\GatewayConfig' );
+        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'Vankosoft\PaymentBundle\Entity\GatewayConfig' );
         $gatewayConfig = $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfigType::class, array('data' => $gatewayConfig->getConfig( false ) ) );

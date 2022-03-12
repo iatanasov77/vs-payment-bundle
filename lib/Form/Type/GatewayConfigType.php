@@ -1,6 +1,6 @@
 <?php
 
-namespace IA\PaymentBundle\Form\Type;
+namespace Vankosoft\PaymentBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -1,5 +1,5 @@
 <?php
-namespace IA\PaymentBundle\Entity;
+namespace Vankosoft\PaymentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\ArrayObject;
 use IA\UsersBundle\Entity\PackagePlan;
