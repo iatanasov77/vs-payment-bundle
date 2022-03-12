@@ -6,7 +6,7 @@ use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Vankosoft\PaymentBundle\Form\PaymentMethod as PaymentMethodForm;
 use Vankosoft\PaymentBundle\Entity\PaymentMethod;
 
-class PaymentMethodConfigController extends PayumController
+class PaymentMethodController extends PayumController
 {
     
     public function indexAction( Request $request )

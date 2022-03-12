@@ -1,6 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Vankosoft\ApplicationBundle\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,14 +16,8 @@ use Vankosoft\PaymentBundle\Entity\GatewayConfig;
 /**
  * Credit Card Form Type for PayPal Pro Direct Payments
  */
-class PaymentMethod extends AbstractType
+class PaymentMethodForm extends AbstractForm
 {
-
-    public function getName()
-    {
-        return 'ia_payment_paymentmethod';
-    }
-
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
@@ -35,21 +29,18 @@ class PaymentMethod extends AbstractType
             ->add( 'name', TextType::class )
             ->add( 'route', TextType::class )
             ->add( 'active', CheckboxType::class, array('required'=>false ) )
-                
-            
-            
-            ->add('btnSave', SubmitType::class, array('label' => 'Save'))
-            ->add('btnCancel', ButtonType::class, array('label' => 'Cancel'))
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions( OptionsResolver $resolver ): void
     {
-        $resolver->setDefaults(array(
-            'data_class' => PaymentMethodData::class
-        ));
+        parent::configureOptions( $resolver );
     }
 
+    public function getName()
+    {
+        return 'vs_payment.payment_method';
+    }
 }
 
 

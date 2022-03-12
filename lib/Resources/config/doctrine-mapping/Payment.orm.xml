@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+    <mapped-superclass name="Vankosoft\PaymentBundle\Model\Payment">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        
+        <many-to-one field="paymentMethod" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" inversed-by="payments" />
+        <!--
+        <many-to-one field="paymentDetails" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentDetailsInterface" inversed-by="payments" />
+        -->
+        <many-to-one field="paymentDetails" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PaymentDetailsInterface" inversed-by="payments" />
+        
+        <field name="number" type="string" length="64" nullable="false" />
+        <field name="description" type="string" nullable="true" />
+        <field name="clientEmail" type="string" length="64" nullable="false" />
+        <field name="clientId" type="integer" nullable="true" default="null" />
+        <field name="totalAmount " type="float" nullable="false" />
+        <field name="currencyCode" type="string" length="6" nullable="false" />
+    </mapped-superclass>
+</doctrine-mapping>

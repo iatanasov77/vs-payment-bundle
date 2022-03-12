@@ -1,21 +1,3 @@
-# Payment Methods and Payum Gateways Config
-ia_payment_gateways_index:
-    path:     /gateways
-    defaults: { _controller: IAPaymentBundle:GatewayConfig:index }
-ia_payment_gateways_config:
-    path:     /gateways/config/{gatewayName}
-    defaults: { _controller: IAPaymentBundle:GatewayConfig:config }
-ia_payment_gateways_config_options:
-    path:     /gateways/config/options/get
-    defaults: { _controller: IAPaymentBundle:GatewayConfig:gatewayConfig }
-ia_payment_methods_index:
-    path:     /methods
-    defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:index }
-ia_payment_methods_config:
-    path:     /methods/config/{id}
-    defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:config }
- 
-
 # Payum Payments
 payum_capture:
     resource: "@PayumBundle/Resources/config/routing/capture.xml"

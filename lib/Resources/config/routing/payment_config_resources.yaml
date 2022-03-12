@@ -1,0 +1,6 @@
+vs_payment_gateway_config:
+    resource: |
+        alias: vs_payment.gateway_config
+        path: /payment/gateway-config
+        templates: "@VSPayment/GatewayConfig"
+    type: sylius.resource

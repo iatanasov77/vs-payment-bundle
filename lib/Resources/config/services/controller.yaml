@@ -1,0 +1,12 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+        
+    Vankosoft\PaymentBundle\Controller\GatewayConfigExtController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
+            - '@vs_payment.repository.gateway_config'
+            - '@vs_payment.factory.gateway_config'
