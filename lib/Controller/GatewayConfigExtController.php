@@ -11,7 +11,7 @@ use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
 
 use Payum\Core\Bridge\Doctrine\Storage\DoctrineStorage;
 
-class GatewayConfigController extends PayumController
+class GatewayConfigExtController extends PayumController
 {
     /** @var EntityRepository */
     protected EntityRepository $gatewayConfigRepository;

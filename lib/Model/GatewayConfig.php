@@ -39,6 +39,11 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
         $this->sandboxConfig    = [];
     }
     
+    public function getId()
+    {
+        return $this->id;
+    }
+    
     public function getSandboxConfig()
     {
         return $this->sandboxConfig;
