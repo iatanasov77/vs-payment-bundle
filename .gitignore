@@ -52,5 +52,5 @@
 /.web-server-pid
 
 # VisualParadigm Meta Files
-/doc/technical/VisualParadigm/.UsersSubscriptionsBundle.vpp.lck
-/doc/technical/VisualParadigm/UsersSubscriptionsBundle.vpp.bak_*
+/doc/technical/VisualParadigm/.PaymentBundle.vpp.lck
+/doc/technical/VisualParadigm/PaymentBundle.vpp.bak_*
