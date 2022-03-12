@@ -1,8 +1,13 @@
 {
 	"name": "vankosoft/payment-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony IAPaymentBundle",
-    "keywords": ["Payment processing"],
+    "description": "Symfony VSPaymentBundle",
+    "keywords": [
+        "symfony",
+        "vankosoft",
+        "payment",
+        "payum"
+    ],
     "homepage": "https://github.com/iatanasov77/vs-payment-bundle",
     "license": "MIT",
     "authors": [
