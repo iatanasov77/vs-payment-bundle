@@ -1,0 +1,34 @@
+{
+	"name": "vankosoft/payment-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony IAPaymentBundle",
+    "keywords": ["Payment processing"],
+    "homepage": "https://github.com/iatanasov77/vs-payment-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ivan I. Atanasov",
+            "email": "i.atanasov77@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+       	
+       	"nyholm/psr7": "^1.5",
+       	"php-http/guzzle6-adapter": "^2.0",
+       	
+        "payum/offline": "^1.5",
+        "payum/payum-bundle": "^2.3",
+        "payum/paypal-express-checkout-nvp": "^1.3",
+        "payum/paypal-rest": "*",
+        "payum/paypal-pro-checkout-nvp": "*",
+		"payum/stripe": "^1.5"
+        
+    },
+    "autoload": {
+        "psr-4": {
+            "Vankosoft\\PaymentBundle\\": "lib/"
+        }
+    },
+    "minimum-stability" : "dev"
+}

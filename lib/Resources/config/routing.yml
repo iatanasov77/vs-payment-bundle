@@ -1,0 +1,73 @@
+# Payment Methods and Payum Gateways Config
+ia_payment_gateways_index:
+    path:     /gateways
+    defaults: { _controller: IAPaymentBundle:GatewayConfig:index }
+ia_payment_gateways_config:
+    path:     /gateways/config/{gatewayName}
+    defaults: { _controller: IAPaymentBundle:GatewayConfig:config }
+ia_payment_gateways_config_options:
+    path:     /gateways/config/options/get
+    defaults: { _controller: IAPaymentBundle:GatewayConfig:gatewayConfig }
+ia_payment_methods_index:
+    path:     /methods
+    defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:index }
+ia_payment_methods_config:
+    path:     /methods/config/{id}
+    defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:config }
+ 
+
+# Payum Payments
+payum_capture:
+    resource: "@PayumBundle/Resources/config/routing/capture.xml"
+payum_notify:
+    resource: "@PayumBundle/Resources/config/routing/notify.xml"
+    
+ia_payment_stripe_checkout_prepare:
+   path:     /stripe/checkout/prepare/{planId}
+   defaults: { _controller: IAPaymentBundle:PaymentMethod/StripeCheckout:prepare }
+
+ia_payment_stripe_checkout_capture:
+   path:     /stripe/checkout/capture
+   defaults: { _controller: IAPaymentBundle:PaymentMethod/StripeCheckout:capture }
+
+
+ia_payment_stripe_checkout_done:
+   path:     /stripe/checkout/done
+   defaults: { _controller: IAPaymentBundle:PaymentMethod/StripeCheckout:done }
+
+
+ia_payment_paypal_prepare:
+    path:     /paypal/prepare
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalPro:prepare }
+       
+ia_payment_paypal_done:
+    path:     /paypal/done
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalPro:done }
+
+
+
+ia_payment_paypal_express_checkout_prepare:
+    path:     /paypal_express_checkout/prepare
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:prepare }
+
+     
+ia_payment_paypal_express_checkout_done:
+    path:     /paypal_express_checkout/done
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:done }
+    
+     
+ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement:
+    path:     /paypal_express_checkout/recurring_payment/prepare
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:prepare }
+
+ia_payment_paypal_express_checkout_create_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/create/{packagePlanId}
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:createRecurringPayment }
+       
+ia_payment_paypal_express_checkout_done_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/done
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:done }
+    
+ia_payment_paypal_express_checkout_cancel_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/cancel/{paymentId}
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:cancel }
