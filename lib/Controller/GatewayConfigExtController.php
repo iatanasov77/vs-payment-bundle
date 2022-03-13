@@ -77,7 +77,7 @@ class GatewayConfigExtController extends PayumController
     
     public function gatewayConfigAction( Request $request )
     {
-        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'Vankosoft\PaymentBundle\Entity\GatewayConfig' );
+        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), $this->gatewayConfigClass );
         $gatewayConfig = $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfigType::class, array('data' => $gatewayConfig->getConfig( false ) ) );

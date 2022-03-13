@@ -4,7 +4,7 @@ namespace Vankosoft\PaymentBundle\Controller\PaymentMethod;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 
-class PaymentController extends PayumController
+class OfflineController extends PayumController
 {
     
     /**
