@@ -25,22 +25,25 @@ class GatewayConfigForm extends AbstractForm
         
         $builder
             ->add( 'enabled', CheckboxType::class, [
-                'required'=>false,
-                'label' => 'Active',
+                'required'              =>false,
+                'label'                 => 'vs_payment.form.active',
+                'translation_domain'    => 'VSPaymentBundle',
             ] )
             ->add( 'useSandbox', CheckboxType::class, [
-                'required'=>false,
-                'label' => 'Use Sandbox',
+                'required'              =>false,
+                'label'                 => 'vs_payment.form.gateway_config.use_sandbox',
+                'translation_domain'    => 'VSPaymentBundle',
                 
             ] )
             ->add( 'gatewayName', TextType::class, [
-                'label' => 'Gateway',
-                
+                'label'                 => 'vs_payment.form.gateway',
+                'translation_domain'    => 'VSPaymentBundle',
             ] )
             ->add( 'factoryName', ChoiceType::class, [
-                'label' => 'Factory',
-                'placeholder' => '-- Select Factory --',
-                'choices'  => [
+                'label'                 => 'vs_payment.form.factory',
+                'translation_domain'    => 'VSPaymentBundle',
+                'placeholder'           => '-- Select Factory --',
+                'choices'               => [
                     'offline' => 'offline',
                     'paypal_express_checkout' => 'paypal_express_checkout',
                     'paypal_pro_checkout' => 'paypal_pro_checkout',

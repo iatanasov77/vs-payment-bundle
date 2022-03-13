@@ -1,14 +1,13 @@
 {% extends "@VSApplication/layout.html.twig" %}
-{% block title %}{{ parent() }} :: Payment Gateways{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.gateway_config_ext.index.title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
-{% block pageTitle %}<i class="icon_genius"></i> Payment Gateways{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.gateway_config_ext.index.title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
-    {# FFFFFFFFFFFFFFFFFFFFFFFFFFFF #}
     <div class="row">
     	<div class="btn-group">
             <a class="btn btn-primary" href="{{ path('vs_payment_gateways_config', {'gatewayName': 0}) }}">
-                Create New Gateway
+                {{ 'vs_payment.template.gateway_config_ext.index.create_new_gateway' | trans( {},'VSPaymentBundle' ) }}
             </a>
         </div>
     </div>
@@ -18,9 +17,9 @@
                 <table class="table table-striped table-advance table-hover">
                     <tr>
                         <th width="50">N</th>
-                        <th>Payment Gateway</th>
-                        <th>Gateway Factory</th>
-                        <th width="150">Action</th>
+                        <th>{{ 'vs_payment.template.gateway_config_ext.index.payment_gateway' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.gateway_config_ext.index.gateway_factory' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                     </tr>
                     {% for item in items %}
                         <tr>

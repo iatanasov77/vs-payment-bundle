@@ -1,6 +1,6 @@
 {% if options is not empty %}
 	<fieldset class="border p-2" style="width: 100%;">
-	    <legend class="w-auto">Gateway Config Options</legend>
+	    <legend class="w-auto">{{ 'vs_payment.template.gateway_config_ext.config.options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
 
 	    {% for key, value in options %}
 	       {% if key not in ['factory', 'sandbox'] %}
@@ -18,7 +18,7 @@
 			<div class="form-group"></div>
 			    
 			<div class="card">
-			    <div class="card-header">Sandbox Config</div>
+			    <div class="card-header">{{ 'vs_payment.template.gateway_config_ext.config.sandbox_config' | trans( {},'VSPaymentBundle' ) }}</div>
 			    <div class="card-body">
 			        <blockquote class="blockquote mb-0">
 			            {% for key, value in options %}
