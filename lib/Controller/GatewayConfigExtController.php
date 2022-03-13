@@ -34,7 +34,7 @@ class GatewayConfigExtController extends PayumController
     
     public function indexAction( Request $request )
     {
-        return $this->render( '@VSPayment/GatewayConfigExt/index.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfigExt/index.html.twig', [
             'items' => $this->gatewayConfigRepository->findAll()
         ]);
     }
@@ -49,7 +49,7 @@ class GatewayConfigExtController extends PayumController
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             
-            $postData = $request->request->get( 'gateway_config' );
+            $postData = $request->request->get( 'gateway_config_form' );
             
             // Set Default Config Options From Factory
             $factory = $this->get( 'payum' )->getGatewayFactory( $postData['factoryName'] );
@@ -69,7 +69,7 @@ class GatewayConfigExtController extends PayumController
             return $this->redirect( $this->generateUrl( 'vs_payment_gateways_index' ) );
         }
         
-        return $this->render('@VSPayment/GatewayConfigExt/config.html.twig', [
+        return $this->render('@VSPayment/Pages/GatewayConfigExt/config.html.twig', [
             'gateway'   => $gatewayConfig,
             'form'      => $form->createView()
         ]);
@@ -81,7 +81,7 @@ class GatewayConfigExtController extends PayumController
         $gatewayConfig = $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfigType::class, array('data' => $gatewayConfig->getConfig( false ) ) );
-        return $this->render( '@VSPayment/GatewayConfigExt/config_options.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
             'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
             'form'      => $form->createView()
         ]);

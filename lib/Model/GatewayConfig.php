@@ -23,7 +23,7 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
      * @param type $builder
      * @return type
      */
-    public function getConfig($builder = true) 
+    public function getConfig( $builder = true ) 
     {
         if( ! $builder )
             return parent::getConfig();
