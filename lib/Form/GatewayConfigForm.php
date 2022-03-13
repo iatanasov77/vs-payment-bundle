@@ -33,7 +33,7 @@ class GatewayConfigForm extends AbstractForm
             ->add( 'gatewayName', TextType::class, [
                 'label' => 'Gateway',
                 
-            ])
+            ] )
             ->add( 'factoryName', ChoiceType::class, [
                 'label' => 'Factory',
                 'placeholder' => '-- Select Factory --',
@@ -43,10 +43,16 @@ class GatewayConfigForm extends AbstractForm
                     'paypal_pro_checkout' => 'paypal_pro_checkout',
                     'stripe_checkout' => 'stripe_checkout',
                 ],
-            ])
+            ] )
             
-            ->add('config', GatewayConfigType::class, array('data' => $gatewayConfig->getConfig(false)))
-            ->add('sandboxConfig', GatewayConfigType::class, array('data' => $gatewayConfig->getSandboxConfig()))
+            ->add( 'config', GatewayConfigType::class, [
+                'data'  => $this->dataClass->getConfig( false ),
+                
+            ] )
+            ->add( 'sandboxConfig', GatewayConfigType::class, [
+                'data' => $this->dataClass->getSandboxConfig()
+                
+            ] )
         ;
     }
 
