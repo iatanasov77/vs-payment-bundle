@@ -30,7 +30,7 @@ class GatewayConfigExtController extends PayumController
     public function indexAction( Request $request )
     {
         return $this->render( '@VSPayment/GatewayConfigExt/index.html.twig', [
-            'items' => $this->getDoctrine()->getRepository( GatewayConfigEntity::class )->findAll()
+            'items' => $this->gatewayConfigRepository->findAll()
         ]);
     }
     
