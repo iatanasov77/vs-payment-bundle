@@ -21,6 +21,8 @@ class GatewayConfigForm extends AbstractForm
     {       
         parent::buildForm( $builder, $options );
         
+        $gatewayConfig  = $options['data'];
+        
         $builder
             ->add( 'enabled', CheckboxType::class, [
                 'required'=>false,
@@ -46,11 +48,11 @@ class GatewayConfigForm extends AbstractForm
             ] )
             
             ->add( 'config', GatewayConfigType::class, [
-                'data'  => $this->dataClass->getConfig( false ),
+                'data'  => $gatewayConfig->getConfig( false ),
                 
             ] )
             ->add( 'sandboxConfig', GatewayConfigType::class, [
-                'data' => $this->dataClass->getSandboxConfig()
+                'data' => $gatewayConfig->getSandboxConfig()
                 
             ] )
         ;
