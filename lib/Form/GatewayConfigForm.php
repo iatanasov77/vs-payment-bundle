@@ -29,7 +29,8 @@ class GatewayConfigForm extends AbstractForm
                 'label' => 'Active',
             ] )
             ->add( 'useSandbox', CheckboxType::class, [
-                'required'=>false
+                'required'=>false,
+                'label' => 'Use Sandbox',
                 
             ] )
             ->add( 'gatewayName', TextType::class, [

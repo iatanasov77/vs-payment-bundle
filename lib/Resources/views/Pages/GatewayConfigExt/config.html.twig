@@ -1,6 +1,8 @@
 {% extends "@VSApplication/layout.html.twig" %}
-{% block title %}{{ parent() }} :: Gateway Config{% endblock %}
 
+{% import "@VSApplication/macros/form.html.twig" as vs_form %}
+
+{% block title %}{{ parent() }} :: Gateway Config{% endblock %}
 {% block pageTitle %}<i class="icon_genius"></i> Gateway Config{% endblock %}
 
 {% block content %}
@@ -12,57 +14,67 @@
             <div class="card">
             	<h5 class="card-header">Gateway: {{ gateway.gatewayName }}</h5>
             	<div class="card-body">
-		            {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
-		                {{ form_widget(form._token) }}
-		
-		                {% if form_errors(form) is not empty %}
-		                    <div class="alert alert-block alert-danger fade in">
-		                        <button type="button" class="close close-sm" data-dismiss="alert">
-		                            <i class="icon-remove"></i>
-		                        </button>
-		                        <strong>Error!</strong> {{ form_errors(form) }}
-		                    </div>
-		                {% endif %}
-		                <section class="panel">
-		                    <header class="panel-heading"> Gateway Config </header>
-		                    <div class="panel-body">
-		                        <div class="form-row">
+	                <section class="panel">
+	                    <div class="panel-body bio-graph-info">
+		                    {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
+                                {{ form_widget(form._token) }}
+                
+                                {% if form_errors(form) is not empty %}
+                                    <div class="alert alert-block alert-danger fade in">
+                                        <button type="button" class="close close-sm" data-dismiss="alert">
+                                            <i class="icon-remove"></i>
+                                        </button>
+                                        <strong>Error!</strong> {{ form_errors(form) }}
+                                    </div>
+                                {% endif %}
+                                
+                                <label class="custom-control custom-checkbox">  
+                                    <input type="checkbox" id="gateway_config_form_enabled"
+                                        class="custom-control-input form-check-input"
+                                        name="gateway_config_form[enabled]"
+                                        value="{{ form.vars.value.enabled }}"
+                                        {% if form.vars.value.enabled %}checked="checked"{% endif %}
+                                    />
+                                    <span class="custom-control-label">{{ form.enabled.vars.label }}</span>
+                                </label>
+                                
+                                <label class="custom-control custom-checkbox">  
+                                    <input type="checkbox" id="gateway_config_form_useSandbox"
+                                        class="custom-control-input form-check-input"
+                                        name="gateway_config_form[useSandbox]"
+                                        value="{{ form.vars.value.useSandbox }}"
+                                        {% if form.vars.value.useSandbox %}checked="checked"{% endif %}
+                                    />
+                                    <span class="custom-control-label">{{ form.useSandbox.vars.label }}</span>
+                                </label>
+    
+		                        <div class="form-group">
 		                            {{ form_label(form.gatewayName, null, {
-                                        'label_attr': {'class': 'control-label col-lg-2'}
+                                        'label_attr': {'class': 'col-form-label'}
                                         }) 
                                     }}
 		                            
-		                            {{ form_widget(form.gatewayName) }}
+		                            {{ form_widget(form.gatewayName, {'attr': {'class': 'form-control'}}) }}
 		                        </div> 
-		                        <div class="form-row">    
+		                        <div class="form-group">    
 		                            {{ form_label(form.factoryName, null, {
-                                        'label_attr': {'class': 'control-label col-lg-2'}
+                                        'label_attr': {'class': 'col-form-label'}
                                         }) 
                                     }}
 		                            {{ form_widget(form.factoryName, {'attr': {
-		                            	'data-getConfigUrl': path( 'vs_payment_gateways_config_options' )
+		                            	'data-getConfigUrl': path( 'vs_payment_gateways_config_options' ),
+		                            	'class': 'form-control'
 		                            }}) }}
 		                        </div>
-		                        
-		                        <div class="form-row">
-								    {{ form_label(form.useSandbox, null, {
-								        'label_attr': {'class': 'control-label col-lg-2'}
-								        }) 
-								    }}
-								    <div class="col-lg-10">
-								        <div class="checkbox">
-								            {{ form_widget(form.useSandbox) }}
-								        </div>
-								    </div>
-								</div>
+
 		                        <div class="fieldsContainer" id="gatewayConfigOptions">
                                     {% include '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig' with { 'options': gateway.getConfig( true ) } %}
 		                        </div>
-		                    </div>
-		                </section>
-		                {{ form_widget(form.btnSave, {'attr': {'class': 'btn btn-primary', 'id':'btnSave'}}) }}
-		                {{ form_widget(form.btnCancel, {'attr': {'class': 'btn btn-default', 'id':'btnCancel'}}) }}
-		            {{ form_end(form, {'render_rest': false}) }}
+		                        
+		                        {{ vs_form.buttons( form ) }}
+                            {{ form_end(form, {'render_rest': false}) }}
+	                    </div>
+	                </section>  
 				</div>
 			</div>
 		</div>
