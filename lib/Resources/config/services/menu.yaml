@@ -1,0 +1,10 @@
+parameters:
+     vs_application.main_menus: ['profileMenu', 'mainSystemMenu', 'mainCmsMenu', 'mainPaymentMenu']
+services:
+    vs_payment.main_menu_payment:
+        autowire: false
+        class: Knp\Menu\MenuItem
+        factory: ["@vs_app.menu_builder", mainMenu]
+        arguments: ["@knp_menu.factory", 'mainPaymentMenu']
+        tags:
+            - { name: knp_menu.menu, alias: mainPayment }
