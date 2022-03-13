@@ -13,6 +13,9 @@ use Payum\Core\Bridge\Doctrine\Storage\DoctrineStorage;
 
 class GatewayConfigExtController extends PayumController
 {
+    /** @var string */
+    protected $gatewayConfigClass;
+    
     /** @var EntityRepository */
     protected EntityRepository $gatewayConfigRepository;
     
@@ -20,9 +23,11 @@ class GatewayConfigExtController extends PayumController
     protected Factory $gatewayConfigFactory;
     
     public function __construct(
+        string $gatewayConfigClass,
         EntityRepository $gatewayConfigRepository,
         Factory $gatewayConfigFactory
     ) {
+        $this->gatewayConfigClass       = $gatewayConfigClass;
         $this->gatewayConfigRepository  = $gatewayConfigRepository;
         $this->gatewayConfigFactory     = $gatewayConfigFactory;
     }
@@ -36,7 +41,7 @@ class GatewayConfigExtController extends PayumController
     
     public function configAction( $gatewayName, Request $request )
     {
-        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'Vankosoft\PaymentBundle\Entity\GatewayConfig' );
+        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), $this->gatewayConfigClass );
         $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
         $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
         
@@ -61,7 +66,7 @@ class GatewayConfigExtController extends PayumController
             
             $gatewayConfigStorage->update( $gatewayConfig );
             
-            return $this->redirect( $this->generateUrl( 'ia_payment_gateways_index' ) );
+            return $this->redirect( $this->generateUrl( 'vs_payment_gateways_index' ) );
         }
         
         return $this->render('@VSPayment/GatewayConfigExt/config.html.twig', [
