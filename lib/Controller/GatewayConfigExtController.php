@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Resource\Factory\Factory;
 
-use Vankosoft\PaymentBundle\Form\GatewayConfig;
+use Vankosoft\PaymentBundle\Form\GatewayConfigForm;
 use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
 
 use Payum\Core\Bridge\Doctrine\Storage\DoctrineStorage;
@@ -45,7 +45,7 @@ class GatewayConfigExtController extends PayumController
         $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
         $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
         
-        $form = $this->createForm( GatewayConfig::class, $gatewayConfig );
+        $form = $this->createForm( GatewayConfigForm::class, $gatewayConfig );
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             
