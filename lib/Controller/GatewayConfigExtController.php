@@ -49,7 +49,9 @@ class GatewayConfigExtController extends PayumController
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             
-            $postData = $request->request->get( 'gateway_config_form' );
+            $postData                               = $request->request->get( 'gateway_config_form' );
+            $submitedConfig                         = $request->request->get( 'gateway_config' );
+            $submitedConfig['config']['sandbox']    = false;
             
             // Set Default Config Options From Factory
             $factory = $this->get( 'payum' )->getGatewayFactory( $postData['factoryName'] );
@@ -57,12 +59,10 @@ class GatewayConfigExtController extends PayumController
             $defaultOptions = $config['payum.default_options'];
             
             if( isset( $defaultOptions['sandbox'] ) ) {
-                $postData['config']['sandbox']          = false;
-                $postData['sandboxConfig']['sandbox']   = true;
-                
-                $gatewayConfig->setSandboxConfig( $postData['sandboxConfig'] );
+                $submitedConfig['sandboxConfig']['sandbox']   = true;
+                $gatewayConfig->setSandboxConfig( $submitedConfig['sandboxConfig'] );
             }
-            $gatewayConfig->setConfig( $postData['config'] );
+            $gatewayConfig->setConfig( $submitedConfig['config'] );
             
             $gatewayConfigStorage->update( $gatewayConfig );
             
