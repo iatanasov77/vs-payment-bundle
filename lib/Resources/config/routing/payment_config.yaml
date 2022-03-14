@@ -5,6 +5,8 @@ vs_payment_gateways_index:
 vs_payment_gateways_config:
     path:     /gateways/config/{gatewayName}
     controller: Vankosoft\PaymentBundle\Controller\GatewayConfigExtController::configAction
+    defaults:
+        gatewayName: '' # To Can be Added in the Menu
 vs_payment_gateways_config_options:
     path:     /gateways/config/options/get
     controller: Vankosoft\PaymentBundle\Controller\GatewayConfigExtController::gatewayConfigAction
