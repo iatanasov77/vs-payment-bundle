@@ -1,0 +1,88 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{% import "@VSApplication/macros/form.html.twig" as vs_form %}
+
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.gateway_config_ext.config.title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.gateway_config_ext.config.title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <!-- ============================================================== -->
+        <!-- basic tabs  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+            	<h5 class="card-header">{{ 'vs_payment.template.gateway' | trans( {},'VSPaymentBundle' ) }}: {{ gateway.gatewayName }}</h5>
+            	<div class="card-body">
+	                <section class="panel">
+	                    <div class="panel-body bio-graph-info">
+		                    {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
+                                {{ form_widget(form._token) }}
+                
+                                {% if form_errors(form) is not empty %}
+                                    <div class="alert alert-block alert-danger fade in">
+                                        <button type="button" class="close close-sm" data-dismiss="alert">
+                                            <i class="icon-remove"></i>
+                                        </button>
+                                        <strong>Error!</strong> {{ form_errors(form) }}
+                                    </div>
+                                {% endif %}
+                                
+                                <label class="custom-control custom-checkbox">  
+                                    <input type="checkbox" id="gateway_config_form_enabled"
+                                        class="custom-control-input form-check-input"
+                                        name="gateway_config_form[enabled]"
+                                        value="{{ form.vars.value.enabled }}"
+                                        {% if form.vars.value.enabled %}checked="checked"{% endif %}
+                                    />
+                                    <span class="custom-control-label">{{ form.enabled.vars.label }}</span>
+                                </label>
+                                
+                                <label class="custom-control custom-checkbox">  
+                                    <input type="checkbox" id="gateway_config_form_useSandbox"
+                                        class="custom-control-input form-check-input"
+                                        name="gateway_config_form[useSandbox]"
+                                        value="{{ form.vars.value.useSandbox }}"
+                                        {% if form.vars.value.useSandbox %}checked="checked"{% endif %}
+                                    />
+                                    <span class="custom-control-label">{{ form.useSandbox.vars.label }}</span>
+                                </label>
+    
+		                        <div class="form-group">
+		                            {{ form_label(form.gatewayName, null, {
+                                        'label_attr': {'class': 'col-form-label'}
+                                        }) 
+                                    }}
+		                            
+		                            {{ form_widget(form.gatewayName, {'attr': {'class': 'form-control'}}) }}
+		                        </div> 
+		                        <div class="form-group">    
+		                            {{ form_label(form.factoryName, null, {
+                                        'label_attr': {'class': 'col-form-label'}
+                                        }) 
+                                    }}
+		                            {{ form_widget(form.factoryName, {'attr': {
+		                            	'data-getConfigUrl': path( 'vs_payment_gateways_config_options' ),
+		                            	'class': 'form-control'
+		                            }}) }}
+		                        </div>
+
+		                        <div class="fieldsContainer" id="gatewayConfigOptions">
+                                    {% include '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig' with { 'options': gateway.getConfig( true ) } %}
+		                        </div>
+		                        
+		                        {{ vs_form.buttons( form ) }}
+                            {{ form_end(form, {'render_rest': false}) }}
+	                    </div>
+	                </section>  
+				</div>
+			</div>
+		</div>
+    </div>  
+{% endblock %}
+
+{% block body_scripts %}
+	{{ parent() }}
+	
+    {{ encore_entry_script_tags( 'js/gateway-config' ) }}  
+{% endblock %}

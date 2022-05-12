@@ -1,48 +1,18 @@
-<?php
-namespace IA\PaymentBundle\Entity;
+<?php namespace Vankosoft\PaymentBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\GatewayConfig as BaseGatewayConfig;
+use Sylius\Component\Resource\Model\ToggleableTrait;
 
-/**
- * @ORM\Table(name="IAP_GatewayConfig")
- * @ORM\Entity
- */
-class GatewayConfig extends BaseGatewayConfig
+class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfigInterface
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     *
-     * @var integer $id
-     */
+    use ToggleableTrait;
+    
     protected $id;
     
-    /**
-     * @var bool
-     * 
-     *  @ORM\Column(name="useSandbox", type="boolean", nullable=false)
-     */
     protected $useSandbox;
     
-    /**
-     * @var array
-     * 
-     * @ORM\Column(name="sandboxConfig", type="json", nullable=false)
-     */
     protected $sandboxConfig;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="currency", type="string", length=4, nullable=true)
-     */
-    protected $currency;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="PaymentMethod", mappedBy="gateway", cascade={"persist"})
-     */
     protected $paymentMethods;
     
     /**
@@ -53,52 +23,47 @@ class GatewayConfig extends BaseGatewayConfig
      * @param type $builder
      * @return type
      */
-    public function getConfig($builder = true) 
+    public function getConfig( $builder = true ) 
     {
-        if(!$builder)
+        if( ! $builder )
             return parent::getConfig();
         
         return $this->useSandbox ? $this->sandboxConfig : $this->config;
     }
     
-    
     public function __construct()
     {
         parent::__construct();
-        $this->useSandbox = false;
-        $this->sandboxConfig = [];
+        
+        $this->useSandbox       = false;
+        $this->sandboxConfig    = [];
     }
     
-    function getUseSandbox()
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function getSandboxConfig()
+    {
+        return $this->sandboxConfig;
+    }
+    
+    public function setSandboxConfig( array $sandboxConfig ): self
+    {
+        $this->sandboxConfig = $sandboxConfig;
+        
+        return $this;
+    }
+    
+    public function getUseSandbox()
     {
         return $this->useSandbox;
     }
 
-    function getSandboxConfig()
-    {
-        return $this->sandboxConfig;
-    }
-
-    function setUseSandbox($useSandbox)
+    public function setUseSandbox($useSandbox): self
     {
         $this->useSandbox = $useSandbox;
-        return $this;
-    }
-
-    function setSandboxConfig( array $sandboxConfig )
-    {
-        $this->sandboxConfig = $sandboxConfig;
-        return $this;
-    }
-    
-    public function getCurrency()
-    {
-        return $this->currency;
-    }
-    
-    public function setCurrency( $currency )
-    {
-        $this->currency = $currency;
         
         return $this;
     }

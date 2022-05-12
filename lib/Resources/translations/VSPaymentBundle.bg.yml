@@ -1,0 +1,29 @@
+vs_payment:
+    form:
+        active: Активен
+        gateway: Гейтуей
+        factory: Фактори
+        
+        gateway_config:
+            use_sandbox: Използвай Сенд-бокс
+            
+        credit_card:
+            acct: 'Card Number'
+            exp_date: 'Expiration Date'
+            cvv2: 'CVV2'
+    
+    template:
+        gateway: Гейтуей
+        action: Действие
+        
+        gateway_config_ext:
+            index:
+                title: Payment Gateways
+                payment_gateway: Payment Gateway
+                gateway_factory: Gateway Factory
+                create_new_gateway: Създай Нов Гейтуей
+            config:
+                title: Гейтуей Конфигурация
+                options_title: Гейтуей Конфигурация Опции
+                sandbox_config: Сенд-бокс Конфигурация
+    

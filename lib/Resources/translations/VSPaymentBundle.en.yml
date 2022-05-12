@@ -1,0 +1,30 @@
+vs_payment:
+    form:
+        active: Active
+        gateway: Gateway
+        factory: Factory
+        
+        gateway_config:
+            use_sandbox: Use Sandbox
+            
+        credit_card:
+            acct: 'Card Number'
+            exp_date: 'Expiration Date'
+            cvv2: 'CVV2'
+
+    template:
+        gateway: Gateway
+        action: Action
+        
+        gateway_config_ext:
+            index:
+                title: Payment Gateways
+                payment_gateway: Payment Gateway
+                gateway_factory: Gateway Factory
+                create_new_gateway: Create New Gateway
+            config:
+                title: Gateway Config
+                options_title: Gateway Config Options
+                sandbox_config: Sandbox Config
+                
+    

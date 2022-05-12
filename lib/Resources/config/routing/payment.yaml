@@ -1,0 +1,50 @@
+# Payum Payment Routes
+#######################################################################################
+payum_capture:
+    resource: "@PayumBundle/Resources/config/routing/capture.xml"
+payum_notify:
+    resource: "@PayumBundle/Resources/config/routing/notify.xml"
+
+# PayPal Express Checkout
+#######################################################################################
+vs_payment_paypal_express_checkout_prepare:
+    path:     /paypal_express_checkout/prepare
+    controller: Vankosoft\PaymentBundle\Controller\PaymentMethod\PaypalExpressCheckoutController::prepareAction
+
+vs_payment_paypal_express_checkout_done:
+    path:     /paypal_express_checkout/done
+    controller: Vankosoft\PaymentBundle\Controller\PaymentMethod\PaypalExpressCheckoutController::doneAction
+
+# PayPal Express Checkout Recurring
+#######################################################################################
+vs_payment_paypal_express_checkout_prepare_recurring_payment_agreement:
+    path:     /paypal_express_checkout/recurring_payment/prepare
+    controller: Vankosoft\PaymentBundle\Controller\PaymentMethod\PaypalExpressCheckoutRecurringController::prepareAction
+
+vs_payment_paypal_express_checkout_create_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/create/{packagePlanId}
+    controller: Vankosoft\PaymentBundle\Controller\PaymentMethod\PaypalExpressCheckoutRecurringController::createRecurringPaymentAction
+       
+vs_payment_paypal_express_checkout_done_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/done
+    controller: Vankosoft\PaymentBundle\Controller\PaymentMethod\PaypalExpressCheckoutRecurringController::doneAction
+    
+vs_payment_paypal_express_checkout_cancel_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/cancel/{paymentId}
+    controller: Vankosoft\PaymentBundle\Controller\PaymentMethod\PaypalExpressCheckoutRecurringController::cancelAction
+
+# Stripe Checkout
+#######################################################################################
+vs_payment_stripe_checkout_prepare:
+   path:     /stripe/checkout/prepare/{planId}
+   controller: Vankosoft\PaymentBundle\Controller\PaymentMethod\StripeCheckoutController::prepareAction
+
+vs_payment_stripe_checkout_capture:
+   path:     /stripe/checkout/capture
+   controller: Vankosoft\PaymentBundle\Controller\PaymentMethod\StripeCheckoutController::captureAction
+
+vs_payment_stripe_checkout_done:
+   path:     /stripe/checkout/done
+   controller: Vankosoft\PaymentBundle\Controller\PaymentMethod\StripeCheckoutController::doneAction
+
+

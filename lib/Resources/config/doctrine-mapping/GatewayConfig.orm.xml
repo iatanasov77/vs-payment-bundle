@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+    <mapped-superclass name="Vankosoft\PaymentBundle\Model\GatewayConfig">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        
+        <field name="enabled" column="active" type="boolean" />
+        <field name="useSandbox" type="boolean" nullable="false" default="0" />
+        
+        <!-- Mapping Defined In: /vendor/payum/core/Payum/Core/Bridge/Doctrine/Resources/mapping/GatewayConfig.orm.xml
+        <field name="factoryName" type="string" length="64" nullable="false" />
+        <field name="gatewayName" type="string" length="64" nullable="false" />
+        <field name="config" type="json" nullable="true" />
+        -->
+        
+        <field name="sandboxConfig" type="json" nullable="true" />
+        
+        <one-to-many field="paymentMethods" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\NewsletterSubscriptionInterface" mapped-by="gateway" />
+    </mapped-superclass>
+</doctrine-mapping>

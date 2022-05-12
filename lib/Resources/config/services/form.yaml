@@ -1,0 +1,7 @@
+services:
+    vs_payment.resources.gateway_config.form:
+        class: Vankosoft\PaymentBundle\Form\GatewayConfigForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.gateway_config.class%'
