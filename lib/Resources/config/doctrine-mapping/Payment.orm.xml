@@ -13,7 +13,6 @@
         <!--
         <many-to-one field="paymentDetails" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentDetailsInterface" inversed-by="payments" />
         -->
-        <many-to-one field="paymentDetails" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PaymentDetailsInterface" inversed-by="payments" />
         
         <!-- Mapping Defined In: /vendor/payum/core/Payum/Core/Bridge/Doctrine/Resources/mapping/Payment.orm.xml
         <field name="number" type="string" length="64" nullable="false" />
