@@ -30,6 +30,10 @@
 		"payum/stripe": "^1.5"
         
     },
+    "conflict": {
+        "doctrine/doctrine-bundle": "<1.3",
+        "symfony/doctrine-bridge": "<2.7"
+    },
     "autoload": {
         "psr-4": {
             "Vankosoft\\PaymentBundle\\": "lib/"
