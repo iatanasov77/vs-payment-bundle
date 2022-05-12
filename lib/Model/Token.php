@@ -1,5 +1,4 @@
-<?php
-namespace Vankosoft\PaymentBundle\Entity;
+<?php namespace Vankosoft\PaymentBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\Token as BaseToken;
