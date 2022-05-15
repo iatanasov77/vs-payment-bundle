@@ -10,12 +10,12 @@ use Sylius\Component\Resource\Factory\Factory;
 
 use Vankosoft\PaymentBundle\Model\GatewayConfig;
 use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
-use Vankosoft\PaymentBundle\Controller\GatewayConfigController;
+use Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigController;
 use Vankosoft\PaymentBundle\Form\GatewayConfigForm;
 
 use Vankosoft\PaymentBundle\Model\PaymentMethod;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
-use Vankosoft\PaymentBundle\Controller\PaymentMethodController;
+use Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigController;
 use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
 
 use Vankosoft\PaymentBundle\Model\Payment;
