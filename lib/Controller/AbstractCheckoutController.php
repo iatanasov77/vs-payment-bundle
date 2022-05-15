@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
+<?php namespace Vankosoft\PaymentBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Payum\Core\Request\GetHumanStatus;
 
-abstract class AbstractPaymentMethodController extends PayumController
+abstract class AbstractCheckoutController extends PayumController
 {
     
     abstract public function prepareAction( Request $request );

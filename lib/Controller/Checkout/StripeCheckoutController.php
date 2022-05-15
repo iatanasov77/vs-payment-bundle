@@ -2,7 +2,9 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
-class StripeCheckoutController extends AbstractPaymentMethodController
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
+
+class StripeCheckoutController extends AbstractCheckoutController
 {
     /*
      * TEST MAIL: i.atanasov77@gmail.com

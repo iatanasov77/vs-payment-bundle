@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller;
+<?php namespace Vankosoft\PaymentBundle\Controller\Configuration;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Symfony\Component\HttpFoundation\Request;

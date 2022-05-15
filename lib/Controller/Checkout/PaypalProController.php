@@ -3,6 +3,8 @@
 use Symfony\Component\HttpFoundation\Request;
 use Vankosoft\PaymentBundle\Form\CreditCard as CreditCardForm;
 
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
+
 /*
  * TEST CARDS
  * ===========
@@ -22,7 +24,7 @@ use Vankosoft\PaymentBundle\Form\CreditCard as CreditCardForm;
 
 // SETUP TEST ACCOUNT MANUEL: https://developer.paypal.com/docs/classic/payflow/test-hosted-pages/#create-a-test-only-payflow-gateway-account
 
-class PaypalProController extends AbstractPaymentMethodController
+class PaypalProController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request )
     {

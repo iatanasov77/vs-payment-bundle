@@ -1,15 +1,15 @@
 # Payment Methods and Payum Gateways Config
 vs_payment_gateways_index:
     path:     /gateways
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfigExtController::indexAction
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigExtController::indexAction
 vs_payment_gateways_config:
     path:     /gateways/config/{gatewayName}
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfigExtController::configAction
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigExtController::configAction
     defaults:
         gatewayName: '' # To Can be Added in the Menu
 vs_payment_gateways_config_options:
     path:     /gateways/config/options/get
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfigExtController::gatewayConfigAction
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigExtController::gatewayConfigAction
 #vs_payment_methods_index:
 #    path:     /methods
 #    defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:index }

@@ -10,6 +10,7 @@ use Payum\Core\Request\GetHumanStatus;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 
 use IA\UsersBundle\Entity\UserActivity;
 
@@ -19,7 +20,7 @@ use IA\UsersBundle\Entity\UserActivity;
  * -----------------------------------------------
  * sb-wsp2g401218@personal.example.com / 8o?JWT#6
  */
-class PaypalExpressCheckoutRecurringController extends AbstractPaymentMethodController
+class PaypalExpressCheckoutRecurringController extends AbstractCheckoutController
 {
 
     public function prepareAction( Request $request )
