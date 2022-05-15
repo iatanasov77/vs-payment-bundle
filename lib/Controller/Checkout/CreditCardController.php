@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller;
+<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

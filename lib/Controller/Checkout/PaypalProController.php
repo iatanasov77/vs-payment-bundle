@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller\PaymentMethod;
+<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
 use Symfony\Component\HttpFoundation\Request;
 use Vankosoft\PaymentBundle\Form\CreditCard as CreditCardForm;
