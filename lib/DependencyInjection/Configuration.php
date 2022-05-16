@@ -103,8 +103,9 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         
                         
-                        /* I dont know if this should to be resource
-                         * =============================================
+                        /* This should to be resource, Because otherwise I can't take the class name in concrete project
+                         * ===============================================================================================
+                         */
                         ->arrayNode( 'payment' )
                             ->addDefaultsIfNotSet()
                             ->children()
