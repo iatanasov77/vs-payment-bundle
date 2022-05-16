@@ -26,5 +26,6 @@ vs_payment:
                 title: Gateway Config
                 options_title: Gateway Config Options
                 sandbox_config: Sandbox Config
+                sandbox_config_options_title: Sandbox Config Options
                 
     
