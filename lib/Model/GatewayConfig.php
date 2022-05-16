@@ -22,12 +22,12 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
      * @param type $builder
      * @return type
      */
-    public function getConfig( $builder = true ) 
+    public function getConfig( $fromParent = false, $forSandbox = false ) 
     {
-        if( ! $builder )
+        if( $fromParent )
             return parent::getConfig();
         
-        return $this->useSandbox ? $this->sandboxConfig : $this->config;
+        return $this->useSandbox || $forSandbox ? $this->sandboxConfig : $this->config;
     }
     
     public function __construct()

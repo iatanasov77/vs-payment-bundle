@@ -81,7 +81,7 @@ class GatewayConfigExtController extends PayumController
         $gatewayConfig          = $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfigType::class, [
-            'data'      => $gatewayConfig->getConfig( false ), 
+            'data'      => $gatewayConfig->getConfig( true ),
         ]);
         return $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
             'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),

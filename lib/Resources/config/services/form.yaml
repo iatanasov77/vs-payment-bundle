@@ -1,3 +1,7 @@
+parameters:
+    #vs_payment.gateway_factories: ['offline', 'paypal_express_checkout', 'paypal_pro_checkout', 'stripe_checkout', 'stripe_js']
+    vs_payment.gateway_factories: ['offline']
+
 services:
     vs_payment.resources.gateway_config.form:
         class: Vankosoft\PaymentBundle\Form\GatewayConfigForm
