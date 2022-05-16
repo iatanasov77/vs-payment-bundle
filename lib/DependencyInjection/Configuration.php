@@ -21,8 +21,6 @@ use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
 use Vankosoft\PaymentBundle\Model\Payment;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 
-use Vankosoft\PaymentBundle\Model\PaymentDetails;
-use Vankosoft\PaymentBundle\Model\Interfaces\PaymentDetailsInterface;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -122,24 +120,6 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         
-                        /* I dont know if this resource should exists
-                         * =============================================
-                          
-                        ->arrayNode( 'payment_details' )
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->variableNode( 'options' )->end()
-                                ->arrayNode( 'classes' )
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode( 'model' )->defaultValue( PaymentDetails::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( PaymentDetailsInterface::class )->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                        
-                        */
                     ->end()
                 ->end()
             ->end()

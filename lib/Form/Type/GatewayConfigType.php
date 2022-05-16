@@ -22,8 +22,7 @@ class GatewayConfigType extends AbstractType
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {   
-        
+    {
         $builder
             ->add('factory', HiddenType::class)
         ;
