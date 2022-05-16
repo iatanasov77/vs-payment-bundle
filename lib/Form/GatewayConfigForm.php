@@ -17,6 +17,18 @@ use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
  */
 class GatewayConfigForm extends AbstractForm
 {
+    /** @var array */
+    protected $factories;
+    
+    public function __construct(
+        string $dataClass,
+        array $factories
+    ) {
+        parent::__construct( $dataClass );
+     
+        $this->factories    = $factories;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {       
         parent::buildForm( $builder, $options );
@@ -43,12 +55,7 @@ class GatewayConfigForm extends AbstractForm
                 'label'                 => 'vs_payment.form.factory',
                 'translation_domain'    => 'VSPaymentBundle',
                 'placeholder'           => '-- Select Factory --',
-                'choices'               => [
-                    'offline' => 'offline',
-                    'paypal_express_checkout' => 'paypal_express_checkout',
-                    'paypal_pro_checkout' => 'paypal_pro_checkout',
-                    'stripe_checkout' => 'stripe_checkout',
-                ],
+                'choices'               => \array_combine( $this->factories, $this->factories ),
             ] )
             
             ->add( 'config', GatewayConfigType::class, [

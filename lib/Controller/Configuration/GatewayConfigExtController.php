@@ -77,10 +77,12 @@ class GatewayConfigExtController extends PayumController
     
     public function gatewayConfigAction( Request $request )
     {
-        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), $this->gatewayConfigClass );
-        $gatewayConfig = $gatewayConfigStorage->create();
+        $gatewayConfigStorage   = new DoctrineStorage( $this->getDoctrine()->getManager(), $this->gatewayConfigClass );
+        $gatewayConfig          = $gatewayConfigStorage->create();
         
-        $form = $this->createForm( GatewayConfigType::class, array('data' => $gatewayConfig->getConfig( false ) ) );
+        $form = $this->createForm( GatewayConfigType::class, [
+            'data'      => $gatewayConfig->getConfig( false ), 
+        ]);
         return $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
             'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
             'form'      => $form->createView()
