@@ -6,20 +6,43 @@ class Payment extends BasePayment implements Interfaces\PaymentInterface
 {
     protected $id;
     
+    /**
+     * @var \Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface
+     */
+    protected $paidServicePeriod;
+    
+    /**
+     * @var Interfaces\PaymentMethodInterface
+     */
     protected $paymentMethod;
     
-    protected $paymentDetails;
+    /**
+     * @var \Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface
+     */
+    protected $user;
     
     public function getId()
     {
         return $this->id;
     }
     
+    public function getPaidServicePeriod()
+    {
+        return $this->paidServicePeriod;
+    }
+    
+    public function setPaidServicePeriod($paidServicePeriod): self
+    {
+        $this->paidServicePeriod = $paidServicePeriod;
+        
+        return $this;
+    }
+    
     public function getPaymentMethod()
     {
         return $this->paymentMethod;
     }
-
+    
     public function setPaymentMethod($paymentMethod)
     {
         $this->paymentMethod = $paymentMethod;
@@ -27,20 +50,14 @@ class Payment extends BasePayment implements Interfaces\PaymentInterface
         return $this;
     }
     
-    /*
-     * @NOTE Not need i think but see more on Payum\Core\Model\ArrayObject
-     */
-    public function getPaymentDetails()
+    public function getUser()
     {
-        return $this->paymentDetails;
+        return $this->user;
     }
     
-    /* 
-     * @NOTE Not need i think but see more on Payum\Core\Model\ArrayObject
-     */
-    public function setPaymentDetails($paymentDetails)
+    public function setUser($user)
     {
-        $this->paymentDetails = $paymentDetails;
+        $this->user = $user;
         
         return $this;
     }

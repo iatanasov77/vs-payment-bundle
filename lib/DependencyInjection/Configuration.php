@@ -101,6 +101,10 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+                        
+                        
+                        /* I dont know if this should to be resource
+                         * =============================================
                         ->arrayNode( 'payment' )
                             ->addDefaultsIfNotSet()
                             ->children()
