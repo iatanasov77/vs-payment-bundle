@@ -1,9 +1,9 @@
 {% if options is not empty %}
 	<fieldset class="border p-2 mb-4" style="width: 100%;">
-    {% if sandbox %}   
-	    <legend class="w-auto">{{ 'vs_payment.template.gateway_config_ext.config.options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
+    {% if sandbox %}
+        <legend class="w-auto">{{ 'vs_payment.template.gateway_config_ext.config.sandbox_config_options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
     {% else %}
-        <legend class="w-auto">{{ 'vs_payment.template.gateway_config_ext.config.sandbox_options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
+        <legend class="w-auto">{{ 'vs_payment.template.gateway_config_ext.config.options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
     {% endif %}
     
 	    {% for key, value in options %}
@@ -25,3 +25,4 @@
 		{% endfor %}
 	</fieldset>
 {% endif %}
+    
