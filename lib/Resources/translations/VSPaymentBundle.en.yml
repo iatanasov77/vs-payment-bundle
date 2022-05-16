@@ -1,7 +1,7 @@
 vs_payment:
     form:
         active: Active
-        gateway: Gateway
+        gateway: Gateway Name
         factory: Factory
         
         gateway_config:

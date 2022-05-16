@@ -1,7 +1,7 @@
 vs_payment:
     form:
         active: Активен
-        gateway: Гейтуей
+        gateway: Гейтуей Име
         factory: Фактори
         
         gateway_config:
