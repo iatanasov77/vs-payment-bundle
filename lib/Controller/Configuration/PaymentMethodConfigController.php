@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller;
+<?php namespace Vankosoft\PaymentBundle\Controller\Configuration;
 
 use Symfony\Component\HttpFoundation\Request;
 use Payum\Bundle\PayumBundle\Controller\PayumController;
@@ -6,7 +6,7 @@ use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Vankosoft\PaymentBundle\Form\PaymentMethod as PaymentMethodForm;
 use Vankosoft\PaymentBundle\Entity\PaymentMethod;
 
-class PaymentMethodController extends PayumController
+class PaymentMethodConfigController extends PayumController
 {
     
     public function indexAction( Request $request )

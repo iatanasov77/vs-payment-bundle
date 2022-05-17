@@ -10,16 +10,17 @@ use Sylius\Component\Resource\Factory\Factory;
 
 use Vankosoft\PaymentBundle\Model\GatewayConfig;
 use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
-use Vankosoft\PaymentBundle\Controller\GatewayConfigController;
+use Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigController;
 use Vankosoft\PaymentBundle\Form\GatewayConfigForm;
 
 use Vankosoft\PaymentBundle\Model\PaymentMethod;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
-use Vankosoft\PaymentBundle\Controller\PaymentMethodController;
+use Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigController;
 use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
 
 use Vankosoft\PaymentBundle\Model\Payment;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
+
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -90,7 +91,7 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( PaymentMethod::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'interface' )->defaultValue( PaymentMethodInterface::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'controller' )->defaultValue( PaymentMethodController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( PaymentMethodConfigController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( PaymentMethodForm::class )->cannotBeEmpty()->end()
@@ -98,6 +99,11 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+                        
+                        
+                        /* This should to be resource, Because otherwise I can't take the class name in concrete project
+                         * ===============================================================================================
+                         */
                         ->arrayNode( 'payment' )
                             ->addDefaultsIfNotSet()
                             ->children()
@@ -113,6 +119,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+                        
                     ->end()
                 ->end()
             ->end()

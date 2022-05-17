@@ -1,7 +1,7 @@
 vs_payment:
     form:
         active: Активен
-        gateway: Гейтуей
+        gateway: Гейтуей Име
         factory: Фактори
         
         gateway_config:
@@ -26,4 +26,5 @@ vs_payment:
                 title: Гейтуей Конфигурация
                 options_title: Гейтуей Конфигурация Опции
                 sandbox_config: Сенд-бокс Конфигурация
+                sandbox_config_options_title: Сенд-бокс Конфигурация Опции
     

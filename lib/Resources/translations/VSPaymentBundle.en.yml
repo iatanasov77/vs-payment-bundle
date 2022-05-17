@@ -1,7 +1,7 @@
 vs_payment:
     form:
         active: Active
-        gateway: Gateway
+        gateway: Gateway Name
         factory: Factory
         
         gateway_config:
@@ -26,5 +26,6 @@ vs_payment:
                 title: Gateway Config
                 options_title: Gateway Config Options
                 sandbox_config: Sandbox Config
+                sandbox_config_options_title: Sandbox Config Options
                 
     

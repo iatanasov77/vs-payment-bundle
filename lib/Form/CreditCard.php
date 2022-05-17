@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Credit Card Form Type for PayPal Pro Direct Payments
+ * 
+ * THIS IS OLD BETTER TO USE NEW CreditCardForm 
  */
 class CreditCard extends AbstractType
 {

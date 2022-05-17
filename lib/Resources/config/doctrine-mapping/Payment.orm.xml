@@ -9,19 +9,9 @@
             <generator strategy="AUTO" />
         </id>
         
+        <many-to-one field="paidServicePeriod" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface" inversed-by="payments" />
         <many-to-one field="paymentMethod" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" inversed-by="payments" />
-        <!--
-        <many-to-one field="paymentDetails" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentDetailsInterface" inversed-by="payments" />
-        -->
-        <many-to-one field="paymentDetails" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PaymentDetailsInterface" inversed-by="payments" />
-        
-        <!-- Mapping Defined In: /vendor/payum/core/Payum/Core/Bridge/Doctrine/Resources/mapping/Payment.orm.xml
-        <field name="number" type="string" length="64" nullable="false" />
-        <field name="description" type="string" nullable="true" />
-        <field name="clientEmail" type="string" length="64" nullable="false" />
-        <field name="clientId" type="integer" nullable="true" default="null" />
-        <field name="totalAmount " type="float" nullable="false" />
-        <field name="currencyCode" type="string" length="6" nullable="false" />
-        -->
+        <many-to-one field="user" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface" inversed-by="payments" />
+
     </mapped-superclass>
 </doctrine-mapping>

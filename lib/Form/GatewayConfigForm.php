@@ -17,6 +17,18 @@ use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
  */
 class GatewayConfigForm extends AbstractForm
 {
+    /** @var array */
+    protected $factories;
+    
+    public function __construct(
+        string $dataClass,
+        array $factories
+    ) {
+        parent::__construct( $dataClass );
+     
+        $this->factories    = $factories;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {       
         parent::buildForm( $builder, $options );
@@ -25,12 +37,12 @@ class GatewayConfigForm extends AbstractForm
         
         $builder
             ->add( 'enabled', CheckboxType::class, [
-                'required'              =>false,
+                'required'              => false,
                 'label'                 => 'vs_payment.form.active',
                 'translation_domain'    => 'VSPaymentBundle',
             ] )
             ->add( 'useSandbox', CheckboxType::class, [
-                'required'              =>false,
+                'required'              => false,
                 'label'                 => 'vs_payment.form.gateway_config.use_sandbox',
                 'translation_domain'    => 'VSPaymentBundle',
                 
@@ -43,21 +55,15 @@ class GatewayConfigForm extends AbstractForm
                 'label'                 => 'vs_payment.form.factory',
                 'translation_domain'    => 'VSPaymentBundle',
                 'placeholder'           => '-- Select Factory --',
-                'choices'               => [
-                    'offline' => 'offline',
-                    'paypal_express_checkout' => 'paypal_express_checkout',
-                    'paypal_pro_checkout' => 'paypal_pro_checkout',
-                    'stripe_checkout' => 'stripe_checkout',
-                ],
+                'choices'               => \array_combine( $this->factories, $this->factories ),
             ] )
             
             ->add( 'config', GatewayConfigType::class, [
                 'data'  => $gatewayConfig->getConfig( false ),
-                
             ] )
+            
             ->add( 'sandboxConfig', GatewayConfigType::class, [
                 'data' => $gatewayConfig->getSandboxConfig()
-                
             ] )
         ;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vankosoft\PaymentBundle\Controller\PaymentMethod;
+namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 

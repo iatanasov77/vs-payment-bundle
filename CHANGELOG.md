@@ -1,3 +1,19 @@
+0.1.0	|	Release date: **17.05.2022**
+============================================
+* New Features and Improvements:
+  - Again Add PaymentDetails Model.
+  - Add a New CreditCardForm and Controller that Show It.
+  - Controllers Namespace Refactoring.
+  - CreditCard Form Template Add Variables for Form Action and Method.
+  - Improve Payment Model.
+  - Remove Model PaymentDetails.
+  - Create GatewayConfig Factories Configurable From Parameters.
+  - Improve GatewayConfigForm
+  - Translate GatewayConfigForm Fields Labels.
+  - Add Payment Methods routes
+  - Gateway Config Options Json Response.
+
+
 0.0.2	|	Release date: **12.05.2022**
 ============================================
 * Bug-Fixes, Refactoring and Improvements:

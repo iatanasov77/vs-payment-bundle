@@ -35,7 +35,7 @@
                                         value="{{ form.vars.value.enabled }}"
                                         {% if form.vars.value.enabled %}checked="checked"{% endif %}
                                     />
-                                    <span class="custom-control-label">{{ form.enabled.vars.label }}</span>
+                                    <span class="custom-control-label">{{ form.enabled.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
                                 </label>
                                 
                                 <label class="custom-control custom-checkbox">  
@@ -45,7 +45,7 @@
                                         value="{{ form.vars.value.useSandbox }}"
                                         {% if form.vars.value.useSandbox %}checked="checked"{% endif %}
                                     />
-                                    <span class="custom-control-label">{{ form.useSandbox.vars.label }}</span>
+                                    <span class="custom-control-label">{{ form.useSandbox.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
                                 </label>
     
 		                        <div class="form-group">
@@ -68,8 +68,12 @@
 		                        </div>
 
 		                        <div class="fieldsContainer" id="gatewayConfigOptions">
-                                    {% include '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig' with { 'options': gateway.getConfig( true ) } %}
+                                    {% include '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig' with { 'sandbox': false, 'options': gateway.getConfig( true, false ) } %}
 		                        </div>
+		                        
+		                        <div class="fieldsContainer" id="gatewaySandboxConfigOptions">
+                                    {% include '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig' with { 'sandbox': true, 'options': gateway.getConfig( true, true ) } %}
+                                </div>
 		                        
 		                        {{ vs_form.buttons( form ) }}
                             {{ form_end(form, {'render_rest': false}) }}
