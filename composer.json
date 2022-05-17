@@ -22,7 +22,8 @@
        	"nyholm/psr7": "^1.5",
        	"php-http/guzzle6-adapter": "^2.0",
        	
-       	"payum/payum-bundle": "^2.3",
+       	"payum/core": "^1.7",
+       	"payum/payum-bundle": "^2.4",
        	
         "payum/offline": "^1.5",
         "payum/paypal-express-checkout-nvp": "^1.3",
