@@ -12,6 +12,11 @@ use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
  * TEST ACCOUNTS
  * -----------------------------------------------
  * sb-wsp2g401218@personal.example.com / 8o?JWT#6
+ * 
+ * DEPRECATED
+ * ==========
+ * PayPal Express Checkout is deprecated. Please, use new PayPal Commerce Platform integration.
+ * PayPal Commerce Platform: https://github.com/Sylius/PayPalPlugin
  */
 class PaypalExpressCheckoutController extends AbstractCheckoutController
 {   
