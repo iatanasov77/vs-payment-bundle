@@ -9,25 +9,28 @@ trait PrependPayumTrait
         if ( ! $container->hasExtension( 'payum' ) ) {
             return;
         }
+        //$this->debug( $container );
         
+        $vsPaymentResources = \array_pop( $container->getExtensionConfig( 'vs_payment' ) )['resources'];
+        var_dump( $vsPaymentResources['payment']["classes"]["model"] ); die;
+        $payumConfig        = $container->getExtensionConfig( 'payum' );
+        $container->prependExtensionConfig( 'payum', [
+            'storages'  => \array_merge( \array_pop( $payumConfig )['storages'] ?? [], [
+                $vsPaymentResources['payment']["classes"]["model"] => $this->getMigrationsDirectory(),
+            ]),
+            'dynamic_gateways' => \array_merge( \array_pop( $payumConfig )['dynamic_gateways'] ?? [], [
+                $this->getMigrationsNamespace() => $this->getMigrationsDirectory(),
+            ]),
+        ]);
+    }
+    
+    private function debug( ContainerBuilder $container )
+    {
         echo '<pre>';
         //var_dump( $container->getParameter( 'vs_payment.model.gateway_config.class' ) );
         echo '<br><br><br><br>';
         var_dump( $container->getExtensionConfig( 'vs_payment' ) );
         echo '<br><br><br><br>';
         var_dump( $container->getExtensionConfig( 'payum' ) ); die;
-        
-        
-        if ( $container->hasParameter( 'vs_payment.model.gateway_config.class' ) ) {
-            
-        }
-                
-        $payumConfig = $container->getExtensionConfig( 'payum' );
-        
-        $container->prependExtensionConfig( 'payum', [
-            'migrations_paths' => \array_merge( \array_pop( $doctrineConfig )['migrations_paths'] ?? [], [
-                $this->getMigrationsNamespace() => $this->getMigrationsDirectory(),
-            ]),
-        ]);
     }
 }
