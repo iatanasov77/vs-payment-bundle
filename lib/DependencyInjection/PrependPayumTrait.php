@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\ApplicationBundle\DependencyInjection;
+<?php namespace Vankosoft\PaymentBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
