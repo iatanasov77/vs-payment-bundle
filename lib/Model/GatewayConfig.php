@@ -16,11 +16,16 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
     protected $paymentMethods;
     
     /**
+     * {@inheritDoc}
      * 
-     *  Configuration for Sandbox and Production is Set in One Record,
+     * Override BaseGatewayConfig::getConfig() To Can Get Factory Form From Parent 
+     * Or Get Stored Configuration From Database
+     * NOTE: Configuration for Sandbox and Production is Set in One Record
      * 
-     * @param type $builder
-     * @return type
+     * @param bool $fromParent
+     * @param bool $forSandbox          Maybe Not Needed
+     * 
+     * @return array
      */
     public function getConfig( $fromParent = false, $forSandbox = false ) 
     {

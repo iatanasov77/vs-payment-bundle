@@ -88,20 +88,15 @@ class GatewayConfigExtController extends PayumController
             'data'      => $gatewayConfig->getConfig( true ),
         ]);
         
-        /*
-        return $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
-            'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
-            'form'      => $form->createView(),
-            'sandbox'   => false,
-        ]);
-        */
         return new JsonResponse([
             'status'        => Status::STATUS_OK,
+            
             'gatewayConfig' => $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
                 'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
                 'form'      => $form->createView(),
                 'sandbox'   => false,
             ])->getContent(),
+            
             'sandboxConfig' => $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
                 'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
                 'form'      => $form->createView(),
