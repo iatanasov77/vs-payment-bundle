@@ -9,12 +9,15 @@ trait PrependPayumTrait
         if ( ! $container->hasExtension( 'payum' ) ) {
             return;
         }
-            
+        
+        echo '<pre>';
+        var_dump( $container->getParameter( 'vs_payment.model.gateway_config.class' ) );
+        echo '<br><br><br><br>';
+        var_dump( $container->getExtensionConfig( 'payum' ) ); die;
+        
+        
         if ( $container->hasParameter( 'vs_payment.model.gateway_config.class' ) ) {
-            echo '<pre>';
-            var_dump( $container->getParameter( 'vs_payment.model.gateway_config.class' ) );
-            echo '<br><br><br><br>';
-            var_dump( $container->getExtensionConfig( 'payum' ) ); die;
+            
         }
                 
         $payumConfig = $container->getExtensionConfig( 'payum' );
