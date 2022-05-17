@@ -35,7 +35,7 @@
                                         value="{{ form.vars.value.enabled }}"
                                         {% if form.vars.value.enabled %}checked="checked"{% endif %}
                                     />
-                                    <span class="custom-control-label">{{ form.enabled.vars.label }}</span>
+                                    <span class="custom-control-label">{{ form.enabled.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
                                 </label>
                                 
                                 <label class="custom-control custom-checkbox">  
@@ -45,7 +45,7 @@
                                         value="{{ form.vars.value.useSandbox }}"
                                         {% if form.vars.value.useSandbox %}checked="checked"{% endif %}
                                     />
-                                    <span class="custom-control-label">{{ form.useSandbox.vars.label }}</span>
+                                    <span class="custom-control-label">{{ form.useSandbox.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
                                 </label>
     
 		                        <div class="form-group">

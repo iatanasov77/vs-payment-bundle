@@ -37,12 +37,12 @@ class GatewayConfigForm extends AbstractForm
         
         $builder
             ->add( 'enabled', CheckboxType::class, [
-                'required'              =>false,
+                'required'              => false,
                 'label'                 => 'vs_payment.form.active',
                 'translation_domain'    => 'VSPaymentBundle',
             ] )
             ->add( 'useSandbox', CheckboxType::class, [
-                'required'              =>false,
+                'required'              => false,
                 'label'                 => 'vs_payment.form.gateway_config.use_sandbox',
                 'translation_domain'    => 'VSPaymentBundle',
                 
@@ -60,11 +60,10 @@ class GatewayConfigForm extends AbstractForm
             
             ->add( 'config', GatewayConfigType::class, [
                 'data'  => $gatewayConfig->getConfig( false ),
-                
             ] )
+            
             ->add( 'sandboxConfig', GatewayConfigType::class, [
                 'data' => $gatewayConfig->getSandboxConfig()
-                
             ] )
         ;
     }
