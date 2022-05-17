@@ -19,6 +19,7 @@ vs_payment:
     
     template:
         gateway: Гейтуей
+        payment_method: Метод на Плащане
         action: Действие
         
         gateway_config_ext:

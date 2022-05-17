@@ -62,7 +62,8 @@ class PaymentMethodConfigExtController extends PayumController
         }
         
         return $this->render( '@VSPayment/Pages/PaymentMethodConfigExt/config.html.twig', [
-            'form'      => $form->createView()
+            'form'      => $form->createView(),
+            'item'      => $paymentMethod,
         ]);
     }
 }

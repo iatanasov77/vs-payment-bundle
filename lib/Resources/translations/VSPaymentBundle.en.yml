@@ -19,6 +19,7 @@ vs_payment:
 
     template:
         gateway: Gateway
+        payment_method: Payment Method
         action: Action
         
         gateway_config_ext:
@@ -27,6 +28,18 @@ vs_payment:
                 payment_gateway: Payment Gateway
                 gateway_factory: Gateway Factory
                 create_new_gateway: Create New Gateway
+            config:
+                title: Gateway Config
+                options_title: Gateway Config Options
+                sandbox_config: Sandbox Config
+                sandbox_config_options_title: Sandbox Config Options
+                
+        payment_method_config_ext:
+            index:
+                title: Payment Methods
+                payment_gateway: Payment Gateway
+                gateway_factory: Gateway Factory
+                create_new_payment_method: Create New Payment Method
             config:
                 title: Gateway Config
                 options_title: Gateway Config Options

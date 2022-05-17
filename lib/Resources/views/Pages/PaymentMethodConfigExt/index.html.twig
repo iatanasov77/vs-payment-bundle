@@ -30,7 +30,9 @@
                             <td>{{ item.active }}</td>
                             <td>
                                 <div class="btn-group">
-                                    
+                                    <a class="btn btn-primary" href="{{ path('vs_payment_methods_config', {'id': item.id}) }}">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

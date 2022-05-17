@@ -36,11 +36,9 @@
                             <td>{{ item.factoryName }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <div class="btn-group">
-                                        <a class="btn btn-primary" href="{{ path('vs_payment_gateways_config', {'gatewayName': item.gatewayName}) }}">
-                                            <i class="glyphicon glyphicon-pencil"></i>
-                                        </a>
-                                    </div>
+                                    <a class="btn btn-primary" href="{{ path('vs_payment_gateways_config', {'gatewayName': item.gatewayName}) }}">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
