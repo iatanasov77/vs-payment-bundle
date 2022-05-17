@@ -9,12 +9,11 @@ trait PrependPayumTrait
         if ( ! $container->hasExtension( 'payum' ) ) {
             return;
         }
-        //$this->debug( $container );
+        $this->debug( $container );
         
         $vsPaymentConfig    = $container->getExtensionConfig( 'vs_payment' );
         $vsPaymentResources = \array_pop( $vsPaymentConfig )['resources'];
         
-        var_dump( $vsPaymentResources['payment']["classes"]["model"] ); die;
         $payumConfig        = $container->getExtensionConfig( 'payum' );
         $container->prependExtensionConfig( 'payum', [
             'storages'  => \array_merge( \array_pop( $payumConfig )['storages'] ?? [], [
