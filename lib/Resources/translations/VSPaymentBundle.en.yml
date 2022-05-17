@@ -11,6 +11,11 @@ vs_payment:
             acct: 'Card Number'
             exp_date: 'Expiration Date'
             cvv2: 'CVV2'
+            
+        payment_method:
+            gateway: Gateway
+            gateway_placeholder: '-- Select Gateway --'
+            name: Payment Method Name
 
     template:
         gateway: Gateway

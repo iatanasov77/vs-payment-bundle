@@ -12,6 +12,11 @@ vs_payment:
             exp_date: 'Expiration Date'
             cvv2: 'CVV2'
     
+        payment_method:
+            gateway: Гейтуей
+            gateway_placeholder: '-- Избери Гейтуей --'
+            name: Име на Метод на Плащане
+    
     template:
         gateway: Гейтуей
         action: Действие
