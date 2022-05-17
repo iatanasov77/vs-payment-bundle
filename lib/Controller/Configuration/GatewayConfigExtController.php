@@ -2,6 +2,8 @@
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Resource\Factory\Factory;
@@ -10,6 +12,8 @@ use Vankosoft\PaymentBundle\Form\GatewayConfigForm;
 use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
 
 use Payum\Core\Bridge\Doctrine\Storage\DoctrineStorage;
+
+use Vankosoft\ApplicationBundle\Component\Status;
 
 class GatewayConfigExtController extends PayumController
 {
@@ -32,14 +36,14 @@ class GatewayConfigExtController extends PayumController
         $this->gatewayConfigFactory     = $gatewayConfigFactory;
     }
     
-    public function indexAction( Request $request )
+    public function indexAction( Request $request ): Response
     {
         return $this->render( '@VSPayment/Pages/GatewayConfigExt/index.html.twig', [
             'items' => $this->gatewayConfigRepository->findAll()
         ]);
     }
     
-    public function configAction( $gatewayName, Request $request )
+    public function configAction( $gatewayName, Request $request ): Response
     {
         $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), $this->gatewayConfigClass );
         $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
@@ -75,7 +79,7 @@ class GatewayConfigExtController extends PayumController
         ]);
     }
     
-    public function gatewayConfigAction( Request $request )
+    public function gatewayConfigAction( Request $request ): JsonResponse
     {
         $gatewayConfigStorage   = new DoctrineStorage( $this->getDoctrine()->getManager(), $this->gatewayConfigClass );
         $gatewayConfig          = $gatewayConfigStorage->create();
@@ -83,10 +87,25 @@ class GatewayConfigExtController extends PayumController
         $form = $this->createForm( GatewayConfigType::class, [
             'data'      => $gatewayConfig->getConfig( true ),
         ]);
+        
         return $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
             'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
             'form'      => $form->createView(),
             'sandbox'   => false,
+        ]);
+        
+        return new JsonResponse([
+            'status'        => Status::STATUS_OK,
+            'gatewayConfig' => $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
+                'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
+                'form'      => $form->createView(),
+                'sandbox'   => false,
+            ]),
+            'sandboxConfig' => $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
+                'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
+                'form'      => $form->createView(),
+                'sandbox'   => true,
+            ]),
         ]);
     }
     
