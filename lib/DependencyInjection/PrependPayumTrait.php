@@ -10,7 +10,10 @@ trait PrependPayumTrait
             return;
         }
             
-        if ( $container->hasParameter( 'vankosoft_application.prepend_doctrine_migrations' ) ) {
+        if ( $container->hasParameter( 'vs_payment.model.gateway_config.class' ) ) {
+            echo '<pre>';
+            var_dump( $container->getParameter( 'vs_payment.model.gateway_config.class' ) );
+            echo '<br><br><br><br>';
             var_dump( $container->getExtensionConfig( 'payum' ) ); die;
         }
                 
