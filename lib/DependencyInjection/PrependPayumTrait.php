@@ -9,7 +9,6 @@ trait PrependPayumTrait
         if ( ! $container->hasExtension( 'payum' ) ) {
             return;
         }
-        //$this->debug( $container );
         
         $vsPaymentConfig    = $container->getExtensionConfig( 'vs_payment' );
         $vsPaymentResources = \array_pop( $vsPaymentConfig )['resources'];
@@ -26,8 +25,8 @@ trait PrependPayumTrait
                 ],
             ]),
         ]);
-        
-        $this->debug( $container );
+
+        //$this->debug( $container );
     }
     
     private function debug( ContainerBuilder $container )
