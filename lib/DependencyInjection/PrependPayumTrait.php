@@ -9,7 +9,7 @@ trait PrependPayumTrait
         if ( ! $container->hasExtension( 'payum' ) ) {
             return;
         }
-        $this->debug( $container );
+        //$this->debug( $container );
         
         $vsPaymentConfig    = $container->getExtensionConfig( 'vs_payment' );
         $vsPaymentResources = \array_pop( $vsPaymentConfig )['resources'];
@@ -17,12 +17,17 @@ trait PrependPayumTrait
         $payumConfig        = $container->getExtensionConfig( 'payum' );
         $container->prependExtensionConfig( 'payum', [
             'storages'  => \array_merge( \array_pop( $payumConfig )['storages'] ?? [], [
-                $vsPaymentResources['payment']["classes"]["model"] => $this->getMigrationsDirectory(),
+                $vsPaymentResources['payment']["classes"]["model"] => ['doctrine' => 'orm'],
             ]),
             'dynamic_gateways' => \array_merge( \array_pop( $payumConfig )['dynamic_gateways'] ?? [], [
-                $this->getMigrationsNamespace() => $this->getMigrationsDirectory(),
+                'sonata_admin'      => false,
+                'config_storage'    => [
+                    $vsPaymentResources['gateway_config']["classes"]["model"]   => ['doctrine' => 'orm'],
+                ],
             ]),
         ]);
+        
+        $this->debug( $container );
     }
     
     private function debug( ContainerBuilder $container )
