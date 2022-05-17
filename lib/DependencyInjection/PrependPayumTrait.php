@@ -11,7 +11,7 @@ trait PrependPayumTrait
         }
         
         echo '<pre>';
-        var_dump( $container->getParameter( 'vs_payment.model.gateway_config.class' ) );
+        //var_dump( $container->getParameter( 'vs_payment.model.gateway_config.class' ) );
         echo '<br><br><br><br>';
         var_dump( $container->getExtensionConfig( 'payum' ) ); die;
         
