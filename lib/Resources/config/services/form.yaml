@@ -1,5 +1,5 @@
 parameters:
-    #vs_payment.gateway_factories: ['offline', 'paypal_express_checkout', 'paypal_pro_checkout', 'stripe_checkout', 'stripe_js']
+    #vs_payment.gateway_factories: ['offline', 'paypal_rest', 'paypal_express_checkout', 'paypal_pro_checkout', 'stripe_checkout', 'stripe_js']
     vs_payment.gateway_factories: ['offline']
 
 services:
