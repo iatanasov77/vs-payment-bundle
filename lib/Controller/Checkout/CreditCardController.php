@@ -8,19 +8,19 @@ use Vankosoft\PaymentBundle\Form\CreditCardForm;
 
 class CreditCardController extends AbstractController
 {
-    public function showCreditCardFormAction( $paidServiceId, Request $request ): Response
+    public function showCreditCardFormAction( $formAction, Request $request ): Response
     {
-        $form   = $this->getCreditCardForm( $paidServiceId );
+        $form   = $this->getCreditCardForm( urldecode( $formAction ) );
         
         return $this->render( '@VSPayment/Pages/CreditCard/credit_card.html.twig', [
             'form' => $form->createView(),
         ]);
     }
     
-    protected function getCreditCardForm( $paidServiceId )
+    protected function getCreditCardForm( $captureUrl )
     {
         return $this->createForm( CreditCardForm::class, [
-            'paidService' => $paidServiceId,
+            'captureUrl' => $captureUrl,
         ]);
     }
 }

@@ -16,7 +16,7 @@ class CreditCardForm extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
-            ->add( 'paidService', HiddenType::class, ['empty_data' => $options['paidService']] )
+            ->add( 'captureUrl', HiddenType::class, ['empty_data' => $options['captureUrl']] )
             
             ->add( 'name', TextType::class, [
                 'label' => 'Name',
@@ -74,8 +74,8 @@ class CreditCardForm extends AbstractType
         
         $resolver
             ->setDefaults([
-                'csrf_protection' => false,
-                'paidService' => null,
+                'csrf_protection'   => false,
+                'captureUrl'        => null,
             ])
         ;
     }
