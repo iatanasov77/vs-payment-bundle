@@ -52,11 +52,17 @@ abstract class AbstractCheckoutController extends AbstractController
         // using shortcut
         if ( $status->isCaptured() || $status->isAuthorized() ) {
             // success
+            return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
+                'paymentStatus' => $status,
+            ]);
         }
         
         // using shortcut
         if ( $status->isPending() ) {
             // most likely success, but you have to wait for a push notification.
+            return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
+                'paymentStatus' => $status,
+            ]);
         }
         
         // using shortcut
