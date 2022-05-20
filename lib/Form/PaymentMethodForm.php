@@ -34,7 +34,7 @@ class PaymentMethodForm extends AbstractForm
                 'label'                 => 'vs_payment.form.active',
                 'translation_domain'    => 'VSPaymentBundle',
             ] )
-        
+            
             ->add( 'gateway', EntityType::class, [
                 'class'                 => $this->gatewayClass,
                 'choice_label'          => 'gatewayName',
