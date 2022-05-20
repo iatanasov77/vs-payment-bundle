@@ -27,7 +27,13 @@
                                 </a>
                             </td>
                             <td>{{ item.gateway.gatewayName }}</td>
-                            <td>{{ item.active }}</td>
+                            <td style="text-align: center;">
+                                {% if item.active %}
+                                    <i class="fas fa-check" style="color: #82c91e;">
+                                {% else %}
+                                    <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                                {% endif %}
+                            </td>
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-primary" href="{{ path('vs_payment_methods_config', {'id': item.id}) }}">
