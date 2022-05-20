@@ -4,7 +4,7 @@ use Payum\Core\Model\GatewayConfig as BaseGatewayConfig;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-use Interfaces\PaymentMethodInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
 
 class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfigInterface
 {
