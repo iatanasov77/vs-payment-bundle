@@ -27,6 +27,7 @@ vs_payment:
                 title: Payment Gateways
                 payment_gateway: Payment Gateway
                 gateway_factory: Gateway Factory
+                use_sandbox: Use Sandbox
                 create_new_gateway: Create New Gateway
             config:
                 title: Gateway Config

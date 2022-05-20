@@ -27,6 +27,7 @@ vs_payment:
                 title: Payment Gateways
                 payment_gateway: Payment Gateway
                 gateway_factory: Gateway Factory
+                use_sandbox: Използвай Сенд-бокс
                 create_new_gateway: Създай Нов Гейтуей
             config:
                 title: Гейтуей Конфигурация
