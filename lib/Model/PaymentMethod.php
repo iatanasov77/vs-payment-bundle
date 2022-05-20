@@ -1,7 +1,11 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
+
+use Interfaces\OrderInterface;
 
 class PaymentMethod implements Interfaces\PaymentMethodInterface
 {
@@ -22,6 +26,16 @@ class PaymentMethod implements Interfaces\PaymentMethodInterface
     
     /** @var string */
     protected $name;
+    
+    /**
+     * @var Collection|OrderInterface[]
+     */
+    protected $orders;
+    
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
     
     public function getId()
     {
@@ -87,6 +101,31 @@ class PaymentMethod implements Interfaces\PaymentMethodInterface
     {
         $this->locale = $locale;
         return $this;
+    }
+    
+    /**
+     * @return Collection|OrderInterface[]
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+    
+    public function addOrder( OrderInterface $order )
+    {
+        if( ! $this->orders->contains( $order ) ) {
+            $this->orders->add( $order );
+            $order->setPaymentMethod( $this );
+            
+        }
+    }
+    
+    public function removeOrder( OrderInterface $order )
+    {
+        if( $this->orders->contains( $order ) ) {
+            $this->orders->removeElement( $order );
+            $order->setPaymentMethod( null );
+        }
     }
     
     /*

@@ -4,16 +4,16 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
 >
-    <mapped-superclass name="Vankosoft\PaymentBundle\Model\GatewayConfig">
+    <mapped-superclass name="Vankosoft\PaymentBundle\Model\OrderItem">
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
         
-        <field name="enabled" column="active" type="boolean" />
-        <field name="useSandbox" type="boolean" nullable="false" default="0" />
+        <many-to-one field="order" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" inversed-by="items" />
+        <many-to-one field="object" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface" inversed-by="orderItems" />
         
-        <field name="sandboxConfig" type="json" nullable="true" />
+        <field name="price" type="float" nullable="false" />
+        <field name="currencyCode" column="currency_code" type="string" length="8" nullable="false" />
         
-        <one-to-many field="paymentMethods" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" mapped-by="gateway" />
     </mapped-superclass>
 </doctrine-mapping>

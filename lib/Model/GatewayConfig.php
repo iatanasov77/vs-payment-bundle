@@ -1,18 +1,31 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
 use Payum\Core\Model\GatewayConfig as BaseGatewayConfig;
-use Sylius\Component\Resource\Model\ToggleableTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
+use Interfaces\PaymentMethodInterface;
 
 class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfigInterface
 {
-    use ToggleableTrait;
-    
+    /**
+     * @var int
+     */
     protected $id;
     
+    /**
+     * @var bool
+     */
     protected $useSandbox;
     
+    /**
+     * @var array
+     */
     protected $sandboxConfig;
     
+    /**
+     * @var Collection|PaymentMethodInterface[]
+     */
     protected $paymentMethods;
     
     /**
@@ -41,6 +54,8 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
         
         $this->useSandbox       = false;
         $this->sandboxConfig    = [];
+        
+        $this->paymentMethods   = new ArrayCollection();
     }
     
     public function getId()
@@ -70,5 +85,30 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
         $this->useSandbox = $useSandbox;
         
         return $this;
+    }
+    
+    /**
+     * @return Collection|PaymentMethodInterface[]
+     */
+    public function getPaymentMethods()
+    {
+        return $this->paymentMethods;
+    }
+    
+    public function addPaymentMethod( PaymentMethodInterface $paymentMethod )
+    {
+        if( ! $this->paymentMethods->contains( $paymentMethod ) ) {
+            $this->paymentMethods->add( $paymentMethod );
+            $paymentMethod->setGateway( $this );
+            
+        }
+    }
+    
+    public function removePaymentMethod( PaymentMethodInterface $paymentMethod )
+    {
+        if( $this->paymentMethods->contains( $paymentMethod ) ) {
+            $this->paymentMethods->removeElement( $paymentMethod );
+            $paymentMethod->setGateway( null );
+        }
     }
 }
