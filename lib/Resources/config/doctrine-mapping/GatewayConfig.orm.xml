@@ -9,9 +9,7 @@
             <generator strategy="AUTO" />
         </id>
         
-        <field name="enabled" column="active" type="boolean" />
         <field name="useSandbox" type="boolean" nullable="false" default="0" />
-        
         <field name="sandboxConfig" type="json" nullable="true" />
         
         <one-to-many field="paymentMethods" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" mapped-by="gateway" />
