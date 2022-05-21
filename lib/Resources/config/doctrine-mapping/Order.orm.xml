@@ -16,7 +16,7 @@
         </many-to-one>
         <many-to-one field="paymentMethod" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" inversed-by="orders" >
             <cascade>
-                <cascade-persist />
+                <cascade-all />
             </cascade>
         </many-to-one>
         
