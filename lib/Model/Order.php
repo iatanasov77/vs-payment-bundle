@@ -3,7 +3,7 @@
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-use Interfaces\OrderItemInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
 class Order implements Interfaces\OrderInterface
 {
