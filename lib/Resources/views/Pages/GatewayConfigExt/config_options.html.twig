@@ -7,7 +7,7 @@
         {% endif %}
         
         {% if sandbox %}
-            <input type="hidden" name="gateway_config[sandboxConfig][sandbox]" value="true" />
+            <input type="hidden" name="gateway_config_form[sandboxConfig][sandbox]" value="true" />
         {% endif %}
         
         {% for key, value in options %}
@@ -17,8 +17,8 @@
     	    	
     	        <div class="col-lg-10">
     	        	<input type="text"
-                        id="gateway_config{% if sandbox %}_sandbox{% else %}_config{% endif %}_{{ key }}"
-                        name="gateway_config[{% if sandbox %}sandboxConfig{% else %}config{% endif %}][{{ key }}]"
+                        id="gateway_config_form{% if sandbox %}_sandbox{% else %}_config{% endif %}_{{ key }}"
+                        name="gateway_config_form[{% if sandbox %}sandboxConfig{% else %}config{% endif %}][{{ key }}]"
                         value="{{ value }}"
                         required="required"
                         size="100"
