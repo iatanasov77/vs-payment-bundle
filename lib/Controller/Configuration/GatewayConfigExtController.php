@@ -53,36 +53,20 @@ class GatewayConfigExtController extends PayumController
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             $em                                     = $this->getDoctrine()->getManager();
-            $formData                               = $form->getData();
-            $formData['config']['sandbox']          = false;
-            $formData['sandboxConfig']['sandbox']   = true;
-            unset( $formData['config']['factory'] );
-            unset( $formData['sandboxConfig']['factory'] );
+            $submitedGatewayConfig                  = $form->getData();
             
-            $em->persist( $formData );
+            $config = $submitedGatewayConfig->getConfig();
+            $config['sandbox']   = false;
+            unset( $config['factory'] );
+            $submitedGatewayConfig->setConfig( $config ) ;
+            
+            $config = $submitedGatewayConfig->getSandboxConfig();
+            $config['sandbox']   = true;
+            unset( $config['factory'] );
+            $submitedGatewayConfig->setSandboxConfig( $config ) ;
+            
+            $em->persist( $submitedGatewayConfig );
             $em->flush();
-            
-            
-            
-            /*
-            $postData                               = $request->request->get( 'gateway_config_form' );
-            $submitedConfig                         = $request->request->get( 'gateway_config' );
-            $submitedConfig['config']['sandbox']    = false;
-            
-            // Set Default Config Options From Factory
-            $factory = $this->get( 'payum' )->getGatewayFactory( $postData['factoryName'] );
-            $config = $factory->createConfig();
-            $defaultOptions = $config['payum.default_options'];
-            
-            if( isset( $defaultOptions['sandbox'] ) ) {
-                $submitedConfig['sandboxConfig']['sandbox']   = true;
-                $gatewayConfig->setSandboxConfig( $submitedConfig['sandboxConfig'] );
-            }
-            $gatewayConfig->setConfig( $submitedConfig['config'] );
-            
-            $gatewayConfigStorage->update( $gatewayConfig );
-            */
-            
             
             return $this->redirect( $this->generateUrl( 'vs_payment_gateways_index' ) );
         }
