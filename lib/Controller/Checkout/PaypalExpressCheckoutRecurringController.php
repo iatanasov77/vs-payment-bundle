@@ -8,6 +8,7 @@ use Payum\Paypal\ExpressCheckout\Nvp\Api;
 use Payum\Core\Request\Sync;
 use Payum\Core\Request\GetHumanStatus;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
@@ -23,7 +24,7 @@ use IA\UsersBundle\Entity\UserActivity;
 class PaypalExpressCheckoutRecurringController extends AbstractCheckoutController
 {
 
-    public function prepareAction( Request $request )
+    public function prepareAction( Request $request ): Response
     {
         $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
         

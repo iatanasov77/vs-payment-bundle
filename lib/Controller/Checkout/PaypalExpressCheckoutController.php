@@ -1,6 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
@@ -20,7 +21,7 @@ use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
  */
 class PaypalExpressCheckoutController extends AbstractCheckoutController
 {   
-    public function prepareAction( Request $request )
+    public function prepareAction( Request $request ): Response
     {
         $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
         
