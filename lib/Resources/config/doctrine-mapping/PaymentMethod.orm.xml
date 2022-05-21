@@ -20,6 +20,7 @@
             <gedmo:translatable />
         </field>
         
+        <field name="paymentRoute" type="string" length="255" nullable="false" />
         <field name="enabled" column="active" type="boolean" />
         
         <!--

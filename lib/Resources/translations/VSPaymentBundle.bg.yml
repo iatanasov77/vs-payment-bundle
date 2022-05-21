@@ -16,6 +16,7 @@ vs_payment:
             gateway: Гейтуей
             gateway_placeholder: '-- Избери Гейтуей --'
             name: Име на Метод на Плащане
+            payment_route: Плащане Руут
     
     template:
         gateway: Гейтуей

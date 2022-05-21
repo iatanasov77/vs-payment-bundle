@@ -27,6 +27,9 @@ class PaymentMethod implements Interfaces\PaymentMethodInterface
     /** @var string */
     protected $name;
     
+    /** @var string */
+    protected $paymentRoute;
+    
     /**
      * @var Collection|OrderInterface[]
      */
@@ -73,6 +76,17 @@ class PaymentMethod implements Interfaces\PaymentMethodInterface
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+    
+    public function getPaymentRoute()
+    {
+        return $this->paymentRoute;
+    }
+    
+    public function setPaymentRoute($paymentRoute)
+    {
+        $this->paymentRoute = $paymentRoute;
         return $this;
     }
     

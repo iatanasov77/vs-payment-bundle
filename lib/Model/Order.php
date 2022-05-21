@@ -44,7 +44,9 @@ class Order implements Interfaces\OrderInterface
     
     public function __construct()
     {
-        $this->items    = new ArrayCollection();
+        $this->totalAmount  = 0;
+        $this->currencyCode = 'EUR';
+        $this->items        = new ArrayCollection();
     }
     
     public function getId()
@@ -129,6 +131,8 @@ class Order implements Interfaces\OrderInterface
         if( ! $this->items->contains( $item ) ) {
             $this->items->add( $item );
             $item->setOrder( $this );
+            
+            $this->totalAmount += $item->getPrice();
         }
     }
     
@@ -137,6 +141,8 @@ class Order implements Interfaces\OrderInterface
         if( $this->items->contains( $item ) ) {
             $this->items->removeElement( $item );
             $item->setOrder( null );
+            
+            $this->totalAmount -= $item->getPrice();
         }
     }
 }

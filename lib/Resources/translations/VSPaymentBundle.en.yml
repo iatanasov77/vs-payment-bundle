@@ -16,6 +16,7 @@ vs_payment:
             gateway: Gateway
             gateway_placeholder: '-- Select Gateway --'
             name: Payment Method Name
+            payment_route: Payment Route
 
     template:
         gateway: Gateway

@@ -48,6 +48,12 @@ class PaymentMethodForm extends AbstractForm
                 'attr'                  => ['placeholder' => 'vs_payment.form.payment_method.name'],
                 'translation_domain'    => 'VSPaymentBundle',
             ] )
+            
+            ->add( 'paymentRoute', TextType::class, [
+                'label'                 => 'vs_payment.form.payment_method.payment_route',
+                'attr'                  => ['placeholder' => 'vs_payment.form.payment_method.payment_route'],
+                'translation_domain'    => 'VSPaymentBundle',
+            ] )
         ;
     }
 

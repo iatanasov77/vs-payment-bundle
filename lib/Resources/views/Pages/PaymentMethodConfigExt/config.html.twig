@@ -48,6 +48,14 @@
 		                        </div>
 		                        
 		                        <div class="form-group">
+                                    {{ form_label(form.paymentRoute, null, {
+                                        'label_attr': {'class': 'col-form-label'}
+                                        }) 
+                                    }}
+                                    {{ form_widget(form.paymentRoute, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+		                        
+		                        <div class="form-group">
 		                            {{ form_label(form.gateway, null, {
 		                                'label_attr': {'class': 'col-form-label'}
 		                                }) 
