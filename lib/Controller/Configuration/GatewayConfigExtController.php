@@ -53,6 +53,13 @@ class GatewayConfigExtController extends PayumController
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             
+            $em = $this->getDoctrine()->getManager();
+            $em->persist( $form->getData() );
+            $em->flush();
+            
+            
+            
+            /*
             $postData                               = $request->request->get( 'gateway_config_form' );
             $submitedConfig                         = $request->request->get( 'gateway_config' );
             $submitedConfig['config']['sandbox']    = false;
@@ -69,6 +76,8 @@ class GatewayConfigExtController extends PayumController
             $gatewayConfig->setConfig( $submitedConfig['config'] );
             
             $gatewayConfigStorage->update( $gatewayConfig );
+            */
+            
             
             return $this->redirect( $this->generateUrl( 'vs_payment_gateways_index' ) );
         }
