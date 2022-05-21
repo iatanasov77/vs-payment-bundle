@@ -39,7 +39,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->gateway                  = $this->payum->getGateway( $this->gatewayName );
     }
     
-    abstract public function prepareAction( int $subscriptionPeriod, Request $request ): Response;
+    abstract public function prepareAction( Request $request ): Response;
     
     public function doneAction( Request $request ): Response
     {
