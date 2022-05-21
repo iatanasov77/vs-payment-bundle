@@ -18,6 +18,11 @@ trait PrependPayumTrait
             'storages'  => \array_merge( \array_pop( $payumConfig )['storages'] ?? [], [
                 $vsPaymentResources['payment']["classes"]["model"] => ['doctrine' => 'orm'],
             ]),
+            'security'  =>  [
+                'token_storage' => [
+                    $vsPaymentResources['token']["classes"]["model"] => ['doctrine' => 'orm'],
+                ]
+            ],
             'dynamic_gateways' => \array_merge( \array_pop( $payumConfig )['dynamic_gateways'] ?? [], [
                 'sonata_admin'      => false,
                 'config_storage'    => [
