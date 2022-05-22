@@ -18,11 +18,8 @@ trait PrependPayumTrait
             'storages'  => \array_merge( \array_pop( $payumConfig )['storages'] ?? [], [
                 $vsPaymentResources['payment']["classes"]["model"] => ['doctrine' => 'orm'],
             ]),
-            'security'  =>  [
-                'token_storage' => [
-                    $vsPaymentResources['token']["classes"]["model"] => ['doctrine' => 'orm'],
-                ]
-            ],
+            'security'  =>  $this->originalPayumSecurity(),
+            //'security'  =>  $this->vankosoftPayumSecurity( $vsPaymentResources ),
             'dynamic_gateways' => \array_merge( \array_pop( $payumConfig )['dynamic_gateways'] ?? [], [
                 'sonata_admin'      => false,
                 'config_storage'    => [
@@ -42,5 +39,28 @@ trait PrependPayumTrait
         var_dump( $container->getExtensionConfig( 'vs_payment' ) );
         echo '<br><br><br><br>';
         var_dump( $container->getExtensionConfig( 'payum' ) ); die;
+    }
+    
+    private function originalPayumSecurity()
+    {
+        return [
+            'token_storage' => [
+                ['Payum\Core\Model\Token'] => [
+                    'filesystem' => [
+                        'storage_dir'  => '%kernel.project_dir%/var/payum/gateways',
+                        'id_property'  => 'hash',
+                    ]
+                ],
+            ]
+        ];
+    }
+    
+    private function vankosoftPayumSecurity( $vsPaymentResources )
+    {
+        return [
+            'token_storage' => [
+                $vsPaymentResources['token']["classes"]["model"] => ['doctrine' => 'orm'],
+            ]
+        ];
     }
 }
