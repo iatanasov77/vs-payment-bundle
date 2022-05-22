@@ -11,6 +11,7 @@
         </id>
         
         <many-to-one field="gateway" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface" inversed-by="paymentMethods" />
+        <one-to-many field="orders" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" mapped-by="paymentMethod" />
         
         <field name="slug" column="slug" type="string" length="255" nullable="false" unique="true">
             <gedmo:slug unique="true" style="lower" updatable="true" separator="-" fields="name" />
