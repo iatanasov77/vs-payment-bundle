@@ -45,7 +45,7 @@ trait PrependPayumTrait
     {
         return [
             'token_storage' => [
-                ['Payum\Core\Model\Token'] => [
+                'Payum\Core\Model\Token' => [
                     'filesystem' => [
                         'storage_dir'  => '%kernel.project_dir%/var/payum/gateways',
                         'id_property'  => 'hash',
