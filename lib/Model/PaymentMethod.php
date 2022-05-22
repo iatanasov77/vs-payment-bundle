@@ -125,7 +125,7 @@ class PaymentMethod implements Interfaces\PaymentMethodInterface
         return $this->orders;
     }
     
-    public function addOrder( ?OrderInterface $order )
+    public function addOrder( $order )
     {
         if( ! $this->orders->contains( $order ) ) {
             $this->orders->add( $order );
@@ -134,7 +134,7 @@ class PaymentMethod implements Interfaces\PaymentMethodInterface
         }
     }
     
-    public function removeOrder( ?OrderInterface $order )
+    public function removeOrder( $order )
     {
         if( $this->orders->contains( $order ) ) {
             $this->orders->removeElement( $order );
