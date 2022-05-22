@@ -18,6 +18,13 @@ class OrderItem implements Interfaces\OrderItemInterface
     protected $object;
     
     /**
+     * The Class of the object
+     * 
+     * @var string
+     */
+    protected $objectType;
+    
+    /**
      * @var float
      */
     protected $price;
@@ -52,6 +59,19 @@ class OrderItem implements Interfaces\OrderItemInterface
     public function setObject($object)
     {
         $this->object = $object;
+        $this->objectType   = get_class( $object );
+        
+        return $this;
+    }
+    
+    public function getObjectType()
+    {
+        return $this->objectType;
+    }
+    
+    public function setObjectType($objectType)
+    {
+        $this->objectType = $objectType;
         
         return $this;
     }

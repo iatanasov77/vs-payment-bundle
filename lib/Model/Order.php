@@ -2,11 +2,17 @@
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Resource\Model\TimestampableTrait;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
 class Order implements Interfaces\OrderInterface
 {
+    use TimestampableTrait;
+    
+    const STATUS_SHOPPING_CART = 'shopping_cart';
+    const STATUS_ORDER = 'order';
+    
     /**
      * @var int
      */
@@ -41,6 +47,14 @@ class Order implements Interfaces\OrderInterface
      * @var Collection|OrderItemInterface[]
      */
     protected $items;
+    
+    /**
+     * NEED THIS BECAUSE ORDER SHOULD BE CREATED BEFORE THE PAYMENT IS PRAPARED AND DONE
+     * https://dev.to/qferrer/purging-expired-carts-building-a-shopping-cart-with-symfony-3eff
+     * 
+     * @var enum
+     */
+    protected $status;
     
     public function __construct()
     {
@@ -144,5 +158,17 @@ class Order implements Interfaces\OrderInterface
             
             $this->totalAmount -= $item->getPrice();
         }
+    }
+    
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
+    public function setStatus($status)
+    {
+        $this->status    = $status;
+        
+        return $this;
     }
 }

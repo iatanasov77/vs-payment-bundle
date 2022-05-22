@@ -1,9 +1,12 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
 use Payum\Core\Model\Payment as BasePayment;
+use Sylius\Component\Resource\Model\TimestampableTrait;
 
 class Payment extends BasePayment implements Interfaces\PaymentInterface
 {
+    use TimestampableTrait;
+    
     /**
      * @var int
      */
