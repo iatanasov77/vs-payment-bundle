@@ -25,7 +25,7 @@
         </many-to-one>
         
         <one-to-one field="payment" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface" inversed-by="order" >
-            <join-column name="payment_id" referencedColumnName="id" nullable="false" />
+            <join-column name="payment_id" referencedColumnName="id" nullable="true" />
             <cascade>
                 <cascade-all/>
             </cascade>
