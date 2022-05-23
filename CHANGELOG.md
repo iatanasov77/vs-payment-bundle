@@ -1,3 +1,40 @@
+0.2.0	|	Release date: **23.05.2022**
+============================================
+* Bug-Fixes , Improvements, Refactoring:
+  - Update composer.json
+  - Update VisualParadigm Diagrams.
+  - Improve PaymentMethod Model.
+  - Prepair PaymentMethod Resource.
+  - Fix Route in Template.
+  - Improve Payment Method Config Template.
+  - Payum Prepend Extension is DONE!
+  - Add README file.
+  - Add Checkout Test Controllers.
+  - Update CreditCardForm.
+  - Improve AbstractCheckoutController and CreditCardForm Template.
+  - Checkout Done Template.
+  - Checkout Done Template.
+  - Detach this bundle from UsersSubscriptionsBundle and Full Refactoring and Add Orders Model.
+  - Fix GatewayConfig Doctrine Mapping.
+  - Fix Model Method.
+  - Fix GatewayConfigForm and PaymentMethodForm.
+  - Improve PaymentMethodConfig Index Template.
+  - Improve GatewayConfig  Index Template.
+  - Fix Model Order.
+  - Fix AbstractCheckoutController.
+  - Add Payment Route into PaymentMethod Model.
+  - Add Payum Tokens as Doctrine Orm.
+  - Add Order Statuses and Make Order and Payment Timestampable.
+  - Add PaymentController with AddToCard, showPaymentMethods and showCreditCard Actions.
+  - Add CheckoutControllers Services.
+  - Fix Checkout\PaymentController.
+  - Add Method getShoppingCard() into the AbstractCheckoutController.
+  - Order Model Set Default Values.
+  - Fix PaymentController::showCreditCardForm
+  - Add Publishable Key in Stripe Credit Card Form.
+  - Improve CreditCardForm Template
+
+
 0.1.0	|	Release date: **17.05.2022**
 ============================================
 * New Features and Improvements:
