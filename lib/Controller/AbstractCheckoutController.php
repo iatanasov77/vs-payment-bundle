@@ -12,14 +12,14 @@ use Payum\Core\Model\CreditCard;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
-    /** @var string */
-    protected $paymentClass;
-    
     /** @var EntityRepository */
-    protected $subscriptionRepository;
+    protected $ordersRepository;
     
     /** @var Payum */
     protected $payum;
+    
+    /** @var string */
+    protected $paymentClass;
     
     /** @var \Payum\Core\Gateway  */
     protected $gateway;
@@ -28,15 +28,20 @@ abstract class AbstractCheckoutController extends AbstractController
     protected $gatewayName;
     
     public function __construct(
-        string $paymentClass,
-        EntityRepository $paidServiceSubscriptionPeriodRepository,
-        Payum $payum
+        EntityRepository $ordersRepository,
+        Payum $payum,
+        string $paymentClass
     ) {
-        $this->paymentClass             = $paymentClass;
-        $this->subscriptionRepository   = $paidServiceSubscriptionPeriodRepository;
+        $this->ordersRepository         = $ordersRepository;
         $this->payum                    = $payum;
+        $this->paymentClass             = $paymentClass;
         
-        $this->gateway                  = $this->payum->getGateway( $this->gatewayName );
+        /**
+         * NOTE: $this->gatewayName shold be initialized in Child Classes
+         */
+        if ( $this->gatewayName ) {
+            $this->gateway  = $this->payum->getGateway( $this->gatewayName );
+        }
     }
     
     abstract public function prepareAction( Request $request ): Response;
