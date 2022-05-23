@@ -1,6 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Vankosoft\PaymentBundle\Form\CreditCard as CreditCardForm;
 
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
@@ -24,9 +25,9 @@ use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 
 // SETUP TEST ACCOUNT MANUEL: https://developer.paypal.com/docs/classic/payflow/test-hosted-pages/#create-a-test-only-payflow-gateway-account
 
-class PaypalProController extends AbstractCheckoutController
+class PaypalProCheckoutController extends AbstractCheckoutController
 {
-    public function prepareAction( Request $request )
+    public function prepareAction( Request $request ): Response
     {
         $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
         

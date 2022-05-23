@@ -7,8 +7,14 @@
     <div class="padding">
     	<div class="row">
     		<div class="col-sm-6">
+                {% if paymentMethod.gateway.factoryName == 'stripe_checkout' or paymentMethod.gateway.factoryName == 'stripe_js' %}
+                    {% set captureKey = paymentMethod.gateway.config.publishable_key %}
+                {% else %}
+                    {% set captureKey = '' %}
+                {% endif %}
+    
                 {% include '@VSPayment/Pages/CreditCard/Partial/credit_card_form.html.twig' with {
-                     'formAction': '' ),
+                     'formAction': '',
                      'formMethod': 'POST'
                  } %}
     		</div>
@@ -16,9 +22,8 @@
     </div>
 {% endblock content %}
 
-{% block stylesheets %} 
+{% block stylesheets %}
     {{ parent() }}
     
     {% include '@VSPayment/Pages/CreditCard/Partial/credit_card_css.html.twig' %}
-    
 {% endblock %}

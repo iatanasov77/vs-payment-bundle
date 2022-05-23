@@ -52,23 +52,16 @@ class GatewayConfigExtController extends PayumController
         $form = $this->createForm( GatewayConfigForm::class, $gatewayConfig );
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
-            
+            $em                                     = $this->getDoctrine()->getManager();
+            $submitedGatewayConfig                  = $form->getData();
             $postData                               = $request->request->get( 'gateway_config_form' );
-            $submitedConfig                         = $request->request->get( 'gateway_config' );
-            $submitedConfig['config']['sandbox']    = false;
+            //echo "<pre>"; var_dump( $postData ); die;
             
-            // Set Default Config Options From Factory
-            $factory = $this->get( 'payum' )->getGatewayFactory( $postData['factoryName'] );
-            $config = $factory->createConfig();
-            $defaultOptions = $config['payum.default_options'];
+            $submitedGatewayConfig->setConfig( $postData['config'] ) ;
+            $submitedGatewayConfig->setSandboxConfig( $postData['sandboxConfig'] ) ;
             
-            if( isset( $defaultOptions['sandbox'] ) ) {
-                $submitedConfig['sandboxConfig']['sandbox']   = true;
-                $gatewayConfig->setSandboxConfig( $submitedConfig['sandboxConfig'] );
-            }
-            $gatewayConfig->setConfig( $submitedConfig['config'] );
-            
-            $gatewayConfigStorage->update( $gatewayConfig );
+            $em->persist( $submitedGatewayConfig );
+            $em->flush();
             
             return $this->redirect( $this->generateUrl( 'vs_payment_gateways_index' ) );
         }

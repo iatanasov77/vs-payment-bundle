@@ -1,6 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
@@ -12,10 +13,15 @@ use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
  * TEST ACCOUNTS
  * -----------------------------------------------
  * sb-wsp2g401218@personal.example.com / 8o?JWT#6
+ * 
+ * DEPRECATED
+ * ==========
+ * PayPal Express Checkout is deprecated. Please, use new PayPal Commerce Platform integration.
+ * PayPal Commerce Platform: https://github.com/Sylius/PayPalPlugin
  */
 class PaypalExpressCheckoutController extends AbstractCheckoutController
 {   
-    public function prepareAction( Request $request )
+    public function prepareAction( Request $request ): Response
     {
         $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
         

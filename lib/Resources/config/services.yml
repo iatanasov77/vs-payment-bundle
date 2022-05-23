@@ -3,6 +3,8 @@ imports:
     - { resource: services/form.yaml }
     - { resource: services/menu.yaml }
     - { resource: services/payment.yaml }
+    - { resource: services/checkout.yaml }
+    - { resource: services/checkout_test.yaml }
     
 services:
     _defaults:

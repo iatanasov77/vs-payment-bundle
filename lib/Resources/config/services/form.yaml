@@ -1,5 +1,5 @@
 parameters:
-    #vs_payment.gateway_factories: ['offline', 'paypal_express_checkout', 'paypal_pro_checkout', 'stripe_checkout', 'stripe_js']
+    #vs_payment.gateway_factories: ['offline', 'paypal_rest', 'paypal_express_checkout', 'paypal_pro_checkout', 'stripe_checkout', 'stripe_js']
     vs_payment.gateway_factories: ['offline']
 
 services:
@@ -10,3 +10,13 @@ services:
         arguments:
             - '%vs_payment.model.gateway_config.class%'
             - '%vs_payment.gateway_factories%'
+
+    vs_payment.resources.payment_method.form:
+        class: Vankosoft\PaymentBundle\Form\PaymentMethodForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.payment_method.class%'
+            - '%vs_payment.model.gateway_config.class%'
+
+

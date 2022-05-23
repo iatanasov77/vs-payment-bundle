@@ -3,6 +3,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
 >
     <mapped-superclass name="Vankosoft\PaymentBundle\Model\PaymentMethod">
         <id name="id" column="id" type="integer">
@@ -10,8 +11,24 @@
         </id>
         
         <many-to-one field="gateway" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface" inversed-by="paymentMethods" />
+        <one-to-many field="orders" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" mapped-by="paymentMethod" />
         
-        <field name="name" type="string" length="64" nullable="false" />
+        <field name="slug" column="slug" type="string" length="255" nullable="false" unique="true">
+            <gedmo:slug unique="true" style="lower" updatable="true" separator="-" fields="name" />
+        </field>
+        
+        <field name="name" type="string" length="64" nullable="false" >
+            <gedmo:translatable />
+        </field>
+        
+        <field name="paymentRoute" type="string" length="255" nullable="false" />
         <field name="enabled" column="active" type="boolean" />
+        
+        <!--
+            Used locale to override Translation listener`s locale
+            this is not a mapped field of entity metadata, just a simple property
+            and it is not necessary because globally locale can be set in listener
+        -->
+        <gedmo:translation entity="Vankosoft\ApplicationBundle\Model\Interfaces\TranslationInterface" locale="locale" />
     </mapped-superclass>
 </doctrine-mapping>

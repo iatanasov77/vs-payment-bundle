@@ -1,6 +1,7 @@
 <?php  namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 
@@ -62,7 +63,7 @@ class StripeCheckoutController extends AbstractCheckoutController
         return $plan;
     }
     
-    public function prepareAction( Request $request )
+    public function prepareAction( Request $request ): Response
     {
         $ppr            = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
         

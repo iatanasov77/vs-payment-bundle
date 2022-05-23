@@ -21,6 +21,7 @@
                         <th width="50">N</th>
                         <th>{{ 'vs_payment.template.gateway_config_ext.index.payment_gateway' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_payment.template.gateway_config_ext.index.gateway_factory' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.gateway_config_ext.index.use_sandbox' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                     </tr>
                     {% for item in items %}
@@ -35,12 +36,17 @@
                             </td>
                             <td>{{ item.factoryName }}</td>
                             <td>
+                                {% if item.useSandbox %}
+                                    <i class="fas fa-check" style="color: #82c91e;">
+                                {% else %}
+                                    <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                                {% endif %}
+                            </td>
+                            <td>
                                 <div class="btn-group">
-                                    <div class="btn-group">
-                                        <a class="btn btn-primary" href="{{ path('vs_payment_gateways_config', {'gatewayName': item.gatewayName}) }}">
-                                            <i class="glyphicon glyphicon-pencil"></i>
-                                        </a>
-                                    </div>
+                                    <a class="btn btn-primary" href="{{ path('vs_payment_gateways_config', {'gatewayName': item.gatewayName}) }}">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

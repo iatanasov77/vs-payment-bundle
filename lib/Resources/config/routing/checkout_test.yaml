@@ -1,0 +1,10 @@
+vs_payment_checkout_test_stripe_prepare:
+    path: /vs_payment/checkout-test/stripe/prepare
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\StripeCheckoutController::prepareAction
+    
+vs_payment_checkout_test_stripe_done:
+    path: /vs_payment/checkout-test/stripe/done
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\StripeCheckoutController::doneAction
+
+
+

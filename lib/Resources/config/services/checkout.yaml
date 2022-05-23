@@ -1,0 +1,52 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+     # PAYPAL REST - CREDIT CARD
+    ##############################
+    
+            
+    # PAYPAL EXPRESS CHECKOUT
+    ##############################
+    Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController:
+        arguments:
+            - '@vs_payment.repository.order'
+            - '@payum'
+            - '%vs_payment.model.payment.class%'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+    
+    # PAYPAL EXPRESS CHECKOUT RECURRING
+    #######################################
+    Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutRecurringController:
+        arguments:
+            - '@vs_payment.repository.order'
+            - '@payum'
+            - '%vs_payment.model.payment.class%'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+    
+    # PAYPAL PRO CHECKOUT
+    ##############################
+    Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController:
+        arguments:
+            - '@vs_payment.repository.order'
+            - '@payum'
+            - '%vs_payment.model.payment.class%'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+    
+    # STRIPE CHECKOUT
+    ##############################
+    Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController:
+        arguments:
+            - '@vs_payment.repository.order'
+            - '@payum'
+            - '%vs_payment.model.payment.class%'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+    
+    
+

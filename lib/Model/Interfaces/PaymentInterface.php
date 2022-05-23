@@ -6,7 +6,5 @@ use Payum\Core\Model\DirectDebitPaymentInterface;
 
 interface PaymentInterface extends ResourceInterface, BasePaymentInterface, DirectDebitPaymentInterface
 {
-    public function getUser();
-    public function getPaidServicePeriod();
-    public function getPaymentMethod();
+    public function getOrder();
 }

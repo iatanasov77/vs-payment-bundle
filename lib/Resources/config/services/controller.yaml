@@ -11,3 +11,12 @@ services:
             - '%vs_payment.model.gateway_config.class%'
             - '@vs_payment.repository.gateway_config'
             - '@vs_payment.factory.gateway_config'
+
+    Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigExtController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
+            - '%vs_payment.model.payment_method.class%'
+            - '@vs_payment.repository.payment_method'
+            - '@vs_payment.factory.payment_method'
+

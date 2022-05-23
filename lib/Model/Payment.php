@@ -1,63 +1,36 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
 use Payum\Core\Model\Payment as BasePayment;
+use Sylius\Component\Resource\Model\TimestampableTrait;
 
 class Payment extends BasePayment implements Interfaces\PaymentInterface
 {
+    use TimestampableTrait;
+    
+    /**
+     * @var int
+     */
     protected $id;
     
     /**
-     * @var \Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface
+     * @var \Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface
      */
-    protected $paidServicePeriod;
-    
-    /**
-     * @var Interfaces\PaymentMethodInterface
-     */
-    protected $paymentMethod;
-    
-    /**
-     * @var \Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface
-     */
-    protected $user;
+    protected $order;
     
     public function getId()
     {
         return $this->id;
     }
     
-    public function getPaidServicePeriod()
+    public function getOrder()
     {
-        return $this->paidServicePeriod;
+        return $this->order;
     }
     
-    public function setPaidServicePeriod($paidServicePeriod): self
+    public function setOrder($order): self
     {
-        $this->paidServicePeriod = $paidServicePeriod;
-        
-        return $this;
-    }
-    
-    public function getPaymentMethod()
-    {
-        return $this->paymentMethod;
-    }
-    
-    public function setPaymentMethod($paymentMethod)
-    {
-        $this->paymentMethod = $paymentMethod;
-        
-        return $this;
-    }
-    
-    public function getUser()
-    {
-        return $this->user;
-    }
-    
-    public function setUser($user)
-    {
-        $this->user = $user;
+        $this->order = $order;
+        $order->setPayment( $this );
         
         return $this;
     }

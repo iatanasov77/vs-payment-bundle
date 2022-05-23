@@ -1,11 +1,25 @@
-parameters:
-    payment_methods:
-        # payment_method: gateway_factory
-#        paypal_pro_checkout: paypal_pro_checkout
-#        paypal_express_checkout_recurring_payment: paypal_express_checkout
-            
-
 services:
-#    ia_payment.example:
-#        class: %ia_payment.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        
+    Vankosoft\PaymentBundle\Controller\Checkout\:
+        resource: '../../../Controller/Checkout'
+        tags: ['controller.service_arguments']
+        autowire: true
+
+    Vankosoft\PaymentBundle\Controller\Checkout\PaymentController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@vs_payment.factory.order'
+            - '@vs_payment.factory.order_item'
+            - '@vs_payment.repository.order'
+            - '@vs_users_subscriptions.repository.payed_service_subscription_period'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+            
+    Vankosoft\PaymentBundle\Form\PaymentForm:
+        tags: ['form.type']
+        arguments:
+            - '%vs_payment.model.payment_method.class%'

@@ -14,9 +14,9 @@ vs_payment_gateways_config_options:
 # Payment Methods Config
 vs_payment_methods_index:
     path:     /payment_methods
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigController::indexAction
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigExtController::indexAction
 vs_payment_methods_config:
     path:     /payment_methods/config/{id}
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigController::configAction
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigExtController::configAction
     defaults:
         id: 0 # To Can be Added in the Menu

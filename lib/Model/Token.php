@@ -1,12 +1,17 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\Token as BaseToken;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * ORM\Table(name="IAP_Tokens")
- * ORM\Entity
- */
-class Token extends BaseToken
+class Token extends BaseToken implements ResourceInterface
 {
+    /**
+     * @var int
+     */
+    protected $id;
+    
+    public function getId()
+    {
+        return $this->id;
+    }
 }

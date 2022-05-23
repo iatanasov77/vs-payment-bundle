@@ -10,25 +10,50 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-use Vankosoft\PaymentBundle\Entity\PaymentMethod as PaymentMethodData;
-use Vankosoft\PaymentBundle\Entity\GatewayConfig;
-
-/**
- * Credit Card Form Type for PayPal Pro Direct Payments
- */
 class PaymentMethodForm extends AbstractForm
 {
+    /** @var string */
+    protected $gatewayClass;
+    
+    public function __construct(
+        string $dataClass,
+        string $gatewayClass
+    ) {
+        parent::__construct( $dataClass );
+        
+        $this->gatewayClass = $gatewayClass;
+    }
+    
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
+        parent::buildForm( $builder, $options );
+        
         $builder
-            ->add( 'gateway', EntityType::class, [
-                'placeholder' => '-- Select Gateway --',
-                'class' => GatewayConfig::class,
-                'choice_label' => 'gatewayName',
+            ->add( 'enabled', CheckboxType::class, [
+                'required'              => false,
+                'label'                 => 'vs_payment.form.active',
+                'translation_domain'    => 'VSPaymentBundle',
             ] )
-            ->add( 'name', TextType::class )
-            ->add( 'route', TextType::class )
-            ->add( 'active', CheckboxType::class, array('required'=>false ) )
+            
+            ->add( 'gateway', EntityType::class, [
+                'class'                 => $this->gatewayClass,
+                'choice_label'          => 'gatewayName',
+                'label'                 => 'vs_payment.form.payment_method.gateway',
+                'placeholder'           => 'vs_payment.form.payment_method.gateway_placeholder',
+                'translation_domain'    => 'VSPaymentBundle',
+            ] )
+            
+            ->add( 'name', TextType::class, [
+                'label'                 => 'vs_payment.form.payment_method.name',
+                'attr'                  => ['placeholder' => 'vs_payment.form.payment_method.name'],
+                'translation_domain'    => 'VSPaymentBundle',
+            ] )
+            
+            ->add( 'paymentRoute', TextType::class, [
+                'label'                 => 'vs_payment.form.payment_method.payment_route',
+                'attr'                  => ['placeholder' => 'vs_payment.form.payment_method.payment_route'],
+                'translation_domain'    => 'VSPaymentBundle',
+            ] )
         ;
     }
 

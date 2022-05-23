@@ -9,17 +9,9 @@
             <generator strategy="AUTO" />
         </id>
         
-        <field name="enabled" column="active" type="boolean" />
         <field name="useSandbox" type="boolean" nullable="false" default="0" />
-        
-        <!-- Mapping Defined In: /vendor/payum/core/Payum/Core/Bridge/Doctrine/Resources/mapping/GatewayConfig.orm.xml
-        <field name="factoryName" type="string" length="64" nullable="false" />
-        <field name="gatewayName" type="string" length="64" nullable="false" />
-        <field name="config" type="json" nullable="true" />
-        -->
-        
         <field name="sandboxConfig" type="json" nullable="true" />
         
-        <one-to-many field="paymentMethods" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\NewsletterSubscriptionInterface" mapped-by="gateway" />
+        <one-to-many field="paymentMethods" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" mapped-by="gateway" />
     </mapped-superclass>
 </doctrine-mapping>
