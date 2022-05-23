@@ -43,6 +43,7 @@ class PaymentController extends AbstractController
         if ( ! $card ) {
             throw new ShoppingCardException( 'Card cannot be created !!!' );
         }
+        $em             = $this->getDoctrine()->getManager();
         
         $orderItem      = $this->orderItemsFactory->createNew();
         $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
