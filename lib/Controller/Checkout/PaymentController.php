@@ -105,7 +105,7 @@ class PaymentController extends AbstractController
     
     public function showCreditCardFormAction( $formAction, Request $request ): Response
     {
-        $form   = $this->getCreditCardForm( urldecode( $formAction ) );
+        $form   = $this->getCreditCardForm( base64_decode( $formAction ) );
         
         return $this->render( '@VSPayment/Pages/CreditCard/credit_card.html.twig', [
             'form' => $form->createView(),
