@@ -3,9 +3,11 @@
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
+use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
 use Vankosoft\PaymentBundle\Form\PaymentForm;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
