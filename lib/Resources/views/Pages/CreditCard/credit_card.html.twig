@@ -7,7 +7,7 @@
     <div class="padding">
     	<div class="row">
     		<div class="col-sm-6">
-                {% if paymentMethod.gateway.config.factory == 'stripe_checkout' || paymentMethod.gateway.config.factory == 'stripe_js' %}
+                {% if paymentMethod.gateway.factoryName == 'stripe_checkout' or paymentMethod.gateway.factoryName == 'stripe_js' %}
                     {% set captureKey = paymentMethod.gateway.config.publishable_key %}
                 {% else %}
                     {% set captureKey = '' %}
