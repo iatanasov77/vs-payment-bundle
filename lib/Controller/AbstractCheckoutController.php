@@ -49,6 +49,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $gateway    = $this->payum->getGateway( $token->getGatewayName() );
         $gateway->execute( $status = new GetHumanStatus( $token ) );
         
+        $payment    = $status->getFirstModel();
         // using shortcut
         if ( $status->isCaptured() || $status->isAuthorized() ) {
             // success
