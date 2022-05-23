@@ -105,10 +105,20 @@ class PaymentController extends AbstractController
     
     public function showCreditCardFormAction( $formAction, Request $request ): Response
     {
+        $cardId = $this->get('session')->get( 'vs_payment_basket' );
+        if ( ! $cardId ) {
+            throw new ShoppingCardException( 'Card not exist in session !!!' );
+        }
+        $card   = $this->ordersRepository->find( $cardId );
+        if ( ! $card ) {
+            throw new ShoppingCardException( 'Card not exist in repository !!!' );
+        }
+        
         $form   = $this->getCreditCardForm( base64_decode( $formAction ) );
         
         return $this->render( '@VSPayment/Pages/CreditCard/credit_card.html.twig', [
-            'form' => $form->createView(),
+            'form'          => $form->createView(),
+            'paymentMethod' => $card->getPaymentMethod(),
         ]);
     }
     
