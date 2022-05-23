@@ -58,9 +58,14 @@ class Order implements Interfaces\OrderInterface
     
     public function __construct()
     {
+        $this->items        = new ArrayCollection();
+        
+        /** 
+         * Set Default Values
+         */
         $this->totalAmount  = 0;
         $this->currencyCode = 'EUR';
-        $this->items        = new ArrayCollection();
+        $this->status       = 'shopping_cart';
     }
     
     public function getId()
