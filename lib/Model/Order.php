@@ -44,6 +44,11 @@ class Order implements Interfaces\OrderInterface
     protected $currencyCode;
     
     /**
+     * @var string
+     */
+    protected $description;
+    
+    /**
      * @var Collection|OrderItemInterface[]
      */
     protected $items;
@@ -65,6 +70,7 @@ class Order implements Interfaces\OrderInterface
          */
         $this->totalAmount  = 0;
         $this->currencyCode = 'EUR';
+        $this->description = 'VankoSoft Payment';
         $this->status       = 'shopping_cart';
     }
     
@@ -129,6 +135,18 @@ class Order implements Interfaces\OrderInterface
     public function setCurrencyCode($currencyCode)
     {
         $this->currencyCode = $currencyCode;
+        
+        return $this;
+    }
+    
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    public function setDescription($description)
+    {
+        $this->description = $description;
         
         return $this;
     }

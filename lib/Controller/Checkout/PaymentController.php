@@ -40,7 +40,7 @@ class PaymentController extends AbstractController
     
     public function addToCardAction( $payableObjectId, Request $request ): Response
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket' );
+        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
         $card   = $cardId ? $this->ordersRepository->find( $cardId ) : $this->createCard();
         if ( ! $card ) {
             throw new ShoppingCardException( 'Card cannot be created !!!' );
@@ -65,16 +65,18 @@ class PaymentController extends AbstractController
     
     public function showPaymentMethodsFormAction( Request $request ): Response
     {
-        $form   = $this->createForm( PaymentForm::class );
+        $paymentDescription = $request->query->get( 'payment_description' );
+        $form               = $this->createForm( PaymentForm::class );
         
         return $this->render( '@VSPayment/Pages/Payment/payment-form.html.twig', [
-            'form' => $form->createView(),
+            'form'                  => $form->createView(),
+            'paymentDescription'    => $paymentDescription ?: 'VankoSoft Payment',
         ]);
     }
     
     public function handlePaymentMethodsFormAction( Request $request ): Response
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket' );
+        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }
@@ -90,6 +92,7 @@ class PaymentController extends AbstractController
             $formData   = $form->getData();
             
             $card->setPaymentMethod( $formData['paymentMethod'] );
+            $card->setDescription( $formData['paymentDescription'] );
             $em->persist( $card );
             $em->flush();
             
@@ -105,7 +108,7 @@ class PaymentController extends AbstractController
     
     public function showCreditCardFormAction( $formAction, Request $request ): Response
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket' );
+        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }
@@ -132,7 +135,7 @@ class PaymentController extends AbstractController
         $em->persist( $card );
         $em->flush();
         
-        $this->get('session')->set( 'vs_payment_basket', $card->getId() );
+        $this->get('session')->set( 'vs_payment_basket_id', $card->getId() );
         return $card;
     }
     

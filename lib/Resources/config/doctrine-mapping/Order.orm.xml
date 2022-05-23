@@ -22,6 +22,7 @@
 
         <field name="totalAmount" column="total_amount" type="float" nullable="false" />
         <field name="currencyCode" column="currency_code" type="string" length="8" nullable="false" />
+        <field name="description" column="description" type="string" nullable="false" />
         
         <one-to-many field="items" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="order" >
             <cascade>

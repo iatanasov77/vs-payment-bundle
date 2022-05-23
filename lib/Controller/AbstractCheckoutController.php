@@ -91,7 +91,7 @@ abstract class AbstractCheckoutController extends AbstractController
 */
     protected function getShoppingCard()
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket' );
+        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }
