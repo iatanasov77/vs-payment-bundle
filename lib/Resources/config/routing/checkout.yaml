@@ -38,8 +38,10 @@ vs_payment_paypal_express_checkout_cancel_recurring_payment:
 # Stripe Checkout
 #######################################################################################
 vs_payment_stripe_checkout_prepare:
-   path: /vs_payment/stripe-checkout/prepare
-   controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::prepareAction
+    path: /vs_payment/stripe-checkout/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::prepareAction
+    options:
+        expose: true
 
 vs_payment_stripe_checkout_done:
    path: /vs_payment/stripe-checkout/done
