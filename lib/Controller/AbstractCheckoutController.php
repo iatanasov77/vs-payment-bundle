@@ -44,11 +44,14 @@ abstract class AbstractCheckoutController extends AbstractController
         $gateway    = $this->payum->getGateway( $token->getGatewayName() );
         $gateway->execute( $status = new GetHumanStatus( $token ) );
         
+        $storage    = $this->payum->getStorage( $this->paymentClass );
         $payment    = $status->getFirstModel();
+        
         // using shortcut
         if ( $status->isCaptured() || $status->isAuthorized() || $status->isPending() ) {
             // success
             $payment->getOrder()->setStatus( Order::STATUS_ORDER );
+            $storage->update( $payment );
             return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
                 'paymentStatus' => $status,
             ]);
