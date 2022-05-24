@@ -8,12 +8,16 @@ use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 use Vankosoft\ApplicationBundle\Component\Status;
+use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
 use Vankosoft\PaymentBundle\Form\PaymentForm;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
 
 class PaymentController extends AbstractController
 {
+    /** @var Payment */
+    protected $vsPayment;
+    
     /** @var Factory */
     protected $ordersFactory;
     
@@ -27,11 +31,13 @@ class PaymentController extends AbstractController
     protected $payableObjectsRepository;
     
     public function __construct(
+        Payment $vsPayment,
         Factory $ordersFactory,
         Factory $orderItemsFactory,
         EntityRepository $ordersRepository,
         EntityRepository $payableObjectsRepository
     ) {
+        $this->vsPayment                = $vsPayment;
         $this->ordersFactory            = $ordersFactory;
         $this->orderItemsFactory        = $orderItemsFactory;
         $this->ordersRepository         = $ordersRepository;
@@ -96,11 +102,11 @@ class PaymentController extends AbstractController
             $em->persist( $card );
             $em->flush();
             
-            $paymentPrepareUrl  = $formData['paymentMethod']->getPaymentRoute();
+            $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute( $formData['paymentMethod']->getGateway() );
             return new JsonResponse([
                 'status'    => Status::STATUS_OK,
                 'data'      => [
-                    'paymentPrepareUrl'  => $paymentPrepareUrl ?: 'not_configured',
+                    'paymentPrepareUrl'  => $paymentPrepareUrl,
                 ]
             ]);
         }

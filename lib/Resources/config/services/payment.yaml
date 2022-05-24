@@ -3,6 +3,9 @@ services:
         autowire: true
         autoconfigure: true
         
+    vs_payment_payment:
+        class: Vankosoft\PaymentBundle\Component\Payment\Payment
+    
     Vankosoft\PaymentBundle\Controller\Checkout\:
         resource: '../../../Controller/Checkout'
         tags: ['controller.service_arguments']
@@ -12,6 +15,7 @@ services:
         tags: ['controller.service_arguments']
         autowire: false
         arguments:
+            - '@vs_payment_payment'
             - '@vs_payment.factory.order'
             - '@vs_payment.factory.order_item'
             - '@vs_payment.repository.order'
