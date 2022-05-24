@@ -1,13 +1,8 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-
-use Payum\Bundle\PayumBundle\Controller\PayumController;
-use Payum\Core\Request\GetHumanStatus;
-
-use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 
 /*
  * TEST ACCOUNTS
@@ -23,49 +18,28 @@ class PaypalExpressCheckoutController extends AbstractCheckoutController
 {   
     public function prepareAction( Request $request ): Response
     {
-        $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
+        $card   = $this->getShoppingCard();
         
-        $packagePlan = $ppr->find( $request->query->get( 'packagePlanId' ) );
-        if ( ! $packagePlan ) {
-            throw new \Exception( 'Invalid Request!!!' );
-        }
-
-        if ( $request->isMethod( 'POST' ) ) {
-            $pb         = $this->get( 'ia_payment_builder' );
-            $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, $this->gatewayName() );
-            
-            $payment->setPaymentMethod( 'paypal_express_checkout_NOT_recurring_payment' );
-            $payment->setDetails([
-                'PAYMENTREQUEST_0_AMT'          => $packagePlan->getPrice() * $payment->getCurrencyDivisor(),
-                'PAYMENTREQUEST_0_CURRENCYCODE' => $packagePlan->getCurrency(),
-                'PAYMENTREQUEST_0_DESC'         => $packagePlan->getDescription(),
-                'NOSHIPPING'                    => 1
-            ]);
-            $pb->updateStorage( $payment );
-            
-            $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken(
-                $this->gatewayName(), 
-                $payment,
-                'ia_payment_paypal_express_checkout_done'
-            );
-            
-            return $this->redirect( $captureToken->getTargetUrl() );
-        }
-
-        $tplVars = array(
-            'formAction'    => $this->generateUrl( 'ia_payment_paypal_express_checkout_prepare' ) . '?packagePlanId=' . $packagePlan->getId(),
-            'packagePlan'   => $packagePlan
+        $storage = $this->payum->getStorage( $this->paymentClass );
+        $payment = $storage->create();
+        
+        $payment->setNumber( uniqid() );
+        $payment->setCurrencyCode( $card->getCurrencyCode() );
+        $payment->setTotalAmount( $card->getTotalAmount() );
+        $payment->setDescription( $card->getDescription() );
+        
+        $payment->setDetails([
+            'PAYMENTREQUEST_0_AMT'          => $card->getTotalAmount(),
+            'PAYMENTREQUEST_0_CURRENCYCODE' => $card->getCurrencyCode(),
+        ]);
+        $storage->update( $payment );
+        
+        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
+            $card->getPaymentMethod()->getGateway()->getGatewayName(),
+            $payment,
+            'vs_payment_paypal_express_checkout_done'
         );
-        return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:CheckoutForm.html.twig', $tplVars);
-    }
-    
-    protected function gatewayName()
-    {
-        return 'paypal_express_checkout_gateway';
-    }
-    
-    protected function getErrorMessage( $details )
-    {
-        return 'PAYPAL ERROR: ' . $details['L_LONGMESSAGE0'];
+        
+        return $this->redirect( $captureToken->getTargetUrl() );
     }
 }

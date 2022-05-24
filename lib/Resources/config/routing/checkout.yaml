@@ -12,6 +12,8 @@ payum_notify:
 vs_payment_paypal_express_checkout_prepare:
     path:     /paypal_express_checkout/prepare
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::prepareAction
+    options:
+        expose: true
 
 vs_payment_paypal_express_checkout_done:
     path:     /paypal_express_checkout/done
