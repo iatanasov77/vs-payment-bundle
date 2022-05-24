@@ -1,3 +1,9 @@
+1.0.2	|	Release date: **24.05.2022**
+============================================
+* New Features:
+  - Add Doctrine Mappings on Model Traits.
+
+
 1.0.1	|	Release date: **24.05.2022**
 ============================================
 * Bug-Fixes:
