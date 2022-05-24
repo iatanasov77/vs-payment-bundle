@@ -73,7 +73,7 @@ class StripeCheckoutController extends AbstractCheckoutController
         $storage->update( $payment );
         
         $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
-            $this->gatewayName,
+            $card->getPaymentMethod()->getGateway()->getGatewayName(),
             $payment,
             'vs_payment_stripe_checkout_done' // the route to redirect after capture
         );

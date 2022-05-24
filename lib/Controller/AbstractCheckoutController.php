@@ -23,12 +23,6 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var string */
     protected $paymentClass;
     
-    /** @var \Payum\Core\Gateway  */
-    protected $gateway;
-    
-    /** @var string */
-    protected $gatewayName;
-    
     public function __construct(
         EntityRepository $ordersRepository,
         Payum $payum,
@@ -37,13 +31,6 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->ordersRepository         = $ordersRepository;
         $this->payum                    = $payum;
         $this->paymentClass             = $paymentClass;
-        
-        /**
-         * NOTE: $this->gatewayName shold be initialized in Child Classes
-         */
-        if ( $this->gatewayName ) {
-            $this->gateway  = $this->payum->getGateway( $this->gatewayName );
-        }
     }
     
     abstract public function prepareAction( Request $request ): Response;
@@ -78,17 +65,7 @@ abstract class AbstractCheckoutController extends AbstractController
             throw new HttpException( 400, $this->getErrorMessage( $status->getModel() ) );
         }
     }
-/*
-    public function doneAction( Request $request )
-    {
-        $token      = $this->payum->getHttpRequestVerifier()->verify( $request );
-        $gateway    = $this->payum->getGateway( $token->getGatewayName() );
-        
-        $gateway->execute( $status = new GetHumanStatus( $token ) );
-        
-        echo '<pre>'; var_dump( $status ); die;
-    }
-*/
+
     protected function getShoppingCard()
     {
         $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
