@@ -10,7 +10,7 @@
         </id>
         
         <many-to-one field="order" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" inversed-by="items" />
-        <many-to-one field="object" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface"  /><!-- inversed-by="orderItems" -->
+        <many-to-one field="object" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface" inversed-by="orderItems" />
         <field name="objectType" column="object_type" type="string" nullable="false" />
         
         <field name="price" type="float" nullable="false" />
