@@ -10,8 +10,9 @@ class Order implements Interfaces\OrderInterface
 {
     use TimestampableTrait;
     
-    const STATUS_SHOPPING_CART = 'shopping_cart';
-    const STATUS_ORDER = 'order';
+    const STATUS_SHOPPING_CART  = 'shopping_cart';
+    const STATUS_PAID_ORDER     = 'paid_order';
+    const STATUS_FAILED_ORDER   = 'failed_order';
     
     /**
      * @var int
