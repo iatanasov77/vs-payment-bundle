@@ -10,6 +10,7 @@ use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
 use Payum\Core\Model\CreditCard;
 
+use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
 
 abstract class AbstractCheckoutController extends AbstractController
@@ -45,16 +46,9 @@ abstract class AbstractCheckoutController extends AbstractController
         
         $payment    = $status->getFirstModel();
         // using shortcut
-        if ( $status->isCaptured() || $status->isAuthorized() ) {
+        if ( $status->isCaptured() || $status->isAuthorized() || $status->isPending() ) {
             // success
-            return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
-                'paymentStatus' => $status,
-            ]);
-        }
-        
-        // using shortcut
-        if ( $status->isPending() ) {
-            // most likely success, but you have to wait for a push notification.
+            $payment->getOrder()->setStatus( Order::STATUS_ORDER );
             return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
                 'paymentStatus' => $status,
             ]);
