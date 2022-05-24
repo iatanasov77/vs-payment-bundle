@@ -1,3 +1,5 @@
+# Stripe Checkout
+#######################################################################################
 vs_payment_checkout_test_stripe_prepare:
     path: /vs_payment/checkout-test/stripe/prepare
     controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\StripeCheckoutController::prepareAction
@@ -5,6 +7,55 @@ vs_payment_checkout_test_stripe_prepare:
 vs_payment_checkout_test_stripe_done:
     path: /vs_payment/checkout-test/stripe/done
     controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\StripeCheckoutController::doneAction
+
+
+# PayPal Express Checkout Recurring
+#######################################################################################
+vs_payment_checkout_test_paypal_express_checkout_prepare_recurring_payment_agreement:
+    path:     /paypal_express_checkout/recurring_payment/prepare
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\PaypalExpressCheckoutRecurringController::prepareAction
+
+vs_payment_checkout_test_paypal_express_checkout_create_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/create/{packagePlanId}
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\PaypalExpressCheckoutRecurringController::createRecurringPaymentAction
+       
+vs_payment_checkout_test_paypal_express_checkout_done_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/done
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\PaypalExpressCheckoutRecurringController::doneAction
+    
+vs_payment_checkout_test_paypal_express_checkout_cancel_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/cancel/{paymentId}
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\PaypalExpressCheckoutRecurringController::cancelAction
+
+
+# PAYPAL REST - CREDIT CARD
+##############################
+vs_payment_checkout_test_paypal_rest_cc_prepare:
+    path: /vs_payment/paypal/rest-cc/prepare
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\PaypalRestCreditCardController::prepareAction
+    options:
+        expose: true
+    
+vs_payment_checkout_test_paypal_rest_cc_create:
+    path: /vs_payment/paypal/rest-cc/create
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\PaypalRestCreditCardController::createPaymentAction
+    
+vs_payment_checkout_test_paypal_rest_cc_done:
+    path: /vs_payment/paypal/rest-cc/done
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\PaypalRestCreditCardController::doneAction
+
+
+# PAYPAL REST - GET STARTED
+##############################
+vs_payment_checkout_test_paypal_rest_gs_prepare:
+    path: /vs_payment/paypal/rest-gs/prepare
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\PaypalRestGetStartedController::prepareAction
+    options:
+        expose: true
+    
+vs_payment_checkout_test_paypal_rest_gs_done:
+    path: /vs_payment/paypal/rest-gs/done
+    controller: Vankosoft\PaymentBundle\Controller\CheckoutTest\PaypalRestGetStartedController::doneAction
 
 
 

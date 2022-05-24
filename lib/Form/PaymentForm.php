@@ -5,6 +5,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Doctrine\ORM\EntityRepository;
@@ -23,6 +24,8 @@ class PaymentForm extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
+            ->add( 'paymentDescription', HiddenType::class )
+        
             ->add( 'paymentMethod', EntityType::class, [
                 'expanded'              => true,
                 'class'                 => $this->paymentMethodClass,

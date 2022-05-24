@@ -10,8 +10,9 @@ class Order implements Interfaces\OrderInterface
 {
     use TimestampableTrait;
     
-    const STATUS_SHOPPING_CART = 'shopping_cart';
-    const STATUS_ORDER = 'order';
+    const STATUS_SHOPPING_CART  = 'shopping_cart';
+    const STATUS_PAID_ORDER     = 'paid_order';
+    const STATUS_FAILED_ORDER   = 'failed_order';
     
     /**
      * @var int
@@ -44,6 +45,11 @@ class Order implements Interfaces\OrderInterface
     protected $currencyCode;
     
     /**
+     * @var string
+     */
+    protected $description;
+    
+    /**
      * @var Collection|OrderItemInterface[]
      */
     protected $items;
@@ -65,6 +71,7 @@ class Order implements Interfaces\OrderInterface
          */
         $this->totalAmount  = 0;
         $this->currencyCode = 'EUR';
+        $this->description = 'VankoSoft Payment';
         $this->status       = 'shopping_cart';
     }
     
@@ -129,6 +136,18 @@ class Order implements Interfaces\OrderInterface
     public function setCurrencyCode($currencyCode)
     {
         $this->currencyCode = $currencyCode;
+        
+        return $this;
+    }
+    
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    public function setDescription($description)
+    {
+        $this->description = $description;
         
         return $this;
     }

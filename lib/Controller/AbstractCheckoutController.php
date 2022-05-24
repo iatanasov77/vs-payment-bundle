@@ -10,6 +10,7 @@ use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
 use Payum\Core\Model\CreditCard;
 
+use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
 
 abstract class AbstractCheckoutController extends AbstractController
@@ -23,12 +24,6 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var string */
     protected $paymentClass;
     
-    /** @var \Payum\Core\Gateway  */
-    protected $gateway;
-    
-    /** @var string */
-    protected $gatewayName;
-    
     public function __construct(
         EntityRepository $ordersRepository,
         Payum $payum,
@@ -37,13 +32,6 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->ordersRepository         = $ordersRepository;
         $this->payum                    = $payum;
         $this->paymentClass             = $paymentClass;
-        
-        /**
-         * NOTE: $this->gatewayName shold be initialized in Child Classes
-         */
-        if ( $this->gatewayName ) {
-            $this->gateway  = $this->payum->getGateway( $this->gatewayName );
-        }
     }
     
     abstract public function prepareAction( Request $request ): Response;
@@ -56,18 +44,16 @@ abstract class AbstractCheckoutController extends AbstractController
         $gateway    = $this->payum->getGateway( $token->getGatewayName() );
         $gateway->execute( $status = new GetHumanStatus( $token ) );
         
+        $storage    = $this->payum->getStorage( $this->paymentClass );
         $payment    = $status->getFirstModel();
-        // using shortcut
-        if ( $status->isCaptured() || $status->isAuthorized() ) {
-            // success
-            return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
-                'paymentStatus' => $status,
-            ]);
-        }
         
         // using shortcut
-        if ( $status->isPending() ) {
-            // most likely success, but you have to wait for a push notification.
+        if ( $status->isCaptured() || $status->isAuthorized() || $status->isPending() ) {
+            // success
+            $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
+            $storage->update( $payment );
+            $this->get( 'session' )->remove( 'vs_payment_basket_id' );
+            
             return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
                 'paymentStatus' => $status,
             ]);
@@ -75,23 +61,17 @@ abstract class AbstractCheckoutController extends AbstractController
         
         // using shortcut
         if ( $status->isFailed() || $status->isCanceled() ) {
+            $payment->getOrder()->setStatus( Order::STATUS_FAILED_ORDER );
+            $storage->update( $payment );
+            $this->get( 'session' )->remove( 'vs_payment_basket_id' );
+            
             throw new HttpException( 400, $this->getErrorMessage( $status->getModel() ) );
         }
     }
-/*
-    public function doneAction( Request $request )
-    {
-        $token      = $this->payum->getHttpRequestVerifier()->verify( $request );
-        $gateway    = $this->payum->getGateway( $token->getGatewayName() );
-        
-        $gateway->execute( $status = new GetHumanStatus( $token ) );
-        
-        echo '<pre>'; var_dump( $status ); die;
-    }
-*/
+
     protected function getShoppingCard()
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket' );
+        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }

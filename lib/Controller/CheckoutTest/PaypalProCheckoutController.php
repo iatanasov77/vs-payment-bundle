@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
+<?php namespace Vankosoft\PaymentBundle\Controller\CheckoutTest;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,15 +71,5 @@ class PaypalProCheckoutController extends AbstractCheckoutController
         return $this->render('IAPaymentBundle:PaymentMethod/PaypalPro:prepare.html.twig', array(
             'form' => $form->createView(),
         ));
-    }
-    
-    protected function gatewayName()
-    {
-        return 'paypal_pro_checkout_gateway';
-    }
-    
-    protected function getErrorMessage( $details )
-    {
-        return 'PAYPAL ERROR: ' . $details['RESPMSG'];
     }
 }

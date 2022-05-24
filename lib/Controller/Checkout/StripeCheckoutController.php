@@ -5,108 +5,85 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 
+/**
+ * USED MANUALS:
+ * =============
+ * https://stackoverflow.com/questions/34908805/create-a-recurring-or-subscription-payment-using-payum-stripe-on-symfony-2
+ * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
+ * https://github.com/Payum/PayumBundle
+ *
+ * MANUALS for Overriding Payum Stripe Bundle templates
+ * =====================================================
+ * https://github.com/Payum/PayumBundle/issues/326
+ * https://stackoverflow.com/questions/28452317/stripe-checkout-with-custom-form-symfony
+ * https://github.com/makasim/PayumBundleSandbox/blob/ffea27445d6774dfdc8e646b914e9b58cbfa9765/src/Acme/PaymentBundle/Controller/SimplePurchaseStripeViaOmnipayController.php#L36
+ *
+ * OmnipayBridge is Very Old
+ * ==========================
+ * https://github.com/Payum/OmnipayBridge/blob/master/composer.json
+ */
+/*
+ * TEST MAIL: i.atanasov77@gmail.com
+ *
+ * TEST CARDS
+ * ===========
+ 
+ Card Type  |	Card Number	    |  Exp. Date  | CVV Code
+ --------------------------------------------------------
+ Visa       | 4242424242424242  |   Any future| Any 3
+ |                   |      date   | digits
+ ---------------------------------------------------------
+ Visa       | 4263982640269299  |   02/2023   |  837
+ --------------------------------------------------------
+ Visa       | 4263982640269299  |   04/2023   |  738
+ 
+ */
 class StripeCheckoutController extends AbstractCheckoutController
 {
-    /*
-     * TEST MAIL: i.atanasov77@gmail.com
-     * 
-     * TEST CARDS
-     * ===========
-     
-     Card Type  |	Card Number	    |  Exp. Date  | CVV Code
-     --------------------------------------------------------
-     Visa       | 4242424242424242  |   Any future| Any 3
-                |                   |      date   | digits
-     ---------------------------------------------------------
-     Visa       | 4263982640269299  |   02/2023   |  837
-     --------------------------------------------------------
-     Visa       | 4263982640269299  |   04/2023   |  738
-     
-     */
-    
-    protected function createPlan()
-    {
-        $product = new \ArrayObject([
-            "id"    => "plan_subscription_product",
-            "name"  => "plan_subscription_product",
-            "type"  => 'service',
-        ]);
-        
-        $plan = new \ArrayObject([
-            "id" => "monthly_subscription_plan",
-            "amount" => 2000,
-            "interval" => "month",
-            "currency" => "usd",
-            "product" => 'plan_subscription_product'
-        ]);
-        
-        $gw = $this->getPayum()->getGateway( $this->gatewayName() );
-        
-        try {
-            $pr = $gw->execute( new \Payum\Stripe\Request\Api\CreateProduct( $product ) );
-            if ( isset( $product['error'] ) ) {
-                //throw new \Exception( $product['error']['message'] );
-            }
-        } catch ( Exception $e ) {
-            // throw new \Exception( $e->getMessage() );
-        }
-        
-        try {
-            $pl = $gw->execute( new \Payum\Stripe\Request\Api\CreatePlan( $plan ) );
-            if ( isset( $plan['error'] ) ) {
-                throw new \Exception( $plan['error']['message'] );
-            }
-        } catch (Exception $e) {
-            // throw new \Exception( $e->getMessage() );
-        }
-        
-        return $plan;
-    }
-    
     public function prepareAction( Request $request ): Response
     {
-        $ppr            = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
+        $em     = $this->getDoctrine()->getManager();
+        $card   = $this->getShoppingCard();
         
-        $packagePlan    = $ppr->find( $request->query->get( 'packagePlanId' ) );
-        if ( ! $packagePlan ) {
-            throw new \Exception('Invalid Request!!!');
-        }
+        $storage = $this->payum->getStorage( $this->paymentClass );
+        $payment = $storage->create();
         
-        $plan       = $this->createPlan();
+        $payment->setNumber( uniqid() );
+        $payment->setCurrencyCode( $card->getCurrencyCode() );
+        $payment->setTotalAmount( $card->getTotalAmount() * 100 ); // Amount must convert to at least 100 stotinka.
+        $payment->setDescription( $card->getDescription() );
         
-        $pb         = $this->get( 'ia_payment_builder' );
-        $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, $this->gatewayName() );
+        $payment->setClientId( $this->getUser() ? $this->getUser()->getId() : 'UNREGISTERED_USER' );
+        $payment->setClientEmail( $this->getUser() ? $this->getUser()->getEmail() : 'UNREGISTERED_USER' );
         
-        $payment->setPaymentMethod( 'stripe' );
+        /*
+         * Stripe. Store credit card and use later.
+         * ====================================================================================
+         * https://github.com/Payum/Payum/blob/master/docs/stripe/store-card-and-use-later.md
+         */
         $payment->setDetails([
-            'currency'      => $packagePlan->getCurrency(),
-            'amount'        => $packagePlan->getPrice() * $payment->getCurrencyDivisor(),
-            'description'   => $packagePlan->getDescription(),
-            'local'         => [
+            'local' => [
                 'save_card' => true,
-                'customer' => [
-                    'plan' => $plan['id']    // $packagePlan->getId()
-                ],
             ]
         ]);
-        $pb->updateStorage( $payment );
         
-        $captureToken = $this->get( 'payum' )->getTokenFactory()->createCaptureToken(
-            $this->gatewayName(),
+        $payment->setOrder( $card );
+        $em->persist( $card );
+        $em->flush();
+        $storage->update( $payment );
+        
+        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
+            $card->getPaymentMethod()->getGateway()->getGatewayName(),
             $payment,
-            'ia_payment_stripe_checkout_done' // the route to redirect after capture;
+            'vs_payment_stripe_checkout_done' // the route to redirect after capture
         );
         
-        return $this->redirect( $captureToken->getTargetUrl() );
-    }
-    
-    protected function gatewayName()
-    {
-        return 'stripe_checkout_gateway';
-    }
-    
-    protected function getErrorMessage( $details )
-    {
-        return 'STRIPE ERROR: ' . $details['error']['message'];
+        
+        if ( $card->getPaymentMethod()->getGateway()->getFactoryName() == 'stripe_js' ) {
+            $captureUrl = base64_encode( $captureToken->getTargetUrl() );
+            return $this->redirect( $this->generateUrl( 'vs_payment_show_credit_card_form', ['formAction' => $captureUrl] ) );
+        } else {
+            return $this->redirect( $captureToken->getTargetUrl() );
+        }
     }
 }
