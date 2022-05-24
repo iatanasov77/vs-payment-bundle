@@ -50,7 +50,7 @@ class StripeCheckoutController extends AbstractCheckoutController
         
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $card->getCurrencyCode() );
-        $payment->setTotalAmount( $card->getTotalAmount() );
+        $payment->setTotalAmount( $card->getTotalAmount() * 100 );
         $payment->setDescription( $card->getDescription() );
         
         $payment->setClientId( $this->getUser() ? $this->getUser()->getId() : 'UNREGISTERED_USER' );
