@@ -1,3 +1,19 @@
+1.0.0	|	Release date: **24.05.2022**
+============================================
+* New Features:
+  - Add Description Field in Order and Used it in Payment.
+  - StripeCheckoutController is Done!
+  - PaypalExpressCheckout Controller is Done!.
+  - Add Order Statuses For Success and Failed Paiments.
+* Bug-Fixes, Improvements and Refactoring:
+  - Fix StripeCheckout Rotes!
+  - Payment Checkout Refactoring.
+  - Improve AbstractCheckoutController::doneAction
+  - Refactoring
+  - Fix Payment Methods Form
+  - Stripe Amount Amount must convert to at least 100
+
+
 0.2.0	|	Release date: **23.05.2022**
 ============================================
 * Bug-Fixes , Improvements, Refactoring:
