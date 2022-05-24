@@ -1,3 +1,9 @@
+1.0.1	|	Release date: **24.05.2022**
+============================================
+* Bug-Fixes:
+  - Fix Order and OrderItem Doctrine Mappings.
+
+
 1.0.0	|	Release date: **24.05.2022**
 ============================================
 * New Features:
