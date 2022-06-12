@@ -29,7 +29,9 @@
         "payum/paypal-express-checkout-nvp": "^1.3",
         "payum/paypal-rest": "*",
         "payum/paypal-pro-checkout-nvp": "*",
-		"payum/stripe": "^1.5"
+		"payum/stripe": "^1.5",
+		
+		"vankosoft/users-subscriptions-bundle": ">=2.3.0"
     },
     "conflict": {
         "doctrine/doctrine-bundle": "<1.3",

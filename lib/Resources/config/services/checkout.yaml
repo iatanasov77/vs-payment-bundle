@@ -15,6 +15,8 @@ services:
             - '@vs_payment.repository.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
+            - '@vs_users_subscriptions.repository.payed_service_subscriptions'
+            - '@vs_users_subscriptions.factory.payed_service_subscriptions'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -25,6 +27,8 @@ services:
             - '@vs_payment.repository.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
+            - '@vs_users_subscriptions.repository.payed_service_subscriptions'
+            - '@vs_users_subscriptions.factory.payed_service_subscriptions'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -35,6 +39,8 @@ services:
             - '@vs_payment.repository.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
+            - '@vs_users_subscriptions.repository.payed_service_subscriptions'
+            - '@vs_users_subscriptions.factory.payed_service_subscriptions'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -45,6 +51,8 @@ services:
             - '@vs_payment.repository.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
+            - '@vs_users_subscriptions.repository.payed_service_subscriptions'
+            - '@vs_users_subscriptions.factory.payed_service_subscriptions'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     

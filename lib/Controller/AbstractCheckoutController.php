@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Factory\Factory;
 
 use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
@@ -24,14 +25,24 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var string */
     protected $paymentClass;
     
+    /** @var EntityRepository */
+    protected $subscriptionRepository;
+    
+    /** @var Factory */
+    protected $subscriptionFactory;
+    
     public function __construct(
         EntityRepository $ordersRepository,
         Payum $payum,
-        string $paymentClass
+        string $paymentClass,
+        EntityRepository $subscriptionRepository,
+        Factory $subscriptionFactory
     ) {
         $this->ordersRepository         = $ordersRepository;
         $this->payum                    = $payum;
         $this->paymentClass             = $paymentClass;
+        $this->subscriptionRepository   = $subscriptionRepository;
+        $this->subscriptionFactory      = $subscriptionFactory;
     }
     
     abstract public function prepareAction( Request $request ): Response;
@@ -53,6 +64,8 @@ abstract class AbstractCheckoutController extends AbstractController
             $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
             $storage->update( $payment );
             $this->get( 'session' )->remove( 'vs_payment_basket_id' );
+            
+            $this->setSubscription( $payment->getOrder() );
             
             return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
                 'paymentStatus' => $status,
@@ -98,5 +111,24 @@ abstract class AbstractCheckoutController extends AbstractController
     protected function getErrorMessage( $details )
     {
         return 'STRIPE ERROR: ' . $details['error']['message'];
+    }
+    
+    protected function setSubscription( Order $order )
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        foreach( $order->getItems() as $item ) {
+            $subscription   = $this->subscriptionFactory->createNew();
+            $payableObject  = $item->getObject();
+            
+            $subscription->setUser( $this->getUser() );
+            $subscription->setPayedService( $payableObject );
+            
+            $subscription->setSubscriptionCode( $payableObject->getSubscriptionCode() );
+            $subscription->setSubscriptionPriority( $payableObject->getSubscriptionPriority() );
+            
+            $em->persist( $subscription );
+            $em->flush();
+        }
     }
 }
