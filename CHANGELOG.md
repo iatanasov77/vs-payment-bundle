@@ -1,3 +1,10 @@
+2.0.0	|	Release date: **12.06.2022**
+============================================
+* New Features:
+  - Create Paid Subscription When Payment is Done Successfully.
+  - Add Composer Package Requirement.
+
+
 1.0.2	|	Release date: **24.05.2022**
 ============================================
 * New Features:
