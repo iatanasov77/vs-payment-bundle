@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
        	
        	"nyholm/psr7": "^1.5",
        	"php-http/guzzle6-adapter": "^2.0",
