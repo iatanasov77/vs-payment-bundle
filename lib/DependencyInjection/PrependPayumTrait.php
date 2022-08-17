@@ -11,9 +11,8 @@ trait PrependPayumTrait
         }
         
         $vsPaymentConfig    = $container->getExtensionConfig( 'vs_payment' );
-        $vsPaymentConfig    = isset( \array_pop( $vsPaymentConfig )['resources'] ) ? \array_pop( $vsPaymentConfig ) : $vsPaymentConfig[0];
         //echo "<pre>"; var_dump($vsPaymentConfig); die;
-        $vsPaymentResources = $vsPaymentConfig['resources'];
+        $vsPaymentResources = $vsPaymentConfig[0]['resources'];
         
         $payumConfig        = $container->getExtensionConfig( 'payum' );
         $container->prependExtensionConfig( 'payum', [
