@@ -1,3 +1,11 @@
+2.0.1	|	Release date: **17.08.2022**
+============================================
+* New Features:
+  - Begin Suport for PHP 8
+* Bug-Fixes:
+  - Fix Config Extension.
+
+
 2.0.0	|	Release date: **12.06.2022**
 ============================================
 * New Features:
