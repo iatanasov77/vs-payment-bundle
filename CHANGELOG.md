@@ -1,3 +1,9 @@
+2.1.0	|	Release date: **29.08.2022**
+============================================
+* New Features:
+  - Add VankoSoft Menu Translations.
+
+
 2.0.2	|	Release date: **17.08.2022**
 ============================================
 * Bug-Fixes:
