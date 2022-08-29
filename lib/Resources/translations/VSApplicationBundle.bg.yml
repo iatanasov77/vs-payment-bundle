@@ -1,0 +1,11 @@
+vs_application:
+    menu:
+        payment: Платежна Система
+        gateway_config: Гейтуей Конфигурация
+        gateways: Гейтуей Списък
+        create_new_gateway: Създай Нов Гейтуей
+        edit_a_gateway: Редакция на Гейтуей
+        payment_methods: Начини на Плащане
+        create_new_payment_method: Създай Нов Начин на Плащане
+        edit_a_payment_method: Редакция на Начин на Плащане
+

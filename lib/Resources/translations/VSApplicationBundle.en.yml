@@ -1,0 +1,11 @@
+vs_application:
+    menu:
+        payment: Payment System
+        gateway_config: Gateway Config
+        gateways: Gateways
+        create_new_gateway: Create New Gateway
+        edit_a_gateway: Edit a Gateway
+        payment_methods: Payment Methods
+        create_new_payment_method: Create New Payment Method
+        edit_a_payment_method: Edit a Payment Method
+
