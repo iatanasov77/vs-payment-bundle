@@ -1,3 +1,9 @@
+2.1.1	|	Release date: **06.09.2022**
+============================================
+* New Features:
+  - AdminPanel Set Current Menu Item.
+
+
 2.1.0	|	Release date: **29.08.2022**
 ============================================
 * New Features:
