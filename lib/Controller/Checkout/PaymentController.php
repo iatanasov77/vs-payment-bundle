@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
@@ -15,6 +16,9 @@ use Vankosoft\PaymentBundle\Form\CreditCardForm;
 
 class PaymentController extends AbstractController
 {
+    /** @var ManagerRegistry */
+    protected ManagerRegistry $doctrine;
+    
     /** @var Payment */
     protected $vsPayment;
     
@@ -31,12 +35,14 @@ class PaymentController extends AbstractController
     protected $payableObjectsRepository;
     
     public function __construct(
+        ManagerRegistry $doctrine,
         Payment $vsPayment,
         Factory $ordersFactory,
         Factory $orderItemsFactory,
         EntityRepository $ordersRepository,
         EntityRepository $payableObjectsRepository
     ) {
+        $this->doctrine                 = $doctrine;
         $this->vsPayment                = $vsPayment;
         $this->ordersFactory            = $ordersFactory;
         $this->orderItemsFactory        = $orderItemsFactory;
@@ -51,7 +57,7 @@ class PaymentController extends AbstractController
         if ( ! $card ) {
             throw new ShoppingCardException( 'Card cannot be created !!!' );
         }
-        $em             = $this->getDoctrine()->getManager();
+        $em             = $this->doctrine->getManager();
         
         $orderItem      = $this->orderItemsFactory->createNew();
         $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
@@ -94,7 +100,7 @@ class PaymentController extends AbstractController
         $form   = $this->createForm( PaymentForm::class );
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
-            $em         = $this->getDoctrine()->getManager();
+            $em         = $this->doctrine->getManager();
             $formData   = $form->getData();
             
             $card->setPaymentMethod( $formData['paymentMethod'] );
@@ -133,7 +139,7 @@ class PaymentController extends AbstractController
     
     protected function createCard()
     {
-        $em     = $this->getDoctrine()->getManager();
+        $em    = $this->doctrine->getManager();
         $card  = $this->ordersFactory->createNew();
         
         $card->setUser( $this->getUser() );

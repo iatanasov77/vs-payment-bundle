@@ -4,6 +4,7 @@ use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\Persistence\ManagerRegistry;
 
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Resource\Factory\Factory;
@@ -17,6 +18,9 @@ use Vankosoft\ApplicationBundle\Component\Status;
 
 class GatewayConfigExtController extends PayumController
 {
+    /** @var ManagerRegistry */
+    protected ManagerRegistry $doctrine;
+    
     /** @var string */
     protected $gatewayConfigClass;
     
@@ -27,10 +31,12 @@ class GatewayConfigExtController extends PayumController
     protected Factory $gatewayConfigFactory;
     
     public function __construct(
+        ManagerRegistry $doctrine,
         string $gatewayConfigClass,
         EntityRepository $gatewayConfigRepository,
         Factory $gatewayConfigFactory
     ) {
+        $this->doctrine                 = $doctrine;
         $this->gatewayConfigClass       = $gatewayConfigClass;
         $this->gatewayConfigRepository  = $gatewayConfigRepository;
         $this->gatewayConfigFactory     = $gatewayConfigFactory;
@@ -45,14 +51,14 @@ class GatewayConfigExtController extends PayumController
     
     public function configAction( $gatewayName, Request $request ): Response
     {
-        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), $this->gatewayConfigClass );
+        $gatewayConfigStorage = new DoctrineStorage( $this->doctrine->getManager(), $this->gatewayConfigClass );
         $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
         $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfigForm::class, $gatewayConfig );
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
-            $em                                     = $this->getDoctrine()->getManager();
+            $em                                     = $this->doctrine->getManager();
             $submitedGatewayConfig                  = $form->getData();
             $postData                               = $request->request->get( 'gateway_config_form' );
             //echo "<pre>"; var_dump( $postData ); die;
@@ -74,7 +80,7 @@ class GatewayConfigExtController extends PayumController
     
     public function gatewayConfigAction( Request $request ): JsonResponse
     {
-        $gatewayConfigStorage   = new DoctrineStorage( $this->getDoctrine()->getManager(), $this->gatewayConfigClass );
+        $gatewayConfigStorage   = new DoctrineStorage( $this->doctrine->getManager(), $this->gatewayConfigClass );
         $gatewayConfig          = $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfigType::class, [
