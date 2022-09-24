@@ -1,3 +1,9 @@
+2.1.2	|	Release date: **24.09.2022**
+============================================
+* New Features:
+  - Remove Calling of getDoctrine() method from All Controllers and Inject Doctrine in Constructors.
+
+
 2.1.1	|	Release date: **06.09.2022**
 ============================================
 * New Features:
