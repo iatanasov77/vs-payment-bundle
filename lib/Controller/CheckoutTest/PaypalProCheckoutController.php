@@ -29,7 +29,7 @@ class PaypalProCheckoutController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
-        $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
+        $ppr = $this->doctrine->getRepository( 'IAUsersBundle:PackagePlan' );
         
         $packagePlanId  = $request->query->get( 'packagePlanId' );
         $packagePlan = $ppr->find( $packagePlanId );

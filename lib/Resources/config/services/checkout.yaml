@@ -12,6 +12,7 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController:
         arguments:
+            - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
@@ -24,6 +25,7 @@ services:
     #######################################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutRecurringController:
         arguments:
+            - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
@@ -36,6 +38,7 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController:
         arguments:
+            - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
@@ -48,6 +51,7 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController:
         arguments:
+            - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'

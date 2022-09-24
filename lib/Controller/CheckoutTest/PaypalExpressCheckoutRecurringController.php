@@ -26,7 +26,7 @@ class PaypalExpressCheckoutRecurringController extends AbstractCheckoutControlle
 
     public function prepareAction( Request $request ): Response
     {
-        $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
+        $ppr = $this->doctrine->getRepository( 'IAUsersBundle:PackagePlan' );
         
         $packagePlanId  = $request->query->get( 'packagePlanId' );
         $packagePlan = $ppr->find( $packagePlanId );
@@ -69,7 +69,7 @@ class PaypalExpressCheckoutRecurringController extends AbstractCheckoutControlle
 
     public function createRecurringPaymentAction( $packagePlanId, Request $request )
     {
-        $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
+        $ppr = $this->doctrine->getRepository('IAUsersBundle:PackagePlan');
         
         $packagePlan = $ppr->find( $packagePlanId );
         if ( ! $packagePlan ) {
@@ -137,7 +137,7 @@ class PaypalExpressCheckoutRecurringController extends AbstractCheckoutControlle
     {
         $gateway = $this->getPayum()->getGateway( $this->gatewayName() );
         
-        $ppr = $this->getDoctrine()->getRepository( 'IAPaymentBundle:Payment' );
+        $ppr = $this->doctrine->getRepository( 'IAPaymentBundle:Payment' );
         $payment = $ppr->find( $paymentId );
         
         $gateway->execute( new Cancel( $payment ) );
@@ -159,7 +159,7 @@ class PaypalExpressCheckoutRecurringController extends AbstractCheckoutControlle
             )
         );
         
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $em->persist( $activity );
         $em->flush();
         
@@ -179,7 +179,7 @@ class PaypalExpressCheckoutRecurringController extends AbstractCheckoutControlle
     private function runWorkаround( $payment )
     {
         // WORKAROUND
-        $conn = $this->getDoctrine()->getManager()->getConnection();
+        $conn = $this->doctrine->getManager()->getConnection();
         $sql = '
     		UPDATE IAP_Payments SET details=:details
     		WHERE IAP_Payments.id=:id

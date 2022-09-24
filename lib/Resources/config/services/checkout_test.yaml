@@ -8,6 +8,7 @@ services:
         tags: ['controller.service_arguments']
         autowire: false
         arguments:
+            - '@doctrine'
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service'
             - '@payum'

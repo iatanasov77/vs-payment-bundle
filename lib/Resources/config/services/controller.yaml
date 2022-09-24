@@ -8,6 +8,7 @@ services:
         tags: ['controller.service_arguments']
         autowire: true
         arguments:
+            - '@doctrine'
             - '%vs_payment.model.gateway_config.class%'
             - '@vs_payment.repository.gateway_config'
             - '@vs_payment.factory.gateway_config'
@@ -16,6 +17,7 @@ services:
         tags: ['controller.service_arguments']
         autowire: true
         arguments:
+            - '@doctrine'
             - '%vs_payment.model.payment_method.class%'
             - '@vs_payment.repository.payment_method'
             - '@vs_payment.factory.payment_method'

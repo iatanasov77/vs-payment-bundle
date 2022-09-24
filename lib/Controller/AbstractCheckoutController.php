@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Resource\Factory\Factory;
 
@@ -16,6 +17,9 @@ use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
+    /** @var ManagerRegistry */
+    protected ManagerRegistry $doctrine;
+    
     /** @var EntityRepository */
     protected $ordersRepository;
     
@@ -32,12 +36,14 @@ abstract class AbstractCheckoutController extends AbstractController
     protected $subscriptionFactory;
     
     public function __construct(
+        ManagerRegistry $doctrine,
         EntityRepository $ordersRepository,
         Payum $payum,
         string $paymentClass,
         EntityRepository $subscriptionRepository,
         Factory $subscriptionFactory
     ) {
+        $this->doctrine                 = $doctrine;
         $this->ordersRepository         = $ordersRepository;
         $this->payum                    = $payum;
         $this->paymentClass             = $paymentClass;
@@ -115,7 +121,7 @@ abstract class AbstractCheckoutController extends AbstractController
     
     protected function setSubscription( Order $order )
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         
         foreach( $order->getItems() as $item ) {
             $subscription   = $this->subscriptionFactory->createNew();
