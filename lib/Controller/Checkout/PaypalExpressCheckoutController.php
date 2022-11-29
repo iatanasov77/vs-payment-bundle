@@ -5,9 +5,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /*
- * TEST ACCOUNTS
- * -----------------------------------------------
- * sb-wsp2g401218@personal.example.com / 8o?JWT#6
  * 
  * DEPRECATED
  * ==========
