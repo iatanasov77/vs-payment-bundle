@@ -68,7 +68,7 @@ abstract class AbstractCheckoutController extends AbstractController
         if ( $status->isCaptured() || $status->isAuthorized() || $status->isPending() ) {
             // success
             $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
-            $this->debugObject( $payment );
+            //$this->debugObject( $payment );
             $storage->update( $payment );
             $this->get( 'session' )->remove( 'vs_payment_basket_id' );
             
