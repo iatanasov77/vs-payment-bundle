@@ -19,6 +19,7 @@ class Payment
                 
                 break;
             case 'paypal_rest':
+                $route  = 'vs_payment_paypal_rest_prepare';
                 
                 break;
             default:

@@ -35,8 +35,17 @@ vs_payment_paypal_express_checkout_done:
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::doneAction
 
 
+# PayPal Rest
+#######################################################################################
+vs_payment_paypal_rest_prepare:
+    path:     /paypal_rest/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::prepareAction
+    options:
+        expose: true
 
-
+vs_payment_paypal_rest_done:
+    path:     /paypal_rest/done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::doneAction
 
 
 
