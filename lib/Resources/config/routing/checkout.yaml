@@ -48,5 +48,17 @@ vs_payment_paypal_rest_done:
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::doneAction
 
 
+# Borica
+#######################################################################################
+vs_payment_borica_prepare:
+    path:     /borica/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\BoricaController::prepareAction
+    options:
+        expose: true
+
+vs_payment_borica_done:
+    path:     /borica/done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\BoricaController::doneAction
+
 
 
