@@ -72,6 +72,19 @@ services:
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
         calls:
             - [ setContainer, [ '@service_container' ] ]
+            
+    # BORICA
+    ##############################
+    Vankosoft\PaymentBundle\Controller\Checkout\BoricaController:
+        arguments:
+            - '@doctrine'
+            - '@vs_payment.repository.order'
+            - '@payum'
+            - '%vs_payment.model.payment.class%'
+            - '@vs_users_subscriptions.repository.payed_service_subscriptions'
+            - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
     
     
 
