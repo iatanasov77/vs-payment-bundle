@@ -14,6 +14,16 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
     protected $id;
     
     /**
+     * @var string
+     */
+    protected $title;
+    
+    /**
+     * @var string
+     */
+    protected $description;
+    
+    /**
      * @var bool
      */
     protected $useSandbox;
@@ -27,6 +37,11 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
      * @var Collection|PaymentMethodInterface[]
      */
     protected $paymentMethods;
+    
+    /**
+     * @var string
+     */
+    protected $locale;
     
     /**
      * {@inheritDoc}
@@ -61,6 +76,30 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function getTitle()
+    {
+        return $this->title;
+    }
+    
+    public function setTitle($title): self
+    {
+        $this->title = $title;
+        
+        return $this;
+    }
+    
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    public function setDesciption($description): self
+    {
+        $this->description = $description;
+        
+        return $this;
     }
     
     public function getSandboxConfig()
@@ -110,5 +149,17 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
             $this->paymentMethods->removeElement( $paymentMethod );
             $paymentMethod->setGateway( null );
         }
+    }
+    
+    public function getTranslatableLocale(): ?string
+    {
+        return $this->locale;
+    }
+    
+    public function setTranslatableLocale($locale): self
+    {
+        $this->locale = $locale;
+        
+        return $this;
     }
 }

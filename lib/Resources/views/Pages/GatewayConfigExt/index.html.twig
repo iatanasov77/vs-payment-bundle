@@ -19,6 +19,8 @@
                 <table class="table table-striped table-advance table-hover">
                     <tr>
                         <th width="50">N</th>
+                        <th>{{ 'vs_payment.template.gateway_config_ext.index.gateway_title' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.gateway_config_ext.index.gateway_description' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_payment.template.gateway_config_ext.index.payment_gateway' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_payment.template.gateway_config_ext.index.gateway_factory' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_payment.template.gateway_config_ext.index.use_sandbox' | trans( {},'VSPaymentBundle' ) }}</th>
@@ -29,6 +31,8 @@
                             <td>
                                 {{ loop.index }}
                             </td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.description }}</td>
                             <td>
                                 <a href="{{ path('vs_payment_gateways_config', {'gatewayName': item.gatewayName}) }}">
                                     {{ item.gatewayName }}
