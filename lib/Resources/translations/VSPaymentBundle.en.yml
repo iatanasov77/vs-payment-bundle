@@ -1,8 +1,12 @@
 vs_payment:
     form:
         active: Active
-        gateway: Gateway Name
+        gateway: Gateway ID
         factory: Factory
+        title: Title
+        description: Description
+        gatewayNameHelp: This is the Gateway ID Used in Payum
+        factoryHelp: This is the Factory ID Used in Payum
         
         gateway_config:
             use_sandbox: Use Sandbox
@@ -26,12 +30,15 @@ vs_payment:
         gateway_config_ext:
             index:
                 title: Payment Gateways
-                payment_gateway: Payment Gateway
+                payment_gateway: Gateway ID
                 gateway_factory: Gateway Factory
                 use_sandbox: Use Sandbox
                 create_new_gateway: Create New Gateway
+                gateway_title: Title
+                gateway_description: Description
             config:
                 title: Gateway Config
+                payum_config_options: Payum Config Options
                 options_title: Gateway Config Options
                 sandbox_config: Sandbox Config
                 sandbox_config_options_title: Sandbox Config Options

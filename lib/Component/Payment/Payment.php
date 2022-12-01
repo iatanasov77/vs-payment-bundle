@@ -19,6 +19,11 @@ class Payment
                 
                 break;
             case 'paypal_rest':
+                $route  = 'vs_payment_paypal_rest_prepare';
+                
+                break;
+            case 'borica':
+                $route  = 'vs_payment_borica_prepare';
                 
                 break;
             default:

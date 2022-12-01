@@ -106,8 +106,16 @@ class GatewayConfigExtController extends PayumController
     
     private function gatewayConfigOptions( $factory )
     {
-        $config    = $this->get( 'payum' )->getGatewayFactory( $factory )->createConfig();
+        $config             = $this->get( 'payum' )->getGatewayFactory( $factory )->createConfig();
+        $payumFactoryConfig = $config['payum.default_options'];
+        //var_dump( $payumFactoryConfig ); die;
         
-        return $config['payum.default_options'];
+        if ( $factory == 'paypal_rest' ) {
+            // The key 'config' is array and not needed use 'config_path' and set path to the ini file
+            // Examle ini file: https://github.com/paypal/PayPal-PHP-SDK/blob/master/sample/sdk_config.ini
+            unset( $payumFactoryConfig['config'] );
+        }
+        
+        return $payumFactoryConfig;
     }
 }

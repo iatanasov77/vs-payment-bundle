@@ -28,35 +28,63 @@
                                     </div>
                                 {% endif %}
                                 
-                                <label class="custom-control custom-checkbox">  
-                                    <input type="checkbox" id="gateway_config_form_useSandbox"
-                                        class="custom-control-input form-check-input"
-                                        name="gateway_config_form[useSandbox]"
-                                        value="{{ form.vars.value.useSandbox }}"
-                                        {% if form.vars.value.useSandbox %}checked="checked"{% endif %}
-                                    />
-                                    <span class="custom-control-label">{{ form.useSandbox.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
-                                </label>
-    
-		                        <div class="form-group">
-		                            {{ form_label(form.gatewayName, null, {
+                                <div class="form-group">
+                                    {{ form_label(form.title, null, {
                                         'label_attr': {'class': 'col-form-label'}
                                         }) 
                                     }}
-		                            
-		                            {{ form_widget(form.gatewayName, {'attr': {'class': 'form-control'}}) }}
-		                        </div> 
-		                        <div class="form-group">    
-		                            {{ form_label(form.factoryName, null, {
+                                    
+                                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(form.description, null, {
                                         'label_attr': {'class': 'col-form-label'}
                                         }) 
                                     }}
-		                            {{ form_widget(form.factoryName, {'attr': {
-		                            	'data-getConfigUrl': path( 'vs_payment_gateways_config_options' ),
-		                            	'class': 'form-control'
-		                            }}) }}
-		                        </div>
-
+                                    
+                                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                    
+                                <fieldset class="border p-2 mb-4" style="width: 100%;">
+                                    <legend class="w-auto">{{ 'vs_payment.template.gateway_config_ext.config.payum_config_options' | trans( {},'VSPaymentBundle' ) }}</legend>
+                                    
+                                    <label class="custom-control custom-checkbox">  
+                                        <input type="checkbox" id="gateway_config_form_useSandbox"
+                                            class="custom-control-input form-check-input"
+                                            name="gateway_config_form[useSandbox]"
+                                            value="{{ form.vars.value.useSandbox }}"
+                                            {% if form.vars.value.useSandbox %}checked="checked"{% endif %}
+                                        />
+                                        <span class="custom-control-label">{{ form.useSandbox.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
+                                    </label>
+        
+    		                        <div class="form-group">
+    		                            {{ form_label(form.gatewayName, null, {
+                                            'label_attr': {'class': 'col-form-label'}
+                                            }) 
+                                        }}
+    		                            
+    		                            {{ form_widget(form.gatewayName, {'attr': {'class': 'form-control', 'aria-describedby': 'gatewayNameHelp'}}) }}
+    		                            <small id="gatewayNameHelp" class="form-text text-muted">
+                                            {{ 'vs_payment.form.gatewayNameHelp' | trans( {},'VSPaymentBundle' ) }}
+                                        </small>
+    		                        </div> 
+    		                        <div class="form-group">    
+    		                            {{ form_label(form.factoryName, null, {
+                                            'label_attr': {'class': 'col-form-label'}
+                                            }) 
+                                        }}
+    		                            {{ form_widget(form.factoryName, {'attr': {
+    		                            	'data-getConfigUrl': path( 'vs_payment_gateways_config_options' ),
+    		                            	'class': 'form-control',
+    		                            	'aria-describedby': 'factoryHelp'
+    		                            }}) }}
+    		                            <small id="factoryHelp" class="form-text text-muted">
+                                            {{ 'vs_payment.form.factoryHelp' | trans( {},'VSPaymentBundle' ) }}
+                                        </small>
+    		                        </div>
+                                </fieldset>
+                                
 		                        <div class="fieldsContainer" id="gatewayConfigOptions">
                                     {% include '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig' with { 'sandbox': false, 'options': gateway.getConfig( true, false ) } %}
 		                        </div>

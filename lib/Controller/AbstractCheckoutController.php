@@ -68,6 +68,7 @@ abstract class AbstractCheckoutController extends AbstractController
         if ( $status->isCaptured() || $status->isAuthorized() || $status->isPending() ) {
             // success
             $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
+            //$this->debugObject( $payment );
             $storage->update( $payment );
             $this->get( 'session' )->remove( 'vs_payment_basket_id' );
             
@@ -136,5 +137,13 @@ abstract class AbstractCheckoutController extends AbstractController
             $em->persist( $subscription );
             $em->flush();
         }
+    }
+    
+    protected function debugObject( $object )
+    {
+        $serializer         = \JMS\Serializer\SerializerBuilder::create()->build();
+        $serializedObject   = $serializer->serialize( $object, 'json' );
+        
+        \file_put_contents( '/tmp/DebugPaymentBundle', $serializedObject );
     }
 }
