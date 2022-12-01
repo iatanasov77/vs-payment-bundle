@@ -95,7 +95,7 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
         return $this->description;
     }
     
-    public function setDesciption($description): self
+    public function setDescription($description): self
     {
         $this->description = $description;
         
