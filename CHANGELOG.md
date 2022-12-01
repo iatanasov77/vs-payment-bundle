@@ -1,3 +1,16 @@
+2.2.0	|	Release date: **01.12.2022**
+============================================
+* New Features:
+  - Update Payum Packages.
+  - Create PaypalRestController Checkout Controller.
+  - Add Debug Functionality to AbstractCheckoutController .
+  - Add a Borica Checkout Controller.
+  - Add Borica Prepare Route.
+  - Improve GatewayConfig Model.
+* Bug-Fixes:
+  - Fix Gateway Config Controller for paypal_rest Factory.
+
+
 2.1.2	|	Release date: **24.09.2022**
 ============================================
 * New Features:
