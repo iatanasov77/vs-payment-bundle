@@ -31,6 +31,8 @@
         "payum/paypal-pro-checkout-nvp": "*",
 		"payum/stripe": "^1.7",
 		
+		"plumtreesystems/payum-paysera-gateway": "^0.3",
+		
 		"vankosoft/users-subscriptions-bundle": ">=2.3.0"
     },
     "conflict": {

@@ -47,6 +47,17 @@ vs_payment_paypal_rest_done:
     path:     /paypal_rest/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::doneAction
 
+# Paysera
+#######################################################################################
+vs_payment_paysera_prepare:
+    path:     /paysera/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\PayseraController::prepareAction
+    options:
+        expose: true
+
+vs_payment_paysera_done:
+    path:     /paysera/done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\PayseraController::doneAction
 
 # Borica
 #######################################################################################

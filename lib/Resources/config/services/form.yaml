@@ -1,6 +1,16 @@
 parameters:
-    #vs_payment.gateway_factories: ['offline', 'paypal_rest', 'paypal_express_checkout', 'paypal_pro_checkout', 'stripe_checkout', 'stripe_js']
-    vs_payment.gateway_factories: ['offline']
+
+    # GatewayConfig Form Options
+    ##########################################################
+    vs_payment.gateway_factories:
+        - 'offline'
+        - 'paypal_rest'
+        - 'paypal_express_checkout'
+        - 'paypal_pro_checkout'
+        - 'stripe_checkout'
+        - 'stripe_js'
+        - 'paysera'
+        - 'borica'
 
 services:
     vs_payment.resources.gateway_config.form:

@@ -22,6 +22,9 @@ class Payment
                 $route  = 'vs_payment_paypal_rest_prepare';
                 
                 break;
+            case 'paysera':
+                $route  = 'vs_payment_paysera_prepare';
+                
             case 'borica':
                 $route  = 'vs_payment_borica_prepare';
                 
