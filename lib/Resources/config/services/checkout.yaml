@@ -72,7 +72,7 @@ services:
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
         calls:
             - [ setContainer, [ '@service_container' ] ]
-            
+    
     # BORICA
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\BoricaController:

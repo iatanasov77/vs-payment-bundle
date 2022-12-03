@@ -1,0 +1,30 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+        
+    # PAYSERA GATEWAY FACTORY
+    # =======================
+    # MANUAL: https://support.paysera.com/index.php?/payserabgr/Knowledgebase/Article/View/1831/0/1003-kak-da-szdam-proekt-za-poluchavane-na-plashaniya-za-uslugata-paysera-tickets
+    ##############################
+    vankosoft.paysera_gateway_factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [PTS\Paysera\PayseraGatewayFactory]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: paysera }
+
+    # PAYSERA CHECKOUT CONTROLLER
+    ##############################
+    Vankosoft\PaymentBundle\Controller\Checkout\PayseraController:
+        arguments:
+            - '@doctrine'
+            - '@vs_payment.repository.order'
+            - '@payum'
+            - '%vs_payment.model.payment.class%'
+            - '@vs_users_subscriptions.repository.payed_service_subscriptions'
+            - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+
+

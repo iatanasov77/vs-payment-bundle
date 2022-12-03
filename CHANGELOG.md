@@ -1,3 +1,12 @@
+2.2.2	|	Release date: **03.12.2022**
+============================================
+* New Features:
+  - Add Paysera Gateway.
+  - Add Paysera Checkout Controller.
+  - Configure PayseraGatewayFactory .
+  - Add Link to Paysera Manual
+
+
 2.2.1	|	Release date: **01.12.2022**
 ============================================
 * Bug-Fixes:
