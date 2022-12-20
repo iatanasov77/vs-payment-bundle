@@ -7,6 +7,7 @@ services:
     # PAYSERA GATEWAY FACTORY
     # =======================
     # MANUAL: https://support.paysera.com/index.php?/payserabgr/Knowledgebase/Article/View/1831/0/1003-kak-da-szdam-proekt-za-poluchavane-na-plashaniya-za-uslugata-paysera-tickets
+    #         https://www.paysera.bg/v2/bg-BG/index
     ##############################
     vankosoft.paysera_gateway_factory:
         class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
