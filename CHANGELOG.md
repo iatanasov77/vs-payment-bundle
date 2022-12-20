@@ -1,3 +1,11 @@
+2.3.0	|	Release date: **20.12.2022**
+============================================
+* New Features, Fixes and Improvements:
+  - Add Link to Paysera Home
+  - Fix Model PaymentMethod .
+  - Update composer.json
+
+
 2.2.2	|	Release date: **03.12.2022**
 ============================================
 * New Features:
