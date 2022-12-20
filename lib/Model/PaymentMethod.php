@@ -4,6 +4,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
+use Sylius\Component\Resource\Model\TranslationInterface;
 
 use Interfaces\OrderInterface;
 
