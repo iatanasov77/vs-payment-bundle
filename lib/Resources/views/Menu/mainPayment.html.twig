@@ -4,7 +4,7 @@
     {% for parentItem in item.children %}
         <li class="nav-item ">
             <a class="nav-link"
-                data-toggle="collapse" aria-expanded="false" data-target="#submenu-payment-{{ loop.index }}" aria-controls="submenu-payment-{{ loop.index }}"
+                data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#submenu-payment-{{ loop.index }}" aria-controls="submenu-payment-{{ loop.index }}"
                 href="{{ parentItem.uri }}"
              >
                 {# <i class="{{ parentItem.attributes.iconClass }}"></i> #}
