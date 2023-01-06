@@ -1,3 +1,9 @@
+2.3.2	|	Release date: **06.01.2023**
+============================================
+* Bug-Fixes:
+  - Fix Templates Index Pages Table Heads For Bootstrap 5
+
+
 2.3.1	|	Release date: **05.01.2023**
 ============================================
 * Bug-Fixes:
