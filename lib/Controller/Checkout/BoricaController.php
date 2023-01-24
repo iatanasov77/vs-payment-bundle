@@ -8,7 +8,7 @@ class BoricaController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
-        $card   = $this->getShoppingCard();
+        $card   = $this->getShoppingCard( $request );
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();

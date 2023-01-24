@@ -70,7 +70,7 @@ abstract class AbstractCheckoutController extends AbstractController
             $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
             //$this->debugObject( $payment );
             $storage->update( $payment );
-            $this->get( 'session' )->remove( 'vs_payment_basket_id' );
+            $request->getSession()->remove( 'vs_payment_basket_id' );
             
             $this->setSubscription( $payment->getOrder() );
             
@@ -83,15 +83,15 @@ abstract class AbstractCheckoutController extends AbstractController
         if ( $status->isFailed() || $status->isCanceled() ) {
             $payment->getOrder()->setStatus( Order::STATUS_FAILED_ORDER );
             $storage->update( $payment );
-            $this->get( 'session' )->remove( 'vs_payment_basket_id' );
+            $request->getSession()->remove( 'vs_payment_basket_id' );
             
             throw new HttpException( 400, $this->getErrorMessage( $status->getModel() ) );
         }
     }
 
-    protected function getShoppingCard()
+    protected function getShoppingCard( Request $request )
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
+        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }

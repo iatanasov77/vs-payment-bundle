@@ -43,7 +43,7 @@ class StripeCheckoutController extends AbstractCheckoutController
     public function prepareAction( Request $request ): Response
     {
         $em     = $this->doctrine->getManager();
-        $card   = $this->getShoppingCard();
+        $card   = $this->getShoppingCard( $request );
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();

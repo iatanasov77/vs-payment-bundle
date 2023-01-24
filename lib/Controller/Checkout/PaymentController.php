@@ -52,8 +52,8 @@ class PaymentController extends AbstractController
     
     public function addToCardAction( $payableObjectId, Request $request ): Response
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
-        $card   = $cardId ? $this->ordersRepository->find( $cardId ) : $this->createCard();
+        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $card   = $cardId ? $this->ordersRepository->find( $cardId ) : $this->createCard( $request );
         if ( ! $card ) {
             throw new ShoppingCardException( 'Card cannot be created !!!' );
         }
@@ -88,7 +88,7 @@ class PaymentController extends AbstractController
     
     public function handlePaymentMethodsFormAction( Request $request ): Response
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
+        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }
@@ -120,7 +120,7 @@ class PaymentController extends AbstractController
     
     public function showCreditCardFormAction( $formAction, Request $request ): Response
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
+        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }
@@ -137,7 +137,7 @@ class PaymentController extends AbstractController
         ]);
     }
     
-    protected function createCard()
+    protected function createCard( Request $request )
     {
         $em    = $this->doctrine->getManager();
         $card  = $this->ordersFactory->createNew();
@@ -147,7 +147,7 @@ class PaymentController extends AbstractController
         $em->persist( $card );
         $em->flush();
         
-        $this->get('session')->set( 'vs_payment_basket_id', $card->getId() );
+        $request->getSession()->set( 'vs_payment_basket_id', $card->getId() );
         return $card;
     }
     
