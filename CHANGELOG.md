@@ -1,3 +1,11 @@
+2.3.3	|	Release date: **24.01.2023**
+============================================
+* Bug-Fixes:
+  - Fix a Deprecation.
+  - Fix Get Session for Symfony 6.
+  - Fix Get User for Symfony 6.
+
+
 2.3.2	|	Release date: **06.01.2023**
 ============================================
 * Bug-Fixes:

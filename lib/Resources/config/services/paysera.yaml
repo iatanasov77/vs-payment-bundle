@@ -19,6 +19,7 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PayseraController:
         arguments:
+            - '@security.token_storage'
             - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'

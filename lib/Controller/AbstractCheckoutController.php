@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Resource\Factory\Factory;
@@ -17,6 +18,9 @@ use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
+    /** @var TokenStorageInterface */
+    protected $tokenStorage;
+    
     /** @var ManagerRegistry */
     protected ManagerRegistry $doctrine;
     
@@ -36,6 +40,7 @@ abstract class AbstractCheckoutController extends AbstractController
     protected $subscriptionFactory;
     
     public function __construct(
+        TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
         EntityRepository $ordersRepository,
         Payum $payum,
@@ -43,6 +48,7 @@ abstract class AbstractCheckoutController extends AbstractController
         EntityRepository $subscriptionRepository,
         Factory $subscriptionFactory
     ) {
+        $this->tokenStorage             = $tokenStorage;
         $this->doctrine                 = $doctrine;
         $this->ordersRepository         = $ordersRepository;
         $this->payum                    = $payum;
@@ -70,7 +76,7 @@ abstract class AbstractCheckoutController extends AbstractController
             $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
             //$this->debugObject( $payment );
             $storage->update( $payment );
-            $this->get( 'session' )->remove( 'vs_payment_basket_id' );
+            $request->getSession()->remove( 'vs_payment_basket_id' );
             
             $this->setSubscription( $payment->getOrder() );
             
@@ -83,15 +89,15 @@ abstract class AbstractCheckoutController extends AbstractController
         if ( $status->isFailed() || $status->isCanceled() ) {
             $payment->getOrder()->setStatus( Order::STATUS_FAILED_ORDER );
             $storage->update( $payment );
-            $this->get( 'session' )->remove( 'vs_payment_basket_id' );
+            $request->getSession()->remove( 'vs_payment_basket_id' );
             
             throw new HttpException( 400, $this->getErrorMessage( $status->getModel() ) );
         }
     }
 
-    protected function getShoppingCard()
+    protected function getShoppingCard( Request $request )
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
+        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }
@@ -128,7 +134,7 @@ abstract class AbstractCheckoutController extends AbstractController
             $subscription   = $this->subscriptionFactory->createNew();
             $payableObject  = $item->getObject();
             
-            $subscription->setUser( $this->getUser() );
+            $subscription->setUser( $this->tokenStorage->getToken()->getUser() );
             $subscription->setPayedService( $payableObject );
             
             $subscription->setSubscriptionCode( $payableObject->getSubscriptionCode() );

@@ -8,7 +8,7 @@ class PayseraController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
-        $card   = $this->getShoppingCard();
+        $card   = $this->getShoppingCard( $request );
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
@@ -19,9 +19,9 @@ class PayseraController extends AbstractCheckoutController
         $payment->setTotalAmount( $card->getTotalAmount() );
         $payment->setDescription( $card->getDescription() );
         
-        $payment->setClientId( $this->getUser() ? $this->getUser()->getId() : 'UNREGISTERED_USER' );
-        $payment->setClientEmail( $this->getUser() ? $this->getUser()->getEmail() : 'UNREGISTERED_USER' );
-        
+        $user   = $this->tokenStorage->getToken()->getUser();
+        $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
+        $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
         $storage->update( $payment );
         

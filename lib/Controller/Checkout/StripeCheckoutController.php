@@ -43,7 +43,7 @@ class StripeCheckoutController extends AbstractCheckoutController
     public function prepareAction( Request $request ): Response
     {
         $em     = $this->doctrine->getManager();
-        $card   = $this->getShoppingCard();
+        $card   = $this->getShoppingCard( $request );
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
@@ -53,8 +53,9 @@ class StripeCheckoutController extends AbstractCheckoutController
         $payment->setTotalAmount( $card->getTotalAmount() * 100 ); // Amount must convert to at least 100 stotinka.
         $payment->setDescription( $card->getDescription() );
         
-        $payment->setClientId( $this->getUser() ? $this->getUser()->getId() : 'UNREGISTERED_USER' );
-        $payment->setClientEmail( $this->getUser() ? $this->getUser()->getEmail() : 'UNREGISTERED_USER' );
+        $user   = $this->tokenStorage->getToken()->getUser();
+        $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
+        $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
         /*
          * Stripe. Store credit card and use later.

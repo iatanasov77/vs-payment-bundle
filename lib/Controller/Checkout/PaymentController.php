@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
@@ -16,6 +17,9 @@ use Vankosoft\PaymentBundle\Form\CreditCardForm;
 
 class PaymentController extends AbstractController
 {
+    /** @var TokenStorageInterface */
+    protected $tokenStorage;
+    
     /** @var ManagerRegistry */
     protected ManagerRegistry $doctrine;
     
@@ -35,6 +39,7 @@ class PaymentController extends AbstractController
     protected $payableObjectsRepository;
     
     public function __construct(
+        TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
         Payment $vsPayment,
         Factory $ordersFactory,
@@ -42,6 +47,7 @@ class PaymentController extends AbstractController
         EntityRepository $ordersRepository,
         EntityRepository $payableObjectsRepository
     ) {
+        $this->tokenStorage             = $tokenStorage;
         $this->doctrine                 = $doctrine;
         $this->vsPayment                = $vsPayment;
         $this->ordersFactory            = $ordersFactory;
@@ -52,8 +58,8 @@ class PaymentController extends AbstractController
     
     public function addToCardAction( $payableObjectId, Request $request ): Response
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
-        $card   = $cardId ? $this->ordersRepository->find( $cardId ) : $this->createCard();
+        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $card   = $cardId ? $this->ordersRepository->find( $cardId ) : $this->createCard( $request );
         if ( ! $card ) {
             throw new ShoppingCardException( 'Card cannot be created !!!' );
         }
@@ -88,7 +94,7 @@ class PaymentController extends AbstractController
     
     public function handlePaymentMethodsFormAction( Request $request ): Response
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
+        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }
@@ -120,7 +126,7 @@ class PaymentController extends AbstractController
     
     public function showCreditCardFormAction( $formAction, Request $request ): Response
     {
-        $cardId = $this->get('session')->get( 'vs_payment_basket_id' );
+        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
         if ( ! $cardId ) {
             throw new ShoppingCardException( 'Card not exist in session !!!' );
         }
@@ -137,17 +143,17 @@ class PaymentController extends AbstractController
         ]);
     }
     
-    protected function createCard()
+    protected function createCard( Request $request )
     {
         $em    = $this->doctrine->getManager();
         $card  = $this->ordersFactory->createNew();
         
-        $card->setUser( $this->getUser() );
+        $card->setUser( $this->tokenStorage->getToken()->getUser() );
         
         $em->persist( $card );
         $em->flush();
         
-        $this->get('session')->set( 'vs_payment_basket_id', $card->getId() );
+        $request->getSession()->set( 'vs_payment_basket_id', $card->getId() );
         return $card;
     }
     

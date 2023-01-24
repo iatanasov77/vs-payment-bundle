@@ -12,6 +12,7 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController:
         arguments:
+            - '@security.token_storage'
             - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'
@@ -25,6 +26,7 @@ services:
     #######################################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutRecurringController:
         arguments:
+            - '@security.token_storage'
             - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'
@@ -38,6 +40,7 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController:
         arguments:
+            - '@security.token_storage'
             - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'
@@ -51,6 +54,7 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController:
         arguments:
+            - '@security.token_storage'
             - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'
@@ -64,6 +68,7 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController:
         arguments:
+            - '@security.token_storage'
             - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'
@@ -77,6 +82,7 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\BoricaController:
         arguments:
+            - '@security.token_storage'
             - '@doctrine'
             - '@vs_payment.repository.order'
             - '@payum'

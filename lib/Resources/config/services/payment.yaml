@@ -15,6 +15,7 @@ services:
         tags: ['controller.service_arguments']
         autowire: false
         arguments:
+            - '@security.token_storage'
             - '@doctrine'
             - '@vs_payment_payment'
             - '@vs_payment.factory.order'
