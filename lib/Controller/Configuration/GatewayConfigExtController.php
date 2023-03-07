@@ -1,6 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Configuration;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
+use Payum\Core\Payum;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,11 +32,14 @@ class GatewayConfigExtController extends PayumController
     protected Factory $gatewayConfigFactory;
     
     public function __construct(
+        Payum $payum,
         ManagerRegistry $doctrine,
         string $gatewayConfigClass,
         EntityRepository $gatewayConfigRepository,
         Factory $gatewayConfigFactory
     ) {
+        parent::__construct( $payum );
+        
         $this->doctrine                 = $doctrine;
         $this->gatewayConfigClass       = $gatewayConfigClass;
         $this->gatewayConfigRepository  = $gatewayConfigRepository;
@@ -106,7 +110,7 @@ class GatewayConfigExtController extends PayumController
     
     private function gatewayConfigOptions( $factory )
     {
-        $config             = $this->get( 'payum' )->getGatewayFactory( $factory )->createConfig();
+        $config             = $this->payum->getGatewayFactory( $factory )->createConfig();
         $payumFactoryConfig = $config['payum.default_options'];
         //var_dump( $payumFactoryConfig ); die;
         
