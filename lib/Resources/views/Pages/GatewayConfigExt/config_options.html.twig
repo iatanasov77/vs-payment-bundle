@@ -6,16 +6,14 @@
             <legend class="w-100">{{ 'vs_payment.template.gateway_config_ext.config.options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
         {% endif %}
         
-        {% if sandbox %}
-            <input type="hidden" name="gateway_config_form[sandboxConfig][sandbox]" value="true" />
-        {% endif %}
-        
         {% if factory == 'paysera' %}
             <input type="hidden"
                 id="gateway_config_form{% if sandbox %}_sandbox{% else %}_config{% endif %}_test"
                 name="gateway_config_form[{% if sandbox %}sandboxConfig{% else %}config{% endif %}][test]"
                 value="{% if sandbox %}true{% else %}false{% endif %}"
             />
+        {% elseif sandbox %}
+            <input type="hidden" name="gateway_config_form[sandboxConfig][sandbox]" value="true" />
         {% endif %}
         
         {% for key, value in options %}
