@@ -1,3 +1,14 @@
+2.4.0	|	Release date: **08.03.2023**
+============================================
+* New Features:
+  - Improve Gateway Config Form for Paysera Gateway.
+  - Improve Gateway Config Options Form.
+* Bug-Fixes:
+  - Fix GatewayConfigExtController
+  - Fix Gateway Config Options Template.
+  - Fix Edit of Gateway Config.
+
+
 2.3.3	|	Release date: **24.01.2023**
 ============================================
 * Bug-Fixes:
