@@ -10,8 +10,16 @@
             <input type="hidden" name="gateway_config_form[sandboxConfig][sandbox]" value="true" />
         {% endif %}
         
+        {% if factory == 'paysera' %}
+            <input type="hidden"
+                id="gateway_config_form{% if sandbox %}_sandbox{% else %}_config{% endif %}_test"
+                name="gateway_config_form[{% if sandbox %}sandboxConfig{% else %}config{% endif %}][test]"
+                value="{% if sandbox %}true{% else %}false{% endif %}"
+            />
+        {% endif %}
+        
         {% for key, value in options %}
-           {% if key not in ['factory', 'sandbox'] %}
+           {% if key not in ['factory', 'sandbox', 'test'] %}
     	    <div class="form-group">
     	    	<label class="control-label col-lg-2">{{ key }}</label>
     	    	

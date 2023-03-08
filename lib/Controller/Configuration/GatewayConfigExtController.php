@@ -98,12 +98,14 @@ class GatewayConfigExtController extends PayumController
                 'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
                 'form'      => $form->createView(),
                 'sandbox'   => false,
+                'factory'   => $request->query->get( 'factory' ),
             ])->getContent(),
             
             'sandboxConfig' => $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
                 'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
                 'form'      => $form->createView(),
                 'sandbox'   => true,
+                'factory'   => $request->query->get( 'factory' ),
             ])->getContent(),
         ]);
     }
