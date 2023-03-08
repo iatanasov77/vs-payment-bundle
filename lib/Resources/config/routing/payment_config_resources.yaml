@@ -12,3 +12,16 @@ vs_payment_method_config:
         templates: "@VSPayment/Pages/PaymentMethodConfig"
     type: sylius.resource
 
+vs_payment_currency:
+    resource: |
+        alias: vs_payment.currency
+        path: /payment/currency
+        templates: "@VSPayment/Pages/Currency"
+    type: sylius.resource
+
+vs_payment_exchange_rate:
+    resource: |
+        alias: vs_payment.exchange_rate
+        path: /payment/exchange_rate
+        templates: "@VSPayment/Pages/ExchangeRate"
+    type: sylius.resource

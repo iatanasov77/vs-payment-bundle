@@ -11,6 +11,12 @@ parameters:
         - 'stripe_js'
         - 'paysera'
         - 'borica'
+        
+    vs_payment.form.type.currency.validation_groups: 
+        - 'VSPaymentBundle'
+    vs_payment.form.type.exchange_rate.validation_groups:
+        - 'VSPaymentBundle'
+
 
 services:
     vs_payment.resources.gateway_config.form:
@@ -28,5 +34,28 @@ services:
         arguments:
             - '%vs_payment.model.payment_method.class%'
             - '%vs_payment.model.gateway_config.class%'
+    
+    vs_payment.resources.currency.form:
+        class: Vankosoft\PaymentBundle\Form\CurrencyForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.currency.class%'
+            - '%vs_payment.form.type.currency.validation_groups%'
+            
+    vs_payment.form.type.currency_choice:
+        class: Vankosoft\PaymentBundle\Form\Type\CurrencyChoiceType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@vs_payment.repository.currency'
+    
+    vs_payment.resources.exchange_rate.form:
+        class: Vankosoft\PaymentBundle\Form\ExchangeRateForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.exchange_rate.class%'
+            - '%vs_payment.form.type.exchange_rate.validation_groups%'
 
 
