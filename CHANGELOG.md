@@ -1,3 +1,9 @@
+2.4.1	|	Release date: **08.03.2023**
+============================================
+* New Features:
+  - Add Requirement For Borica Bundle.
+
+
 2.4.0	|	Release date: **08.03.2023**
 ============================================
 * New Features:
