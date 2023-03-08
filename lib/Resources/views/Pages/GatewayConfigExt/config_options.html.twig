@@ -1,17 +1,23 @@
 {% if options is not empty %}
 	<fieldset class="border p-2 mb-4" style="width: 100%;">
         {% if sandbox %}
-            <legend class="w-auto">{{ 'vs_payment.template.gateway_config_ext.config.sandbox_config_options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
+            <legend class="w-100">{{ 'vs_payment.template.gateway_config_ext.config.sandbox_config_options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
         {% else %}
-            <legend class="w-auto">{{ 'vs_payment.template.gateway_config_ext.config.options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
+            <legend class="w-100">{{ 'vs_payment.template.gateway_config_ext.config.options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
         {% endif %}
         
-        {% if sandbox %}
+        {% if factory == 'paysera' %}
+            <input type="hidden"
+                id="gateway_config_form{% if sandbox %}_sandbox{% else %}_config{% endif %}_test"
+                name="gateway_config_form[{% if sandbox %}sandboxConfig{% else %}config{% endif %}][test]"
+                value="{% if sandbox %}true{% else %}false{% endif %}"
+            />
+        {% elseif sandbox %}
             <input type="hidden" name="gateway_config_form[sandboxConfig][sandbox]" value="true" />
         {% endif %}
         
         {% for key, value in options %}
-           {% if key not in ['factory', 'sandbox'] %}
+           {% if key not in ['factory', 'sandbox', 'test'] %}
     	    <div class="form-group">
     	    	<label class="control-label col-lg-2">{{ key }}</label>
     	    	

@@ -1,6 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Configuration;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
+use Payum\Core\Payum;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,11 +32,14 @@ class GatewayConfigExtController extends PayumController
     protected Factory $gatewayConfigFactory;
     
     public function __construct(
+        Payum $payum,
         ManagerRegistry $doctrine,
         string $gatewayConfigClass,
         EntityRepository $gatewayConfigRepository,
         Factory $gatewayConfigFactory
     ) {
+        parent::__construct( $payum );
+        
         $this->doctrine                 = $doctrine;
         $this->gatewayConfigClass       = $gatewayConfigClass;
         $this->gatewayConfigRepository  = $gatewayConfigRepository;
@@ -60,7 +64,7 @@ class GatewayConfigExtController extends PayumController
         if ( $form->isSubmitted() ) {
             $em                                     = $this->doctrine->getManager();
             $submitedGatewayConfig                  = $form->getData();
-            $postData                               = $request->request->get( 'gateway_config_form' );
+            $postData                               = $request->request->all( 'gateway_config_form' );
             //echo "<pre>"; var_dump( $postData ); die;
             
             $submitedGatewayConfig->setConfig( $postData['config'] ) ;
@@ -74,6 +78,7 @@ class GatewayConfigExtController extends PayumController
         
         return $this->render('@VSPayment/Pages/GatewayConfigExt/config.html.twig', [
             'gateway'   => $gatewayConfig,
+            'factory'   => $gatewayConfig->getFactoryName(),
             'form'      => $form->createView()
         ]);
     }
@@ -94,19 +99,21 @@ class GatewayConfigExtController extends PayumController
                 'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
                 'form'      => $form->createView(),
                 'sandbox'   => false,
+                'factory'   => $request->query->get( 'factory' ),
             ])->getContent(),
             
             'sandboxConfig' => $this->render( '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig', [
                 'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
                 'form'      => $form->createView(),
                 'sandbox'   => true,
+                'factory'   => $request->query->get( 'factory' ),
             ])->getContent(),
         ]);
     }
     
     private function gatewayConfigOptions( $factory )
     {
-        $config             = $this->get( 'payum' )->getGatewayFactory( $factory )->createConfig();
+        $config             = $this->payum->getGatewayFactory( $factory )->createConfig();
         $payumFactoryConfig = $config['payum.default_options'];
         //var_dump( $payumFactoryConfig ); die;
         
