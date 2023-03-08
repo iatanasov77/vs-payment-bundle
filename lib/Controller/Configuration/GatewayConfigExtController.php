@@ -64,7 +64,7 @@ class GatewayConfigExtController extends PayumController
         if ( $form->isSubmitted() ) {
             $em                                     = $this->doctrine->getManager();
             $submitedGatewayConfig                  = $form->getData();
-            $postData                               = $request->request->get( 'gateway_config_form' );
+            $postData                               = $request->request->all( 'gateway_config_form' );
             //echo "<pre>"; var_dump( $postData ); die;
             
             $submitedGatewayConfig->setConfig( $postData['config'] ) ;
