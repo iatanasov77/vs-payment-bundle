@@ -56,8 +56,8 @@ class GatewayConfigExtController extends PayumController
     public function configAction( $gatewayName, Request $request ): Response
     {
         $gatewayConfigStorage = new DoctrineStorage( $this->doctrine->getManager(), $this->gatewayConfigClass );
-        $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
-        $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
+        $searchConfig = $gatewayConfigStorage->findOneBy( ['gatewayName'=>$gatewayName] );
+        $gatewayConfig = $searchConfig ? $searchConfig : $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfigForm::class, $gatewayConfig );
         $form->handleRequest( $request );
@@ -78,6 +78,7 @@ class GatewayConfigExtController extends PayumController
         
         return $this->render('@VSPayment/Pages/GatewayConfigExt/config.html.twig', [
             'gateway'   => $gatewayConfig,
+            'factory'   => $gatewayConfig->getFactoryName(),
             'form'      => $form->createView()
         ]);
     }
