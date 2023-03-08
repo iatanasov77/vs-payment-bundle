@@ -17,6 +17,19 @@ use Payum\Core\Bridge\Doctrine\Storage\DoctrineStorage;
 
 use Vankosoft\ApplicationBundle\Component\Status;
 
+/**
+ * How can I create a payment collection project ... - Paysera
+ * To Can Get ProjectId and Sign Password For Paysera
+ * =====================================================================
+ * https://support.paysera.com/index.php?/payseraeng/Knowledgebase/Article/View/1813/135/1003-how-can-i-create-a-payment-collection-project-for-a-paysera-tickets-service
+ * 
+ * 
+ * Виртуален ПОС - BORICA
+ * =====================================================================
+ * https://webops.eu/blog/%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D0%B5%D0%BD-%D0%BF%D0%BE%D1%81-vpos-%D0%BE%D1%82-%D0%B1%D0%BE%D1%80%D0%B8%D0%BA%D0%B0/
+ * https://www.postbank.bg/bg-BG/Malak-biznes/POS/Virtual-Pos
+ *
+ */
 class GatewayConfigExtController extends PayumController
 {
     /** @var ManagerRegistry */
