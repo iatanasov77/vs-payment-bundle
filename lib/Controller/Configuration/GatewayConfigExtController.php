@@ -56,8 +56,8 @@ class GatewayConfigExtController extends PayumController
     public function configAction( $gatewayName, Request $request ): Response
     {
         $gatewayConfigStorage = new DoctrineStorage( $this->doctrine->getManager(), $this->gatewayConfigClass );
-        $searchConfig = $gatewayConfigStorage->findOneBy( ['gatewayName'=>$gatewayName] );
-        $gatewayConfig = $searchConfig ? $searchConfig : $gatewayConfigStorage->create();
+        $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
+        $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfigForm::class, $gatewayConfig );
         $form->handleRequest( $request );
