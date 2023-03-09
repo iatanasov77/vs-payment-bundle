@@ -6,22 +6,22 @@
     <class name="Vankosoft\PaymentBundle\Model\Currency">
         <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
             <option name="fields">code</option>
-            <option name="message">sylius.currency.code.unique</option>
+            <option name="message">vs_payment.validation.currency_code_unique</option>
             <option name="groups">VSPaymentBundle</option>
         </constraint>
         <property name="code">
             <constraint name="NotBlank">
-                <option name="message">sylius.currency.code.not_blank</option>
+                <option name="message">vs_payment.validation.currency_code_not_blank</option>
                 <option name="groups">VSPaymentBundle</option>
             </constraint>
             <constraint name="Length">
                 <option name="min">3</option>
                 <option name="max">3</option>
-                <option name="exactMessage">sylius.currency.code.exact_length</option>
+                <option name="exactMessage">vs_payment.validation.currency_code_exact_length</option>
                 <option name="groups">VSPaymentBundle</option>
             </constraint>
             <constraint name="Regex">
-                <option name="message">sylius.currency.code.regex</option>
+                <option name="message">vs_payment.validation.currency_code_regex</option>
                 <option name="pattern">/^[\w-]*$/</option>
                 <option name="groups">VSPaymentBundle</option>
             </constraint>
