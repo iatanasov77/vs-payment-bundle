@@ -1,3 +1,22 @@
+2.5.0	|	Release date: **09.03.2023**
+============================================
+* New Features:
+  - Add Sylius Currency in Dependencies.
+  - Add Currency and ExchangeRate Resources.
+  - Add Currency Forms and Routes.
+  - Add Menu Translations.
+  - Add Views for Currency Resources.
+  - Add Controllers for Currency Resources.
+  - Make Currency Resource Forms to Extend Vankosoft Application AbstractForm.
+  - Add Interfaces to Currency Resources Configuration.
+  - Fix ExchangeRateForm Missing Constant.
+  - Add Update Ttemplate for ExchangeRate Resource.
+  - Fix Validation For Currency Resources.
+  - Add Currency Validator Services.
+  - Fix Currency Context Service.
+  - Fix ExchangeRate Index Template.
+
+
 2.4.1	|	Release date: **08.03.2023**
 ============================================
 * New Features:
