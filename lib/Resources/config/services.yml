@@ -6,6 +6,7 @@ imports:
     - { resource: services/checkout.yaml }
     - { resource: services/checkout_test.yaml }
     - { resource: services/paysera.yaml }
+    - { resource: services/currency.yaml }
     
 services:
     _defaults:
