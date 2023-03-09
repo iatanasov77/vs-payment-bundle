@@ -32,9 +32,11 @@ use Vankosoft\PaymentBundle\Model\Token;
 
 use Vankosoft\PaymentBundle\Model\Currency;
 use Vankosoft\PaymentBundle\Form\CurrencyForm;
+use Vankosoft\PaymentBundle\Controller\Configuration\CurrencyController;
 use Vankosoft\PaymentBundle\Model\ExchangeRate;
 use Vankosoft\PaymentBundle\Repository\ExchangeRateRepository;
 use Vankosoft\PaymentBundle\Form\ExchangeRateForm;
+use Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateController;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -189,7 +191,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( Currency::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'controller' )->defaultValue( ResourceController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( CurrencyController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( CurrencyForm::class )->cannotBeEmpty()->end()
@@ -206,7 +208,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( ExchangeRate::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'controller' )->defaultValue( ResourceController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( ExchangeRateController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( ExchangeRateRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( ExchangeRateForm::class )->cannotBeEmpty()->end()
