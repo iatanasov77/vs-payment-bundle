@@ -30,6 +30,8 @@ use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
 use Vankosoft\PaymentBundle\Model\Token;
 
+use Sylius\Component\Currency\Model\CurrencyInterface;
+use Sylius\Component\Currency\Model\ExchangeRateInterface;
 use Vankosoft\PaymentBundle\Model\Currency;
 use Vankosoft\PaymentBundle\Form\CurrencyForm;
 use Vankosoft\PaymentBundle\Controller\Configuration\CurrencyController;
@@ -191,6 +193,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( Currency::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'interface' )->defaultValue( CurrencyInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( CurrencyController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
@@ -208,6 +211,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( ExchangeRate::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'interface' )->defaultValue( ExchangeRateInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( ExchangeRateController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( ExchangeRateRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
