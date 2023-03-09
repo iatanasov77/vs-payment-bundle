@@ -5,7 +5,7 @@ services:
     vs_payment.context.currency.composite:
         class: Sylius\Component\Currency\Context\CompositeCurrencyContext
         decorates: sylius.context.currency
-        decoration-priority: 256
+        decoration_priority: 256
         public: false
     
     vs_payment.currency_converter:
