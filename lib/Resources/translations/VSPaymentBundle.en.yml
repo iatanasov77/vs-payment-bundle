@@ -70,6 +70,9 @@ vs_payment:
         currency_update_title: Edit Currency
         currency_create_title: Create Currency
         currency_title: Currency
+        exchange_rate_update_title: Edit Exchange Rate
+        exchange_rate_create_title: Create Exchange Rate
+        exchange_rate_title: Exchange Rate
     
     validation:
         currency_code_unique: Currency code must be unique.
