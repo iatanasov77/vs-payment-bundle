@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd"
+>
+    <class name="Vankosoft\PaymentBundle\Model\Currency">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">code</option>
+            <option name="message">vs_payment.validation.currency_code_unique</option>
+            <option name="groups">VSPaymentBundle</option>
+        </constraint>
+        <property name="code">
+            <constraint name="NotBlank">
+                <option name="message">vs_payment.validation.currency_code_not_blank</option>
+                <option name="groups">VSPaymentBundle</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">3</option>
+                <option name="max">3</option>
+                <option name="exactMessage">vs_payment.validation.currency_code_exact_length</option>
+                <option name="groups">VSPaymentBundle</option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="message">vs_payment.validation.currency_code_regex</option>
+                <option name="pattern">/^[\w-]*$/</option>
+                <option name="groups">VSPaymentBundle</option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

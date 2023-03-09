@@ -21,6 +21,17 @@ vs_payment:
             gateway_placeholder: '-- Select Gateway --'
             name: Payment Method Name
             payment_route: Payment Route
+            
+        currency:
+            base: Base currency
+            code: Name
+            enabled: Enabled
+            exchange_rate: Exchange rate
+        
+        exchange_rate:
+            source_currency: Source currency
+            target_currency: Target currency
+            ratio: Ratio
 
     template:
         gateway: Gateway
@@ -55,4 +66,25 @@ vs_payment:
                 sandbox_config: Sandbox Config
                 sandbox_config_options_title: Sandbox Config Options
                 
+                
+        currency_update_title: Edit Currency
+        currency_create_title: Create Currency
+        currency_title: Currency
+        exchange_rate_update_title: Edit Exchange Rate
+        exchange_rate_create_title: Create Exchange Rate
+        exchange_rate_title: Exchange Rate
     
+    validation:
+        currency_code_unique: Currency code must be unique.
+        currency_code_not_blank: Please choose currency code.
+        currency_code_exact_length: Currency code must be exactly 3 characters long.
+        currency_code_regex: Currency code can only be comprised of letters, numbers, dashes and underscores.
+        exchange_rate_ratio_invalid: The ratio must be a number.
+        exchange_rate_ratio_not_blank: Please enter exchange rate ratio.
+        exchange_rate_ratio_greater_than: The ratio must be greater than 0.
+        exchange_rate_source_currency_not_blank: Please enter from which currency the exchange rate should be derived.
+        exchange_rate_target_currency_not_blank: Please enter to which currency the exchange rate should be set.
+        unique_currency_pair: The currency pair must be unique.
+        different_source_target_currency: The source and target currencies must differ.
+
+

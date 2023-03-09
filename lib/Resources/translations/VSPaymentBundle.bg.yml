@@ -21,6 +21,17 @@ vs_payment:
             gateway_placeholder: '-- Избери Гейтуей --'
             name: Име на Метод на Плащане
             payment_route: Плащане Руут
+            
+        currency:
+            base: Основна валута
+            code: Име
+            enabled: Активирано
+            exchange_rate: Обменен курс
+        
+        exchange_rate:
+            source_currency: Валута източник
+            target_currency: Целева валута
+            ratio: Съотношение
     
     template:
         gateway: Гейтуей
@@ -42,4 +53,30 @@ vs_payment:
                 options_title: Гейтуей Конфигурация Опции
                 sandbox_config: Сенд-бокс Конфигурация
                 sandbox_config_options_title: Сенд-бокс Конфигурация Опции
+        
+        payment_method_config_ext:
+            index:
+                title: Методи за Плащане
+                payment_gateway: Плащане Гейтуей
+                gateway_factory: Гейтуей Фактори
+                create_new_payment_method: Създаване Нов Метод за Плащане
+            config:
+                title: Гейтуей Конфигурация
+                options_title: Гейтуей Конфигурация Опции
+                sandbox_config: Сендбокс Конфигурация
+                sandbox_config_options_title: Сендбокс Конфигурация Опции
     
+    validation:
+        currency_code_unique: Кодът на валутата трябва да бъде уникален.
+        currency_code_not_blank: Моля, изберете кода на валутата.
+        currency_code_exact_length: Кодът на валутата трябва да бъде точно 3 знака.
+        currency_code_regex: Код валута може да се състои само от букви, цифри, тирета и долни черти.
+        exchange_rate_ratio_invalid: Съотношението трябва да бъде число.
+        exchange_rate_ratio_not_blank: Моля, въведете обменния курс.
+        exchange_rate_ratio_greater_than: Съотношението трябва да бъде по-голямо от 0.
+        exchange_rate_source_currency_not_blank: Моля въведете от коя валута обменният курс трябва да бъдат извличан.
+        exchange_rate_target_currency_not_blank: Моля въведете коя валута следва да се определи обменният курс.
+        unique_currency_pair: Валутната двойка трябва да бъде уникален.
+        different_source_target_currency: Валутата източник и целевата валути трябва да се различават.
+
+

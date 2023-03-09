@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd"
+>
+    <class name="Vankosoft\PaymentBundle\Model\ExchangeRate">
+        <constraint name="Vankosoft\PaymentBundle\Validator\Constraints\UniqueCurrencyPair">
+            <option name="groups">VSPaymentBundle</option>
+        </constraint>
+        <constraint name="Vankosoft\PaymentBundle\Validator\Constraints\DifferentSourceTargetCurrency">
+            <option name="groups">VSPaymentBundle</option>
+        </constraint>
+        <property name="ratio">
+            <constraint name="NotBlank">
+                <option name="message">vs_payment.validation.exchange_rate_ratio_not_blank</option>
+                <option name="groups">VSPaymentBundle</option>
+            </constraint>
+            <constraint name="GreaterThan">
+                <option name="value">0</option>
+                <option name="message">vs_payment.validation.exchange_rate_ratio_greater_than</option>
+                <option name="groups">VSPaymentBundle</option>
+            </constraint>
+        </property>
+        <property name="sourceCurrency">
+            <constraint name="NotBlank">
+                <option name="message">vs_payment.validation.exchange_rate_source_currency_not_blank</option>
+                <option name="groups">VSPaymentBundle</option>
+            </constraint>
+        </property>
+        <property name="targetCurrency">
+            <constraint name="NotBlank">
+                <option name="message">vs_payment.validation.exchange_rate_target_currency_not_blank</option>
+                <option name="groups">VSPaymentBundle</option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

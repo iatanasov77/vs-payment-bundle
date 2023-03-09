@@ -1,0 +1,60 @@
+services:
+    _defaults:
+        public: true
+
+    vs_payment.context.currency:
+        class: Sylius\Component\Currency\Context\CurrencyContextInterface
+        abstract:  true
+    
+    vs_payment.context.currency.composite:
+        class: Sylius\Component\Currency\Context\CompositeCurrencyContext
+        decorates: vs_payment.context.currency
+        decoration_priority: 256
+        public: false
+    
+    vs_payment.currency_converter:
+        class: Sylius\Component\Currency\Converter\CurrencyConverter
+        arguments:
+            - '@vs_payment.repository.exchange_rate'
+    Sylius\Component\Currency\Converter\CurrencyConverterInterface:
+        alias: vs_payment.currency_converter
+
+    vs_payment.currency_name_converter:
+        class: Sylius\Component\Currency\Converter\CurrencyNameConverter
+    Sylius\Component\Currency\Converter\CurrencyNameConverterInterface:
+        alias: vs_payment.currency_name_converter
+
+    vs_payment.validator.different_source_target_currency:
+        class: Vankosoft\PaymentBundle\Validator\Constraints\DifferentSourceTargetCurrencyValidator
+        tags:
+            - { name: validator.constraint_validator }
+            
+    vs_payment.validator.unique_currency_pair:
+        class: Vankosoft\PaymentBundle\Validator\Constraints\UniqueCurrencyPairValidator
+        arguments:
+            - '@vs_payment.repository.exchange_rate'
+        tags:
+            - { name: validator.constraint_validator }
+
+
+
+################################################################################################
+# Currency Twig Extensions
+# ========================
+# See SyliusCurrencyBundle: https://github.com/Sylius/SyliusCurrencyBundle
+################################################################################################
+
+#    sylius.templating.helper.currency:
+#        class: Sylius\Bundle\CurrencyBundle\Templating\Helper\CurrencyHelper
+#        lazy: true
+#        tags:
+#            - { name: form.type, alias: sylius_currency }
+
+#    sylius.twig.extension.currency:
+#        class: Sylius\Bundle\CurrencyBundle\Twig\CurrencyExtension
+#        public: false
+#        arguments:
+#            - '@sylius.templating.helper.currency'
+#        tags:
+#            - { name: twig.extension }
+
