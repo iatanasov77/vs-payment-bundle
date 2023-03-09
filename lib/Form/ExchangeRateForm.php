@@ -59,7 +59,7 @@ final class ExchangeRateForm extends AbstractForm
         parent::configureOptions( $resolver );
         
         /** @psalm-suppress DeprecatedConstant */
-        $resolver->setDefault( 'rounding_mode', NumberToLocalizedStringTransformer::ROUND_HALF_EVEN );
+        $resolver->setDefault( 'rounding_mode', \NumberFormatter::ROUND_HALFEVEN );
     }
     
     public function getBlockPrefix()
