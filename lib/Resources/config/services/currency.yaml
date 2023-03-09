@@ -2,9 +2,11 @@ services:
     _defaults:
         public: true
 
+    vs_payment.context.currency: ~
+    
     vs_payment.context.currency.composite:
         class: Sylius\Component\Currency\Context\CompositeCurrencyContext
-        decorates: sylius.context.currency
+        decorates: vs_payment.context.currency
         decoration_priority: 256
         public: false
     
