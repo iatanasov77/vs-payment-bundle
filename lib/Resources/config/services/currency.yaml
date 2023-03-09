@@ -2,7 +2,9 @@ services:
     _defaults:
         public: true
 
-    vs_payment.context.currency: ~
+    vs_payment.context.currency:
+        class: Sylius\Component\Currency\Context\CurrencyContextInterface
+        abstract:  true
     
     vs_payment.context.currency.composite:
         class: Sylius\Component\Currency\Context\CompositeCurrencyContext
