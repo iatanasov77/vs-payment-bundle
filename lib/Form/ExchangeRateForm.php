@@ -1,6 +1,5 @@
 <?php namespace Vankosoft\PaymentBundle\Form;
 
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Component\Currency\Model\ExchangeRateInterface;
 use Symfony\Component\Form\Extension\Core\DataTransformer\NumberToLocalizedStringTransformer;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -8,13 +7,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vankosoft\ApplicationBundle\Form\AbstractForm;
 
 use Vankosoft\PaymentBundle\Form\Type\CurrencyChoiceType;
 
-final class ExchangeRateForm extends AbstractResourceType
+final class ExchangeRateForm extends AbstractForm
 {
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
+        parent::buildForm( $builder, $options );
+        
         $builder
             ->add( 'ratio', NumberType::class, [
                 'label'                 => 'vs_payment.form.exchange_rate.ratio',
