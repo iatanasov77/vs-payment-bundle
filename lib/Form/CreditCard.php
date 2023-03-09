@@ -18,16 +18,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
  */
 class CreditCard extends AbstractType
 {
-
-    public function getName()
-    {
-        return 'ia_payment_credit_card';
-    }
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm( FormBuilderInterface $builder, array $options )
     {        
         $builder
-        ->add('acct', TextType::class, array('label' => 'form.credit_card.acct', 'translation_domain' => 'IAPaymentBundle'))
+            ->add('acct', TextType::class, array('label' => 'form.credit_card.acct', 'translation_domain' => 'IAPaymentBundle'))
             ->add('exp_date', DateType::class, array(
                 'label' => 'form.credit_card.expire_date', 
                 'translation_domain' => 'IAPaymentBundle',
@@ -54,5 +48,9 @@ class CreditCard extends AbstractType
 //        ));
     }
 
+    public function getName()
+    {
+        return 'vs_payment_credit_card';
+    }
 }
 
