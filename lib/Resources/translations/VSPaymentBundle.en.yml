@@ -36,6 +36,7 @@ vs_payment:
     template:
         gateway: Gateway
         payment_method: Payment Method
+        active: Active
         action: Action
         
         gateway_config_ext:
@@ -57,16 +58,19 @@ vs_payment:
         payment_method_config_ext:
             index:
                 title: Payment Methods
-                payment_gateway: Payment Gateway
-                gateway_factory: Gateway Factory
+                payment_method: Payment Method
+                gateway: Gateway
                 create_new_payment_method: Create New Payment Method
             config:
-                title: Gateway Config
+                title: Payment Method Config
                 options_title: Gateway Config Options
                 sandbox_config: Sandbox Config
                 sandbox_config_options_title: Sandbox Config Options
                 
-                
+        currency_index_title: Currencies
+        currency_index_code: Code
+        currency_index_symbol: Symbol
+        currency_index_name: Name
         currency_update_title: Edit Currency
         currency_create_title: Create Currency
         currency_title: Currency

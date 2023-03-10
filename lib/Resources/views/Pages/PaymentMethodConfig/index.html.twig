@@ -1,7 +1,7 @@
 {% extends "@VSApplication/layout.html.twig" %}
-{% block title %}{{ parent() }} :: Payment Methods{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payment_method_config_ext.index.title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
-{% block pageTitle %}<i class="icon_genius"></i> Payment Methods{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payment_method_config_ext.index.title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="row">   
@@ -11,10 +11,10 @@
                     <thead>
                         <tr>
                             <th width="50">N</th>
-                            <th>Payment Method</th>
-                            <th>Gateway</th>
-                            <th>Active</th>
-                            <th width="150">Action</th>
+                            <th>{{ 'vs_payment.template.payment_method_config_ext.index.payment_method' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.payment_method_config_ext.index.gateway' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.active' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
                     </thead>
                     <tbody>

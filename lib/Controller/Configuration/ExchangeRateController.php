@@ -1,7 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Configuration;
 
-use Symfony\Component\HttpFoundation\Request;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
+use Symfony\Component\HttpFoundation\Request;
 
 class ExchangeRateController extends AbstractCrudController
 {

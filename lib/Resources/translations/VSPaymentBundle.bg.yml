@@ -36,6 +36,7 @@ vs_payment:
     template:
         gateway: Гейтуей
         payment_method: Метод на Плащане
+        active: Активен
         action: Действие
         
         gateway_config_ext:
@@ -57,14 +58,25 @@ vs_payment:
         payment_method_config_ext:
             index:
                 title: Методи за Плащане
-                payment_gateway: Плащане Гейтуей
-                gateway_factory: Гейтуей Фактори
+                payment_method: Метод за Плащане
+                gatewayy: Гейтуей
                 create_new_payment_method: Създаване Нов Метод за Плащане
             config:
-                title: Гейтуей Конфигурация
+                title: Метод за Плащане Конфигурация
                 options_title: Гейтуей Конфигурация Опции
                 sandbox_config: Сендбокс Конфигурация
                 sandbox_config_options_title: Сендбокс Конфигурация Опции
+                
+        currency_index_title: Валути
+        currency_index_code: Код
+        currency_index_symbol: Символ
+        currency_index_name: Име
+        currency_update_title: Редакция Валута
+        currency_create_title: Създаване Валута
+        currency_title: Валута
+        exchange_rate_update_title: Редакция Обменен курс
+        exchange_rate_create_title: Създаване Обменен курс
+        exchange_rate_title: Обменен курс
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

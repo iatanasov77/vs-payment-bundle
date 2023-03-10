@@ -2,8 +2,8 @@
 
 {% import "@VSApplication/macros/form.html.twig" as vs_form %}
 
-{% block title %}{{ parent() }} :: Payment Method Config{% endblock %}
-{% block pageTitle %}<i class="icon_genius"></i> Payment Method Config{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payment_method_config_ext.config.title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payment_method_config_ext.config.title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="row">
