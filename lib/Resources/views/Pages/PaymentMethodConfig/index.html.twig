@@ -13,7 +13,6 @@
                             <th width="50">N</th>
                             <th>Payment Method</th>
                             <th>Gateway</th>
-                            
                             <th>Active</th>
                             <th width="150">Action</th>
                         </tr>
@@ -21,14 +20,8 @@
                     <tbody>
                     {% for item in items %}
                         <tr>
-                            <td>
-                                {{ loop.index }}
-                            </td>
-                            <td>
-                                <a href="{{ path( 'vs_payment_methods_config', {'id': item.id} ) }}">
-                                    {{ item.name }}
-                                </a>
-                            </td>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ item.name }}</td>
                             <td>{{ item.gateway.gatewayName }}</td>
                             <td>
                                 {% if item.active %}
