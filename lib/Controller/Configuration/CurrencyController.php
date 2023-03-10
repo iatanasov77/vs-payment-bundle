@@ -9,7 +9,7 @@ class CurrencyController extends AbstractCrudController
     protected function customData( Request $request, $entity = null ): array
     {
         $currencies = [];
-        foreach ( $items as $currency ) {
+        foreach ( $this->resources as $currency ) {
             $currencies[$currency->getCode()]   = [
                 'symbol'    => Currencies::getSymbol( $currency->getCode() ),
                 'name'      => Currencies::getName( $currency->getCode() ),
