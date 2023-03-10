@@ -17,7 +17,7 @@ class CurrencyController extends AbstractCrudController
         }
         
         return [
-            intlCurrencies  => $currencies,
+            'intlCurrencies'    => $currencies,
         ];
     }
     
