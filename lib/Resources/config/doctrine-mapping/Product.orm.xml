@@ -16,7 +16,7 @@
             <gedmo:translatable />
         </field>
         
-        <field name="price" column="price" type="decimal" scale="8" precision="2" />
+        <field name="price" column="price" type="decimal" scale="2" precision="8" />
         <many-to-one field="currency" target-entity="Sylius\Component\Currency\Model\CurrencyInterface" />
         
         <!--
