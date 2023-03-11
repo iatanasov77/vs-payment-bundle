@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+>
+    <mapped-superclass name="Vankosoft\PaymentBundle\Model\Product">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        
+        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="object" />
+        
+        <field name="name" type="string" length="64" nullable="false" >
+            <gedmo:translatable />
+        </field>
+        
+        <field name="price" column="price" type="decimal" scale="8" precision="2" />
+        <many-to-one field="currency" target-entity="Sylius\Component\Currency\Model\CurrencyInterface" />
+        
+        <!--
+            Used locale to override Translation listener`s locale
+            this is not a mapped field of entity metadata, just a simple property
+            and it is not necessary because globally locale can be set in listener
+        -->
+        <gedmo:translation entity="Vankosoft\ApplicationBundle\Model\Interfaces\TranslationInterface" locale="locale" />
+    </mapped-superclass>
+</doctrine-mapping>
