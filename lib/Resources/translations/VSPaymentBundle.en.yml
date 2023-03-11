@@ -74,9 +74,19 @@ vs_payment:
         currency_update_title: Edit Currency
         currency_create_title: Create Currency
         currency_title: Currency
+        exchange_rate_index_title: Exchange Rates
+        exchange_rate_index_source_currency: Source Currency
+        exchange_rate_index_target_currency: Target Currency
+        exchange_rate_index_ratio: Ratio
         exchange_rate_update_title: Edit Exchange Rate
         exchange_rate_create_title: Create Exchange Rate
         exchange_rate_title: Exchange Rate
+        checkout_done_title: Payment Done
+        checkout_done_subtitle: Payment Success
+        checkout_done_message: You successfuly finished payment! You can turn to application
+        credit_card_title: Credit Card
+        credit_card_description: enter your card details
+        checkout_payment_title: Select Payment Method
     
     validation:
         currency_code_unique: Currency code must be unique.

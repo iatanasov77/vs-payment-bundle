@@ -24,7 +24,7 @@ class CreditCard extends AbstractType
             ->add('acct', TextType::class, array('label' => 'form.credit_card.acct', 'translation_domain' => 'IAPaymentBundle'))
             ->add('exp_date', DateType::class, array(
                 'label' => 'form.credit_card.expire_date', 
-                'translation_domain' => 'IAPaymentBundle',
+                'translation_domain' => 'VSPaymentBundle',
                 'widget' => 'choice',
                 'format' =>'MM-yyyy  d',
                 'years' => range(date('Y'), date('Y')+12),

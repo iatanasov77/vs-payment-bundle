@@ -1,7 +1,7 @@
 {% extends "@VSApplication/layout.html.twig" %}
 
-{% block title %}{{ parent() }} :: Payment Done{% endblock %}
-{% block pageTitle %}<i class="fa fa-user-md"></i> Payment Done{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.checkout_done_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="fa fa-user-md"></i> {{ 'vs_payment.template.checkout_done_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="padding">
@@ -9,13 +9,13 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header">
-                        <strong>Payment Success</strong>
+                        <strong>{{ 'vs_payment.template.checkout_done_subtitle' | trans( {},'VSPaymentBundle' ) }}</strong>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 {#    {{ dump( paymentStatus ) }}   #}
-                                You successfuly finished payment! You can turn to application <a href="{{ path('app_home') }}">home</a>.
+                                {{ 'vs_payment.template.checkout_done_message' | trans( {},'VSPaymentBundle' ) }} <a href="{{ path('app_home') }}">home</a>.
                             </div>
                          </div>
                      </div>

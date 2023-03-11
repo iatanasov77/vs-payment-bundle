@@ -12,8 +12,8 @@ vs_payment:
             use_sandbox: Използвай Сенд-бокс
             
         credit_card:
-            acct: 'Card Number'
-            exp_date: 'Expiration Date'
+            acct: 'Карта Номер'
+            exp_date: 'Дата на Изтичане'
             cvv2: 'CVV2'
     
         payment_method:
@@ -74,9 +74,19 @@ vs_payment:
         currency_update_title: Редакция Валута
         currency_create_title: Създаване Валута
         currency_title: Валута
+        exchange_rate_index_title: Обменни курсове
+        exchange_rate_index_source_currency: Източник Валута
+        exchange_rate_index_target_currency: Целева Валута
+        exchange_rate_index_ratio: Съотношение
         exchange_rate_update_title: Редакция Обменен курс
         exchange_rate_create_title: Създаване Обменен курс
         exchange_rate_title: Обменен курс
+        checkout_done_title: Приключено Плащане
+        checkout_done_subtitle: Успешно Плащане
+        checkout_done_message: Вие платихте успешно! Може да се върнете към приложението
+        credit_card_title: Кредитна Карта
+        credit_card_description: въведете детайли за вашата карта
+        checkout_payment_title: Избери Метод за Плащане
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
