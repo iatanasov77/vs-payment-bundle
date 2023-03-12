@@ -40,6 +40,16 @@ use Vankosoft\PaymentBundle\Repository\ExchangeRateRepository;
 use Vankosoft\PaymentBundle\Form\ExchangeRateForm;
 use Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateController;
 
+use Vankosoft\PaymentBundle\Model\Product;
+use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
+use Vankosoft\PaymentBundle\Form\ProductForm;
+use Vankosoft\PaymentBundle\Controller\ProductController;
+use Vankosoft\PaymentBundle\Model\ProductCategory;
+use Vankosoft\PaymentBundle\Model\Interfaces\ProductCategoryInterface;
+use Vankosoft\PaymentBundle\Repository\ProductCategoryRepository;
+use Vankosoft\PaymentBundle\Form\ProductCategoryForm;
+use Vankosoft\PaymentBundle\Controller\ProductCategoryController;
+
 /**
  * This is the class that validates and merges configuration from your app/config files
  *
@@ -216,6 +226,42 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'repository' )->defaultValue( ExchangeRateRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( ExchangeRateForm::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
+                        ->arrayNode( 'product' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode( 'model' )->defaultValue( Product::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'interface' )->defaultValue( ProductInterface::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( ProductController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'form' )->defaultValue( ProductForm::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
+                        ->arrayNode( 'product_category' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode( 'model' )->defaultValue( ProductCategory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'interface' )->defaultValue( ProductCategoryInterface::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( ProductCategoryController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( ProductCategoryRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'form' )->defaultValue( ProductCategoryForm::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

@@ -12,11 +12,10 @@ parameters:
         - 'paysera'
         - 'borica'
         
-    vs_payment.form.type.currency.validation_groups: 
+    vs_payment.form.type.currency.validation_groups:
         - 'VSPaymentBundle'
     vs_payment.form.type.exchange_rate.validation_groups:
         - 'VSPaymentBundle'
-
 
 services:
     vs_payment.resources.gateway_config.form:
@@ -57,5 +56,23 @@ services:
         arguments:
             - '%vs_payment.model.exchange_rate.class%'
             - '%vs_payment.form.type.exchange_rate.validation_groups%'
+    
+    vs_payment.resources.product_category.form:
+        class: Vankosoft\PaymentBundle\Form\ProductCategoryForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.product_category.class%'
+            - '@vs_payment.repository.product_category'
+            - "@request_stack"
+            
+    vs_payment.resources.product.form:
+        class: Vankosoft\PaymentBundle\Form\ProductForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - "@request_stack"
+            - '%vs_payment.model.product.class%'
+            - '%vs_payment.model.product_category.class%'
 
 

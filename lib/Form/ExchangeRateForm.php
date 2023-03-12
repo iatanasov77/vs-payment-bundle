@@ -58,7 +58,6 @@ final class ExchangeRateForm extends AbstractForm
     {
         parent::configureOptions( $resolver );
         
-        /** @psalm-suppress DeprecatedConstant */
         $resolver->setDefault( 'rounding_mode', \NumberFormatter::ROUND_HALFEVEN );
     }
     

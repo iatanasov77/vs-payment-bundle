@@ -10,7 +10,11 @@
             <generator strategy="AUTO" />
         </id>
         
-        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="object" />
+        <field name="enabled" column="published" type="boolean" />
+        
+        <field name="slug" column="slug" type="string" length="255" nullable="false" unique="true">
+            <gedmo:slug unique="true" style="lower" updatable="true" separator="-" fields="name" />
+        </field>
         
         <field name="name" type="string" length="64" nullable="false" >
             <gedmo:translatable />
@@ -18,6 +22,24 @@
         
         <field name="price" column="price" type="decimal" scale="2" precision="8" />
         <many-to-one field="currency" target-entity="Sylius\Component\Currency\Model\CurrencyInterface" />
+        
+        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="object" />
+        
+        <many-to-many field="categories" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\ProductCategoryInterface" inversed-by="products">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-detach/>
+            </cascade>
+            <join-table name="VSPAY_Product_Categories">
+                <join-columns>
+                    <join-column name="product_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="category_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
         
         <!--
             Used locale to override Translation listener`s locale

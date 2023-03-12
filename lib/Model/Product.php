@@ -4,16 +4,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
+use Sylius\Component\Resource\Model\ToggleableTrait;
+use Vankosoft\ApplicationBundle\Model\Traits\TaxonLeafTrait;
+use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
-class Product implements PayableObjectInterface
+class Product implements ProductInterface
 {
+    use TaxonLeafTrait;
     use TranslatableTrait;
+    use ToggleableTrait;    // About enabled field - $enabled (published)
     
     /** @var integer */
     protected $id;
+    
+    /** @var string */
+    protected $slug;
     
     /** @var string */
     protected $locale;
@@ -30,14 +37,55 @@ class Product implements PayableObjectInterface
     /** @var Collection|OrderItemInterface[] */
     protected $orderItems;
     
+    /** @var Collection|ProductCategory[] */
+    protected $categories;
+    
     public function __construct()
     {
         $this->orderItems   = new ArrayCollection();
+        $this->categories   = new ArrayCollection();
     }
     
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * @return Collection|ProductCategory[]
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+    
+    public function addCategory( ProductCategory $category ): ProductInterface
+    {
+        if ( ! $this->categories->contains( $category ) ) {
+            $this->categories[] = $category;
+        }
+        
+        return $this;
+    }
+    
+    public function removeCategory( ProductCategory $category ): ProductInterface
+    {
+        if ( $this->categories->contains( $category ) ) {
+            $this->categories->removeElement( $category );
+        }
+        
+        return $this;
+    }
+    
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+    
+    public function setSlug( $slug = null ): void
+    {
+        $this->slug = $slug;
+        //return $this;
     }
     
     public function getName(): ?string
@@ -115,6 +163,22 @@ class Product implements PayableObjectInterface
         $this->locale = $locale;
         
         return $this;
+    }
+    
+    public function getPublished(): ?bool
+    {
+        return $this->enabled;
+    }
+    
+    public function setPublished( ?bool $published ): ProductInterface
+    {
+        $this->enabled = (bool) $published;
+        return $this;
+    }
+    
+    public function isPublished()
+    {
+        return $this->isEnabled();
     }
     
     /*

@@ -4,6 +4,14 @@ vs_payment:
         gateway: Гейтуей ID
         factory: Фактори
         title: Заглавие
+        name: Име
+        price: Цена
+        currency: Валута
+        currency_placeholder: '-- Избери Валута --'
+        categories: Категории
+        categories_placeholder: '-- Избери Категории --'
+        parent_category: Родителска Категория
+        parent_category_placeholder: '-- Избери Родителска Категория --'
         description: Описание
         gatewayNameHelp: Това е ID на шлюза, използван в Payum
         factoryHelp: Това е ID на Фактори, използван в Payum
@@ -87,6 +95,15 @@ vs_payment:
         credit_card_title: Кредитна Карта
         credit_card_description: въведете детайли за вашата карта
         checkout_payment_title: Избери Метод за Плащане
+        product_categories_index_title: Продукт Категории
+        product_categories_create_title: СЪздай Продукт Категория
+        product_categories_update_title: Редакция Продукт Категория
+        product_categories_title: Продукт Категори
+        products_index_title: Продукти
+        uncategorized_products: Некатегоризирани Продукти
+        product_create_title: Създаване Нов Продукт
+        product_update_title: Редакция Продукт
+        product_details: Продукт детайли
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
