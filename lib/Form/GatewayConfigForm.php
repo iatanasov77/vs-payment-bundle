@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
 
