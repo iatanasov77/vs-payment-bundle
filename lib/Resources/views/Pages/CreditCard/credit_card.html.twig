@@ -1,7 +1,7 @@
 {% extends "@VSApplication/layout.html.twig" %}
 
-{% block title %}{{ parent() }} :: Credit Card{% endblock %}
-{% block pageTitle %}<i class="fa fa-user-md"></i> Credit Card{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.credit_card_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="fa fa-user-md"></i> {{ 'vs_payment.template.credit_card_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="padding">

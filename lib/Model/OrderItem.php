@@ -13,9 +13,18 @@ class OrderItem implements Interfaces\OrderItemInterface
     protected $order;
     
     /**
+     * 'object' is for paid services, Because Mapping Error
+     * 
      * @var Interfaces\PayableObjectInterface
      */
     protected $object;
+    
+    /**
+     * 'product' is for products, Because Mapping Error
+     * 
+     * @var Interfaces\ProductInterface
+     */
+    protected $product;
     
     /**
      * The Class of the object
@@ -60,6 +69,19 @@ class OrderItem implements Interfaces\OrderItemInterface
     {
         $this->object = $object;
         $this->objectType   = get_class( $object );
+        
+        return $this;
+    }
+    
+    public function getProduct()
+    {
+        return $this->product;
+    }
+    
+    public function setProduct($product)
+    {
+        $this->product = $product;
+        $this->objectType   = get_class( $product );
         
         return $this;
     }

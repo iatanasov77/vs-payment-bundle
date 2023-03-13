@@ -1,7 +1,7 @@
 {% extends "@VSApplication/layout.html.twig" %}
 
-{% block title %}{{ parent() }} :: Select Payment Method{% endblock %}
-{% block pageTitle %}<i class="fa fa-user-md"></i> Select Payment Method{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.checkout_payment_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="fa fa-user-md"></i> {{ 'vs_payment.template.checkout_payment_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="padding">
@@ -12,7 +12,7 @@
     
                     <div class="card">
                         <div class="card-header">
-                            <strong>Select Payment Method</strong>
+                            <strong>{{ 'vs_payment.template.checkout_payment_title' | trans( {},'VSPaymentBundle' ) }}</strong>
                         </div>
                         <div class="card-body">
                             <div class="row">

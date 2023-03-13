@@ -15,13 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
  */
 class GatewayConfigType extends AbstractType
 {
-
-    public function getName()
-    {
-        return 'config';
-    }
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
             ->add('factory', HiddenType::class)
@@ -38,6 +32,11 @@ class GatewayConfigType extends AbstractType
             //$value  = in_array( $optKey, $options['values'] );
             $builder->add( $optKey, TextType::class, [ 'attr' => ['size'=>100] ] );
         }
+    }
+    
+    public function getName()
+    {
+        return 'config';
     }
 }
 

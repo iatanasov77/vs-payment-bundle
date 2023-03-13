@@ -4,9 +4,9 @@
 {% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
 {% from "@VSApplication/Macros/pagination.html.twig" import pagination %}
 
-{% block title %}{{ parent() }} :: Exchange Rates{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.exchange_rate_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
-{% block pageTitle %}<i class="icon_genius"></i> Exchange Rates{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.exchange_rate_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="row">   
@@ -16,18 +16,16 @@
                     <thead>
                         <tr>
                             <th width="50">N</th>
-                            <th>Source Currency</th>
-                            <th>Target Currency </th>
-                            <th>Ratio</th>
-                            <th width="150">Action</th>
+                            <th>{{ 'vs_payment.template.exchange_rate_index_source_currency' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.exchange_rate_index_target_currency' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.exchange_rate_index_ratio' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for item in resources %}
                         <tr>
-                            <td>
-                                {{ loop.index }}
-                            </td>
+                            <td>{{ loop.index }}</td>
                             <td>{{ item.sourceCurrency.code }}</td>
                             <td>{{ item.targetCurrency.code }}</td>
                             <td>{{ item.ratio }}</td>

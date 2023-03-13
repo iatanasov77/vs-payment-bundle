@@ -4,6 +4,14 @@ vs_payment:
         gateway: Gateway ID
         factory: Factory
         title: Title
+        name: Name
+        price: Price
+        currency_label: Currency
+        currency_placeholder: '-- Select Currency --'
+        categories: Categories
+        categories_placeholder: '-- Select Categories --'
+        parent_category: Parent Category
+        parent_category_placeholder: '-- Select Parent Category --'
         description: Description
         gatewayNameHelp: This is the Gateway ID Used in Payum
         factoryHelp: This is the Factory ID Used in Payum
@@ -36,6 +44,7 @@ vs_payment:
     template:
         gateway: Gateway
         payment_method: Payment Method
+        active: Active
         action: Action
         
         gateway_config_ext:
@@ -57,23 +66,45 @@ vs_payment:
         payment_method_config_ext:
             index:
                 title: Payment Methods
-                payment_gateway: Payment Gateway
-                gateway_factory: Gateway Factory
+                payment_method: Payment Method
+                gateway: Gateway
                 create_new_payment_method: Create New Payment Method
             config:
-                title: Gateway Config
+                title: Payment Method Config
                 options_title: Gateway Config Options
                 sandbox_config: Sandbox Config
                 sandbox_config_options_title: Sandbox Config Options
                 
-                
+        currency_index_title: Currencies
+        currency_index_code: Code
+        currency_index_symbol: Symbol
+        currency_index_name: Name
         currency_update_title: Edit Currency
         currency_create_title: Create Currency
         currency_title: Currency
+        exchange_rate_index_title: Exchange Rates
+        exchange_rate_index_source_currency: Source Currency
+        exchange_rate_index_target_currency: Target Currency
+        exchange_rate_index_ratio: Ratio
         exchange_rate_update_title: Edit Exchange Rate
         exchange_rate_create_title: Create Exchange Rate
         exchange_rate_title: Exchange Rate
-    
+        checkout_done_title: Payment Done
+        checkout_done_subtitle: Payment Success
+        checkout_done_message: You successfuly finished payment! You can turn to application
+        credit_card_title: Credit Card
+        credit_card_description: enter your card details
+        checkout_payment_title: Select Payment Method
+        product_categories_index_title: Product Categories
+        product_categories_create_title: Create Product Category
+        product_categories_update_title: Edit Product Category
+        product_categories_title: Product Category
+        products_index_title: Products
+        uncategorized_products: Uncategorised Products
+        product_create_title: Create New Product
+        product_update_title: Edit Product
+        product_details: Product details
+        
     validation:
         currency_code_unique: Currency code must be unique.
         currency_code_not_blank: Please choose currency code.

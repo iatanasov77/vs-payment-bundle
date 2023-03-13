@@ -15,4 +15,11 @@ vs_application:
         exchange_rates: Exchange Rates
         create_new_exchange_rate: Create Exchange Rate
         edit_exchange_rate: Edit Exchange Rate
+        catalog: Catalog
+        catalog_categories: Catalog Categories
+        create_catalog_category: Create Catalog Category
+        edit_catalog_category: Edit Catalog Category
+        catalog_products: Products
+        create_catalog_product: Create Product
+        edit_catalog_product: Edit Product
 

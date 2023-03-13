@@ -1,0 +1,15 @@
+vs_payment_product_category:
+    resource: |
+        alias: vs_payment.product_category
+        path: /payment/product-categories
+        templates: "@VSPayment/Pages/Product_Categories"
+    type: sylius.resource
+    
+vs_payment_product:
+    resource: |
+        alias: vs_payment.product
+        path: /payment/products
+        templates: "@VSPayment/Pages/Products"
+    type: sylius.resource
+
+

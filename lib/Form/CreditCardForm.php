@@ -20,7 +20,7 @@ class CreditCardForm extends AbstractType
             
             ->add( 'name', TextType::class, [
                 'label' => 'Name',
-                'translation_domain' => 'VSUsersBundle',
+                'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
                     'placeholder' => 'Enter your name'
                 ],
@@ -28,7 +28,7 @@ class CreditCardForm extends AbstractType
             
             ->add( 'number', NumberType::class, [
                 'label' => 'Credit Card Number',
-                'translation_domain' => 'VSUsersBundle',
+                'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
                     'placeholder' => '0000 0000 0000 0000'
                 ],
@@ -38,19 +38,19 @@ class CreditCardForm extends AbstractType
                 'choices'               => array_combine( range( 1, 12 ), range( 1, 12 ) ),
                 'mapped'                => false,
                 'label'                 => 'Month',
-                'translation_domain'    => 'VSUsersBundle',
+                'translation_domain'    => 'VSPaymentBundle',
             ])
             
             ->add( 'ccyear', ChoiceType::class, [
                 'choices'               => array_combine( range( 2014, 2025 ), range( 2014, 2025 ) ),
                 'mapped'                => false,
                 'label'                 => 'Year',
-                'translation_domain'    => 'VSUsersBundle',
+                'translation_domain'    => 'VSPaymentBundle',
             ])
             
             ->add( 'cvv', TextType::class, [
                 'label' => 'CVV/CVC',
-                'translation_domain' => 'VSUsersBundle',
+                'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
                     'placeholder' => '123'
                 ],
@@ -58,12 +58,12 @@ class CreditCardForm extends AbstractType
             
             ->add( 'btnReset', ResetType::class, [
                 'label' => 'Reset',
-                'translation_domain' => 'VSUsersBundle'
+                'translation_domain' => 'VSPaymentBundle'
             ])
             
             ->add( 'btnContinue', SubmitType::class, [
                 'label' => 'Continue',
-                'translation_domain' => 'VSUsersBundle'
+                'translation_domain' => 'VSPaymentBundle'
             ])
         ;
     }

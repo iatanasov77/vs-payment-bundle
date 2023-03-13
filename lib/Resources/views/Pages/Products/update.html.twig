@@ -1,0 +1,46 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{% if( item.id ) %}
+	{% set pageTitle = 'vs_payment.template.product_update_title' | trans( {},'VSPaymentBundle' ) %}
+{% else %}
+	{% set pageTitle = 'vs_payment.template.product_create_title' | trans( {},'VSPaymentBundle' ) %}
+{% endif %}
+
+{% block title %}{{ parent() }} :: {{ pageTitle}}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {% if(item.id) %}{{ pageTitle}}: {{ item.name }}{% else %}{{ pageTitle}}{% endif %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+            	<h5 class="card-header">{{ 'vs_payment.template.product_details' | trans( {},'VSPaymentBundle' ) }}</h5>
+            	<div class="card-body">
+					{% if form_errors(form) is not empty %}
+		                <div class="alert alert-block alert-danger fade in">
+		                    <button type="button" class="close close-sm" data-bs-dismiss="alert">
+		                        <i class="icon-remove"></i>
+		                    </button>
+		                    <strong>{{ 'vs_application.form.errors_title' | trans( {},'VSApplicationBundle' ) }}</strong> {{ form_errors(form) }}
+		                </div>
+		            {% endif %}
+		            <div id="pageFormContainer" data-pageId="{{ item.id }}">
+                        {% include '@VSPayment/Pages/Products/partial/product_form.html.twig' %}
+                    </div>
+        		</div>
+			</div>
+		</div>
+    </div>
+{% endblock content %}
+
+{% block head_styles %}
+    {{ parent() }}
+    
+    {{ encore_entry_link_tags( 'js/products-edit' ) }}
+{% endblock %}
+
+{% block body_scripts %}
+    {{ parent() }}
+   
+    {{ encore_entry_script_tags( 'js/products-edit' ) }}
+{% endblock %}
+
