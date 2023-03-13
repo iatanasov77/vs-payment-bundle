@@ -13,7 +13,8 @@ class ProductController extends AbstractCrudController
         $taxonomy   = $this->get( 'vs_application.repository.taxonomy' )->findByCode(
                                     $this->getParameter( 'vs_payment.product_category.taxonomy_code' )
                                 );
-        $selectedTaxonIds   = []
+        
+        $selectedTaxonIds   = [];
         if ( $this->classInfo['action'] == 'updateAction' ) {
             foreach ( $entity->getCategories() as $cat ) {
                 $selectedTaxonIds[] = $cat->getTaxon()->getId();
