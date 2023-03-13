@@ -4,13 +4,13 @@
 {% if(item.id) %}{% set method = "PUT" %}{% else %}{% set method = "POST" %}{% endif %}
 {{ form_start(form, { 'attr': {'class': 'form-horizontal '}, 'method': method }) }}
     <label class="custom-control custom-checkbox">  
-        <input type="checkbox" id="page_form_enabled"
+        <input type="checkbox" id="product_form_enabled"
             class="custom-control-input form-check-input"
-            name="page_form[enabled]"
+            name="product_form[enabled]"
             value="{{ item.enabled }}"
             {% if item.enabled %}checked="checked"{% endif %}
         />
-        <span class="custom-control-label">Published</span>
+        <span class="custom-control-label">{{ 'vs_payment.form.active' | trans( {},'VSPaymentBundle' ) }}</span>
     </label>
     
     <div class="form-group">
@@ -29,7 +29,7 @@
     <div class="form-group">
         {{ form_label(form.category_taxon, null, {
             'label_attr': {'class': 'col-form-label required'}
-            }) 
+            })
         }}
         
         {{ vs_tree.easyuiCombobox( form.category_taxon, comboDataSourceUrl, itemId,
