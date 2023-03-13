@@ -13,11 +13,15 @@ class OrderItem implements Interfaces\OrderItemInterface
     protected $order;
     
     /**
+     * 'object' is for paid services, Because Mapping Error
+     * 
      * @var Interfaces\PayableObjectInterface
      */
     protected $object;
     
     /**
+     * 'product' is for products, Because Mapping Error
+     * 
      * @var Interfaces\ProductInterface
      */
     protected $product;
