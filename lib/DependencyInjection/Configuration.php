@@ -30,9 +30,10 @@ use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
 use Vankosoft\PaymentBundle\Model\Token;
 
-use Sylius\Component\Currency\Model\CurrencyInterface;
+//use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Currency\Model\ExchangeRateInterface;
 use Vankosoft\PaymentBundle\Model\Currency;
+use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Form\CurrencyForm;
 use Vankosoft\PaymentBundle\Controller\Configuration\CurrencyController;
 use Vankosoft\PaymentBundle\Model\ExchangeRate;
