@@ -10,7 +10,11 @@ use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
-class Product implements ProductInterface
+/**
+ * PayableObjectInterface must to be directly implemented from Model,
+ * not extended from Concrete Model Interface
+ */
+class Product implements ProductInterface, PayableObjectInterface
 {
     use TaxonLeafTrait;
     use TranslatableTrait;
