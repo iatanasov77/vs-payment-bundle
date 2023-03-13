@@ -44,6 +44,13 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
     protected $locale;
     
     /**
+     * Currency For Gateway Account, to can Convert Price If In Different Currency
+     * 
+     * @var CurrencyInterface
+     */
+    protected $currency;
+    
+    /**
      * {@inheritDoc}
      * 
      * Override BaseGatewayConfig::getConfig() To Can Get Factory Form From Parent 
@@ -149,6 +156,27 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
             $this->paymentMethods->removeElement( $paymentMethod );
             $paymentMethod->setGateway( null );
         }
+    }
+    
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+    
+    public function setCurrency( CurrencyInterface $currency )
+    {
+        $this->currency = $currency;
+        
+        return $this;
+    }
+    
+    public function getCurrencyCode()
+    {
+        if ( $this->currency ) {
+            return $this->currency->getCode();
+        }
+        
+        return null;
     }
     
     public function getTranslatableLocale(): ?string

@@ -46,6 +46,14 @@ class GatewayConfigForm extends AbstractForm
                 'label'                 => 'vs_payment.form.description',
                 'translation_domain'    => 'VSPaymentBundle',
             ] )
+            ->add( 'currency', EntityType::class, [
+                'label'                 => 'vs_payment.form.currency_label',
+                'required'              => true,
+                'class'                 => $this->currencyClass,
+                'choice_label'          => 'code',
+                'placeholder'           => 'vs_payment.form.currency_placeholder',
+                'translation_domain'    => 'VSPaymentBundle',
+            ])
             ->add( 'useSandbox', CheckboxType::class, [
                 'required'              => false,
                 'label'                 => 'vs_payment.form.gateway_config.use_sandbox',
