@@ -13,11 +13,18 @@ class ProductController extends AbstractCrudController
         $taxonomy   = $this->get( 'vs_application.repository.taxonomy' )->findByCode(
                                     $this->getParameter( 'vs_payment.product_category.taxonomy_code' )
                                 );
+        $selectedTaxonIds   = []
+        if ( $this->classInfo['action'] == 'updateAction' ) {
+            foreach ( $entity->getCategories() as $cat ) {
+                $selectedTaxonIds[] = $cat->getTaxon()->getId();
+            }
+        }
         
         return [
-            'categories'    => $this->get( 'vs_payment.repository.product_category' )->findAll(),
-            'taxonomyId'    => $taxonomy ? $taxonomy->getId() : 0,
-            'translations'  => $translations,
+            'categories'        => $this->get( 'vs_payment.repository.product_category' )->findAll(),
+            'taxonomyId'        => $taxonomy ? $taxonomy->getId() : 0,
+            'translations'      => $translations,
+            'selectedTaxonIds'  => $selectedTaxonIds,
         ];
     }
     
