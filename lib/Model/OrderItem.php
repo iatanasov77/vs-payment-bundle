@@ -18,6 +18,11 @@ class OrderItem implements Interfaces\OrderItemInterface
     protected $object;
     
     /**
+     * @var Interfaces\ProductInterface
+     */
+    protected $product;
+    
+    /**
      * The Class of the object
      * 
      * @var string
@@ -60,6 +65,19 @@ class OrderItem implements Interfaces\OrderItemInterface
     {
         $this->object = $object;
         $this->objectType   = get_class( $object );
+        
+        return $this;
+    }
+    
+    public function getProduct()
+    {
+        return $this->product;
+    }
+    
+    public function setProduct($product)
+    {
+        $this->product = $product;
+        $this->objectType   = get_class( $product );
         
         return $this;
     }
