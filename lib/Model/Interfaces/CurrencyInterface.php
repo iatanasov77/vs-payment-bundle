@@ -1,8 +1,8 @@
 <?php namespace Vankosoft\PaymentBundle\Model\Interfaces;
 
-use Sylius\Component\Currency\Model\CurrencyInterface;
+use Sylius\Component\Currency\Model\CurrencyInterface as BaseCurrencyInterface;
 
-interface CurrencyInterface extends CurrencyInterface
+interface CurrencyInterface extends BaseCurrencyInterface
 {
     
 }
