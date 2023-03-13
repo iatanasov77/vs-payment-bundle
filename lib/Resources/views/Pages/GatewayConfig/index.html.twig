@@ -30,7 +30,7 @@
                             <td>{{ item.description }}</td>
                             <td>{{ item.gatewayName }}</td>
                             <td>{{ item.factoryName }}</td>
-                            <td>{{ item.currency.code }}</td>
+                            <td>{% if item.currency %}{{ item.currency.code }}{% endif %}</td>
                             <td>
                                 {% if item.useSandbox %}
                                     <i class="fas fa-check" style="color: #82c91e;">
