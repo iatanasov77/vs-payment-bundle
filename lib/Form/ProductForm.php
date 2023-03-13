@@ -63,7 +63,7 @@ class ProductForm extends AbstractForm
                 'label'                 => 'vs_payment.form.categories',
                 'translation_domain'    => 'VSPaymentBundle',
                 'multiple'              => true,
-                'required'              => true,
+                'required'              => false,   // Is Required but Used EasyUi
                 'mapped'                => false,
                 'placeholder'           => 'vs_payment.form.categories_placeholder',
             ])
