@@ -25,6 +25,7 @@ services:
         arguments:
             - '%vs_payment.model.gateway_config.class%'
             - '%vs_payment.gateway_factories%'
+            - '%vs_payment.model.currency.class%'
 
     vs_payment.resources.payment_method.form:
         class: Vankosoft\PaymentBundle\Form\PaymentMethodForm

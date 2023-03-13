@@ -20,13 +20,18 @@ class GatewayConfigForm extends AbstractForm
     /** @var array */
     protected $factories;
     
+    /** @var string */
+    protected $currencyClass;
+    
     public function __construct(
         string $dataClass,
-        array $factories
+        array $factories,
+        string $currencyClass
     ) {
         parent::__construct( $dataClass );
      
-        $this->factories    = $factories;
+        $this->factories        = $factories;
+        $this->currencyClass    = $currencyClass;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options ): void
