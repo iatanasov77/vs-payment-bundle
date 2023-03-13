@@ -6,6 +6,8 @@ interface OrderItemInterface extends ResourceInterface
 {
     public function getOrder();
     public function getObject();
+    public function getProduct();
+    public function getObjectType();
     public function getPrice();
     public function getCurrencyCode();
 }
