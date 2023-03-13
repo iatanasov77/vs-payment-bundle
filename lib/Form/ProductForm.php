@@ -22,15 +22,20 @@ class ProductForm extends AbstractForm
     /** @var string */
     protected $categoryClass;
     
+    /** @var string */
+    protected $currencyClass;
+    
     public function __construct(
         RequestStack $requestStack,
         string $dataClass,
-        string $categoryClass
+        string $categoryClass,
+        string $currencyClass
     ) {
         parent::__construct( $dataClass );
         
         $this->requestStack         = $requestStack;
         $this->categoryClass        = $categoryClass;
+        $this->currencyClass        = $currencyClass;
     }
 
     public function buildForm( FormBuilderInterface $builder, array $options ): void

@@ -74,5 +74,6 @@ services:
             - "@request_stack"
             - '%vs_payment.model.product.class%'
             - '%vs_payment.model.product_category.class%'
+            - '%vs_payment.model.currency.class%'
 
 
