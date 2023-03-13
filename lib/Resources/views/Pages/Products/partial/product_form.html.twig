@@ -32,7 +32,7 @@
             })
         }}
         
-        <div class="d-none" id="categoryTaxonIds" data-values="{{ selectedTaxonIds }}"></div>
+        <div class="d-none" id="categoryTaxonIds" data-values="{{ selectedTaxonIds | join(',') }}"></div>
         {{ vs_tree.easyuiCombobox( form.category_taxon, comboDataSourceUrl, itemId,
             {
                 'elementSelector': '#user_role_form_parent',
