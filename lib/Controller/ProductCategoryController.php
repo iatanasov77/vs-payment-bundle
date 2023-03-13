@@ -31,8 +31,9 @@ class ProductCategoryController extends AbstractCrudController
         $this->get( 'vs_application.slug_generator' )->setLocaleCode( $translatableLocale );
         
         $categoryName           = $form['name']->getData();
-        $parentCategory         = $this->get( 'vs_payment.repository.product_category' )
-                                        ->findByTaxonId( $_POST['product_category_form']['parent'] );
+        $parentCategory         = isset( $_POST['product_category_form']['parent'] ) ?
+                                    $this->get( 'vs_payment.repository.product_category' )->findByTaxonId( $_POST['product_category_form']['parent'] ) :
+                                    null;
         
         if ( $entity->getTaxon() ) {
             $entityTaxon    = $entity->getTaxon();
