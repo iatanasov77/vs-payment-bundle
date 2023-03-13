@@ -59,6 +59,7 @@ class GatewayConfigExtController extends PayumController
         $this->gatewayConfigFactory     = $gatewayConfigFactory;
     }
     
+    /** @NOTE This Action Not Used Anymore */
     public function indexAction( Request $request ): Response
     {
         return $this->render( '@VSPayment/Pages/GatewayConfigExt/index.html.twig', [
@@ -86,7 +87,7 @@ class GatewayConfigExtController extends PayumController
             $em->persist( $submitedGatewayConfig );
             $em->flush();
             
-            return $this->redirect( $this->generateUrl( 'vs_payment_gateways_index' ) );
+            return $this->redirect( $this->generateUrl( 'vs_payment_gateway_config_index' ) );
         }
         
         return $this->render('@VSPayment/Pages/GatewayConfigExt/config.html.twig', [
