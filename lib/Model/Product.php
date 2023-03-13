@@ -6,6 +6,7 @@ use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 use Vankosoft\ApplicationBundle\Model\Traits\TaxonLeafTrait;
+use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
