@@ -22,9 +22,9 @@
         {{ vs_tree.easyuiCombobox( form.parent, comboDataSourceUrl, item.id ? item.taxon.parent.id : 0,
             {
                 'elementSelector': '#product_category_form_parent',
-                'required': 'true',
-                'multiple': 'true',
-                'checkbox': 'true',
+                'required': 'false',
+                'multiple': 'false',
+                'checkbox': 'false',
                 'placeholder': comboTreePlaceholder
             }
         ) }}
