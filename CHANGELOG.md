@@ -1,3 +1,28 @@
+2.5.1	|	Release date: **13.03.2023**
+============================================
+* New Features:
+  - Add Product  Resources
+* Bug-Fixes and Improvements:
+  - Fix All Forms That Extend AbstractForm.
+  - Improw Gateway Config Index Page.
+  - Move GatewayConfig Index Page to Resource Index.
+  - Move PaymentMethodConfig Index Page to Resource Index.
+  - Improve Currency Index Page.
+  - Fix Duplicate Key in Translations.
+  - Add Translations For Catalog Resources For Menu.
+  - Fix Product Model.
+  - Fix OrderItem Mapping.
+  - Fix ProductCategoryController
+  - Fix ProductCategory Edit Template.
+  - Fix Products Index Template.
+  - Not Display Uncategorized Products For Now.
+  - Import Currency Class in ProductForm.
+  - Extend Sylius Currency Interface.
+  - Fix Products Update Template.
+  - Make Category for Product Required.
+  - Fix Products Update Template.
+
+
 2.5.0	|	Release date: **09.03.2023**
 ============================================
 * New Features:
