@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\Collection;
 use Vankosoft\ApplicationBundle\Model\Interfaces\TaxonInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\ProductCategoryInterface;
 
-class ProductCategory extends ProductCategoryInterface
+class ProductCategory implements ProductCategoryInterface
 {
     /** @var mixed */
     protected $id;
