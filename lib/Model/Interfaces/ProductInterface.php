@@ -2,7 +2,7 @@
 
 use Vankosoft\ApplicationBundle\Model\Interfaces\TaxonLeafInterface;
 
-interface ProductInterface extends TaxonLeafInterface
+interface ProductInterface extends PayableObjectInterface, TaxonLeafInterface
 {
     
 }
