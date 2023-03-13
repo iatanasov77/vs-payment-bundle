@@ -77,7 +77,7 @@ class ProductForm extends AbstractForm
             ])
             
             ->add( 'currency', EntityType::class, [
-                'label'                 => 'vs_payment.form.currency',
+                'label'                 => 'vs_payment.form.currency_label',
                 'required'              => true,
                 'class'                 => $this->currencyClass,
                 'choice_label'          => 'code',

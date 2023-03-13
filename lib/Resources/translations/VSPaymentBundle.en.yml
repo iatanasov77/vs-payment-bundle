@@ -6,7 +6,7 @@ vs_payment:
         title: Title
         name: Name
         price: Price
-        currency: Currency
+        currency_label: Currency
         currency_placeholder: '-- Select Currency --'
         categories: Categories
         categories_placeholder: '-- Select Categories --'

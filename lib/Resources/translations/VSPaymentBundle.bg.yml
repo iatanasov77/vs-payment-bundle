@@ -6,7 +6,7 @@ vs_payment:
         title: Заглавие
         name: Име
         price: Цена
-        currency: Валута
+        currency_label: Валута
         currency_placeholder: '-- Избери Валута --'
         categories: Категории
         categories_placeholder: '-- Избери Категории --'
