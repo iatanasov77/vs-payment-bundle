@@ -1,3 +1,14 @@
+2.6.0	|	Release date: **13.03.2023**
+============================================
+* New Features:
+  - Improve GatewayConfig Index Page.
+  - Add Currency Field into GatewayConfig.
+  - Add Doctrine Migrations For Extended Project.
+* Bug-Fixes:
+  - Fix GatewayConfigExt Controller.
+  - Fix PaymentMethodConfigExt Controller.
+
+
 2.5.1	|	Release date: **13.03.2023**
 ============================================
 * New Features:

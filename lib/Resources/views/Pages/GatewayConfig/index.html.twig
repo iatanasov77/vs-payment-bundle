@@ -15,6 +15,7 @@
                             <th>{{ 'vs_payment.template.gateway_config_ext.index.gateway_description' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.gateway_config_ext.index.payment_gateway' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.gateway_config_ext.index.gateway_factory' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.form.currency_label' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.gateway_config_ext.index.use_sandbox' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
@@ -29,6 +30,7 @@
                             <td>{{ item.description }}</td>
                             <td>{{ item.gatewayName }}</td>
                             <td>{{ item.factoryName }}</td>
+                            <td>{% if item.currency %}{{ item.currency.code }}{% endif %}</td>
                             <td>
                                 {% if item.useSandbox %}
                                     <i class="fas fa-check" style="color: #82c91e;">

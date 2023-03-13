@@ -44,7 +44,16 @@
                                     
                                     {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
                                 </div>
+                                
+                                <div class="form-group">
+                                    {{ form_label(form.currency, null, {
+                                        'label_attr': {'class': 'col-form-label'}
+                                        }) 
+                                    }}
                                     
+                                    {{ form_widget(form.currency, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+    
                                 <fieldset class="border p-2 mb-4" style="width: 100%;">
                                     <legend class="w-100 mb-3">{{ 'vs_payment.template.gateway_config_ext.config.payum_config_options' | trans( {},'VSPaymentBundle' ) }}</legend>
                                     

@@ -24,6 +24,7 @@
         <field name="sandboxConfig" type="json" nullable="true" />
         
         <one-to-many field="paymentMethods" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" mapped-by="gateway" />
+        <many-to-one field="currency" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface" />
         
         <gedmo:translation entity="Vankosoft\ApplicationBundle\Model\Interfaces\TranslationInterface" locale="locale"/>
     </mapped-superclass>

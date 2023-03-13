@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 
 class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfigInterface
 {
@@ -42,6 +43,13 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
      * @var string
      */
     protected $locale;
+    
+    /**
+     * Currency For Gateway Account, to can Convert Price If In Different Currency
+     * 
+     * @var CurrencyInterface
+     */
+    protected $currency;
     
     /**
      * {@inheritDoc}
@@ -149,6 +157,27 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
             $this->paymentMethods->removeElement( $paymentMethod );
             $paymentMethod->setGateway( null );
         }
+    }
+    
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+    
+    public function setCurrency( CurrencyInterface $currency )
+    {
+        $this->currency = $currency;
+        
+        return $this;
+    }
+    
+    public function getCurrencyCode()
+    {
+        if ( $this->currency ) {
+            return $this->currency->getCode();
+        }
+        
+        return null;
     }
     
     public function getTranslatableLocale(): ?string

@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
 
@@ -20,13 +21,18 @@ class GatewayConfigForm extends AbstractForm
     /** @var array */
     protected $factories;
     
+    /** @var string */
+    protected $currencyClass;
+    
     public function __construct(
         string $dataClass,
-        array $factories
+        array $factories,
+        string $currencyClass
     ) {
         parent::__construct( $dataClass );
      
-        $this->factories    = $factories;
+        $this->factories        = $factories;
+        $this->currencyClass    = $currencyClass;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options ): void
@@ -46,6 +52,14 @@ class GatewayConfigForm extends AbstractForm
                 'label'                 => 'vs_payment.form.description',
                 'translation_domain'    => 'VSPaymentBundle',
             ] )
+            ->add( 'currency', EntityType::class, [
+                'label'                 => 'vs_payment.form.currency_label',
+                'required'              => true,
+                'class'                 => $this->currencyClass,
+                'choice_label'          => 'code',
+                'placeholder'           => 'vs_payment.form.currency_placeholder',
+                'translation_domain'    => 'VSPaymentBundle',
+            ])
             ->add( 'useSandbox', CheckboxType::class, [
                 'required'              => false,
                 'label'                 => 'vs_payment.form.gateway_config.use_sandbox',

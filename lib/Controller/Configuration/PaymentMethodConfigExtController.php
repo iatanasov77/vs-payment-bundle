@@ -35,6 +35,7 @@ class PaymentMethodConfigExtController extends PayumController
         $this->paymentMethodFactory     = $paymentMethodFactory;
     }
     
+    /** @NOTE This Action Not Used Anymore */
     public function indexAction( Request $request )
     {
         return $this->render( '@VSPayment/Pages/PaymentMethodConfigExt/index.html.twig', [
@@ -64,7 +65,7 @@ class PaymentMethodConfigExtController extends PayumController
             $em->persist( $form->getData() );
             $em->flush();
             
-           return $this->redirect( $this->generateUrl( 'vs_payment_methods_index' ) );
+           return $this->redirect( $this->generateUrl( 'vs_payment_payment_method_index' ) );
         }
         
         return $this->render( '@VSPayment/Pages/PaymentMethodConfigExt/config.html.twig', [
