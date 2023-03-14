@@ -1,3 +1,13 @@
+2.6.1	|	Release date: **14.03.2023**
+============================================
+* New Features and Improvements:
+  - Unification Price Orm Types.
+  - Add a Doctrine Migration.
+  - Add New Fields to Product Model.
+  - Add New Doctrine Migration.
+  - Add Product Pictures Fieldset.
+
+
 2.6.0	|	Release date: **13.03.2023**
 ============================================
 * New Features:
