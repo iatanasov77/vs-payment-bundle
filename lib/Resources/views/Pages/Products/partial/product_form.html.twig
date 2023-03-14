@@ -54,6 +54,28 @@
     </div>
     
     <div class="form-group">
+        {{ form_label(form.description, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    
+    <fieldset class="fieldset-product-pictures">
+        <legend class="w-auto">Pictures</legend>
+        <div class="attributesContainer"
+            data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Products/partial/add-picture-prototype.html.twig' with {'form': form.pictures.vars.prototype} %}{% endapply %}"
+        > 
+            {% for pictureForm in form.pictures %}
+                {% include '@VSPayment/Pages/Products/partial/add-picture-prototype.html.twig' with {'form': pictureForm} %}
+            {% endfor %}
+        </div>
+    </fieldset>
+
+    <div class="row">&nbsp;</div>
+    
+    <div class="form-group">
         {{ form_label(form.price, null, {
             'label_attr': {'class': 'col-form-label'}
             }) 

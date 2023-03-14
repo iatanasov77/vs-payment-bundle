@@ -28,6 +28,12 @@ class Product implements ProductInterface
     /** @var string */
     protected $name;
     
+    /** @var string */
+    protected $description;
+    
+    /** @var string */
+    protected $pictures;
+    
     /** @var integer */
     protected $price;
     
@@ -44,6 +50,7 @@ class Product implements ProductInterface
     {
         $this->orderItems   = new ArrayCollection();
         $this->categories   = new ArrayCollection();
+        $this->pictures     = new ArrayCollection();
     }
     
     public function getId()
@@ -96,6 +103,45 @@ class Product implements ProductInterface
     public function setName( $name ): self
     {
         $this->name = $name;
+        
+        return $this;
+    }
+    
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+    
+    public function setDescription( $description ): self
+    {
+        $this->description = $description;
+        
+        return $this;
+    }
+    
+    /**
+     * @return Collection|ProductPicture[]
+     */
+    public function getPictures()
+    {
+        return $this->pictures;
+    }
+    
+    public function addPicture( ProductPicture $picture ): ProductInterface
+    {
+        if ( ! $this->pictures->contains( $picture ) ) {
+            $picture->setOwner( $this );
+            $this->pictures[] = $picture;
+        }
+        
+        return $this;
+    }
+    
+    public function removePicture( ProductPicture $picture ): ProductInterface
+    {
+        if ( $this->pictures->contains( $picture ) ) {
+            $this->pictures->removeElement( $picture );
+        }
         
         return $this;
     }

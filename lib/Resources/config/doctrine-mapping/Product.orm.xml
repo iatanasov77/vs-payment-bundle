@@ -20,6 +20,16 @@
             <gedmo:translatable />
         </field>
         
+        <field name="description" type="string" length="255" nullable="true" >
+            <gedmo:translatable />
+        </field>
+        
+        <one-to-many field="pictures" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\ProductPictureInterface" mapped-by="owner">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+        
         <field name="price" column="price" type="decimal" scale="2" precision="8" />
         <many-to-one field="currency" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface" />
         

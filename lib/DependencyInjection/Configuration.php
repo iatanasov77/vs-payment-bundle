@@ -50,6 +50,8 @@ use Vankosoft\PaymentBundle\Model\Interfaces\ProductCategoryInterface;
 use Vankosoft\PaymentBundle\Repository\ProductCategoryRepository;
 use Vankosoft\PaymentBundle\Form\ProductCategoryForm;
 use Vankosoft\PaymentBundle\Controller\ProductCategoryController;
+use Vankosoft\PaymentBundle\Model\ProductPicture;
+use Vankosoft\PaymentBundle\Model\Interfaces\ProductPictureInterface;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -245,6 +247,22 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( ProductForm::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
+                        ->arrayNode( 'product_picture' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode( 'model' )->defaultValue( ProductPicture::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'interface' )->defaultValue( ProductPictureInterface::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

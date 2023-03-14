@@ -18,7 +18,7 @@
         
         <field name="objectType" column="object_type" type="string" nullable="false" />
         
-        <field name="price" type="float" nullable="false" />
+        <field name="price" type="decimal" scale="2" precision="8" nullable="false" />
         <field name="currencyCode" column="currency_code" type="string" length="8" nullable="false" />
         
     </mapped-superclass>

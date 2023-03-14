@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Vankosoft\PaymentBundle\Model\Product;
@@ -71,6 +72,19 @@ class ProductForm extends AbstractForm
             ->add( 'name', TextType::class, [
                 'label'                 => 'vs_payment.form.name',
                 'translation_domain'    => 'VSPaymentBundle',
+            ])
+            
+            ->add( 'description', TextType::class, [
+                'label'                 => 'vs_payment.form.description',
+                'translation_domain'    => 'VSPaymentBundle',
+            ])
+            
+            ->add( 'pictures', CollectionType::class, [
+                'entry_type'   => Type\ProductPictureType::class,
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'prototype'    => true,
+                'by_reference' => false
             ])
             
             ->add( 'price', NumberType::class, [
