@@ -7,7 +7,6 @@ use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Vankosoft\PaymentBundle\Model\ProductPicture;
 
 class ProductController extends AbstractCrudController
 {
@@ -63,9 +62,20 @@ class ProductController extends AbstractCrudController
             }
         }
         
-        $productPictureFile    = $form->get( 'picture' )->getData();
-        if ( $gamePictureFile ) {
-            $this->addProductPicture( $entity, $productPictureFile );
+        $pictures    = $request->files->get( 'product_form' );
+        foreach ( $pictures as $pic ) {
+            // echo "<pre>"; var_dump( \reset( $pic )['picture'] ); die;
+            $productPictureFile = \reset( $pic )['picture'];
+            if ( $productPictureFile ) {
+                $this->addProductPicture( $entity, $productPictureFile );
+            }
+        }
+        
+        /** WORKAROUND */
+        foreach ( $entity->getPictures() as $pic ) {
+            if ( empty( $pic->getPath() ) ) {
+                $entity->removePicture( $pic );
+            }
         }
     }
     
@@ -84,7 +94,7 @@ class ProductController extends AbstractCrudController
     private function addProductPicture( &$entity, File $file ): void
     {
         $uploadedFile   = new UploadedFile( $file->getRealPath(), $file->getBasename() );
-        $productPicture = new ProductPicture();
+        $productPicture = $this->get( 'vs_payment.factory.product_picture' )->createNew();
         
         $productPicture->setOriginalName( $file->getClientOriginalName() );
         $productPicture->setFile( $uploadedFile );
