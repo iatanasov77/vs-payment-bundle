@@ -9,8 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Vankosoft\PaymentBundle\Model\Product;
@@ -80,25 +79,12 @@ class ProductForm extends AbstractForm
                 'translation_domain'    => 'VSPaymentBundle',
             ])
             
-            ->add( 'picture', FileType::class, [
-                'mapped'                => false,
-                'required'              => false,
-                
-                'label'                 => 'vs_application.form.picture',
-                'translation_domain'    => 'VSApplicationBundle',
-                
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/gif',
-                            'image/jpeg',
-                            'image/png',
-                            'image/svg+xml',
-                        ],
-                        'mimeTypesMessage' => 'vs_application.form.picture_invalid',
-                    ])
-                ],
+            ->add( 'pictures', CollectionType::class, [
+                'entry_type'   => Type\ProductPictureType::class,
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'prototype'    => true,
+                'by_reference' => false
             ])
             
             ->add( 'price', NumberType::class, [

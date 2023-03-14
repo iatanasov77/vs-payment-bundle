@@ -76,5 +76,11 @@ services:
             - '%vs_payment.model.product.class%'
             - '%vs_payment.model.product_category.class%'
             - '%vs_payment.model.currency.class%'
+    
+    Vankosoft\PaymentBundle\Form\Type\ProductPictureType:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.product_picture.class%'
 
 

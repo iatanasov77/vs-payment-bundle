@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-lg-4">
+        <div class="form-group mt-3">
+            {# {% set pictureFileName  = item.picture.originalName %} #}
+            {% set pictureFileName  = 'vs_application.form.picture_placeholder'  | trans( {},'VSApplicationBundle' ) %}
+            
+            <label for="product_form_picture" class="col-form-label">
+                {{ 'vs_application.form.picture'  | trans( {},'VSApplicationBundle' ) }}
+            </label>
+            <div class="form-field-file">
+                {{ form_widget(form.picture, {'attr': {'class': 'form-control' }}) }}
+                
+                {{ form_label(form.picture, pictureFileName, {
+                    'label_attr': {'class': 'input-group-text'}
+                    }) 
+                }}
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-1">
+        <a href="javascript:;" class="btn btn-success btnAddField"><i class="icon_plus_alt2"></i></a>
+        <a href="javascript:;" class="btn btn-danger btnRemoveField"><i class="icon_close_alt2"></i></a>
+    </div>
+</div>
+    
