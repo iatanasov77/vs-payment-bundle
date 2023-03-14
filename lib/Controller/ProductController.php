@@ -4,6 +4,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Vankosoft\PaymentBundle\Model\ProductPicture;
+
 class ProductController extends AbstractCrudController
 {
     protected function customData( Request $request, $entity = null ): array
@@ -57,6 +62,11 @@ class ProductController extends AbstractCrudController
                 }
             }
         }
+        
+        $productPictureFile    = $form->get( 'picture' )->getData();
+        if ( $gamePictureFile ) {
+            $this->addProductPicture( $entity, $productPictureFile );
+        }
     }
     
     private function getTranslations()
@@ -69,5 +79,19 @@ class ProductController extends AbstractCrudController
         }
         
         return $translations;
+    }
+    
+    private function addProductPicture( &$entity, File $file ): void
+    {
+        $uploadedFile   = new UploadedFile( $file->getRealPath(), $file->getBasename() );
+        $productPicture = new ProductPicture();
+        
+        $productPicture->setOriginalName( $file->getClientOriginalName() );
+        $productPicture->setFile( $uploadedFile );
+        
+        $this->get( 'vs_application.app_pictures_uploader' )->upload( $productPicture );
+        $productPicture->setFile( null ); // reset File Because: Serialization of 'Symfony\Component\HttpFoundation\File\UploadedFile' is not allowed
+        
+        $entity->addPicture( $productPicture );
     }
 }

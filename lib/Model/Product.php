@@ -6,6 +6,7 @@ use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 use Vankosoft\ApplicationBundle\Model\Traits\TaxonLeafTrait;
+use Vankosoft\CmsBundle\Model\FileInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
@@ -27,6 +28,12 @@ class Product implements ProductInterface
     
     /** @var string */
     protected $name;
+    
+    /** @var string */
+    protected $description;
+    
+    /** @var string */
+    protected $pictures;
     
     /** @var integer */
     protected $price;
@@ -96,6 +103,42 @@ class Product implements ProductInterface
     public function setName( $name ): self
     {
         $this->name = $name;
+        
+        return $this;
+    }
+    
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+    
+    public function setDescription( $description ): self
+    {
+        $this->description = $description;
+        
+        return $this;
+    }
+    
+    public function getPictures(): ?FileInterface
+    {
+        return $this->pictures;
+    }
+    
+    public function addPicture( ProductPicture $picture ): ProductInterface
+    {
+        if ( ! $this->pictures->contains( $picture ) ) {
+            $picture->setOwner( $this );
+            $this->pictures[] = $picture;
+        }
+        
+        return $this;
+    }
+    
+    public function removePicture( ProductPicture $picture ): ProductInterface
+    {
+        if ( $this->pictures->contains( $picture ) ) {
+            $this->pictures->removeElement( $picture );
+        }
         
         return $this;
     }
