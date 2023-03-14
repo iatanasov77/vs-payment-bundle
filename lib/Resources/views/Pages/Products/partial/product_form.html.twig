@@ -65,7 +65,7 @@
     <fieldset class="fieldset-product-pictures">
         <legend class="w-auto">Pictures</legend>
         <div class="attributesContainer"
-            data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Products/partial/add-picture-prototype.html.twig' with {'form': form.attributes.vars.prototype} %}{% endapply %}"
+            data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Products/partial/add-picture-prototype.html.twig' with {'form': form.pictures.vars.prototype} %}{% endapply %}"
         > 
             {% for pictureForm in form.pictures %}
                 {% include 'admin-panel/pages/Projects/add-attribute-prototype.html.twig' with {'form': pictureForm} %}
