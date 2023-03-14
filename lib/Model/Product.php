@@ -6,7 +6,6 @@ use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 use Vankosoft\ApplicationBundle\Model\Traits\TaxonLeafTrait;
-use Vankosoft\CmsBundle\Model\FileInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
@@ -51,6 +50,7 @@ class Product implements ProductInterface
     {
         $this->orderItems   = new ArrayCollection();
         $this->categories   = new ArrayCollection();
+        $this->pictures     = new ArrayCollection();
     }
     
     public function getId()
@@ -119,7 +119,10 @@ class Product implements ProductInterface
         return $this;
     }
     
-    public function getPictures(): ?FileInterface
+    /**
+     * @return Collection|ProductPicture[]
+     */
+    public function getPictures()
     {
         return $this->pictures;
     }
