@@ -17,7 +17,7 @@ class OrderItem implements Interfaces\OrderItemInterface
      * 
      * @var Interfaces\PayableObjectInterface
      */
-    protected $object;
+    protected $paidServiceSubscription;
     
     /**
      * 'product' is for products, Because Mapping Error
@@ -27,11 +27,11 @@ class OrderItem implements Interfaces\OrderItemInterface
     protected $product;
     
     /**
-     * The Class of the object
+     * The Class of the payable object
      * 
      * @var string
      */
-    protected $objectType;
+    protected $payableObjectType;
     
     /**
      * @var float
@@ -42,6 +42,16 @@ class OrderItem implements Interfaces\OrderItemInterface
      * @var string
      */
     protected $currencyCode;
+    
+    /**
+     * @var int
+     */
+    protected $qty;
+    
+    public function __construct()
+    {
+        $this->qty  = 1;
+    }
     
     public function getId()
     {
@@ -60,15 +70,15 @@ class OrderItem implements Interfaces\OrderItemInterface
         return $this;
     }
     
-    public function getObject()
+    public function getPaidServiceSubscription()
     {
-        return $this->object;
+        return $this->paidServiceSubscription;
     }
     
-    public function setObject($object)
+    public function setPaidServiceSubscription($paidServiceSubscription)
     {
-        $this->object = $object;
-        $this->objectType   = get_class( $object );
+        $this->paidServiceSubscription  = $paidServiceSubscription;
+        $this->payableObjectType        = get_class( $paidServiceSubscription );
         
         return $this;
     }
@@ -80,20 +90,20 @@ class OrderItem implements Interfaces\OrderItemInterface
     
     public function setProduct($product)
     {
-        $this->product = $product;
-        $this->objectType   = get_class( $product );
+        $this->product              = $product;
+        $this->payableObjectType    = get_class( $product );
         
         return $this;
     }
     
-    public function getObjectType()
+    public function getPayableObjectType()
     {
-        return $this->objectType;
+        return $this->payableObjectType;
     }
     
-    public function setObjectType($objectType)
+    public function setPayableObjectType($payableObjectType)
     {
-        $this->objectType = $objectType;
+        $this->payableObjectType = $payableObjectType;
         
         return $this;
     }
@@ -118,6 +128,18 @@ class OrderItem implements Interfaces\OrderItemInterface
     public function setCurrencyCode($currencyCode)
     {
         $this->currencyCode = $currencyCode;
+        
+        return $this;
+    }
+    
+    public function getQty()
+    {
+        return $this->qty;
+    }
+    
+    public function setQty($qty)
+    {
+        $this->qty = $qty;
         
         return $this;
     }
