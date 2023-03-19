@@ -37,24 +37,22 @@ services:
             - { name: validator.constraint_validator }
 
 
-
 ################################################################################################
 # Currency Twig Extensions
 # ========================
 # See SyliusCurrencyBundle: https://github.com/Sylius/SyliusCurrencyBundle
 ################################################################################################
+    vs_payment.templating.helper.currency:
+        class: Vankosoft\PaymentBundle\Templating\Helper\CurrencyHelper
+        lazy: true
+        tags:
+            - { name: form.type, alias: vs_payment_currency }
 
-#    sylius.templating.helper.currency:
-#        class: Sylius\Bundle\CurrencyBundle\Templating\Helper\CurrencyHelper
-#        lazy: true
-#        tags:
-#            - { name: form.type, alias: sylius_currency }
-
-#    sylius.twig.extension.currency:
-#        class: Sylius\Bundle\CurrencyBundle\Twig\CurrencyExtension
-#        public: false
-#        arguments:
-#            - '@sylius.templating.helper.currency'
-#        tags:
-#            - { name: twig.extension }
+    sylius.twig.extension.currency:
+        class: Vankosoft\PaymentBundle\Twig\CurrencyExtension
+        public: false
+        arguments:
+            - '@vs_payment.templating.helper.currency'
+        tags:
+            - { name: twig.extension }
 
