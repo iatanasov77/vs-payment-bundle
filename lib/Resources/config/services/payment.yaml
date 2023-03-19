@@ -30,6 +30,13 @@ services:
         arguments:
             - '%vs_payment.model.payment_method.class%'
             
+    ########################################################################
+    # ShoppingCart Controllers
+    ########################################################################
+    Vankosoft\PaymentBundle\Controller\ShoppingCart\:
+        resource: '../../../Controller/ShoppingCart'
+        tags: ['controller.service_arguments']
+        autowire: true
     Vankosoft\PaymentBundle\Controller\ShoppingCart\ShoppingCartController:
         tags: ['controller.service_arguments']
         autowire: false
