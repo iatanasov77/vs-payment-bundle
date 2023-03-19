@@ -20,3 +20,10 @@ vs_payment_show_credit_card_form:
         formAction: ''
     options:
         expose: true
+
+vs_payment_shopping_cart_index:
+    path: /vs_payment/shopping-cart
+    controller: Vankosoft\PaymentBundle\Controller\ShoppingCart\ShoppingCartController::index
+    options:
+        expose: true
+

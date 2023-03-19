@@ -29,3 +29,9 @@ services:
         tags: ['form.type']
         arguments:
             - '%vs_payment.model.payment_method.class%'
+            
+    Vankosoft\PaymentBundle\Controller\ShoppingCart\ShoppingCartController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@vs_payment.repository.order'
