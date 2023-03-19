@@ -42,5 +42,8 @@
                 <option name="comment">NEED THIS BECAUSE ORDER SHOULD BE CREATED BEFORE THE PAYMENT IS PRAPARED AND DONE.</option>
             </options>
         </field>
+        
+        <field name="sessionId" type="string" length="255" nullable="true" />
+        
     </mapped-superclass>
 </doctrine-mapping>

@@ -4,11 +4,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
+use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
@@ -17,11 +17,11 @@ use Vankosoft\PaymentBundle\Form\CreditCardForm;
 
 class PaymentController extends AbstractController
 {
-    /** @var TokenStorageInterface */
-    protected $tokenStorage;
-    
     /** @var ManagerRegistry */
     protected ManagerRegistry $doctrine;
+    
+    /** @var SecurityBridge */
+    protected $securityBridge;
     
     /** @var Payment */
     protected $vsPayment;
@@ -39,16 +39,16 @@ class PaymentController extends AbstractController
     protected $payableObjectsRepository;
     
     public function __construct(
-        TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
+        SecurityBridge $securityBridge,
         Payment $vsPayment,
         Factory $ordersFactory,
         Factory $orderItemsFactory,
         EntityRepository $ordersRepository,
         EntityRepository $payableObjectsRepository
     ) {
-        $this->tokenStorage             = $tokenStorage;
         $this->doctrine                 = $doctrine;
+        $this->securityBridge           = $securityBridge;
         $this->vsPayment                = $vsPayment;
         $this->ordersFactory            = $ordersFactory;
         $this->orderItemsFactory        = $orderItemsFactory;
@@ -145,10 +145,14 @@ class PaymentController extends AbstractController
     
     protected function createCard( Request $request )
     {
+        $session = $request->getSession();
+        $session->start();  // Ensure Session is Started
+        
         $em    = $this->doctrine->getManager();
         $card  = $this->ordersFactory->createNew();
         
-        $card->setUser( $this->tokenStorage->getToken()->getUser() );
+        $card->setUser( $this->securityBridge->getUser() );
+        $card->setSessionId( $session->getId() );
         
         $em->persist( $card );
         $em->flush();

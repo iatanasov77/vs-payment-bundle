@@ -3,12 +3,12 @@
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 
-trait PayableObjectTrait
+trait PaidServiceSubscriptionTrait
 {
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface", mappedBy="object")
+     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface", mappedBy="paidServiceSubscription")
      */
     protected $orderItems;
     

@@ -5,9 +5,9 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 interface OrderItemInterface extends ResourceInterface
 {
     public function getOrder();
-    public function getObject();
+    public function getPaidServiceSubscription();
     public function getProduct();
-    public function getObjectType();
+    public function getPayableObjectType();
     public function getPrice();
     public function getCurrencyCode();
 }

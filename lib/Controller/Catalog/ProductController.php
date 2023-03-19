@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller;
+<?php namespace Vankosoft\PaymentBundle\Controller\Catalog;
 
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
