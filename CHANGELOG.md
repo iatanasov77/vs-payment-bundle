@@ -1,3 +1,18 @@
+2.6.2	|	Release date: **19.03.2023**
+============================================
+* New Features, Refactoring and Improvements:
+  - Refactoring OrderItem Model.
+  - Rename Trait to PaidServiceSubscriptionTrait .
+  - Fix OrderItemInterface.
+  - Add a DoctrineMigration
+  - Add Currency Twig Extensions.
+  - Change Namespace of Product Controllers.
+  - Create ShoppingCartController
+  - Add SessionId Into Order Model.
+  - Add a Doctrine Migration.
+  - Create OrderRepository.
+
+
 2.6.1	|	Release date: **14.03.2023**
 ============================================
 * New Features and Improvements:
