@@ -42,3 +42,5 @@ services:
         autowire: false
         arguments:
             - '@vs_payment.repository.order'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
