@@ -14,6 +14,7 @@ use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
 use Vankosoft\PaymentBundle\Form\PaymentForm;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
+use Vankosoft\PaymentBundle\Component\PayableObject;
 
 class PaymentController extends AbstractController
 {
@@ -56,25 +57,24 @@ class PaymentController extends AbstractController
         $this->payableObjectsRepository = $payableObjectsRepository;
     }
     
-    public function addToCardAction( $payableObjectId, Request $request ): Response
+    public function addToCardAction( $payableObjectType, $payableObjectId, $qty, Request $request ): Response
     {
         $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
         $card   = $cardId ? $this->ordersRepository->find( $cardId ) : $this->createCard( $request );
         if ( ! $card ) {
             throw new ShoppingCardException( 'Card cannot be created !!!' );
         }
-        $em             = $this->doctrine->getManager();
         
-        $orderItem      = $this->orderItemsFactory->createNew();
-        $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
-        
-        $orderItem->setObject( $payableObject );
-        $orderItem->setPrice( $payableObject->getPrice() );
-        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
-        
-        $card->addItem( $orderItem );
-        $em->persist( $card );
-        $em->flush();
+        switch ( $payableObjectType ) {
+            case PayableObject::OBJECT_TYPE_SERVICE:
+                $this->addServiceToCard( $payableObjectId, $qty, $card );
+                break;
+            case PayableObject::OBJECT_TYPE_PRODUCT:
+                $this->addProductToCard( $payableObjectId, $qty, $card );
+                break;
+            default:
+                
+        }
         
         return new JsonResponse([
             'status'    => Status::STATUS_OK,
@@ -166,5 +166,37 @@ class PaymentController extends AbstractController
         return $this->createForm( CreditCardForm::class, [
             'captureUrl' => $captureUrl,
         ]);
+    }
+    
+    protected function addServiceToCard( $payableObjectId, $qty, $card ): void
+    {
+        $em             = $this->doctrine->getManager();
+        
+        $orderItem      = $this->orderItemsFactory->createNew();
+        $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
+        
+        $orderItem->setObject( $payableObject );
+        $orderItem->setPrice( $payableObject->getPrice() );
+        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+        
+        $card->addItem( $orderItem );
+        $em->persist( $card );
+        $em->flush();
+    }
+    
+    protected function addProductToCard( $payableObjectId, $qty, $card ): void
+    {
+        $em             = $this->doctrine->getManager();
+        
+        $orderItem      = $this->orderItemsFactory->createNew();
+        $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
+        
+        $orderItem->setObject( $payableObject );
+        $orderItem->setPrice( $payableObject->getPrice() );
+        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+        
+        $card->addItem( $orderItem );
+        $em->persist( $card );
+        $em->flush();
     }
 }
