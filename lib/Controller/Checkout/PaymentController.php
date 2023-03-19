@@ -37,6 +37,9 @@ class PaymentController extends AbstractController
     protected $ordersRepository;
     
     /** @var EntityRepository */
+    protected $productsRepository;
+    
+    /** @var EntityRepository */
     protected $payableObjectsRepository;
     
     public function __construct(
@@ -46,6 +49,7 @@ class PaymentController extends AbstractController
         Factory $ordersFactory,
         Factory $orderItemsFactory,
         EntityRepository $ordersRepository,
+        EntityRepository $productsRepository,
         EntityRepository $payableObjectsRepository
     ) {
         $this->doctrine                 = $doctrine;
@@ -54,6 +58,7 @@ class PaymentController extends AbstractController
         $this->ordersFactory            = $ordersFactory;
         $this->orderItemsFactory        = $orderItemsFactory;
         $this->ordersRepository         = $ordersRepository;
+        $this->productsRepository       = $productsRepository;
         $this->payableObjectsRepository = $payableObjectsRepository;
     }
     
@@ -73,7 +78,7 @@ class PaymentController extends AbstractController
                 $this->addProductToCard( $payableObjectId, $qty, $card );
                 break;
             default:
-                
+                throw new ShoppingCardException( 'Invalid Payable Object Type !!!' );
         }
         
         return new JsonResponse([
@@ -175,7 +180,7 @@ class PaymentController extends AbstractController
         $orderItem      = $this->orderItemsFactory->createNew();
         $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
         
-        $orderItem->setObject( $payableObject );
+        $orderItem->setPaidServiceSubscription( $payableObject );
         $orderItem->setPrice( $payableObject->getPrice() );
         $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
         
@@ -189,9 +194,9 @@ class PaymentController extends AbstractController
         $em             = $this->doctrine->getManager();
         
         $orderItem      = $this->orderItemsFactory->createNew();
-        $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
+        $payableObject  = $this->productsRepository->find( $payableObjectId );
         
-        $orderItem->setObject( $payableObject );
+        $orderItem->setProduct( $payableObject );
         $orderItem->setPrice( $payableObject->getPrice() );
         $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
         
