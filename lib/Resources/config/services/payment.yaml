@@ -41,6 +41,7 @@ services:
         tags: ['controller.service_arguments']
         autowire: false
         arguments:
+            - '@vs_users.security_bridge'
             - '@vs_payment.repository.order'
         calls:
             - [ setContainer, [ '@service_container' ] ]

@@ -24,6 +24,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Vankosoft\PaymentBundle\Repository\OrderRepository;
 
 use Vankosoft\PaymentBundle\Model\OrderItem;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
@@ -160,7 +161,7 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( Order::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'interface' )->defaultValue( OrderInterface::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( OrderRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
