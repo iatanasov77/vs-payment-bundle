@@ -4,7 +4,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
@@ -20,9 +19,6 @@ class PaymentController extends AbstractController
 {
     /** @var ManagerRegistry */
     protected ManagerRegistry $doctrine;
-    
-    /** @var SessionStorageInterface */
-    protected $session;
     
     /** @var SecurityBridge */
     protected $securityBridge;
@@ -44,7 +40,6 @@ class PaymentController extends AbstractController
     
     public function __construct(
         ManagerRegistry $doctrine,
-        SessionStorageInterface $session,
         SecurityBridge $securityBridge,
         Payment $vsPayment,
         Factory $ordersFactory,
@@ -53,7 +48,6 @@ class PaymentController extends AbstractController
         EntityRepository $payableObjectsRepository
     ) {
         $this->doctrine                 = $doctrine;
-        $this->session                  = $session;
         $this->securityBridge           = $securityBridge;
         $this->vsPayment                = $vsPayment;
         $this->ordersFactory            = $ordersFactory;
@@ -151,14 +145,14 @@ class PaymentController extends AbstractController
     
     protected function createCard( Request $request )
     {
-        // Ensure Session is Started
-        $this->session->start();
+        $session = $request->getSession();
+        $session->start();  // Ensure Session is Started
         
         $em    = $this->doctrine->getManager();
         $card  = $this->ordersFactory->createNew();
         
         $card->setUser( $this->securityBridge->getUser() );
-        $card->setSessionId( $this->session->getId() );
+        $card->setSessionId( $session->getId() );
         
         $em->persist( $card );
         $em->flush();

@@ -16,7 +16,6 @@ services:
         autowire: false
         arguments:
             - '@doctrine'
-            - '@session'
             - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.factory.order'
