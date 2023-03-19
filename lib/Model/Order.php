@@ -62,6 +62,11 @@ class Order implements Interfaces\OrderInterface
      */
     protected $status;
     
+    /**
+     * @var string
+     */
+    protected $sessionId;
+    
     public function __construct()
     {
         $this->items        = new ArrayCollection();
@@ -192,6 +197,18 @@ class Order implements Interfaces\OrderInterface
     public function setStatus($status)
     {
         $this->status    = $status;
+        
+        return $this;
+    }
+    
+    public function getSessionId()
+    {
+        return $this->sessionId;
+    }
+    
+    public function setSessionId($sessionId)
+    {
+        $this->sessionId    = $sessionId;
         
         return $this;
     }

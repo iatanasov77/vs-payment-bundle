@@ -10,4 +10,7 @@ interface OrderInterface extends ResourceInterface
     public function getTotalAmount();
     public function getCurrencyCode();
     public function getItems();
+    
+    public function getStatus();
+    public function getSessionId();
 }
