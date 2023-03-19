@@ -48,7 +48,7 @@ services:
         tags:
             - { name: form.type, alias: vs_payment_currency }
 
-    sylius.twig.extension.currency:
+    vs_payment.twig.extension.currency:
         class: Vankosoft\PaymentBundle\Twig\CurrencyExtension
         public: false
         arguments:
