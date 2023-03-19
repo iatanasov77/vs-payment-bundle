@@ -44,12 +44,12 @@ use Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateController;
 use Vankosoft\PaymentBundle\Model\Product;
 use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 use Vankosoft\PaymentBundle\Form\ProductForm;
-use Vankosoft\PaymentBundle\Controller\ProductController;
+use Vankosoft\PaymentBundle\Controller\Catalog\ProductController;
 use Vankosoft\PaymentBundle\Model\ProductCategory;
 use Vankosoft\PaymentBundle\Model\Interfaces\ProductCategoryInterface;
 use Vankosoft\PaymentBundle\Repository\ProductCategoryRepository;
 use Vankosoft\PaymentBundle\Form\ProductCategoryForm;
-use Vankosoft\PaymentBundle\Controller\ProductCategoryController;
+use Vankosoft\PaymentBundle\Controller\Catalog\ProductCategoryController;
 use Vankosoft\PaymentBundle\Model\ProductPicture;
 use Vankosoft\PaymentBundle\Model\Interfaces\ProductPictureInterface;
 
