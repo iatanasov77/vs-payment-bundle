@@ -1,3 +1,11 @@
+2.6.3	|	Release date: **24.03.2023**
+============================================
+* New Features and Improvements:
+  - Improve Add To Cart Action.
+  - Add TODO List In Documentation.
+  - Improve ShoppingCartController .
+
+
 2.6.2	|	Release date: **19.03.2023**
 ============================================
 * New Features, Refactoring and Improvements:
