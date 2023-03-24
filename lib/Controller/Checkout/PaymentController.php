@@ -1,6 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Vankosoft\PaymentBundle\Controller\BaseShoppingCartController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,13 +16,10 @@ use Vankosoft\PaymentBundle\Form\PaymentForm;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
 use Vankosoft\PaymentBundle\Component\PayableObject;
 
-class PaymentController extends AbstractController
+class PaymentController extends BaseShoppingCartController
 {
     /** @var ManagerRegistry */
     protected ManagerRegistry $doctrine;
-    
-    /** @var SecurityBridge */
-    protected $securityBridge;
     
     /** @var Payment */
     protected $vsPayment;
@@ -32,9 +29,6 @@ class PaymentController extends AbstractController
     
     /** @var Factory */
     protected $orderItemsFactory;
-    
-    /** @var EntityRepository */
-    protected $ordersRepository;
     
     /** @var EntityRepository */
     protected $productsRepository;
@@ -52,12 +46,12 @@ class PaymentController extends AbstractController
         EntityRepository $productsRepository,
         EntityRepository $payableObjectsRepository
     ) {
+        parent::__construct( $securityBridge, $ordersRepository );
+        
         $this->doctrine                 = $doctrine;
-        $this->securityBridge           = $securityBridge;
         $this->vsPayment                = $vsPayment;
         $this->ordersFactory            = $ordersFactory;
         $this->orderItemsFactory        = $orderItemsFactory;
-        $this->ordersRepository         = $ordersRepository;
         $this->productsRepository       = $productsRepository;
         $this->payableObjectsRepository = $payableObjectsRepository;
     }
@@ -146,24 +140,6 @@ class PaymentController extends AbstractController
             'form'          => $form->createView(),
             'paymentMethod' => $card->getPaymentMethod(),
         ]);
-    }
-    
-    protected function createCard( Request $request )
-    {
-        $session = $request->getSession();
-        $session->start();  // Ensure Session is Started
-        
-        $em    = $this->doctrine->getManager();
-        $card  = $this->ordersFactory->createNew();
-        
-        $card->setUser( $this->securityBridge->getUser() );
-        $card->setSessionId( $session->getId() );
-        
-        $em->persist( $card );
-        $em->flush();
-        
-        $request->getSession()->set( 'vs_payment_basket_id', $card->getId() );
-        return $card;
     }
     
     protected function getCreditCardForm( $captureUrl )

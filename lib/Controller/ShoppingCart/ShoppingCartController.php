@@ -1,23 +1,16 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\ShoppingCart;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Vankosoft\PaymentBundle\Controller\BaseShoppingCartController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 
-class ShoppingCartController extends AbstractController
+class ShoppingCartController extends BaseShoppingCartController
 {
-    /** @var SecurityBridge */
-    protected $securityBridge;
-    
-    /** @var EntityRepository */
-    protected $ordersRepository;
-    
     public function __construct( SecurityBridge $securityBridge, EntityRepository $ordersRepository )
     {
-        $this->securityBridge   = $securityBridge;
-        $this->ordersRepository = $ordersRepository;
+        parent::__construct( $securityBridge, $ordersRepository );
     }
     
     public function index( Request $request ): Response
@@ -28,7 +21,7 @@ class ShoppingCartController extends AbstractController
         //$shoppingCart   = $this->ordersRepository->getShoppingCart( $this->securityBridge->getUser(), $session->getId() );
         
         $cardId         = $session->get( 'vs_payment_basket_id' );
-        $shoppingCart   = $cardId ? $this->ordersRepository->find( $cardId ) : null;
+        $shoppingCart   = $cardId ? $this->ordersRepository->find( $cardId ) : $this->createCard( $request );
         
         return $this->render( '@VSPayment/Pages/ShoppingCart/index.html.twig', [
             'shoppingCart'  => $shoppingCart,
