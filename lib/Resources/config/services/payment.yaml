@@ -44,6 +44,7 @@ services:
         arguments:
             - '@doctrine'
             - '@vs_users.security_bridge'
+            - '@vs_payment.factory.order'
             - '@vs_payment.repository.order'
         calls:
             - [ setContainer, [ '@service_container' ] ]

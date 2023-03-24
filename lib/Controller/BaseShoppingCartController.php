@@ -3,6 +3,7 @@
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
+use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 
@@ -14,13 +15,21 @@ class BaseShoppingCartController extends AbstractController
     /** @var SecurityBridge */
     protected $securityBridge;
     
+    /** @var Factory */
+    protected $ordersFactory;
+    
     /** @var EntityRepository */
     protected $ordersRepository;
     
-    public function __construct( ManagerRegistry $doctrine, SecurityBridge $securityBridge, EntityRepository $ordersRepository )
-    {
+    public function __construct(
+        ManagerRegistry $doctrine,
+        SecurityBridge $securityBridge,
+        Factory $ordersFactory,
+        EntityRepository $ordersRepository
+    ) {
         $this->doctrine         = $doctrine;
         $this->securityBridge   = $securityBridge;
+        $this->ordersFactory    = $ordersFactory;
         $this->ordersRepository = $ordersRepository;
     }
     

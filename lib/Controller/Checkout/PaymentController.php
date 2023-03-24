@@ -22,9 +22,6 @@ class PaymentController extends BaseShoppingCartController
     protected $vsPayment;
     
     /** @var Factory */
-    protected $ordersFactory;
-    
-    /** @var Factory */
     protected $orderItemsFactory;
     
     /** @var EntityRepository */
@@ -43,10 +40,9 @@ class PaymentController extends BaseShoppingCartController
         EntityRepository $productsRepository,
         EntityRepository $payableObjectsRepository
     ) {
-        parent::__construct( $doctrine, $securityBridge, $ordersRepository );
+        parent::__construct( $doctrine, $securityBridge, $ordersFactory, $ordersRepository );
         
         $this->vsPayment                = $vsPayment;
-        $this->ordersFactory            = $ordersFactory;
         $this->orderItemsFactory        = $orderItemsFactory;
         $this->productsRepository       = $productsRepository;
         $this->payableObjectsRepository = $payableObjectsRepository;
