@@ -28,7 +28,7 @@ class ShoppingCartController extends AbstractController
         //$shoppingCart   = $this->ordersRepository->getShoppingCart( $this->securityBridge->getUser(), $session->getId() );
         
         $cardId         = $session->get( 'vs_payment_basket_id' );
-        $shoppingCart   = $this->ordersRepository->find( $cardId );
+        $shoppingCart   = $cardId ? $this->ordersRepository->find( $cardId ) : null;
         
         return $this->render( '@VSPayment/Pages/ShoppingCart/index.html.twig', [
             'shoppingCart'  => $shoppingCart,
