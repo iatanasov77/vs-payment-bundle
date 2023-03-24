@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 
-class BaseShoppingCartController
+class BaseShoppingCartController extends AbstractController
 {
     /** @var SecurityBridge */
     protected $securityBridge;
