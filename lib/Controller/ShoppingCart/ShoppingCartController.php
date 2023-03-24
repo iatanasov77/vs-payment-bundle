@@ -3,14 +3,15 @@
 use Vankosoft\PaymentBundle\Controller\BaseShoppingCartController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 
 class ShoppingCartController extends BaseShoppingCartController
 {
-    public function __construct( SecurityBridge $securityBridge, EntityRepository $ordersRepository )
+    public function __construct( ManagerRegistry $doctrine, SecurityBridge $securityBridge, EntityRepository $ordersRepository )
     {
-        parent::__construct( $securityBridge, $ordersRepository );
+        parent::__construct( $doctrine, $securityBridge, $ordersRepository );
     }
     
     public function index( Request $request ): Response

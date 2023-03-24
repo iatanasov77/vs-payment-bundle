@@ -42,6 +42,7 @@ services:
         tags: ['controller.service_arguments']
         autowire: false
         arguments:
+            - '@doctrine'
             - '@vs_users.security_bridge'
             - '@vs_payment.repository.order'
         calls:

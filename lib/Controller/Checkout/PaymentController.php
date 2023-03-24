@@ -18,9 +18,6 @@ use Vankosoft\PaymentBundle\Component\PayableObject;
 
 class PaymentController extends BaseShoppingCartController
 {
-    /** @var ManagerRegistry */
-    protected ManagerRegistry $doctrine;
-    
     /** @var Payment */
     protected $vsPayment;
     
@@ -46,9 +43,8 @@ class PaymentController extends BaseShoppingCartController
         EntityRepository $productsRepository,
         EntityRepository $payableObjectsRepository
     ) {
-        parent::__construct( $securityBridge, $ordersRepository );
+        parent::__construct( $doctrine, $securityBridge, $ordersRepository );
         
-        $this->doctrine                 = $doctrine;
         $this->vsPayment                = $vsPayment;
         $this->ordersFactory            = $ordersFactory;
         $this->orderItemsFactory        = $orderItemsFactory;
