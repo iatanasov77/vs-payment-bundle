@@ -1,23 +1,22 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\ShoppingCart;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Vankosoft\PaymentBundle\Controller\BaseShoppingCartController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Persistence\ManagerRegistry;
+use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 
-class ShoppingCartController extends AbstractController
+class ShoppingCartController extends BaseShoppingCartController
 {
-    /** @var SecurityBridge */
-    protected $securityBridge;
-    
-    /** @var EntityRepository */
-    protected $ordersRepository;
-    
-    public function __construct( SecurityBridge $securityBridge, EntityRepository $ordersRepository )
-    {
-        $this->securityBridge   = $securityBridge;
-        $this->ordersRepository = $ordersRepository;
+    public function __construct(
+        ManagerRegistry $doctrine,
+        SecurityBridge $securityBridge,
+        Factory $ordersFactory,
+        EntityRepository $ordersRepository
+    ) {
+        parent::__construct( $doctrine, $securityBridge, $ordersFactory, $ordersRepository );
     }
     
     public function index( Request $request ): Response
@@ -28,10 +27,11 @@ class ShoppingCartController extends AbstractController
         //$shoppingCart   = $this->ordersRepository->getShoppingCart( $this->securityBridge->getUser(), $session->getId() );
         
         $cardId         = $session->get( 'vs_payment_basket_id' );
-        $shoppingCart   = $this->ordersRepository->find( $cardId );
+        $shoppingCart   = $cardId ? $this->ordersRepository->find( $cardId ) : $this->createCard( $request );
         
         return $this->render( '@VSPayment/Pages/ShoppingCart/index.html.twig', [
-            'items' => $shoppingCart ? $shoppingCart->getItems() : [],
+            'shoppingCart'  => $shoppingCart,
+            'items'         => $shoppingCart ? $shoppingCart->getItems() : [],
         ]);
     }
 }

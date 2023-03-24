@@ -1,6 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Vankosoft\PaymentBundle\Controller\BaseShoppingCartController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,26 +14,18 @@ use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
 use Vankosoft\PaymentBundle\Form\PaymentForm;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
+use Vankosoft\PaymentBundle\Component\PayableObject;
 
-class PaymentController extends AbstractController
+class PaymentController extends BaseShoppingCartController
 {
-    /** @var ManagerRegistry */
-    protected ManagerRegistry $doctrine;
-    
-    /** @var SecurityBridge */
-    protected $securityBridge;
-    
     /** @var Payment */
     protected $vsPayment;
-    
-    /** @var Factory */
-    protected $ordersFactory;
     
     /** @var Factory */
     protected $orderItemsFactory;
     
     /** @var EntityRepository */
-    protected $ordersRepository;
+    protected $productsRepository;
     
     /** @var EntityRepository */
     protected $payableObjectsRepository;
@@ -45,36 +37,35 @@ class PaymentController extends AbstractController
         Factory $ordersFactory,
         Factory $orderItemsFactory,
         EntityRepository $ordersRepository,
+        EntityRepository $productsRepository,
         EntityRepository $payableObjectsRepository
     ) {
-        $this->doctrine                 = $doctrine;
-        $this->securityBridge           = $securityBridge;
+        parent::__construct( $doctrine, $securityBridge, $ordersFactory, $ordersRepository );
+        
         $this->vsPayment                = $vsPayment;
-        $this->ordersFactory            = $ordersFactory;
         $this->orderItemsFactory        = $orderItemsFactory;
-        $this->ordersRepository         = $ordersRepository;
+        $this->productsRepository       = $productsRepository;
         $this->payableObjectsRepository = $payableObjectsRepository;
     }
     
-    public function addToCardAction( $payableObjectId, Request $request ): Response
+    public function addToCardAction( $payableObjectType, $payableObjectId, $qty, Request $request ): Response
     {
         $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
         $card   = $cardId ? $this->ordersRepository->find( $cardId ) : $this->createCard( $request );
         if ( ! $card ) {
             throw new ShoppingCardException( 'Card cannot be created !!!' );
         }
-        $em             = $this->doctrine->getManager();
         
-        $orderItem      = $this->orderItemsFactory->createNew();
-        $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
-        
-        $orderItem->setObject( $payableObject );
-        $orderItem->setPrice( $payableObject->getPrice() );
-        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
-        
-        $card->addItem( $orderItem );
-        $em->persist( $card );
-        $em->flush();
+        switch ( $payableObjectType ) {
+            case PayableObject::OBJECT_TYPE_SERVICE:
+                $this->addServiceToCard( $payableObjectId, $qty, $card );
+                break;
+            case PayableObject::OBJECT_TYPE_PRODUCT:
+                $this->addProductToCard( $payableObjectId, $qty, $card );
+                break;
+            default:
+                throw new ShoppingCardException( 'Invalid Payable Object Type !!!' );
+        }
         
         return new JsonResponse([
             'status'    => Status::STATUS_OK,
@@ -143,28 +134,42 @@ class PaymentController extends AbstractController
         ]);
     }
     
-    protected function createCard( Request $request )
-    {
-        $session = $request->getSession();
-        $session->start();  // Ensure Session is Started
-        
-        $em    = $this->doctrine->getManager();
-        $card  = $this->ordersFactory->createNew();
-        
-        $card->setUser( $this->securityBridge->getUser() );
-        $card->setSessionId( $session->getId() );
-        
-        $em->persist( $card );
-        $em->flush();
-        
-        $request->getSession()->set( 'vs_payment_basket_id', $card->getId() );
-        return $card;
-    }
-    
     protected function getCreditCardForm( $captureUrl )
     {
         return $this->createForm( CreditCardForm::class, [
             'captureUrl' => $captureUrl,
         ]);
+    }
+    
+    protected function addServiceToCard( $payableObjectId, $qty, $card ): void
+    {
+        $em             = $this->doctrine->getManager();
+        
+        $orderItem      = $this->orderItemsFactory->createNew();
+        $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
+        
+        $orderItem->setPaidServiceSubscription( $payableObject );
+        $orderItem->setPrice( $payableObject->getPrice() );
+        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+        
+        $card->addItem( $orderItem );
+        $em->persist( $card );
+        $em->flush();
+    }
+    
+    protected function addProductToCard( $payableObjectId, $qty, $card ): void
+    {
+        $em             = $this->doctrine->getManager();
+        
+        $orderItem      = $this->orderItemsFactory->createNew();
+        $payableObject  = $this->productsRepository->find( $payableObjectId );
+        
+        $orderItem->setProduct( $payableObject );
+        $orderItem->setPrice( $payableObject->getPrice() );
+        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+        
+        $card->addItem( $orderItem );
+        $em->persist( $card );
+        $em->flush();
     }
 }

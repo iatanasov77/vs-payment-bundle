@@ -1,6 +1,8 @@
 vs_payment_add_to_card:
-    path: /vs_payment/add-to-card/{payableObjectId}
+    path: /vs_payment/add-to-card/{payableObjectType}/{payableObjectId}/{qty}
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaymentController::addToCardAction
+    defaults:
+        qty: 1
     options:
         expose: true
 vs_payment_show_payment_methods_form:

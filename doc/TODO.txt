@@ -1,0 +1,6 @@
+
+# Converting currencies using a third party API.
+###################################################################################
+https://github.com/Whyounes/currency-converter
+
+
