@@ -1,0 +1,55 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    vs_payment.fixture.currencies:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\CurrenciesFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.currencies'
+        tags:
+            - 'sylius_fixtures.fixture'
+            
+    vs_payment.fixture.exchange_rates:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\ExchangeRatesFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.exchange_rates'
+        tags:
+            - 'sylius_fixtures.fixture'
+            
+    vs_payment.fixture.gateway_configs:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\GatewayConfigsFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.gateway_configs'
+        tags:
+            - 'sylius_fixtures.fixture'
+            
+    vs_payment.fixture.payment_methods:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\PaymentMethodsFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.payment_methods'
+        tags:
+            - 'sylius_fixtures.fixture'
+            
+    vs_payment.fixture.product_categories:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\ProductCategoriesFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.product_categories'
+        tags:
+            - 'sylius_fixtures.fixture'
+            
+    vs_payment.fixture.products:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\ProductsFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.products'
+        tags:
+            - 'sylius_fixtures.fixture'
+
+

@@ -10,6 +10,8 @@
             <generator strategy="AUTO" />
         </id>
         
+        <field name="gatewayName" column="gateway_name" type="string" unique="true" />
+        
         <field name="title" type="string" length="255" nullable="false" >
             <gedmo:translatable />
             <options>

@@ -1,0 +1,48 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    vs_payment.fixture.example_factory.currencies:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\CurrenciesExampleFactory
+        arguments:
+            - '@vs_payment.factory.currency'
+            
+    vs_payment.fixture.example_factory.exchange_rates:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\CurrenciesExampleFactory
+        arguments:
+            - '@vs_payment.factory.exchange_rate'
+            - '@vs_payment.repository.currency'
+            
+    vs_payment.fixture.example_factory.gateway_configs:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\GatewayConfigsExampleFactory
+        arguments:
+            - '@vs_payment.factory.gateway_config'
+            - '@vs_payment.repository.currency'
+            
+    vs_payment.fixture.example_factory.payment_methods:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\PaymentMethodsExampleFactory
+        arguments:
+            - '@vs_payment.factory.payment_method'
+            - '@vs_payment.repository.gateway_config'
+            
+    vs_payment.fixture.example_factory.product_categories:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\ProductCategoriesExampleFactory
+        arguments:
+            - '@vs_payment.factory.product_category'
+            - '@vs_application.repository.taxonomy'
+            - '@vs_application.factory.taxon'
+            - '@vs_application.slug_generator'
+            
+    vs_payment.fixture.example_factory.products:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\ProductsExampleFactory
+        arguments:
+            - '@vs_payment.factory.product'
+            - '@vs_payment.factory.product_picture'
+            - '@vs_payment.repository.currency'
+            - '@vs_payment.repository.product_category'
+            - '@file_locator'
+            - '@vs_application.app_pictures_uploader'
+
+

@@ -116,7 +116,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $card->setNumber( $details['number'] );
         $card->setExpireAt( new \DateTime('2018-10-10') );
         $card->setSecurityCode( $details['cvv'] );
-        $card->setHolder( $details['holdere'] );
+        $card->setHolder( $details['holder'] );
         
         return $card;
     }
