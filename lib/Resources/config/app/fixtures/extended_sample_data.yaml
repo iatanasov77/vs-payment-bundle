@@ -1,6 +1,10 @@
 sylius_fixtures:
     suites:
         vankosoft_extended_sample_data_suite:
+            listeners:
+                #orm_purger: ~
+                logger: ~
+            
             fixtures:
                 currencies:
                     name: currencies
