@@ -62,7 +62,7 @@ final class ProductsExampleFactory extends AbstractExampleFactory implements Exa
         $entity     = $this->productsFactory->createNew();
         
         $currency   = $this->currenciesRepository->findOneBy( ['code' => $options['currency']] );
-        $category   = $this->categoriesRepository->findOneByCode( $options['category_code'] );
+        $category   = $this->categoriesRepository->findByTaxonCode( $options['category_code'] );
         
         $entity->addCategory( $category );
         $entity->setTranslatableLocale( $options['locale'] );
