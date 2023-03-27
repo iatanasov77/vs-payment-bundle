@@ -10,7 +10,7 @@ services:
             - '@vs_payment.factory.currency'
             
     vs_payment.fixture.example_factory.exchange_rates:
-        class: Vankosoft\PaymentBundle\DataFixtures\Factory\CurrenciesExampleFactory
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\ExchangeRatesExampleFactory
         arguments:
             - '@vs_payment.factory.exchange_rate'
             - '@vs_payment.repository.currency'
