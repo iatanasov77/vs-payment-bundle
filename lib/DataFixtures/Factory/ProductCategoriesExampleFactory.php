@@ -70,7 +70,7 @@ final class ProductCategoriesExampleFactory extends AbstractExampleFactory imple
     {
         $resolver
             ->setDefault( 'parent', null )
-            ->setAllowedTypes( 'parent', ['string'] )
+            ->setAllowedTypes( 'parent', ['string', 'null'] )
         
             ->setDefault( 'title', null )
             ->setAllowedTypes( 'title', ['string'] )
