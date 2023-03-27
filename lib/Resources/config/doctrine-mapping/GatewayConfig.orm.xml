@@ -10,7 +10,13 @@
             <generator strategy="AUTO" />
         </id>
         
+        <!--
+            Duplicate definition of column 'gateway_name'
+            Use Validation on Form Submit
+        --> 
+        <!-- 
         <field name="gatewayName" column="gateway_name" type="string" unique="true" />
+        -->
         
         <field name="title" type="string" length="255" nullable="false" >
             <gedmo:translatable />
