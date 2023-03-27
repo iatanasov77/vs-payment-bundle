@@ -1,23 +1,6 @@
 sylius_fixtures:
     suites:
         vankosoft_extended_sample_data_suite:
-            listeners:
-                sample_data_purger:
-                    mode: 'truncate'
-                    options:
-                        exclude:
-                            - 'VSAPP_Settings'
-                            - 'VSAPP_Applications'
-                            - 'VSAPP_Taxonomy'
-                            - 'VSAPP_Taxons'
-                            - 'VSAPP_TaxonTranslations'
-                            - 'VSAPP_Translations'
-                            - 'VSUM_Users'
-                            - 'VSUM_UsersInfo'
-                            - 'VSUM_UsersActivities'
-                            - 'VSUM_UsersNotifications'
-                logger: ~
-                
             fixtures:
                 currencies:
                     name: currencies
