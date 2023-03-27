@@ -23,12 +23,12 @@ final class GatewayConfigsExampleFactory extends AbstractExampleFactory implemen
         FactoryInterface $gatewayConfigsFactory,
         RepositoryInterface $currenciesRepository
     ) {
-        $this->gatewayConfigs   = $currenciesFactory;
+        $this->gatewayConfigsFactory    = $gatewayConfigsFactory;
         
-        $this->optionsResolver  = new OptionsResolver();
+        $this->optionsResolver          = new OptionsResolver();
         $this->configureOptions( $this->optionsResolver );
         
-        $this->currenciesRepository = $currenciesRepository;
+        $this->currenciesRepository     = $currenciesRepository;
     }
     
     public function create( array $options = [] ): GatewayConfigInterface
