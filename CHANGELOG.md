@@ -1,3 +1,9 @@
+2.6.4	|	Release date: **27.03.2023**
+============================================
+* New Features:
+  - Add Fixture Suit For Sample Data.
+
+
 2.6.3	|	Release date: **24.03.2023**
 ============================================
 * New Features and Improvements:
