@@ -19,8 +19,8 @@ final class GatewayConfigsFixture extends AbstractResourceFixture
                 ->scalarNode( 'gateway_name' )->end()
                 ->scalarNode( 'factory_name' )->end()
                 ->booleanNode( 'use_sandbox' )->defaultTrue()->end()
-                ->arrayNode( 'config' )->end()
-                ->arrayNode( 'sandbox_config' )->end()
+                ->arrayNode( 'config' )->variablePrototype()->end()->end()
+                ->arrayNode( 'sandbox_config' )->variablePrototype()->end()->end()
                 ->scalarNode( 'currency' )->end()
         ;
     }

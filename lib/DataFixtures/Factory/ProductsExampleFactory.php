@@ -72,7 +72,9 @@ final class ProductsExampleFactory extends AbstractExampleFactory implements Exa
         $entity->setPrice( $options['price'] );
         $entity->setCurrency( $currency );
         
-        $this->addProductPictures( $entity, $options['pictures'] );
+        if ( isset( $options['pictures'] ) && null !== $options['pictures'] ) {
+            $this->addProductPictures( $entity, $options['pictures'] );
+        }
         
         return $entity;
     }
@@ -102,7 +104,6 @@ final class ProductsExampleFactory extends AbstractExampleFactory implements Exa
             ->setAllowedTypes( 'currency', ['string'] )
             
             ->setDefault( 'pictures', null )
-            ->setAllowedTypes( 'pictures', ['array'] )
         ;
     }
     

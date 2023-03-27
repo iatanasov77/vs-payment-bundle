@@ -68,11 +68,8 @@ final class GatewayConfigsExampleFactory extends AbstractExampleFactory implemen
             ->setDefault( 'use_sandbox', null )
             ->setAllowedTypes( 'use_sandbox', ['bool'] )
             
-            ->setDefault( 'config', null )
-            ->setAllowedTypes( 'config', ['array'] )
-            
-            ->setDefault( 'sandbox_config', null )
-            ->setAllowedTypes( 'sandbox_config', ['array'] )
+            ->setDefault( 'config', [] )
+            ->setDefault( 'sandbox_config', [] )
             
             ->setDefault( 'currency', null )
             ->setAllowedTypes( 'currency', ['string'] )
