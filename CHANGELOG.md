@@ -1,3 +1,15 @@
+2.6.7	|	Release date: **28.03.2023**
+============================================
+* Bug-Fixes:
+  - Fix GatewayConfigsExampleFactory
+  - Fix Data Fixtures.
+  - Fix Data Fixtures Services.
+  - Fix Array Nodes Definitions in Fixtures.
+  - Fix Sample Data Fixtures Configuration.
+  - Fix Sample Data Fixtures.
+  - Fix Products Fixture.
+
+
 2.6.6	|	Release date: **27.03.2023**
 ============================================
 * Bug-Fixes:
