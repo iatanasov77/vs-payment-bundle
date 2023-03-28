@@ -23,12 +23,12 @@ final class GatewayConfigsExampleFactory extends AbstractExampleFactory implemen
         FactoryInterface $gatewayConfigsFactory,
         RepositoryInterface $currenciesRepository
     ) {
-        $this->gatewayConfigs   = $currenciesFactory;
+        $this->gatewayConfigsFactory    = $gatewayConfigsFactory;
         
-        $this->optionsResolver  = new OptionsResolver();
+        $this->optionsResolver          = new OptionsResolver();
         $this->configureOptions( $this->optionsResolver );
         
-        $this->currenciesRepository = $currenciesRepository;
+        $this->currenciesRepository     = $currenciesRepository;
     }
     
     public function create( array $options = [] ): GatewayConfigInterface
@@ -68,11 +68,8 @@ final class GatewayConfigsExampleFactory extends AbstractExampleFactory implemen
             ->setDefault( 'use_sandbox', null )
             ->setAllowedTypes( 'use_sandbox', ['bool'] )
             
-            ->setDefault( 'config', null )
-            ->setAllowedTypes( 'config', ['array'] )
-            
-            ->setDefault( 'sandbox_config', null )
-            ->setAllowedTypes( 'sandbox_config', ['array'] )
+            ->setDefault( 'config', [] )
+            ->setDefault( 'sandbox_config', [] )
             
             ->setDefault( 'currency', null )
             ->setAllowedTypes( 'currency', ['string'] )

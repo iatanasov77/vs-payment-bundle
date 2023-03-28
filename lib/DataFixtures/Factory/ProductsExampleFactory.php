@@ -62,7 +62,7 @@ final class ProductsExampleFactory extends AbstractExampleFactory implements Exa
         $entity     = $this->productsFactory->createNew();
         
         $currency   = $this->currenciesRepository->findOneBy( ['code' => $options['currency']] );
-        $category   = $this->categoriesRepository->findOneByCode( $options['category_code'] );
+        $category   = $this->categoriesRepository->findByTaxonCode( $options['category_code'] );
         
         $entity->addCategory( $category );
         $entity->setTranslatableLocale( $options['locale'] );
@@ -72,7 +72,9 @@ final class ProductsExampleFactory extends AbstractExampleFactory implements Exa
         $entity->setPrice( $options['price'] );
         $entity->setCurrency( $currency );
         
-        $this->addProductPictures( $entity, $options['pictures'] );
+        if ( isset( $options['pictures'] ) && null !== $options['pictures'] ) {
+            $this->addProductPictures( $entity, $options['pictures'] );
+        }
         
         return $entity;
     }
@@ -102,7 +104,6 @@ final class ProductsExampleFactory extends AbstractExampleFactory implements Exa
             ->setAllowedTypes( 'currency', ['string'] )
             
             ->setDefault( 'pictures', null )
-            ->setAllowedTypes( 'pictures', ['array'] )
         ;
     }
     

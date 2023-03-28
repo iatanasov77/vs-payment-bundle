@@ -22,7 +22,13 @@ final class ProductsFixture extends AbstractResourceFixture
                 ->booleanNode( 'published' )->defaultTrue()->end()
                 ->scalarNode( 'price' )->end()
                 ->scalarNode( 'currency' )->end()
-                ->arrayNode( 'pictures' )->end()
+                ->arrayNode( 'pictures' )
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode( 'file' )->end()
+                        ->end()
+                    ->end()
+                ->end()
         ;
     }
 }
