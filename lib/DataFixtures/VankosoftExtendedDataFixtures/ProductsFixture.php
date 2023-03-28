@@ -23,8 +23,10 @@ final class ProductsFixture extends AbstractResourceFixture
                 ->scalarNode( 'price' )->end()
                 ->scalarNode( 'currency' )->end()
                 ->arrayNode( 'pictures' )
-                    ->children()
-                        ->scalarNode( 'file' )->end()
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode( 'file' )->end()
+                        ->end()
                     ->end()
                 ->end()
         ;
