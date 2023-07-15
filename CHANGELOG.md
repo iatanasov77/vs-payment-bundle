@@ -1,3 +1,9 @@
+2.7.1	|	Release date: **15.07.2023**
+============================================
+* Bug-Fixes:
+  - Fix Twig Templates That Using Macros Alerts.
+
+
 2.7.0	|	Release date: **15.07.2023**
 ============================================
 * New Features:
