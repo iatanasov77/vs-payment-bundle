@@ -1,3 +1,9 @@
+2.7.0	|	Release date: **15.07.2023**
+============================================
+* New Features:
+  - Update Composer Requirement Versions.
+
+
 2.6.7	|	Release date: **28.03.2023**
 ============================================
 * Bug-Fixes:
