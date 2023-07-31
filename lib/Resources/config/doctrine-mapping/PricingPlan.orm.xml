@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+>
+    <mapped-superclass name="Vankosoft\PaymentBundle\Model\PricingPlan">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        
+        <field name="enabled" column="active" type="boolean" />
+        
+        <field name="title" column="title" type="string" length="255" nullable="true">
+            <gedmo:translatable />
+        </field>
+        
+        <field name="description" column="description" type="text" nullable="true">
+            <gedmo:translatable />
+        </field>
+        
+        <field name="premium" column="premium" type="boolean" />
+        <field name="discount" type="decimal" scale="2" precision="8" nullable="true" />
+        
+        <many-to-one field="category" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanCategoryInterface" inversed-by="plans">
+            <join-column name="category_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </many-to-one>
+        
+        <one-to-one field="paidServicePeriod" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface" inversed-by="pricingPlan">
+            <join-column name="paid_service_period_id" referenced-column-name="id" nullable="false" />
+        </one-to-one>
+        
+        <!--
+            Used locale to override Translation listener`s locale
+           this is not a mapped field of entity metadata, just a simple property
+           and it is not necessary because globally locale can be set in listener
+        -->
+        <gedmo:translation entity="Vankosoft\ApplicationBundle\Model\Interfaces\TranslationInterface" locale="locale"/>
+    </mapped-superclass>
+</doctrine-mapping>
