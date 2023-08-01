@@ -1,9 +1,9 @@
 {% extends "@VSApplication/layout.html.twig" %}
 
 {% if( item.id ) %}
-	{% set pageTitle = 'vs_payment.template.product_categories_update_title' | trans( {},'VSPaymentBundle' ) %}
+	{% set pageTitle = 'vs_payment.template.pricing_plan_categories_update_title' | trans( {},'VSPaymentBundle' ) %}
 {% else %}
-	{% set pageTitle = 'vs_payment.template.product_categories_create_title' | trans( {},'VSPaymentBundle' ) %}
+	{% set pageTitle = 'vs_payment.template.pricing_plan_categories_create_title' | trans( {},'VSPaymentBundle' ) %}
 {% endif %}
 
 {% block title %}{{ parent() }} :: {{ pageTitle }}{% endblock %}
@@ -16,7 +16,7 @@
         <!-- ============================================================== -->
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <h5 class="card-header">{{ 'vs_payment.template.product_categories_title' | trans( {},'VSPaymentBundle' ) }}</h5>
+                <h5 class="card-header">{{ 'vs_payment.template.pricing_plan_categories_title' | trans( {},'VSPaymentBundle' ) }}</h5>
                 <div class="card-body">
                 	{% if form_errors(form) is not empty %}
 		                <div class="alert alert-block alert-danger fade in">
@@ -27,7 +27,7 @@
 		                </div>
 		            {% endif %}
                     <div id="pageCategoryFormContainer" data-pageId="{{ item.id }}">
-                        {% include '@VSPayment/Pages/Product_Categories/partial/category_form.html.twig' %}
+                        {% include '@VSPayment/Pages/PricingPlanCategories/partial/category_form.html.twig' %}
                     </div>
                 </div>
             </div>

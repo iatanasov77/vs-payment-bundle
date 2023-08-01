@@ -12,13 +12,13 @@
         <div class="accrodion-regular col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div id="accordion">
                 {% for cat in categories %}
-                    {% if not cat.parent and cat.products | length %}
+                    {% if not cat.parent and cat.plans | length %}
                     	{% set dataParent = '#accordion' %}
                         {% include '@VSPayment/Pages/PricingPlans/partial/pricing_plans_table.html.twig' %}
         			{% endif %}
        			{% endfor %}
        			
-       			<!-- Uncategorized Products -->
+       			<!-- Uncategorized Pricing Plans -->
        			{#
         		<div class="card mb-2">
                     <div class="card-header">
@@ -52,8 +52,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- END Uncategorized Products -->
                 #}
+                <!-- END Uncategorized Pricing Plans -->
             </div>
         </div>
     </div>

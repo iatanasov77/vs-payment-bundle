@@ -107,8 +107,10 @@ vs_payment:
         product_create_title: Create New Product
         product_update_title: Edit Product
         product_details: Product details
-        
         pricing_plan_categories_index_title: Pricing Plan Categories
+        pricing_plan_categories_create_title: Create Pricing Plans Category
+        pricing_plan_categories_update_title: Edit Pricing Plans Category
+        pricing_plan_categories_title: Pricing Plans Category
         pricing_plans_index_title: Pricing Plans
         pricing_plan_create_title: Create New Pricing Plan
         pricing_plan_update_title: Edit Pricing Plan

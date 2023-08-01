@@ -8,13 +8,13 @@
     </td>
     <td>
     	<a class="btn btn-primary"
-           href="{{ path('vs_payment_product_category_update', {'id': item.id}) }}"
+           href="{{ path('vs_payment_pricing_plan_category_update', {'id': item.id}) }}"
            title="{{ 'vs_application.template.items_index_row_action_edit' | trans( {},'VSApplicationBundle' ) }}"
         >
             <i class="fas fa-edit"></i>
         </a>
         <a class="btn btn-danger btnDeleteResource"
-            href="{{ path('vs_payment_product_category_delete', {'id': item.id}) }}"
+            href="{{ path('vs_payment_pricing_plan_category_delete', {'id': item.id}) }}"
             data-csrfToken="{{ csrf_token( item.id ) }}" 
             title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
         >
