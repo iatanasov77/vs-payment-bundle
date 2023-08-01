@@ -44,7 +44,7 @@ vs_payment:
             ratio: Съотношение
             
         pricing_plan:
-            paid_service_period: Paid Service Period
+            paid_service_period: Paid Service Subscription
             set_as_premium: Set as Premium
             premium: Premium
             discount: Discount
@@ -122,7 +122,7 @@ vs_payment:
         pricing_plan_details: Pricing Plan details
         pricing_plan_active: Active
         pricing_plan_premium: Premium
-        pricing_plan_subscription_period: Paid Service Period
+        pricing_plan_subscription_period: Paid Service Subscription
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
