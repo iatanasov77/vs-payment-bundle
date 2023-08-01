@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\PayedServiceSubscriptionPeriod;
@@ -63,19 +64,29 @@ class PricingPlanForm extends AbstractForm
                 'label'                 => 'vs_payment.form.categories',
                 'translation_domain'    => 'VSPaymentBundle',
                 'multiple'              => true,
-                'required'              => false,   // Is Required but Used EasyUi
+                'required'              => true,   // Is Required but Used EasyUi
                 'mapped'                => false,
                 'placeholder'           => 'vs_payment.form.categories_placeholder',
             ])
             
             ->add( 'title', TextType::class, [
-                'label'                 => 'vs_payment.form.name',
+                'label'                 => 'vs_payment.form.title',
                 'translation_domain'    => 'VSPaymentBundle',
+                'required'              => false,
             ])
             
-            ->add( 'description', TextType::class, [
+            ->add( 'description', CKEditorType::class, [
                 'label'                 => 'vs_payment.form.description',
                 'translation_domain'    => 'VSPaymentBundle',
+                'required'              => false,
+                'config'                => [
+                    'uiColor'                           => $options['ckeditor_uiColor'],
+                    'extraAllowedContent'               => $options['ckeditor_extraAllowedContent'],
+                    
+                    'toolbar'                           => $options['ckeditor_toolbar'],
+                    'extraPlugins'                      => array_map( 'trim', explode( ',', $options['ckeditor_extraPlugins'] ) ),
+                    'removeButtons'                     => $options['ckeditor_removeButtons'],
+                ],
             ])
             
             ->add( 'paidServicePeriod', EntityType::class, [
@@ -86,11 +97,13 @@ class PricingPlanForm extends AbstractForm
                 'group_by'              => function ( PayedServiceSubscriptionPeriod $paidServicePeriod ): string {
                     return $paidServicePeriod ? $paidServicePeriod->getPayedService()->getTitle() : 'Undefined Group';
                 },
+                'required'              => true,
             ])
             
             ->add( 'premium', CheckboxType::class, [
                 'label'                 => 'vs_payment.form.pricing_plan.premium',
                 'translation_domain'    => 'VSPaymentBundle',
+                'required'              => false,
             ])
             
             ->add( 'discount', NumberType::class, [
@@ -98,6 +111,7 @@ class PricingPlanForm extends AbstractForm
                 'translation_domain'    => 'VSPaymentBundle',
                 'scale'                 => 2,
                 'rounding_mode'         => $options['rounding_mode'],
+                'required'              => false,
             ])
         ;
     }
@@ -110,13 +124,35 @@ class PricingPlanForm extends AbstractForm
             ->setDefaults([
                 'csrf_protection'   => false,
                 'rounding_mode'     => \NumberFormatter::ROUND_HALFEVEN,
+                
+                // CKEditor Options
+                'ckeditor_uiColor'              => '#ffffff',
+                'ckeditor_extraAllowedContent'  => '*[*]{*}(*)',
+                
+                'ckeditor_toolbar'              => 'full',
+                'ckeditor_extraPlugins'         => '',
+                'ckeditor_removeButtons'        => '',
             ])
             
             ->setDefined([
                 'pricing_plan',
+                
+                // CKEditor Options
+                'ckeditor_uiColor',
+                'ckeditor_extraAllowedContent',
+                'ckeditor_toolbar',
+                'ckeditor_extraPlugins',
+                'ckeditor_removeButtons',
             ])
             
             ->setAllowedTypes( 'pricing_plan', PricingPlanInterface::class )
+            
+            // CKEditor Options
+            ->setAllowedTypes( 'ckeditor_uiColor', 'string' )
+            ->setAllowedTypes( 'ckeditor_extraAllowedContent', 'string' )
+            ->setAllowedTypes( 'ckeditor_toolbar', 'string' )
+            ->setAllowedTypes( 'ckeditor_extraPlugins', 'string' )
+            ->setAllowedTypes( 'ckeditor_removeButtons', 'string' )
         ;
     }
     
