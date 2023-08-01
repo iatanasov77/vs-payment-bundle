@@ -22,4 +22,11 @@ vs_application:
         catalog_products: Продукти
         create_catalog_product: Създай Продукт
         edit_catalog_product: Редакция Продукт
+        pricing_plans: Pricing Plans
+        pricing_plan_categories: Pricing Plan Categories
+        create_pricing_plan_category: Create a Pricing Plan Category
+        edit_pricing_plan_category: Edit Pricing Plan Category
+        pricing_plans_listing: Pricing Plans
+        create_pricing_plan: Create a Pricing Plan
+        edit_pricing_plan: Edit Pricing Plan
 

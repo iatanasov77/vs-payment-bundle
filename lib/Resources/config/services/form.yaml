@@ -82,5 +82,24 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.model.product_picture.class%'
+            
+    vs_payment.resources.pricing_plan_category.form:
+        class: Vankosoft\PaymentBundle\Form\PricingPlanCategoryForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.pricing_plan_category.class%'
+            - '@vs_payment.repository.pricing_plan_category'
+            - "@request_stack"
+            
+    vs_payment.resources.pricing_plan.form:
+        class: Vankosoft\PaymentBundle\Form\PricingPlanForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - "@request_stack"
+            - '%vs_payment.model.pricing_plan.class%'
+            - '%vs_payment.model.pricing_plan_category.class%'
+            - '%vs_users_subscriptions.model.payed_service_subscription_period.class%'
 
 

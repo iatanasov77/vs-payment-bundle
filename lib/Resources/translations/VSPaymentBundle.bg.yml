@@ -8,6 +8,8 @@ vs_payment:
         price: Цена
         currency_label: Валута
         currency_placeholder: '-- Избери Валута --'
+        category: Категория
+        category_placeholder: '-- Избери Категория --'
         categories: Категории
         categories_placeholder: '-- Избери Категории --'
         parent_category: Родителска Категория
@@ -40,6 +42,12 @@ vs_payment:
             source_currency: Валута източник
             target_currency: Целева валута
             ratio: Съотношение
+            
+        pricing_plan:
+            paid_service_period: Paid Service Subscription
+            set_as_premium: Set as Premium
+            premium: Premium
+            discount: Discount
     
     template:
         gateway: Гейтуей
@@ -104,6 +112,17 @@ vs_payment:
         product_create_title: Създаване Нов Продукт
         product_update_title: Редакция Продукт
         product_details: Продукт детайли
+        pricing_plan_categories_index_title: Pricing Plan Categories
+        pricing_plan_categories_create_title: Create Pricing Plans Category
+        pricing_plan_categories_update_title: Edit Pricing Plans Category
+        pricing_plan_categories_title: Pricing Plans Category
+        pricing_plans_index_title: Pricing Plans
+        pricing_plan_create_title: Create New Pricing Plan
+        pricing_plan_update_title: Edit Pricing Plan
+        pricing_plan_details: Pricing Plan details
+        pricing_plan_active: Active
+        pricing_plan_premium: Premium
+        pricing_plan_subscription_period: Paid Service Subscription
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

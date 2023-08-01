@@ -8,6 +8,8 @@ vs_payment:
         price: Price
         currency_label: Currency
         currency_placeholder: '-- Select Currency --'
+        category: Category
+        category_placeholder: '-- Select Category --'
         categories: Categories
         categories_placeholder: '-- Select Categories --'
         parent_category: Parent Category
@@ -40,6 +42,12 @@ vs_payment:
             source_currency: Source currency
             target_currency: Target currency
             ratio: Ratio
+            
+        pricing_plan:
+            paid_service_period: Paid Service Subscription
+            set_as_premium: Set as Premium
+            premium: Premium
+            discount: Discount
 
     template:
         gateway: Gateway
@@ -104,6 +112,17 @@ vs_payment:
         product_create_title: Create New Product
         product_update_title: Edit Product
         product_details: Product details
+        pricing_plan_categories_index_title: Pricing Plan Categories
+        pricing_plan_categories_create_title: Create Pricing Plans Category
+        pricing_plan_categories_update_title: Edit Pricing Plans Category
+        pricing_plan_categories_title: Pricing Plans Category
+        pricing_plans_index_title: Pricing Plans
+        pricing_plan_create_title: Create New Pricing Plan
+        pricing_plan_update_title: Edit Pricing Plan
+        pricing_plan_details: Pricing Plan details
+        pricing_plan_active: Active
+        pricing_plan_premium: Premium
+        pricing_plan_subscription_period: Paid Service Subscription
         
     validation:
         currency_code_unique: Currency code must be unique.
