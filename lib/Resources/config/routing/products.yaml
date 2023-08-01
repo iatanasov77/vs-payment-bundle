@@ -11,5 +11,19 @@ vs_payment_product:
         path: /payment/products
         templates: "@VSPayment/Pages/Products"
     type: sylius.resource
+    
+vs_payment_pricing_plan_category:
+    resource: |
+        alias: vs_payment.pricing_plan_category
+        path: /pricing-plan-category
+        templates: "@VSPayment/Pages/PricingPlanCategories"
+    type: sylius.resource
+    
+vs_payment_pricing_plan:
+    resource: |
+        alias: vs_payment.pricing_plan
+        path: /pricing-plan
+        templates: "@VSPayment/Pages/PricingPlans"
+    type: sylius.resource
 
 
