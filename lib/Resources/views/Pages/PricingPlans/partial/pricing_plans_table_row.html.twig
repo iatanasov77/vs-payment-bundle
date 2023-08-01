@@ -1,15 +1,24 @@
 <tr>
     <td>{{ loop.index }}</td>
-    <td>{{ item.name }}</td>
-    <td>{{ item.slug }}</td>
+    <td>{{ item.title }}</td>
+    <td>{{ item.paidServicePeriod.payedService.title }} - {{ item.paidServicePeriod.subscriptionPeriod }}</td>
     
     <td style="text-align: center;">
-        {% if item.isPublished() %}
+        {% if item.isActive() %}
             <i class="fas fa-check" style="color: #82c91e;">
         {% else %}
             <i class="fas fa-times" style="color: #ff1e1e;"></i>
         {% endif %}
     </td>
+    
+    <td style="text-align: center;">
+        {% if item.isPremium() %}
+            <i class="fas fa-check" style="color: #82c91e;">
+        {% else %}
+            <i class="fas fa-times" style="color: #ff1e1e;"></i>
+        {% endif %}
+    </td>
+    
     <td>
         {% if translations[item.id] is defined %}
             {% for locale in translations[item.id] %}
