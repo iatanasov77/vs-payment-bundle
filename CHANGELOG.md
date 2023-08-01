@@ -1,3 +1,22 @@
+2.8.0	|	Release date: **01.08.2023**
+============================================
+* New Features:
+  - Create Pricing Plan Model.
+  - add Pricing Plan Models as Sylius Resources.
+  - Add Doctrine Migration for Pricing Plan Entities.
+  - Create Controllers, Views and Forms for Pricing Plans Models.
+  - Add to Simple Data Fixture.
+  - Create a Repository Class for PricingPlanCategory Model.
+  - Fix Pricing Plan Model.
+  - Update PricingPlan Form and View.
+  - Improve PricingPlanForm.
+  - Prepair PricingPlanController .
+  - Fix PricingPlan Doctrine Mapping.
+  - Prepair PricingPlan Index Page.
+  - Prepair PricingPlan Update Page.
+  - Update Translations..
+
+
 2.7.2	|	Release date: **26.07.2023**
 ============================================
 * New Features:
