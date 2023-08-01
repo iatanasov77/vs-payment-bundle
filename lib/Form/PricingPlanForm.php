@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
+use Vankosoft\UsersSubscriptionsBundle\Model\PayedServiceSubscriptionPeriod;
 
 class PricingPlanForm extends AbstractForm
 {
@@ -84,8 +85,8 @@ class PricingPlanForm extends AbstractForm
                 'translation_domain'    => 'VSPaymentBundle',
                 'class'                 => $this->paidServicePeriodClass,
                 'choice_label'          => 'title',
-                'group_by'              => function ( $pricingPlan ): string {
-                    return $pricingPlan ? $pricingPlan->getPayedService()->getTitle() : 'Undefined Group';
+                'group_by'              => function ( PayedServiceSubscriptionPeriod $paidServicePeriod ): string {
+                    return $paidServicePeriod ? $paidServicePeriod->getPayedService()->getTitle() : 'Undefined Group';
                 },
             ])
             
