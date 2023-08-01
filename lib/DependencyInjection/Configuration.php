@@ -56,6 +56,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\ProductPictureInterface;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanCategoryInterface;
 use Vankosoft\PaymentBundle\Model\PricingPlanCategory;
+use Vankosoft\PaymentBundle\Repository\PricingPlanCategoryRepository;
 use Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCategoryController;
 use Vankosoft\PaymentBundle\Form\PricingPlanCategoryForm;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
@@ -305,7 +306,7 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( PricingPlanCategory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'interface' )->defaultValue( PricingPlanCategoryInterface::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( PricingPlanCategoryRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( PricingPlanCategoryController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( PricingPlanCategoryForm::class )->cannotBeEmpty()->end()
