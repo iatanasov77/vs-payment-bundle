@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 
 class PricingPlanForm extends AbstractForm
 {
@@ -91,10 +94,30 @@ class PricingPlanForm extends AbstractForm
                 'translation_domain'    => 'VSPaymentBundle',
             ])
             
-            ->add( 'discount', CheckboxType::class, [
+            ->add( 'discount', NumberType::class, [
                 'label'                 => 'vs_payment.form.pricing_plan.discount',
                 'translation_domain'    => 'VSPaymentBundle',
+                'scale'                 => 2,
+                'rounding_mode'         => $options['rounding_mode'],
             ])
+        ;
+    }
+    
+    public function configureOptions( OptionsResolver $resolver ): void
+    {
+        parent::configureOptions( $resolver );
+        
+        $resolver
+            ->setDefaults([
+                'csrf_protection'   => false,
+                'rounding_mode'     => \NumberFormatter::ROUND_HALFEVEN,
+            ])
+            
+            ->setDefined([
+                'pricing_plan',
+            ])
+            
+            ->setAllowedTypes( 'pricing_plan', PricingPlanInterface::class )
         ;
     }
     

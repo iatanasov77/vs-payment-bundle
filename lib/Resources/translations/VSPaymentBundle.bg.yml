@@ -43,8 +43,9 @@ vs_payment:
             
         pricing_plan:
             paid_service_period: Paid Service Period
-            premium: Paid Service Period
-            discount: Paid Service Period
+            set_as_premium: Set as Premium
+            premium: Premium
+            discount: Discount
     
     template:
         gateway: Гейтуей

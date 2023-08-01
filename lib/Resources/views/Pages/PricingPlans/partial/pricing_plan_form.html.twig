@@ -71,24 +71,30 @@
         {{ form_widget(form.paidServicePeriod, {'attr': {'class': 'form-control'}}) }}
     </div>
     
-    <label class="custom-control custom-checkbox">  
-        <input type="checkbox" id="pricing_plan_form_premium"
-            class="custom-control-input form-check-input"
-            name="pricing_plan_form[premium]"
-            value="{{ item.premium }}"
-            {% if item.premium %}checked="checked"{% endif %}
-        />
-        <span class="custom-control-label">{{ 'vs_payment.form.pricing_plan.premium' | trans( {},'VSPaymentBundle' ) }}</span>
-    </label>
-    
-    <div class="form-group">
-        {{ form_label(form.discount, null, {
-            'label_attr': {'class': 'col-form-label'}
-            }) 
-        }}
+    <fieldset class="fieldset-product-pictures">
+        <legend class="w-auto">{{ 'vs_payment.form.pricing_plan.set_as_premium' | trans( {},'VSPaymentBundle' ) }}</legend>
         
-        {{ form_widget(form.discount, {'attr': {'class': 'form-control'}}) }}
-    </div>
+        <label class="custom-control custom-checkbox">  
+            <input type="checkbox" id="pricing_plan_form_premium"
+                class="custom-control-input form-check-input"
+                name="pricing_plan_form[premium]"
+                value="{{ item.premium }}"
+                {% if item.premium %}checked="checked"{% endif %}
+            />
+            <span class="custom-control-label">{{ 'vs_payment.form.pricing_plan.premium' | trans( {},'VSPaymentBundle' ) }}</span>
+        </label>
+        
+        <div class="form-group">
+            {{ form_label(form.discount, null, {
+                'label_attr': {'class': 'col-form-label'}
+                }) 
+            }}
+            
+            {{ form_widget(form.discount, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </fieldset>
+
+    <div class="row">&nbsp;</div>
     
     {{ vs_form.buttons( form ) }}
 {{ form_end(form, {'render_rest': false}) }}
