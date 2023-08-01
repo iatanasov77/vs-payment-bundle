@@ -20,15 +20,20 @@ class PricingPlanForm extends AbstractForm
     /** @var string */
     protected $categoryClass;
     
+    /** @var string */
+    protected $paidServicePeriodClass;
+    
     public function __construct(
         RequestStack $requestStack,
         string $dataClass,
-        string $categoryClass
-        ) {
-            parent::__construct( $dataClass );
-            
-            $this->requestStack         = $requestStack;
-            $this->categoryClass        = $categoryClass;
+        string $categoryClass,
+        string $paidServicePeriodClass
+    ) {
+        parent::__construct( $dataClass );
+        
+        $this->requestStack             = $requestStack;
+        $this->categoryClass            = $categoryClass;
+        $this->paidServicePeriodClass   = $paidServicePeriodClass;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options ): void
@@ -69,6 +74,16 @@ class PricingPlanForm extends AbstractForm
             ->add( 'description', TextType::class, [
                 'label'                 => 'vs_payment.form.description',
                 'translation_domain'    => 'VSPaymentBundle',
+            ])
+            
+            ->add( 'paidServicePeriod', EntityType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan.paid_service_period',
+                'translation_domain'    => 'VSPaymentBundle',
+                'class'                 => $this->paidServicePeriodClass,
+                'choice_label'          => 'title',
+                'group_by'              => function ( $pricingPlan ): string {
+                    return $pricingPlan ? $pricingPlan->getPayedService()->getTitle() : 'Undefined Group';
+                },
             ])
         ;
     }

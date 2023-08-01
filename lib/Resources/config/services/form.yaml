@@ -100,5 +100,6 @@ services:
             - "@request_stack"
             - '%vs_payment.model.pricing_plan.class%'
             - '%vs_payment.model.pricing_plan_category.class%'
+            - '%vs_users_subscriptions.model.payed_service_subscription_period.class%'
 
 

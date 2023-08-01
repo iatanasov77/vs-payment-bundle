@@ -1,7 +1,7 @@
 {% extends "@VSApplication/layout.html.twig" %}
 
-{% block title %}{{ parent() }} :: {{ 'vs_payment.template.products_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
-{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.products_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.pricing_plans_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.pricing_plans_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -14,7 +14,7 @@
                 {% for cat in categories %}
                     {% if not cat.parent and cat.products | length %}
                     	{% set dataParent = '#accordion' %}
-                        {% include '@VSPayment/Pages/Products/partial/products_table.html.twig' %}
+                        {% include '@VSPayment/Pages/PricingPlans/partial/pricing_plans_table.html.twig' %}
         			{% endif %}
        			{% endfor %}
        			
@@ -63,11 +63,11 @@
 
 {% block head_styles %}
     {{ parent() }}
-    {{ encore_entry_link_tags( 'js/products-index' ) }}
+    {{ encore_entry_link_tags( 'js/pricing-plans-index' ) }}
 {% endblock %}
 
 {% block body_scripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags( 'js/products-index' ) }}
+    {{ encore_entry_script_tags( 'js/pricing-plans-index' ) }}
 {% endblock %}
 
