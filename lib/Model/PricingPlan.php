@@ -69,6 +69,10 @@ class PricingPlan implements PricingPlanInterface
     
     public function getTitle():? string
     {
+        if( ! $this->title && ! $this->paidServicePeriod ) {
+            return null;
+        }
+        
         return $this->title ?: $this->paidServicePeriod->getTitle();
     }
     
@@ -81,6 +85,10 @@ class PricingPlan implements PricingPlanInterface
     
     public function getDescription():? string
     {
+        if( ! $this->description && ! $this->paidServicePeriod ) {
+            return null;
+        }
+        
         return $this->description ?: $this->paidServicePeriod->getDescription();
     }
     
