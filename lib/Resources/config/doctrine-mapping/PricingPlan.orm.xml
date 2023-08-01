@@ -30,7 +30,10 @@
             </cascade>
         </many-to-one>
         
-        <one-to-one field="paidServicePeriod" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface" inversed-by="pricingPlan">
+        <!--NOT EXIST IN TARGET ENTITY
+            inversed-by="pricingPlan"
+        -->
+        <one-to-one field="paidServicePeriod" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface">
             <join-column name="paid_service_period_id" referenced-column-name="id" nullable="false" />
         </one-to-one>
         
