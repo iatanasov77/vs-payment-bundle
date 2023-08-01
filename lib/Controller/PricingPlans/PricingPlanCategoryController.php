@@ -11,7 +11,7 @@ class PricingPlanCategoryController extends AbstractCrudController
     protected function customData( Request $request, $entity = null ): array
     {
         $taxonomy       = $this->get( 'vs_application.repository.taxonomy' )->findByCode(
-            $this->getParameter( 'vs_payment.product_category.taxonomy_code' )
+            $this->getParameter( 'vs_payment.pricing_plan_category.taxonomy_code' )
         );
         
         $translations   = $this->classInfo['action'] == 'indexAction' ? $this->getTranslations() : [];
@@ -31,8 +31,8 @@ class PricingPlanCategoryController extends AbstractCrudController
         $this->get( 'vs_application.slug_generator' )->setLocaleCode( $translatableLocale );
         
         $categoryName           = $form['name']->getData();
-        $parentCategory         = isset( $_POST['product_category_form']['parent'] ) ?
-                                    $this->get( 'vs_payment.repository.product_category' )->findByTaxonId( $_POST['product_category_form']['parent'] ) :
+        $parentCategory         = isset( $_POST['pricing_plan_category_form']['parent'] ) ?
+                                    $this->get( 'vs_payment.repository.pricing_plan_category' )->findByTaxonId( $_POST['pricing_plan_category_form']['parent'] ) :
                                     null;
         
         if ( $entity->getTaxon() ) {
@@ -62,7 +62,7 @@ class PricingPlanCategoryController extends AbstractCrudController
              * @WORKAROUND Create Taxon If not exists
              */
             $taxonomy   = $this->get( 'vs_application.repository.taxonomy' )->findByCode(
-                                        $this->getParameter( 'vs_payment.product_category.taxonomy_code' )
+                                        $this->getParameter( 'vs_payment.pricing_plan_category.taxonomy_code' )
                                     );
             $newTaxon   = $this->createTaxon(
                 $categoryName,

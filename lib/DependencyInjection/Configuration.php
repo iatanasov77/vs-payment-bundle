@@ -56,8 +56,12 @@ use Vankosoft\PaymentBundle\Model\Interfaces\ProductPictureInterface;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanCategoryInterface;
 use Vankosoft\PaymentBundle\Model\PricingPlanCategory;
+use Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCategoryController;
+use Vankosoft\PaymentBundle\Form\PricingPlanCategoryForm;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Vankosoft\PaymentBundle\Model\PricingPlan;
+use Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanController;
+use Vankosoft\PaymentBundle\Form\PricingPlanForm;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -303,6 +307,8 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'interface' )->defaultValue( PricingPlanCategoryInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( PricingPlanCategoryController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'form' )->defaultValue( PricingPlanCategoryForm::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -319,6 +325,8 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'interface' )->defaultValue( PricingPlanInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( PricingPlanController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'form' )->defaultValue( PricingPlanForm::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
