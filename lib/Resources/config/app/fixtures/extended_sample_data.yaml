@@ -132,6 +132,10 @@ sylius_fixtures:
                               title: 'Product Categories'
                               description: 'Product Categories'
                               locale:  '%locale%'
+                            - code: 'pricing-plan-categories'
+                              title: 'Pricing Plan Categories'
+                              description: 'Pricing Plan Categories'
+                              locale:  '%locale%'
                 product_categories:
                     name: product_categories
                     options:
