@@ -20,9 +20,7 @@ class PricingPlanController extends AbstractCrudController
         
         $selectedTaxonIds   = [];
         if ( $this->classInfo['action'] == 'updateAction' ) {
-            foreach ( $entity->getCategories() as $cat ) {
-                $selectedTaxonIds[] = $cat->getTaxon()->getId();
-            }
+            $selectedTaxonIds[] = $entity->getCategory()->getTaxon()->getId();
         }
         
         return [
@@ -52,12 +50,6 @@ class PricingPlanController extends AbstractCrudController
                 if ( $category ) {
                     $categories[]   = $category;
                     $entity->addCategory( $category );
-                }
-            }
-            
-            foreach ( $entity->getCategories() as $cat ) {
-                if ( ! $categories->contains( $cat ) ) {
-                    $entity->removeCategory( $cat );
                 }
             }
         }
