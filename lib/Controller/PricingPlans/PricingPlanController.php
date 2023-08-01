@@ -40,7 +40,7 @@ class PricingPlanController extends AbstractCrudController
         
         $formLocale = $request->request->get( 'locale' );
         $formPost   = $request->request->all( 'pricing_plan_form' );
-        $formTaxon  = $formPost['category_taxon'];
+        $formTaxon  = isset( $formPost['category_taxon'] ) ? $formPost['category_taxon'] : null;
         
         if ( $formLocale ) {
             $entity->setTranslatableLocale( $formLocale );
