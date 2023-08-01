@@ -15,7 +15,7 @@ class PricingPlanController extends AbstractCrudController
         $translations   = $this->classInfo['action'] == 'indexAction' ? $this->getTranslations() : [];
         
         $taxonomy   = $this->get( 'vs_application.repository.taxonomy' )->findByCode(
-                                    $this->getParameter( 'vs_payment.product_category.taxonomy_code' )
+                                    $this->getParameter( 'vs_payment.pricing_plan_category.taxonomy_code' )
                                 );
         
         $selectedTaxonIds   = [];
@@ -26,7 +26,7 @@ class PricingPlanController extends AbstractCrudController
         }
         
         return [
-            'categories'        => $this->get( 'vs_payment.repository.product_category' )->findAll(),
+            'categories'        => $this->get( 'vs_payment.repository.pricing_plan_category' )->findAll(),
             'taxonomyId'        => $taxonomy ? $taxonomy->getId() : 0,
             'translations'      => $translations,
             'selectedTaxonIds'  => $selectedTaxonIds,
@@ -36,10 +36,10 @@ class PricingPlanController extends AbstractCrudController
     protected function prepareEntity( &$entity, &$form, Request $request )
     {
         $categories = new ArrayCollection();
-        $pcr        = $this->get( 'vs_payment.repository.product_category' );
+        $pcr        = $this->get( 'vs_payment.repository.pricing_plan_category' );
         
         $formLocale = $request->request->get( 'locale' );
-        $formPost   = $request->request->all( 'product_form' );
+        $formPost   = $request->request->all( 'pricing_plan_form' );
         $formTaxon  = $formPost['category_taxon'];
         
         if ( $formLocale ) {
@@ -61,22 +61,6 @@ class PricingPlanController extends AbstractCrudController
                 }
             }
         }
-        
-        $pictures    = $request->files->get( 'product_form' );
-        foreach ( $pictures as $pic ) {
-            // echo "<pre>"; var_dump( \reset( $pic )['picture'] ); die;
-            $productPictureFile = \reset( $pic )['picture'];
-            if ( $productPictureFile ) {
-                $this->addProductPicture( $entity, $productPictureFile );
-            }
-        }
-        
-        /** WORKAROUND */
-        foreach ( $entity->getPictures() as $pic ) {
-            if ( empty( $pic->getPath() ) ) {
-                $entity->removePicture( $pic );
-            }
-        }
     }
     
     private function getTranslations()
@@ -84,24 +68,10 @@ class PricingPlanController extends AbstractCrudController
         $translations   = [];
         $transRepo      = $this->get( 'vs_application.repository.translation' );
         
-        foreach ( $this->getRepository()->findAll() as $product ) {
-            $translations[$product->getId()] = array_keys( $transRepo->findTranslations( $product ) );
+        foreach ( $this->getRepository()->findAll() as $pricingPlan ) {
+            $translations[$pricingPlan->getId()] = array_keys( $transRepo->findTranslations( $pricingPlan ) );
         }
         
         return $translations;
-    }
-    
-    private function addProductPicture( &$entity, File $file ): void
-    {
-        $uploadedFile   = new UploadedFile( $file->getRealPath(), $file->getBasename() );
-        $productPicture = $this->get( 'vs_payment.factory.product_picture' )->createNew();
-        
-        $productPicture->setOriginalName( $file->getClientOriginalName() );
-        $productPicture->setFile( $uploadedFile );
-        
-        $this->get( 'vs_application.app_pictures_uploader' )->upload( $productPicture );
-        $productPicture->setFile( null ); // reset File Because: Serialization of 'Symfony\Component\HttpFoundation\File\UploadedFile' is not allowed
-        
-        $entity->addPicture( $productPicture );
     }
 }

@@ -15,6 +15,7 @@ vs_payment_product:
 vs_payment_pricing_plan_category:
     resource: |
         alias: vs_payment.pricing_plan_category
+        except: ['show']
         path: /pricing-plan-category
         templates: "@VSPayment/Pages/PricingPlanCategories"
     type: sylius.resource
@@ -22,6 +23,7 @@ vs_payment_pricing_plan_category:
 vs_payment_pricing_plan:
     resource: |
         alias: vs_payment.pricing_plan
+        except: ['show']
         path: /pricing-plan
         templates: "@VSPayment/Pages/PricingPlans"
         form:
