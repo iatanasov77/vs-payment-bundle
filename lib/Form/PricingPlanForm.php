@@ -66,7 +66,7 @@ class PricingPlanForm extends AbstractForm
                 'placeholder'           => 'vs_payment.form.categories_placeholder',
             ])
             
-            ->add( 'name', TextType::class, [
+            ->add( 'title', TextType::class, [
                 'label'                 => 'vs_payment.form.name',
                 'translation_domain'    => 'VSPaymentBundle',
             ])
@@ -84,6 +84,16 @@ class PricingPlanForm extends AbstractForm
                 'group_by'              => function ( $pricingPlan ): string {
                     return $pricingPlan ? $pricingPlan->getPayedService()->getTitle() : 'Undefined Group';
                 },
+            ])
+            
+            ->add( 'premium', CheckboxType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan.premium',
+                'translation_domain'    => 'VSPaymentBundle',
+            ])
+            
+            ->add( 'discount', CheckboxType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan.discount',
+                'translation_domain'    => 'VSPaymentBundle',
             ])
         ;
     }

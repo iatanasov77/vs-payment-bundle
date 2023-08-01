@@ -45,12 +45,12 @@
     </div>
     
     <div class="form-group">
-        {{ form_label(form.name, null, {
+        {{ form_label(form.title, null, {
             'label_attr': {'class': 'col-form-label'}
             }) 
         }}
         
-        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
     </div>
     
     <div class="form-group">
@@ -60,6 +60,34 @@
         }}
         
         {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.paidServicePeriod, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.paidServicePeriod, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    
+    <label class="custom-control custom-checkbox">  
+        <input type="checkbox" id="pricing_plan_form_premium"
+            class="custom-control-input form-check-input"
+            name="pricing_plan_form[premium]"
+            value="{{ item.premium }}"
+            {% if item.premium %}checked="checked"{% endif %}
+        />
+        <span class="custom-control-label">{{ 'vs_payment.form.pricing_plan.premium' | trans( {},'VSPaymentBundle' ) }}</span>
+    </label>
+    
+    <div class="form-group">
+        {{ form_label(form.discount, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.discount, {'attr': {'class': 'form-control'}}) }}
     </div>
     
     {{ vs_form.buttons( form ) }}

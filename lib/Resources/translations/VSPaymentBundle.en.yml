@@ -43,6 +43,8 @@ vs_payment:
             
         pricing_plan:
             paid_service_period: Paid Service Period
+            premium: Paid Service Period
+            discount: Paid Service Period
 
     template:
         gateway: Gateway

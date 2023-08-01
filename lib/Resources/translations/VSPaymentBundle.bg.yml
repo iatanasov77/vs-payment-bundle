@@ -40,6 +40,11 @@ vs_payment:
             source_currency: Валута източник
             target_currency: Целева валута
             ratio: Съотношение
+            
+        pricing_plan:
+            paid_service_period: Paid Service Period
+            premium: Paid Service Period
+            discount: Paid Service Period
     
     template:
         gateway: Гейтуей
