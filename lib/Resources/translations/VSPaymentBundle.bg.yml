@@ -121,6 +121,7 @@ vs_payment:
         pricing_plan_update_title: Edit Pricing Plan
         pricing_plan_details: Pricing Plan details
         pricing_plan_active: Active
+        pricing_plan_premium: Premium
         pricing_plan_subscription_period: Paid Service Period
     
     validation:
