@@ -8,6 +8,8 @@ vs_payment:
         price: Цена
         currency_label: Валута
         currency_placeholder: '-- Избери Валута --'
+        category: Категория
+        category_placeholder: '-- Избери Категория --'
         categories: Категории
         categories_placeholder: '-- Избери Категории --'
         parent_category: Родителска Категория

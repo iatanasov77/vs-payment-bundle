@@ -8,6 +8,8 @@ vs_payment:
         price: Price
         currency_label: Currency
         currency_placeholder: '-- Select Currency --'
+        category: Category
+        category_placeholder: '-- Select Category --'
         categories: Categories
         categories_placeholder: '-- Select Categories --'
         parent_category: Parent Category

@@ -60,11 +60,21 @@ class PricingPlanForm extends AbstractForm
                 'translation_domain'    => 'VSPaymentBundle',
             ])
             
+            ->add( 'category', EntityType::class, [
+                'label'                 => 'vs_payment.form.category',
+                'translation_domain'    => 'VSPaymentBundle',
+                'multiple'              => true,
+                'required'              => true,
+                'placeholder'           => 'vs_payment.form.category_placeholder',
+                'class'                 => $this->categoryClass,
+                'choice_label'          => 'title',
+            ])
+            
             ->add( 'category_taxon', ChoiceType::class, [
                 'label'                 => 'vs_payment.form.categories',
                 'translation_domain'    => 'VSPaymentBundle',
                 'multiple'              => true,
-                'required'              => true,   // Is Required but Used EasyUi
+                'required'              => false,   // Is Required but Used EasyUi
                 'mapped'                => false,
                 'placeholder'           => 'vs_payment.form.categories_placeholder',
             ])
