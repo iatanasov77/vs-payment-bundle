@@ -67,7 +67,7 @@ class PricingPlanForm extends AbstractForm
                 'required'              => true,
                 'placeholder'           => 'vs_payment.form.category_placeholder',
                 'class'                 => $this->categoryClass,
-                'choice_label'          => 'title',
+                'choice_label'          => 'name',
             ])
             
             ->add( 'category_taxon', ChoiceType::class, [
