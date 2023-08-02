@@ -10,7 +10,7 @@ class CurrencyController extends AbstractCrudController
     {
         $currencies = [];
         
-        if ( \is_array( $this->resources ) ) {
+        if ( $this->resources ) {
             foreach ( $this->resources as $currency ) {
                 $currencies[$currency->getCode()]   = [
                     'symbol'    => Currencies::getSymbol( $currency->getCode() ),
