@@ -44,5 +44,23 @@ services:
             - '@vs_payment.repository.product_category'
             - '@file_locator'
             - '@vs_application.app_pictures_uploader'
+            
+    vs_payment.fixture.example_factory.paid_services:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\PaidServicesExampleFactory
+        arguments:
+        
+    vs_payment.fixture.example_factory.pricing_plan_categories:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\PricingPlanCategoriesExampleFactory
+        arguments:
+            - '@vs_payment.factory.pricing_plan_category'
+            - '@vs_application.repository.taxonomy'
+            - '@vs_application.factory.taxon'
+            - '@vs_application.slug_generator'
+            
+    vs_payment.fixture.example_factory.pricing_plans:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\PricingPlansExampleFactory
+        arguments:
+            - '@vs_payment.factory.product'
+            - '@vs_payment.repository.product_category'
 
 
