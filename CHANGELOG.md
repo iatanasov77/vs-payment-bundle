@@ -1,3 +1,9 @@
+2.8.2	|	Release date: **03.08.2023**
+============================================
+* Bug-Fixes:
+  - Fix Fixtures Services Configuration.
+
+
 2.8.1	|	Release date: **03.08.2023**
 ============================================
 * New Features:
