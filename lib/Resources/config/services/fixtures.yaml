@@ -51,5 +51,37 @@ services:
             - '@vs_payment.fixture.example_factory.products'
         tags:
             - 'sylius_fixtures.fixture'
+    
+    vs_payment.fixture.paid_service_categories:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\ProductCategoriesFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.paid_service_categories'
+        tags:
+            - 'sylius_fixtures.fixture'
+            
+    vs_payment.fixture.paid_services:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\ProductsFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.paid_services'
+        tags:
+            - 'sylius_fixtures.fixture'
+            
+    vs_payment.fixture.pricing_plan_categories:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\ProductCategoriesFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.pricing_plan_categories'
+        tags:
+            - 'sylius_fixtures.fixture'
+            
+    vs_payment.fixture.pricing_plans:
+        class: Vankosoft\PaymentBundle\DataFixtures\VankosoftExtendedDataFixtures\ProductsFixture
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@vs_payment.fixture.example_factory.pricing_plans'
+        tags:
+            - 'sylius_fixtures.fixture'
 
 

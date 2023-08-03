@@ -44,5 +44,35 @@ services:
             - '@vs_payment.repository.product_category'
             - '@file_locator'
             - '@vs_application.app_pictures_uploader'
+            
+    vs_payment.fixture.example_factory.paid_service_categories:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\PaidServiceCategoriesExampleFactory
+        arguments:
+            - '@vs_users_subscriptions.factory.payed_service_category'
+            - '@vs_application.repository.taxonomy'
+            - '@vs_application.factory.taxon'
+            - '@vs_application.slug_generator'
+            
+    vs_payment.fixture.example_factory.paid_services:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\PaidServicesExampleFactory
+        arguments:
+            - '@vs_users_subscriptions.factory.payed_service'
+            - '@vs_users_subscriptions.repository.payed_service_category'
+            - '@vs_users_subscriptions.factory.payed_service_subscription_period'
+        
+    vs_payment.fixture.example_factory.pricing_plan_categories:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\PricingPlanCategoriesExampleFactory
+        arguments:
+            - '@vs_payment.factory.pricing_plan_category'
+            - '@vs_application.repository.taxonomy'
+            - '@vs_application.factory.taxon'
+            - '@vs_application.slug_generator'
+            
+    vs_payment.fixture.example_factory.pricing_plans:
+        class: Vankosoft\PaymentBundle\DataFixtures\Factory\PricingPlansExampleFactory
+        arguments:
+            - '@vs_payment.factory.product'
+            - '@vs_payment.repository.product_category'
+            - '@vs_users_subscriptions.repository.payed_service_subscription_period'
 
 

@@ -132,6 +132,10 @@ sylius_fixtures:
                               title: 'Product Categories'
                               description: 'Product Categories'
                               locale:  '%locale%'
+                            - code: 'paid-service-categories'
+                              title: 'Paid Service Categories'
+                              description: 'Paid Service Categories'
+                              locale:  '%locale%'
                             - code: 'pricing-plan-categories'
                               title: 'Pricing Plan Categories'
                               description: 'Pricing Plan Categories'
@@ -203,5 +207,80 @@ sylius_fixtures:
                               currency: 'EUR'
                               pictures:
                                   - file: '8.jpg'
+                
+                
+                paid_service_categories:
+                    name: paid_service_categories
+                    options:
+                        custom:
+                            - title: 'Recurring Subscription Plans'
+                              description: 'Recurring Subscription Plans'
+                              parent: null
+                              taxonomy_code: 'paid-service-categories'
+                              locale:  '%locale%'
+                
+                paid_services:
+                    name: paid_services
+                    options:
+                        custom:
+                            - title: 'Recurring Plans'
+                              description: 'Recurring Plans'
+                              category_code: 'recurring-subscription-plans'
+                              locale:  '%locale%'
+                              active: true
+                              subscription_code: recurring-plan
+                              subscription_priority: 1
+                              periods:
+                                  - subscriptionPeriod: 'Month'
+                                    price: 18.99
+                                    currencyCode: 'EUR'
+                                    title: '1 Month'
+                                    paidServicePeriodCode: 'recurring-plans-month'
+                                  - subscriptionPeriod: 'QuarterYear'
+                                    price: 49.99
+                                    currencyCode: 'EUR'
+                                    title: '3 Months'
+                                    paidServicePeriodCode: 'recurring-plans-quarteryear'
+                                  - subscriptionPeriod: 'HalfYear'
+                                    price: 18.99
+                                    currencyCode: 'EUR'
+                                    title: '6 Months'
+                                    paidServicePeriodCode: 'recurring-plans-halfyear'
+                
+                pricing_plan_categories:
+                    name: pricing_plan_categories
+                    options:
+                        custom:
+                            - title: 'Recurring Subscription Plans'
+                              description: 'Test Category'
+                              parent: null
+                              taxonomy_code: 'pricing-plan-categories'
+                              locale:  '%locale%'
+                
+                pricing_plans:
+                    name: pricing_plans
+                    options:
+                        custom:
+                            - title: '1 MONTH'
+                              description: 'Test Pricing Plan 1'
+                              category_code: 'recurring-subscription-plans-1'
+                              locale:  '%locale%'
+                              active: true
+                              premium: false
+                              paid_service_period: 'recurring-plans-month'
+                            - title: '3 Months'
+                              description: 'Test Pricing Plan 2'
+                              category_code: 'recurring-subscription-plans-1'
+                              locale:  '%locale%'
+                              active: true
+                              premium: false
+                              paid_service_period: 'recurring-plans-quarteryear'
+                            - title: '6 Months'
+                              description: 'Test Pricing Plan 3'
+                              category_code: 'recurring-subscription-plans-1'
+                              locale:  '%locale%'
+                              active: true
+                              premium: false
+                              paid_service_period: 'recurring-plans-halfyear'
                               
                             

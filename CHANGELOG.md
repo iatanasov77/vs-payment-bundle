@@ -1,3 +1,12 @@
+2.8.1	|	Release date: **03.08.2023**
+============================================
+* New Features:
+  - Add a Doctrine Migration.
+  - Create Fixtures For Paid Services and Pricing Plans.
+* Bug-Fixes:
+  - Fix CurrencyController .
+
+
 2.8.0	|	Release date: **01.08.2023**
 ============================================
 * New Features:
