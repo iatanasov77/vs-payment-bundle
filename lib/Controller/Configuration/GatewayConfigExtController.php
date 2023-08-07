@@ -81,8 +81,10 @@ class GatewayConfigExtController extends PayumController
             $postData                               = $request->request->all( 'gateway_config_form' );
             //echo "<pre>"; var_dump( $postData ); die;
             
-            $submitedGatewayConfig->setConfig( $postData['config'] ) ;
-            $submitedGatewayConfig->setSandboxConfig( $postData['sandboxConfig'] ) ;
+            if ( $submitedGatewayConfig->getFactoryName() != 'offline' ) {
+                $submitedGatewayConfig->setConfig( $postData['config'] ) ;
+                $submitedGatewayConfig->setSandboxConfig( $postData['sandboxConfig'] ) ;
+            }
             
             $em->persist( $submitedGatewayConfig );
             $em->flush();
