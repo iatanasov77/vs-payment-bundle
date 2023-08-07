@@ -1,3 +1,9 @@
+2.8.3	|	Release date: **07.08.2023**
+============================================
+* Bug-Fixes:
+  - Fix GatewayConfigExtController when the Selected Factory is 'offline'
+
+
 2.8.2	|	Release date: **03.08.2023**
 ============================================
 * Bug-Fixes:
