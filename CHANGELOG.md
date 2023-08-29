@@ -1,3 +1,9 @@
+2.8.5	|	Release date: **29.08.2023**
+============================================
+* New Features and Improvements:
+  - Improve Main Menu View.
+
+
 2.8.4	|	Release date: **29.08.2023**
 ============================================
 * New Features and Improvements:
