@@ -1,3 +1,9 @@
+2.8.7	|	Release date: **23.09.2023**
+============================================
+* Bug-Fixes:
+  - Fix PaidServicesExampleFactory .
+
+
 2.8.6	|	Release date: **23.09.2023**
 ============================================
 * New Features and Improvements:
