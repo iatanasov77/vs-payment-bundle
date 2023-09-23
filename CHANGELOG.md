@@ -1,3 +1,9 @@
+2.8.8	|	Release date: **23.09.2023**
+============================================
+* Bug-Fixes and Improvements:
+  - Fix and Improve Extended Project Installator SampleData Fixtures.
+
+
 2.8.7	|	Release date: **23.09.2023**
 ============================================
 * Bug-Fixes:

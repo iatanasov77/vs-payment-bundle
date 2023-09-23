@@ -19,6 +19,7 @@ final class PaidServiceCategoriesFixture extends AbstractResourceFixture
                 ->scalarNode( 'title' )->end()
                 ->scalarNode( 'description' )->end()
                 ->scalarNode( 'taxonomy_code' )->end()
+                ->scalarNode( 'taxon_code' )->end()
         ;
     }
 }
