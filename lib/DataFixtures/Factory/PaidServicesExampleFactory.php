@@ -48,8 +48,8 @@ final class PaidServicesExampleFactory extends AbstractExampleFactory implements
         $entity->setTitle( $options['title'] );
         $entity->setDescription( $options['description'] );
         $entity->setEnabled( $options['active'] );
-        $entity->setEnabled( $options['subscription_code'] );
-        $entity->setEnabled( $options['subscription_priority'] );
+        $entity->setSubscriptionCode( $options['subscription_code'] );
+        $entity->setSubscriptionPriority( $options['subscription_priority'] );
         
         if ( isset( $options['periods'] ) && null !== $options['periods'] ) {
             $this->createSubscriptionPeriods( $entity, $options['periods'], $options['locale'] );
