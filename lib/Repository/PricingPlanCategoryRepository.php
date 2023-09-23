@@ -1,8 +1,8 @@
 <?php namespace Vankosoft\PaymentBundle\Repository;
 
-use Vankosoft\ApplicationBundle\Repository\CategoryRepository;
+use Vankosoft\ApplicationBundle\Repository\TaxonDescendentRepository;
 
-class PricingPlanCategoryRepository extends CategoryRepository
+class PricingPlanCategoryRepository extends TaxonDescendentRepository
 {
     
 }
