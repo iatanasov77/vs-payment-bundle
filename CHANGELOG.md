@@ -1,3 +1,9 @@
+2.8.6	|	Release date: **23.09.2023**
+============================================
+* New Features and Improvements:
+  - Unified All Taxon Related Repositories.
+
+
 2.8.5	|	Release date: **29.08.2023**
 ============================================
 * New Features and Improvements:
