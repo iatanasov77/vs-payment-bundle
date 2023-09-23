@@ -1,3 +1,9 @@
+2.8.9	|	Release date: **23.09.2023**
+============================================
+* Bug-Fixes:
+  - Fix PricingPlansExampleFactory .
+
+
 2.8.8	|	Release date: **23.09.2023**
 ============================================
 * Bug-Fixes and Improvements:
