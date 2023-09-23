@@ -51,7 +51,9 @@ final class PricingPlanCategoriesExampleFactory extends AbstractExampleFactory i
         $entity                     = $this->pricingPlanCategoriesFactory->createNew();
         
         $taxonEntity                = $this->taxonFactory->createNew();
-        $slug                       = $this->slugGenerator->generate( $options['title'] );
+        
+        //$slug                       = $this->slugGenerator->generate( $options['title'] );
+        $slug                       = $options['taxon_code'];
         
         $taxonEntity->setCurrentLocale( $options['locale'] );
         $taxonEntity->setCode( $slug );
@@ -83,6 +85,9 @@ final class PricingPlanCategoriesExampleFactory extends AbstractExampleFactory i
             
             ->setDefault( 'taxonomy_code', null )
             ->setAllowedTypes( 'taxonomy_code', ['string'] )
+            
+            ->setDefault( 'taxon_code', null )
+            ->setAllowedTypes( 'taxon_code', ['string'] )
         ;
     }
 }

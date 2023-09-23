@@ -217,6 +217,7 @@ sylius_fixtures:
                               description: 'Recurring Subscription Plans'
                               parent: null
                               taxonomy_code: 'paid-service-categories'
+                              taxon_code: 'recurring-subscription-plans'
                               locale:  '%locale%'
                 
                 paid_services:
@@ -255,6 +256,7 @@ sylius_fixtures:
                               description: 'Test Category'
                               parent: null
                               taxonomy_code: 'pricing-plan-categories'
+                              taxon_code: 'recurring-subscription-plans-1'
                               locale:  '%locale%'
                 
                 pricing_plans:
