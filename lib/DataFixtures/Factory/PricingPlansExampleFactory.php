@@ -6,7 +6,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Vankosoft\ApplicationInstalatorBundle\DataFixtures\Factory\AbstractExampleFactory;
 use Vankosoft\ApplicationInstalatorBundle\DataFixtures\Factory\ExampleFactoryInterface;
 
-use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 
 final class PricingPlansExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
 {
@@ -33,7 +33,7 @@ final class PricingPlansExampleFactory extends AbstractExampleFactory implements
         $this->paidServicesPeriodRepository = $paidServicesPeriodRepository;
     }
     
-    public function create( array $options = [] ): ProductInterface
+    public function create( array $options = [] ): PricingPlanInterface
     {
         $options    = $this->optionsResolver->resolve( $options );
         

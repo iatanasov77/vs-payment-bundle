@@ -71,8 +71,8 @@ services:
     vs_payment.fixture.example_factory.pricing_plans:
         class: Vankosoft\PaymentBundle\DataFixtures\Factory\PricingPlansExampleFactory
         arguments:
-            - '@vs_payment.factory.product'
-            - '@vs_payment.repository.product_category'
+            - '@vs_payment.factory.pricing_plan'
+            - '@vs_payment.repository.pricing_plan_category'
             - '@vs_users_subscriptions.repository.payed_service_subscription_period'
 
 
