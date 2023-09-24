@@ -27,9 +27,7 @@ class PaymentForm extends AbstractType
         $builder
             ->add( 'paymentDescription', HiddenType::class )
         
-            //->add( 'paymentMethod', EntityType::class, [
-            ->add( 'paymentMethod', CollectionType::class, [
-                'entry_type'            => EntityType::class,
+            ->add( 'paymentMethod', EntityType::class, [
                     
                 'expanded'              => true,
                 'class'                 => $this->paymentMethodClass,
