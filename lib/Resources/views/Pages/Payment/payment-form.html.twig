@@ -14,14 +14,17 @@
                         <div class="card-header">
                             <strong>{{ 'vs_payment.template.checkout_payment_title' | trans( {},'VSPaymentBundle' ) }}</strong>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        {{ form_row(form.paymentMethod, {'attr': {'class': 'form-control'}}) }}
-                                    </div>
+                        <div class="card-body" style="padding-bottom: 20px;">
+                            {% for paymentMethod in form.paymentMethod %}
+                                <div class="form-check">
+                                    {{ form_widget( paymentMethod, {'attr': {
+                                        'class': 'form-check-input float-left',
+                                        'style': 'float: left; margin-right: 10px;',
+                                        'checked': loop.index == 1
+                                    }} ) }}
+                                    {{ form_label( paymentMethod, null, {'label_attr': {'class': 'form-check-label'}} ) }}
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-sm btn-success float-right" type="submit"

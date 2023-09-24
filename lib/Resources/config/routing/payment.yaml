@@ -28,4 +28,29 @@ vs_payment_shopping_cart_index:
     controller: Vankosoft\PaymentBundle\Controller\ShoppingCart\ShoppingCartController::index
     options:
         expose: true
+        
+vs_payment_recieved_payments:
+    resource: |
+        alias: vs_payment.payment
+        except: ['create', 'update', 'show']
+        path: /payment/recieved-payments
+        templates: "@VSPayment/Pages/RecievedPayments"
+    type: sylius.resource
+    options:
+        expose: true
+    
+vs_payment_recieved_payments_index:
+    path: /payment/recieved-payments/
+    methods: [GET]
+    defaults:
+        _controller: vs_payment.controller.payment::indexAction
+        _sylius:
+            paginate: 10
+            sortable: true
+            sorting:
+                createdAt: desc
+            filterable: true
+            template: "@VSPayment/Pages/RecievedPayments/index.html.twig"
+    options:
+        expose: true
 
