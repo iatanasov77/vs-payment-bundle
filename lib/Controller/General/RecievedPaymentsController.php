@@ -7,6 +7,8 @@ class RecievedPaymentsController extends AbstractCrudController
 {
     protected function customData( Request $request, $entity = null ): array
     {
-        
+        return [
+            
+        ];
     }
 }

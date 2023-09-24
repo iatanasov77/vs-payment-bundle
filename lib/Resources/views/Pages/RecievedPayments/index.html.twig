@@ -16,9 +16,12 @@
                     <thead>
                         <tr>
                             <th width="50">N</th>
-                            <th>{{ 'vs_payment.template.currency_index_code' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.currency_index_symbol' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.currency_index_name' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.payment_number' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.payment_description' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.payment_client_email' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.payment_total_amount' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_application.template.items_index_row_created' | trans( {},'VSApplicationBundle' ) }}</th>
+                            <th>{{ 'vs_application.template.items_index_row_updated' | trans( {},'VSApplicationBundle' ) }}</th>
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
                     </thead>
@@ -26,19 +29,16 @@
                     {% for item in resources %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ item.code }}</td>
-                            <td>{{ intlCurrencies[item.code]['symbol'] }}</td>
-                            <td>{{ intlCurrencies[item.code]['name'] }}</td>
+                            <td>{{ item.number }}</td>
+                            <td>{{ item.description }}</td>
+                            <td>{{ item.clientEmail }}</td>
+                            <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
+                            <td>{{ item.createdAt }}</td>
+                            <td>{{ item.updatedAt }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a class="btn btn-primary"
-                                        href="{{ path('vs_payment_currency_update', {'id': item.id}) }}"
-                                        title="{{ 'vs_application.template.items_index_row_action_edit' | trans( {},'VSApplicationBundle' ) }}"
-                                    >
-                                        <i class="fas fa-edit"></i>
-                                    </a>
                                     <a class="btn btn-danger btnDeleteResource"
-                                        href="{{ path('vs_payment_currency_delete', {'id': item.id}) }}" 
+                                        href="{{ path('vs_payment_payment_delete', {'id': item.id}) }}" 
                                         data-csrfToken="{{ csrf_token( item.id ) }}" 
                                         title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
                                     >
@@ -69,11 +69,11 @@
 
 {% block head_styles %}
     {{ parent() }}
-    {{ encore_entry_link_tags( 'js/currencies' ) }}
+    {{ encore_entry_link_tags( 'js/recieved-payments' ) }}
 {% endblock %}
 
 {% block body_scripts %}
     {{ parent() }}
     
-    {{ encore_entry_script_tags( 'js/currencies' ) }}
+    {{ encore_entry_script_tags( 'js/recieved-payments' ) }}
 {% endblock %}

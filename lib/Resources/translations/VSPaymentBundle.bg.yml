@@ -123,6 +123,10 @@ vs_payment:
         pricing_plan_active: Active
         pricing_plan_premium: Premium
         pricing_plan_subscription_period: Paid Service Subscription
+        payment_number: Payment Number
+        payment_description: Description
+        payment_client_email: Client Email
+        payment_total_amount: Total Amount
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
