@@ -48,6 +48,14 @@ vs_payment:
             set_as_premium: Set as Premium
             premium: Premium
             discount: Discount
+            
+        select_pricing_plan:
+            name: Name
+            name_placeholder: Full name
+            email: Email
+            choose_plan: Choose plan
+            payment_method: Payment method
+            submit: Proceed
 
     template:
         gateway: Gateway
@@ -82,6 +90,10 @@ vs_payment:
                 options_title: Gateway Config Options
                 sandbox_config: Sandbox Config
                 sandbox_config_options_title: Sandbox Config Options
+                
+        pricing_plans:
+            current_plan: Current Plan
+            choose_plan: Choose Plan
                 
         currency_index_title: Currencies
         currency_index_code: Code

@@ -105,5 +105,13 @@ services:
             - '@vs_application.repository.locale'
             - '%vs_payment.model.pricing_plan_category.class%'
             - '%vs_users_subscriptions.model.payed_service_subscription_period.class%'
+            
+    Vankosoft\PaymentBundle\Form\SelectPricingPlanForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.pricing_plan.class%'
+            - '%vs_payment.model.payment_method.class%'
+            - '@vs_payment.repository.pricing_plan'
 
 
