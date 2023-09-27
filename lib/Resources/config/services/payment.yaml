@@ -22,6 +22,8 @@ services:
             - '@vs_payment.factory.order_item'
             - '@vs_payment.repository.order'
             - '@vs_payment.repository.product'
+            - '@vs_payment.repository.pricing_plan'
+            - '@vs_payment.repository.payment_method'
             - '@vs_users_subscriptions.repository.payed_service_subscription_period'
         calls:
             - [ setContainer, [ '@service_container' ] ]
