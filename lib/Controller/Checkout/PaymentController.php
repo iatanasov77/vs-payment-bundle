@@ -69,7 +69,7 @@ class PaymentController extends BaseShoppingCartController
         
         switch ( $payableObjectType ) {
             case PayableObject::OBJECT_TYPE_PRICING_PLAN:
-                $this->addPricingPlanToCard( $payableObjectId, $card )
+                $this->addPricingPlanToCard( $payableObjectId, $card );
                 break;
             case PayableObject::OBJECT_TYPE_PRODUCT:
                 $this->addProductToCard( $payableObjectId, $qty, $card );
