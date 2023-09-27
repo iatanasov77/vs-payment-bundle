@@ -37,6 +37,8 @@
             <join-column name="paid_service_period_id" referenced-column-name="id" nullable="false" />
         </one-to-one>
         
+        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="paidServiceSubscription" />
+        
         <!--
             Used locale to override Translation listener`s locale
            this is not a mapped field of entity metadata, just a simple property
