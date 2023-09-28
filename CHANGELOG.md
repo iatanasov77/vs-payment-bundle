@@ -1,3 +1,19 @@
+2.9.0	|	Release date: **28.09.2023**
+============================================
+* New Features:
+  - Add to SampleData Fixtures.
+  - Improve PaymentForm .
+  - Add Preview Recieved Payments Page.
+  - Improve Order Model.
+  - Create SelectPricingPlanForm
+  - Create a PricingPlansRepository.
+  - Improve Checkkout Payment Controller.
+  - Move Assosiation of OrderItem From PaidServicePeriod to PricingPlan .
+  - Repairr Checkout Payment Controller.
+* Bug-Fixes:
+  - Fix All Forms About Locale Choices.
+
+
 2.8.9	|	Release date: **23.09.2023**
 ============================================
 * Bug-Fixes:
