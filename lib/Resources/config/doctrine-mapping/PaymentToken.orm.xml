@@ -3,18 +3,24 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
 >
     <mapped-superclass name="Vankosoft\PaymentBundle\Model\PaymentToken">
         <!--
-            Single id is not allowed on composite primary key in entity Vankosoft\PaymentBundle\Model\Token
+            Entity 'App\Entity\Payment\PaymentToken' has a composite identifier but uses an ID generator other than manually assigning (Identity, Sequence).
+            This is not supported.
         -->
+        <!--
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-        <!--
-        <field name="id" column="id" type="integer">
-            <generator strategy="AUTO" />
-        </field>
         -->
+       
+        <field name="createdAt" column="created_at" type="datetime">
+            <gedmo:timestampable on="create"/>
+        </field>
+        <field name="updatedAt" column="updated_at" type="datetime" nullable="true">
+            <gedmo:timestampable on="update"/>
+        </field>
     </mapped-superclass>
 </doctrine-mapping>
