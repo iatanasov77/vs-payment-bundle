@@ -79,7 +79,6 @@ class StripeCheckoutController extends AbstractCheckoutController
             'vs_payment_stripe_checkout_done' // the route to redirect after capture
         );
         
-        
         if ( $card->getPaymentMethod()->getGateway()->getFactoryName() == 'stripe_js' ) {
             $captureUrl = base64_encode( $captureToken->getTargetUrl() );
             return $this->redirect( $this->generateUrl( 'vs_payment_show_credit_card_form', ['formAction' => $captureUrl] ) );
