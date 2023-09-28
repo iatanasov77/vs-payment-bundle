@@ -16,7 +16,7 @@ trait PrependPayumTrait
         //echo "<pre>"; var_dump($vsPaymentConfig); die;
         $vsPaymentResources = $vsPaymentConfig[0]['resources'];
         
-        switch ( $vsPaymentConfig[0]['resources'] ) {
+        switch ( $vsPaymentConfig[0]['token_storage'] ) {
             case ComponentPayment::TOKEN_STORAGE_FILESYSTEM:
                 $tokenStorageConfig = $this->originalPayumSecurity( $container );
                 break;
