@@ -1,13 +1,11 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
-use Payum\Core\Model\Token as BaseToken;
+use Payum\Core\Model\Token;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Token extends BaseToken implements ResourceInterface
+class PaymentToken extends Token implements ResourceInterface
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $id;
     
     public function getId()
