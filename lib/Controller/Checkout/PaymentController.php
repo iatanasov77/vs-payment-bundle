@@ -16,6 +16,7 @@ use Vankosoft\PaymentBundle\Form\PaymentForm;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
 use Vankosoft\PaymentBundle\Component\PayableObject;
 use Vankosoft\PaymentBundle\Form\SelectPricingPlanForm;
+use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 
 class PaymentController extends BaseShoppingCartController
 {
@@ -34,9 +35,6 @@ class PaymentController extends BaseShoppingCartController
     /** @var EntityRepository */
     protected $paymentMethodsRepository;
     
-    /** @var EntityRepository */
-    protected $payableObjectsRepository;
-    
     public function __construct(
         ManagerRegistry $doctrine,
         SecurityBridge $securityBridge,
@@ -46,8 +44,7 @@ class PaymentController extends BaseShoppingCartController
         EntityRepository $ordersRepository,
         EntityRepository $productsRepository,
         EntityRepository $pricingPlansRepository,
-        EntityRepository $paymentMethodsRepository,
-        EntityRepository $payableObjectsRepository
+        EntityRepository $paymentMethodsRepository
     ) {
         parent::__construct( $doctrine, $securityBridge, $ordersFactory, $ordersRepository );
         
@@ -56,7 +53,6 @@ class PaymentController extends BaseShoppingCartController
         $this->productsRepository       = $productsRepository;
         $this->pricingPlansRepository   = $pricingPlansRepository;
         $this->paymentMethodsRepository = $paymentMethodsRepository;
-        $this->payableObjectsRepository = $payableObjectsRepository;
     }
     
     public function addToCardAction( $payableObjectType, $payableObjectId, $qty, Request $request ): Response
@@ -73,9 +69,6 @@ class PaymentController extends BaseShoppingCartController
                 break;
             case PayableObject::OBJECT_TYPE_PRODUCT:
                 $this->addProductToCard( $payableObjectId, $qty, $card );
-                break;
-            case PayableObject::OBJECT_TYPE_SERVICE:
-                $this->addServiceToCard( $payableObjectId, $qty, $card );
                 break;
             default:
                 throw new ShoppingCardException( 'Invalid Payable Object Type !!!' );
@@ -185,23 +178,7 @@ class PaymentController extends BaseShoppingCartController
         ]);
     }
     
-    protected function addServiceToCard( $payableObjectId, $qty, $card ): void
-    {
-        $em             = $this->doctrine->getManager();
-        
-        $orderItem      = $this->orderItemsFactory->createNew();
-        $payableObject  = $this->payableObjectsRepository->find( $payableObjectId );
-        
-        $orderItem->setPaidServiceSubscription( $payableObject );
-        $orderItem->setPrice( $payableObject->getPrice() );
-        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
-        
-        $card->addItem( $orderItem );
-        $em->persist( $card );
-        $em->flush();
-    }
-    
-    protected function addProductToCard( $payableObjectId, $qty, $card ): void
+    protected function addProductToCard( $payableObjectId, $qty, $card ): PayableObjectInterface
     {
         $em             = $this->doctrine->getManager();
         
@@ -215,15 +192,16 @@ class PaymentController extends BaseShoppingCartController
         $card->addItem( $orderItem );
         $em->persist( $card );
         $em->flush();
+        
+        return $payableObject;
     }
     
-    protected function addPricingPlanToCard( $pricingPlanId, &$card )
+    protected function addPricingPlanToCard( $pricingPlanId, &$card ): PayableObjectInterface
     {
         $em             = $this->doctrine->getManager();
         
         $orderItem      = $this->orderItemsFactory->createNew();
-        $pricingPlan    = $this->pricingPlansRepository->find( $pricingPlanId );
-        $payableObject  = $pricingPlan->getPaidServicePeriod();
+        $payableObject  = $this->pricingPlansRepository->find( $pricingPlanId );
         
         $orderItem->setPaidServiceSubscription( $payableObject );
         $orderItem->setPrice( $payableObject->getPrice() );
@@ -233,6 +211,6 @@ class PaymentController extends BaseShoppingCartController
         $em->persist( $card );
         $em->flush();
         
-        return $pricingPlan;
+        return $payableObject;
     }
 }
