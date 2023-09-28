@@ -48,6 +48,14 @@ vs_payment:
             set_as_premium: Set as Premium
             premium: Premium
             discount: Discount
+            
+        select_pricing_plan:
+            name: Name
+            name_placeholder: Full name
+            email: Email
+            choose_plan: Choose plan
+            payment_method: Payment method
+            submit: Proceed
     
     template:
         gateway: Гейтуей
@@ -82,6 +90,10 @@ vs_payment:
                 options_title: Гейтуей Конфигурация Опции
                 sandbox_config: Сендбокс Конфигурация
                 sandbox_config_options_title: Сендбокс Конфигурация Опции
+                
+        pricing_plans:
+            current_plan: Текущ План
+            choose_plan: Избери План
                 
         currency_index_title: Валути
         currency_index_code: Код
@@ -123,6 +135,10 @@ vs_payment:
         pricing_plan_active: Active
         pricing_plan_premium: Premium
         pricing_plan_subscription_period: Paid Service Subscription
+        payment_number: Payment Number
+        payment_description: Description
+        payment_client_email: Client Email
+        payment_total_amount: Total Amount
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

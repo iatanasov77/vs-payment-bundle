@@ -4,6 +4,7 @@ use Vankosoft\ApplicationBundle\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -17,9 +18,6 @@ use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 
 class ProductForm extends AbstractForm
 {
-    /** @var RequestStack */
-    protected $requestStack;
-    
     /** @var string */
     protected $categoryClass;
     
@@ -27,14 +25,17 @@ class ProductForm extends AbstractForm
     protected $currencyClass;
     
     public function __construct(
-        RequestStack $requestStack,
         string $dataClass,
+        RequestStack $requestStack,
+        RepositoryInterface $localesRepository,
         string $categoryClass,
         string $currencyClass
     ) {
         parent::__construct( $dataClass );
         
         $this->requestStack         = $requestStack;
+        $this->localesRepository    = $localesRepository;
+        
         $this->categoryClass        = $categoryClass;
         $this->currencyClass        = $currencyClass;
     }
@@ -50,7 +51,7 @@ class ProductForm extends AbstractForm
             ->add( 'locale', ChoiceType::class, [
                 'label'                 => 'vs_cms.form.locale',
                 'translation_domain'    => 'VSCmsBundle',
-                'choices'               => \array_flip( \Vankosoft\ApplicationBundle\Component\I18N::LanguagesAvailable() ),
+                'choices'               => \array_flip( $this->fillLocaleChoices() ),
                 'data'                  => $currentLocale,
                 'mapped'                => false,
             ])

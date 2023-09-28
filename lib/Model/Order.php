@@ -76,8 +76,8 @@ class Order implements Interfaces\OrderInterface
          */
         $this->totalAmount  = 0;
         $this->currencyCode = 'EUR';
-        $this->description = 'VankoSoft Payment';
-        $this->status       = 'shopping_cart';
+        $this->description  = 'VankoSoft Payment';
+        $this->status       = self::STATUS_SHOPPING_CART;
     }
     
     public function getId()

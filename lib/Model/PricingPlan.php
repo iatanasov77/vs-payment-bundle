@@ -5,8 +5,10 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionInterface;
 
@@ -41,6 +43,14 @@ class PricingPlan implements PricingPlanInterface
     
     /** @var string */
     protected $locale;
+    
+    /** @var Collection|OrderItemInterface[] */
+    protected $orderItems;
+    
+    public function __construct()
+    {
+        $this->orderItems   = new ArrayCollection();
+    }
     
     /**
      * {@inheritdoc}
@@ -166,6 +176,21 @@ class PricingPlan implements PricingPlanInterface
         $this->locale = $locale;
         
         return $this;
+    }
+    
+    public function getOrderItems()
+    {
+        return $this->orderItems;
+    }
+    
+    public function getSubscriptionCode(): ?string
+    {
+        return null;
+    }
+    
+    public function getSubscriptionPriority(): ?int
+    {
+        return null;
     }
     
     /*

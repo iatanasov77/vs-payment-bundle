@@ -21,6 +21,7 @@ use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
 
 use Vankosoft\PaymentBundle\Model\Payment;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
+use Vankosoft\PaymentBundle\Controller\General\RecievedPaymentsController;
 
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
@@ -63,6 +64,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Vankosoft\PaymentBundle\Model\PricingPlan;
 use Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanController;
 use Vankosoft\PaymentBundle\Form\PricingPlanForm;
+use Vankosoft\PaymentBundle\Repository\PricingPlansRepository;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -157,6 +159,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'interface' )->defaultValue( PaymentInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( RecievedPaymentsController::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -324,7 +327,7 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( PricingPlan::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'interface' )->defaultValue( PricingPlanInterface::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( PricingPlansRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( PricingPlanController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( PricingPlanForm::class )->cannotBeEmpty()->end()

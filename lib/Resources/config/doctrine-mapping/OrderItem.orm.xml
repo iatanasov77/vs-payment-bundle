@@ -12,7 +12,7 @@
         <many-to-one field="order" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" inversed-by="items" />
         
         <!-- 'object' is for paid services -->
-        <many-to-one field="paidServiceSubscription" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface" inversed-by="orderItems" />
+        <many-to-one field="paidServiceSubscription" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface" inversed-by="orderItems" />
         <!-- 'product' is for products -->
         <many-to-one field="product" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface" inversed-by="orderItems" />
         

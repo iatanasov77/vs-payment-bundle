@@ -124,6 +124,9 @@ sylius_fixtures:
                             - name: 'Pay with Credit Card By Borica'
                               gateway: 'borica'
                               enabled: true
+                            - name: 'Pay with Credit Card By StripeJs'
+                              gateway: 'stripe_js'
+                              enabled: true
                 taxonomies:
                     name: taxonomy
                     options:

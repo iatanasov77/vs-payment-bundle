@@ -33,7 +33,7 @@
         <field name="price" column="price" type="decimal" scale="2" precision="8" />
         <many-to-one field="currency" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface" />
         
-        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="object" />
+        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="product" />
         
         <many-to-many field="categories" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\ProductCategoryInterface" inversed-by="products">
             <cascade>

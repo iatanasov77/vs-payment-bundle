@@ -8,6 +8,8 @@ vs_application:
         payment_methods: Payment Methods
         create_new_payment_method: Create New Payment Method
         edit_a_payment_method: Edit a Payment Method
+        payment_general: General
+        recieved_payments: Recieved Payments
         currency: Currency
         currencies: Currencies
         create_new_currency: Create New Currency
