@@ -5,13 +5,16 @@
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
 >
     <mapped-superclass name="Vankosoft\PaymentBundle\Model\Token">
-        <!-- Single id is not allowed on composite primary key in entity Vankosoft\PaymentBundle\Model\Token
+        <!--
+            Single id is not allowed on composite primary key in entity Vankosoft\PaymentBundle\Model\Token
+        -->
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-        -->
+        <!--
         <field name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </field>
+        -->
     </mapped-superclass>
 </doctrine-mapping>
