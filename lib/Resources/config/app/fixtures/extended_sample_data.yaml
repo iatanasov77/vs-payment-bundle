@@ -64,9 +64,8 @@ sylius_fixtures:
                                   "publishable_key": '%env(STRIPEJS_PUBLISHABLE_KEY)%'
                                   "secret_key": '%env(STRIPEJS_SECRET_KEY)%'
                               sandbox_config:
-                                  "test": "true"
-                                  "projectid": "PROJECT_ID"
-                                  "sign_password": "SIGN_PASSWORD"
+                                  "publishable_key": '%env(STRIPEJS_PUBLISHABLE_KEY)%'
+                                  "secret_key": '%env(STRIPEJS_SECRET_KEY)%'
                               currency: 'EUR'
                             - title: 'Test Paypal Express Checkout'
                               description: 'Test Paypal Express Checkout'
