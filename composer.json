@@ -24,6 +24,7 @@
        	
        	"payum/core": "^1.7",
        	"payum/payum-bundle": "^2.5",
+       	"php-http/message-factory": "^1.0",
        	
         "payum/offline": "^1.7",
         "payum/paypal-express-checkout-nvp": "^1.7",

@@ -163,11 +163,17 @@ class PaymentController extends BaseShoppingCartController
             throw new ShoppingCardException( 'Card not exist in repository !!!' );
         }
         
-        $form   = $this->getCreditCardForm( base64_decode( $formAction ) );
+        $paymentMethod  = $card->getPaymentMethod();
+        $gatewayConfig  = (
+                            $paymentMethod->getGateway()->getFactoryName() == 'stripe_checkout' || 
+                            $paymentMethod->getGateway()->getFactoryName() == 'stripe_js'
+                          ) ? $paymentMethod->getGateway()->getConfig() : '';
+        $form           = $this->getCreditCardForm( base64_decode( $formAction ) );
         
         return $this->render( '@VSPayment/Pages/CreditCard/credit_card.html.twig', [
             'form'          => $form->createView(),
             'paymentMethod' => $card->getPaymentMethod(),
+            'captureKey'    => $gatewayConfig['publishable_key'],
         ]);
     }
     
