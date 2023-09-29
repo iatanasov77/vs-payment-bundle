@@ -28,14 +28,13 @@ use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
  * TEST CARDS
  * ===========
  
- Card Type  |	Card Number	    |  Exp. Date  | CVV Code
+ Card Type  |	Card Number	    |  Exp. Date           | CVV Code
  --------------------------------------------------------
- Visa       | 4242424242424242  |   Any future| Any 3
- |                   |      date   | digits
+ Visa       | 4242424242424242  |   Any future date    | Any 3 digits
  ---------------------------------------------------------
- Visa       | 4263982640269299  |   02/2023   |  837
+ Visa       | 4263982640269299  |   02/2023            |  837
  --------------------------------------------------------
- Visa       | 4263982640269299  |   04/2023   |  738
+ Visa       | 4263982640269299  |   04/2023            |  738
  
  */
 class StripeCheckoutController extends AbstractCheckoutController
