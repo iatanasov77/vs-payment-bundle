@@ -14,7 +14,7 @@ use Payum\Core\Request\GetHumanStatus;
 use Payum\Core\Model\CreditCard;
 
 use Vankosoft\PaymentBundle\Model\Order;
-use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
+use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
@@ -95,15 +95,15 @@ abstract class AbstractCheckoutController extends AbstractController
         }
     }
 
-    protected function getShoppingCard( Request $request )
+    protected function getShoppingCart( Request $request )
     {
-        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
-        if ( ! $cardId ) {
-            throw new ShoppingCardException( 'Card not exist in session !!!' );
+        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        if ( ! $cartId ) {
+            throw new ShoppingCartException( 'Shopping Cart not exist in session !!!' );
         }
-        $card   = $this->ordersRepository->find( $cardId );
-        if ( ! $card ) {
-            throw new ShoppingCardException( 'Card not exist in repository !!!' );
+        $cart   = $this->ordersRepository->find( $cartId );
+        if ( ! $cart ) {
+            throw new ShoppingCartException( 'Shopping Cart not exist in repository !!!' );
         }
         
         return $card;

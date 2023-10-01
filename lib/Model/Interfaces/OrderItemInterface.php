@@ -10,4 +10,5 @@ interface OrderItemInterface extends ResourceInterface
     public function getPayableObjectType();
     public function getPrice();
     public function getCurrencyCode();
+    public function getObject(): PayableObjectInterface;
 }

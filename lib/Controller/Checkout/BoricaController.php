@@ -8,16 +8,16 @@ class BoricaController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
-        $card   = $this->getShoppingCard( $request );
+        $cart   = $this->getShoppingCart( $request );
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
-        $payment->setOrder( $card );
+        $payment->setOrder( $cart );
         $payment->setNumber( uniqid() );
-        $payment->setCurrencyCode( $card->getCurrencyCode() );
-        $payment->setTotalAmount( $card->getTotalAmount() );
-        $payment->setDescription( $card->getDescription() );
+        $payment->setCurrencyCode( $cart->getCurrencyCode() );
+        $payment->setTotalAmount( $cart->getTotalAmount() );
+        $payment->setDescription( $cart->getDescription() );
         
         $user   = $this->tokenStorage->getToken()->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
@@ -26,7 +26,7 @@ class BoricaController extends AbstractCheckoutController
         $storage->update( $payment );
         
         $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
-            $card->getPaymentMethod()->getGateway()->getGatewayName(),
+            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
             $payment,
             'vs_payment_borica_done'
         );

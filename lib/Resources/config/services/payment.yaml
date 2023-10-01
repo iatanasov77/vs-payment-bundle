@@ -6,39 +6,35 @@ services:
     vs_payment_payment:
         class: Vankosoft\PaymentBundle\Component\Payment\Payment
     
+    Vankosoft\PaymentBundle\Form\PaymentForm:
+        tags: ['form.type']
+        arguments:
+            - '%vs_payment.model.payment_method.class%'
+    
+    ########################################################################
+    # Checkout Controllers
+    ########################################################################
     Vankosoft\PaymentBundle\Controller\Checkout\:
         resource: '../../../Controller/Checkout'
         tags: ['controller.service_arguments']
         autowire: true
 
-    Vankosoft\PaymentBundle\Controller\Checkout\PaymentController:
+    Vankosoft\PaymentBundle\Controller\Checkout\CreditCardController:
         tags: ['controller.service_arguments']
         autowire: false
         arguments:
-            - '@doctrine'
-            - '@vs_users.security_bridge'
-            - '@vs_payment_payment'
-            - '@vs_payment.factory.order'
-            - '@vs_payment.factory.order_item'
             - '@vs_payment.repository.order'
-            - '@vs_payment.repository.product'
-            - '@vs_payment.repository.pricing_plan'
-            - '@vs_payment.repository.payment_method'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
-    Vankosoft\PaymentBundle\Form\PaymentForm:
-        tags: ['form.type']
-        arguments:
-            - '%vs_payment.model.payment_method.class%'
-            
     ########################################################################
-    # ShoppingCart Controllers
+    # Shopping Cart Controllers
     ########################################################################
     Vankosoft\PaymentBundle\Controller\ShoppingCart\:
         resource: '../../../Controller/ShoppingCart'
         tags: ['controller.service_arguments']
         autowire: true
+    
     Vankosoft\PaymentBundle\Controller\ShoppingCart\ShoppingCartController:
         tags: ['controller.service_arguments']
         autowire: false
@@ -47,5 +43,37 @@ services:
             - '@vs_users.security_bridge'
             - '@vs_payment.factory.order'
             - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order_item'
+            - '@vs_payment.repository.product'
         calls:
             - [ setContainer, [ '@service_container' ] ]
+            
+    Vankosoft\PaymentBundle\Controller\ShoppingCart\ShoppingCartCheckoutController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@doctrine'
+            - '@vs_payment.repository.order'
+            - '@vs_payment_payment'
+
+    ########################################################################
+    # Pricing Plans Controllers
+    ########################################################################
+    Vankosoft\PaymentBundle\Controller\PricingPlans\:
+        resource: '../../../Controller/PricingPlans'
+        tags: ['controller.service_arguments']
+        autowire: true
+    
+    Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCheckoutController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@doctrine'
+            - '@vs_users.security_bridge'
+            - '@vs_payment.factory.order'
+            - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order_item'
+            - '@vs_payment.repository.pricing_plan_category'
+            - '@vs_payment.repository.pricing_plan'
+            - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '@vs_payment_payment'
