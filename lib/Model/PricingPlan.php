@@ -185,12 +185,12 @@ class PricingPlan implements PricingPlanInterface
     
     public function getSubscriptionCode(): ?string
     {
-        return null;
+        return $this->paidServicePeriod ? $this->paidServicePeriod->getPayedService()->getSubscriptionCode() : null;
     }
     
     public function getSubscriptionPriority(): ?int
     {
-        return null;
+        return $this->paidServicePeriod ? $this->paidServicePeriod->getPayedService()->getSubscriptionPriority() : null;
     }
     
     /*

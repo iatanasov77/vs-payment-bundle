@@ -119,30 +119,6 @@ class PricingPlanCheckoutController extends AbstractController
         }
     }
     
-    public function handleSuccessPricingPlanPayment( Request $request ): Response
-    {
-        $form   = $this->createForm( SelectPricingPlanForm::class, null, ['method' => 'POST'] );
-        
-        $form->handleRequest( $request );
-        if ( $form->isSubmitted() ) {
-            $em     = $this->doctrine->getManager();
-            $oUser  = $this->getUser();
-            
-            $this->setPricingPlan( $oUser, $form );
-            
-            $em->persist( $oUser );
-            $em->flush();
-            
-            if($request->isXmlHttpRequest()) {
-                return new JsonResponse([
-                    'status'    => Status::STATUS_OK,
-                ]);
-            } else {
-                return $this->redirectToRoute( 'vs_payment_pricing_plans' );
-            }
-        }
-    }
-    
     protected function createCart( Request $request )
     {
         $session = $request->getSession();
@@ -177,28 +153,5 @@ class PricingPlanCheckoutController extends AbstractController
         $em->flush();
         
         return $payableObject;
-    }
-    
-    protected function setPricingPlan( &$user, $form ): void
-    {
-        $pricingPlanId  = $form->get( "pricingPlan" )->getData();
-        $pricingPlan    = $this->pricingPlanRepository->find( $pricingPlanId );
-        
-        if( $pricingPlan ) {
-            $em                 = $this->doctrine->getManager();
-            $paidServicePeriod  = $pricingPlan->getPaidServicePeriod();
-            $paidSubscription   = $this->paidSubscriptionFactory->createNew();
-            
-            $paidSubscription->setPayedService( $paidServicePeriod );
-            $paidSubscription->setUser( $user );
-            $paidSubscription->setDate( new \DateTime() );
-            $paidSubscription->setSubscriptionCode( $paidServicePeriod->getPayedService()->getSubscriptionCode() );
-            $paidSubscription->setSubscriptionPriority( $paidServicePeriod->getPayedService()->getSubscriptionPriority() );
-            
-            $em->persist( $paidSubscription );
-            $em->flush();
-            
-            $user->addPaidSubscription( $paidSubscription );
-        }
     }
 }

@@ -138,13 +138,21 @@ abstract class AbstractCheckoutController extends AbstractController
                 continue;
             }
             
-            $subscription->setUser( $this->tokenStorage->getToken()->getUser() );
-            $subscription->setPayedService( $payableObject );
+            $user   = $this->tokenStorage->getToken()->getUser();
+            
+            $subscription->setUser( $user );
+            $subscription->setPayedService( $payableObject->getPaidServicePeriod() );
             
             $subscription->setSubscriptionCode( $payableObject->getSubscriptionCode() );
             $subscription->setSubscriptionPriority( $payableObject->getSubscriptionPriority() );
             
+            $subscription->setDate( new \DateTime() );
+            
             $em->persist( $subscription );
+            $em->flush();
+            
+            $user->addPaidSubscription( $subscription );
+            $em->persist( $user );
             $em->flush();
         }
     }

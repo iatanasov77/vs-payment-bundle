@@ -61,10 +61,4 @@ vs_payment_handle_pricing_plan_form:
     controller: Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCheckoutController::handlePricingPlanFormAction
     options:
         expose: true
-        
-vs_payment_handle_success_plan_payment:
-    path: /vs_payment/handle-success-pricing-plan-payment
-    controller: Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCheckoutController::handleSuccessPricingPlanPayment
-    options:
-        expose: true
 
