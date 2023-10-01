@@ -1,3 +1,19 @@
+2.9.1	|	Release date: **01.10.2023**
+============================================
+* New Features , Fixes and Improvements:
+  - Add PaymentToken Model .
+  - Improve Bundle Configuration.
+  - Fix PaymentToken Doctrine Mapping.
+  - Add a Doctrine Migration.
+  - Add to Sample Data Fixtures.
+  - Add StripeJs Java Scripts.
+  - Add php-http/message-factory Package.
+  - Very Big Refacturing and New Features.
+  - Fix AbstractCheckoutController done() Action when subscribe to Pricing Plan.
+  - Test StripeJs Script.
+  - Improve StripeJs
+
+
 2.9.0	|	Release date: **28.09.2023**
 ============================================
 * New Features:
