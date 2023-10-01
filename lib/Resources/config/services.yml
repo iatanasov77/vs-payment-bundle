@@ -4,7 +4,6 @@ imports:
     - { resource: services/menu.yaml }
     - { resource: services/payment.yaml }
     - { resource: services/checkout.yaml }
-    - { resource: services/checkout_test.yaml }
     - { resource: services/paysera.yaml }
     - { resource: services/currency.yaml }
     - { resource: services/fixtures_factories.yaml }
