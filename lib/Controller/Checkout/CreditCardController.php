@@ -3,6 +3,7 @@
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
@@ -10,12 +11,17 @@ use Vankosoft\PaymentBundle\Form\CreditCardForm;
 
 class CreditCardController extends AbstractController
 {
+    /** @var ManagerRegistry */
+    protected ManagerRegistry $doctrine;
+    
     /** @var RepositoryInterface */
     protected $ordersRepository;
     
     public function __construct(
+        ManagerRegistry $doctrine,
         RepositoryInterface $ordersRepository
     ) {
+        $this->doctrine         = $doctrine;
         $this->ordersRepository = $ordersRepository;
     }
     
