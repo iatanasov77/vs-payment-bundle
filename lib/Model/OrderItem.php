@@ -3,6 +3,8 @@
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\PaymentBundle\Component\PayableObject;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 
 class OrderItem implements OrderItemInterface
 {
@@ -147,10 +149,10 @@ class OrderItem implements OrderItemInterface
     public function getObject(): PayableObjectInterface
     {
         switch ( $this->getPayableObjectType() ) {
-            case PayableObject::OBJECT_TYPE_PRICING_PLAN:
+            case 'App\Entity\Payment\PricingPlan':
                 return $this->getPaidServiceSubscription();
                 break;
-            case PayableObject::OBJECT_TYPE_PRODUCT:
+            case 'App\Entity\Payment\Product':
                 return $this->getProduct();
                 break;
             default:
