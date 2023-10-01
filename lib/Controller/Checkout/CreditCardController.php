@@ -3,18 +3,18 @@
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
 
 class CreditCardController extends AbstractController
 {
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
     protected $ordersRepository;
     
     public function __construct(
-        EntityRepository $ordersRepository
+        RepositoryInterface $ordersRepository
     ) {
         $this->ordersRepository = $ordersRepository;
     }

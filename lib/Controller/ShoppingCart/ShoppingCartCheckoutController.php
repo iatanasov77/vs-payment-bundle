@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\Persistence\ManagerRegistry;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
@@ -17,7 +17,7 @@ class ShoppingCartCheckoutController extends AbstractController
     /** @var ManagerRegistry */
     protected ManagerRegistry $doctrine;
     
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
     protected $ordersRepository;
     
     /** @var Payment */
@@ -25,7 +25,7 @@ class ShoppingCartCheckoutController extends AbstractController
     
     public function __construct(
         ManagerRegistry $doctrine,
-        EntityRepository $ordersRepository,
+        RepositoryInterface $ordersRepository,
         Payment $vsPayment
     ) {
         $this->doctrine                 = $doctrine;

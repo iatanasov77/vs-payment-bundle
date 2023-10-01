@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Factory\Factory;
 
 use Payum\Core\Payum;
@@ -24,7 +24,7 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var ManagerRegistry */
     protected ManagerRegistry $doctrine;
     
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
     protected $ordersRepository;
     
     /** @var Payum */
@@ -33,7 +33,7 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var string */
     protected $paymentClass;
     
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
     protected $subscriptionRepository;
     
     /** @var Factory */
@@ -42,10 +42,10 @@ abstract class AbstractCheckoutController extends AbstractController
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
-        EntityRepository $ordersRepository,
+        RepositoryInterface $ordersRepository,
         Payum $payum,
         string $paymentClass,
-        EntityRepository $subscriptionRepository,
+        RepositoryInterface $subscriptionRepository,
         Factory $subscriptionFactory
     ) {
         $this->tokenStorage             = $tokenStorage;

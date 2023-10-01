@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Factory\Factory;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
@@ -24,13 +24,16 @@ class PricingPlanCheckoutController extends AbstractController
     /** @var Factory */
     protected $ordersFactory;
     
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
     protected $ordersRepository;
     
     /** @var Factory */
     protected $orderItemsFactory;
     
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
+    $pricingPlanCategoryRepository;
+    
+    /** @var RepositoryInterface */
     protected $pricingPlansRepository;
     
     /** @var Factory */
@@ -43,10 +46,10 @@ class PricingPlanCheckoutController extends AbstractController
         ManagerRegistry $doctrine,
         SecurityBridge $securityBridge,
         Factory $ordersFactory,
-        EntityRepository $ordersRepository,
+        RepositoryInterface $ordersRepository,
         Factory $orderItemsFactory,
         RepositoryInterface $pricingPlanCategoryRepository,
-        EntityRepository $pricingPlansRepository,
+        RepositoryInterface $pricingPlansRepository,
         Factory $paidSubscriptionFactory,
         Payment $vsPayment
     ) {

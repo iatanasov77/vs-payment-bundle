@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Factory\Factory;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
@@ -21,22 +21,22 @@ class ShoppingCartController extends AbstractController
     /** @var Factory */
     protected $ordersFactory;
     
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
     protected $ordersRepository;
     
     /** @var Factory */
     protected $orderItemsFactory;
     
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
     protected $productsRepository;
     
     public function __construct(
         ManagerRegistry $doctrine,
         SecurityBridge $securityBridge,
         Factory $ordersFactory,
-        EntityRepository $ordersRepository,
+        RepositoryInterface $ordersRepository,
         Factory $orderItemsFactory,
-        EntityRepository $productsRepository
+        RepositoryInterface $productsRepository
     ) {
         $this->doctrine             = $doctrine;
         $this->securityBridge       = $securityBridge;

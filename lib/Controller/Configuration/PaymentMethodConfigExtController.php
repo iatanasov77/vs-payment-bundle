@@ -4,7 +4,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Doctrine\Persistence\ManagerRegistry;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Factory\Factory;
 
 use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
@@ -17,8 +17,8 @@ class PaymentMethodConfigExtController extends PayumController
     /** @var string */
     protected $paymentMethodClass;
     
-    /** @var EntityRepository */
-    protected EntityRepository $paymentMethodRepository;
+    /** @var RepositoryInterface */
+    protected RepositoryInterface $paymentMethodRepository;
     
     /** @var Factory */
     protected Factory $paymentMethodFactory;
@@ -26,7 +26,7 @@ class PaymentMethodConfigExtController extends PayumController
     public function __construct(
         ManagerRegistry $doctrine,
         string $paymentMethodClass,
-        EntityRepository $paymentMethodRepository,
+        RepositoryInterface $paymentMethodRepository,
         Factory $paymentMethodFactory
     ) {
         $this->doctrine                 = $doctrine;
