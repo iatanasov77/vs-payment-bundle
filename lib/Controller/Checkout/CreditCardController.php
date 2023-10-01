@@ -23,11 +23,11 @@ class CreditCardController extends AbstractController
     {
         $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
         if ( ! $cartId ) {
-            throw new ShoppingCartException( 'Card not exist in session !!!' );
+            throw new ShoppingCartException( 'Shopping Cart not exist in session !!!' );
         }
         $cart   = $this->ordersRepository->find( $cartId );
         if ( ! $cart ) {
-            throw new ShoppingCartException( 'Card not exist in repository !!!' );
+            throw new ShoppingCartException( 'Shopping Cart not exist in repository !!!' );
         }
         
         $paymentMethod  = $cart->getPaymentMethod();
