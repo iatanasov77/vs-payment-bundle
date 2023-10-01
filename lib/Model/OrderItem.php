@@ -1,6 +1,12 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
-class OrderItem implements Interfaces\OrderItemInterface
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
+use Vankosoft\PaymentBundle\Component\PayableObject;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
+
+class OrderItem implements OrderItemInterface
 {
     /**
      * @var int
@@ -13,15 +19,11 @@ class OrderItem implements Interfaces\OrderItemInterface
     protected $order;
     
     /**
-     * 'object' is for paid services, Because Mapping Error
-     * 
-     * @var Interfaces\PayableObjectInterface
+     * @var Interfaces\PricingPlanInterface
      */
     protected $paidServiceSubscription;
     
     /**
-     * 'product' is for products, Because Mapping Error
-     * 
      * @var Interfaces\ProductInterface
      */
     protected $product;
@@ -142,5 +144,19 @@ class OrderItem implements Interfaces\OrderItemInterface
         $this->qty = $qty;
         
         return $this;
+    }
+    
+    public function getObject(): PayableObjectInterface
+    {
+        switch ( $this->getPayableObjectType() ) {
+            case 'App\Entity\Payment\PricingPlan':
+                return $this->getPaidServiceSubscription();
+                break;
+            case 'App\Entity\Payment\Product':
+                return $this->getProduct();
+                break;
+            default:
+                throw new \Exception( 'Wrong Order Item !!!' );
+        }
     }
 }

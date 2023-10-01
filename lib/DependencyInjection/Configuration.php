@@ -23,14 +23,14 @@ use Vankosoft\PaymentBundle\Model\Payment;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\PaymentBundle\Controller\General\RecievedPaymentsController;
 
+use Vankosoft\PaymentBundle\Model\PaymentToken;
+
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Repository\OrderRepository;
 
 use Vankosoft\PaymentBundle\Model\OrderItem;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
-
-use Vankosoft\PaymentBundle\Model\Token;
 
 //use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Currency\Model\ExchangeRateInterface;
@@ -66,6 +66,9 @@ use Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanController;
 use Vankosoft\PaymentBundle\Form\PricingPlanForm;
 use Vankosoft\PaymentBundle\Repository\PricingPlansRepository;
 
+
+use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
+
 /**
  * This is the class that validates and merges configuration from your app/config files
  *
@@ -86,17 +89,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode( 'orm_driver' )
                     ->defaultValue( SyliusResourceBundle::DRIVER_DOCTRINE_ORM )->cannotBeEmpty()
                 ->end()
-        //             ->arrayNode('payment_accounts')->isRequired()
-        //             ->prototype('variable')
-        //             ->treatNullLike(array())
-        //         ;
-        
-        //         $rootNode->children()
-        //             ->arrayNode('payment_methods')->isRequired()
-        //                 ->prototype('variable')
-        //                 ->treatNullLike(array())
+                ->scalarNode( 'token_storage' )
+                    ->defaultValue( ComponentPayment::TOKEN_STORAGE_DOCTRINE_ORM )->cannotBeEmpty()
+                ->end()
             ->end()
         ;
+        
         $this->addResourcesSection( $rootNode );
 
         return $treeBuilder;
@@ -165,6 +163,21 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         
+                        ->arrayNode( 'payment_token' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode( 'model' )->defaultValue( PaymentToken::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
                         ->arrayNode( 'order' )
                             ->addDefaultsIfNotSet()
                             ->children()
@@ -190,21 +203,6 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( OrderItem::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'interface' )->defaultValue( OrderItemInterface::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                        
-                        ->arrayNode( 'token' )
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->variableNode( 'options' )->end()
-                                ->arrayNode( 'classes' )
-                                    ->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode( 'model' )->defaultValue( Token::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                     ->end()

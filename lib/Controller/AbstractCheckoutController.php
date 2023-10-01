@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Factory\Factory;
 
 use Payum\Core\Payum;
@@ -14,7 +14,8 @@ use Payum\Core\Request\GetHumanStatus;
 use Payum\Core\Model\CreditCard;
 
 use Vankosoft\PaymentBundle\Model\Order;
-use Vankosoft\PaymentBundle\Exception\ShoppingCardException;
+use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
@@ -24,7 +25,7 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var ManagerRegistry */
     protected ManagerRegistry $doctrine;
     
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
     protected $ordersRepository;
     
     /** @var Payum */
@@ -33,7 +34,7 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var string */
     protected $paymentClass;
     
-    /** @var EntityRepository */
+    /** @var RepositoryInterface */
     protected $subscriptionRepository;
     
     /** @var Factory */
@@ -42,10 +43,10 @@ abstract class AbstractCheckoutController extends AbstractController
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
-        EntityRepository $ordersRepository,
+        RepositoryInterface $ordersRepository,
         Payum $payum,
         string $paymentClass,
-        EntityRepository $subscriptionRepository,
+        RepositoryInterface $subscriptionRepository,
         Factory $subscriptionFactory
     ) {
         $this->tokenStorage             = $tokenStorage;
@@ -95,18 +96,18 @@ abstract class AbstractCheckoutController extends AbstractController
         }
     }
 
-    protected function getShoppingCard( Request $request )
+    protected function getShoppingCart( Request $request )
     {
-        $cardId = $request->getSession()->get( 'vs_payment_basket_id' );
-        if ( ! $cardId ) {
-            throw new ShoppingCardException( 'Card not exist in session !!!' );
+        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        if ( ! $cartId ) {
+            throw new ShoppingCartException( 'Shopping Cart not exist in session !!!' );
         }
-        $card   = $this->ordersRepository->find( $cardId );
-        if ( ! $card ) {
-            throw new ShoppingCardException( 'Card not exist in repository !!!' );
+        $cart   = $this->ordersRepository->find( $cartId );
+        if ( ! $cart ) {
+            throw new ShoppingCartException( 'Shopping Cart not exist in repository !!!' );
         }
         
-        return $card;
+        return $cart;
     }
     
     protected function createCreditCard( $details )
@@ -133,14 +134,25 @@ abstract class AbstractCheckoutController extends AbstractController
         foreach( $order->getItems() as $item ) {
             $subscription   = $this->subscriptionFactory->createNew();
             $payableObject  = $item->getObject();
+            if ( ! ( $payableObject instanceof PricingPlanInterface ) ) {
+                continue;
+            }
             
-            $subscription->setUser( $this->tokenStorage->getToken()->getUser() );
-            $subscription->setPayedService( $payableObject );
+            $user   = $this->tokenStorage->getToken()->getUser();
+            
+            $subscription->setUser( $user );
+            $subscription->setPayedService( $payableObject->getPaidServicePeriod() );
             
             $subscription->setSubscriptionCode( $payableObject->getSubscriptionCode() );
             $subscription->setSubscriptionPriority( $payableObject->getSubscriptionPriority() );
             
+            $subscription->setDate( new \DateTime() );
+            
             $em->persist( $subscription );
+            $em->flush();
+            
+            $user->addPaidSubscription( $subscription );
+            $em->persist( $user );
             $em->flush();
         }
     }

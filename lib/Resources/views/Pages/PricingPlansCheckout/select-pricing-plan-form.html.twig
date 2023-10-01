@@ -1,0 +1,51 @@
+{{ form_start( form, {
+    'action': path( 'vs_payment_handle_pricing_plan_form' ),
+    'attr': {'class': 'modal__form', 'id': 'PricingPlanForm'}
+}) }}
+
+    <div class="control-group">
+        {{ form_label(form.name, null, {
+            'label_attr': {'class': 'control-label'}
+            }) 
+        }}
+        {{ form_widget( form.name, { 'attr': { 'class': 'form-control', 'style': 'width: 98%' }, 'value' : app.user.info.fullName } ) }}
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form.email, null, {
+            'label_attr': {'class': 'control-label'}
+            }) 
+        }}
+        {{ form_widget( form.email, { 'attr': { 'class': 'form-control', 'style': 'width: 98%' }, 'value' : app.user.email } ) }}
+    </div>
+    
+    <div class="control-group">
+        {{ form_label(form.pricingPlan, null, {
+            'label_attr': {'class': 'control-label'}
+            }) 
+        }}
+        {{ form_widget( form.pricingPlan, { 'attr': { 'class': 'form-control', 'style': 'width: 100%' }, 'value' : pricingPlanId } ) }}
+        
+        <div class="alert alert-block alert-error fade in">
+            You can spend money from your account on the renewal of the connected packages, or to order cars on our website.
+        </div>
+    </div>
+
+    <div class="control-group">
+        {{ form_label(form.paymentMethod, null, {
+            'label_attr': {'class': 'control-label'}
+            }) 
+        }}
+        <div id="select_pricing_plan_form_paymentMethod" class="controls" style="width: 100%">
+            {% for paymentMethod in form.paymentMethod %}
+                {{ form_widget( paymentMethod, { 'attr': { 'style': 'float: left; margin-right: 5px;', 'checked': loop.index == 1 } } ) }}
+                {{ form_label( paymentMethod ) }}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="control-group">&nbsp;</div>
+
+    {{ form_widget( form.btnSubmit, {'attr': {'class': 'btn btn-large btn-success'}, 'id': 'SelectPricingPlanSubmit'} ) }}
+
+{{ form_end(form, {'render_rest': false}) }}

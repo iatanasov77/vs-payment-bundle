@@ -21,6 +21,7 @@
        	
        	"nyholm/psr7": "^1.8",
        	"php-http/guzzle6-adapter": "^2.0.2",
+       	"php-http/message-factory": "^1.0",
        	
        	"payum/core": "^1.7",
        	"payum/payum-bundle": "^2.5",
@@ -31,8 +32,8 @@
         "payum/paypal-pro-checkout-nvp": "*",
 		"payum/stripe": "^1.7",
 		
-		"sylius/currency": "^1.12",
 		"vankosoft/users-subscriptions-bundle": ">=2.5.3",
+		"sylius/currency": "^1.12",
 		"plumtreesystems/payum-paysera-gateway": "^0.3",
         "vankosoft/borica-bundle": "^0.2"
     },

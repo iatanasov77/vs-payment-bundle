@@ -28,14 +28,13 @@ use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
  * TEST CARDS
  * ===========
  
- Card Type  |	Card Number	    |  Exp. Date  | CVV Code
+ Card Type  |	Card Number	    |  Exp. Date           | CVV Code
  --------------------------------------------------------
- Visa       | 4242424242424242  |   Any future| Any 3
- |                   |      date   | digits
+ Visa       | 4242424242424242  |   Any future date    | Any 3 digits
  ---------------------------------------------------------
- Visa       | 4263982640269299  |   02/2023   |  837
+ Visa       | 4263982640269299  |   02/2023            |  837
  --------------------------------------------------------
- Visa       | 4263982640269299  |   04/2023   |  738
+ Visa       | 4263982640269299  |   04/2023            |  738
  
  */
 class StripeCheckoutController extends AbstractCheckoutController
@@ -43,15 +42,15 @@ class StripeCheckoutController extends AbstractCheckoutController
     public function prepareAction( Request $request ): Response
     {
         $em     = $this->doctrine->getManager();
-        $card   = $this->getShoppingCard( $request );
+        $cart   = $this->getShoppingCart( $request );
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
         $payment->setNumber( uniqid() );
-        $payment->setCurrencyCode( $card->getCurrencyCode() );
-        $payment->setTotalAmount( $card->getTotalAmount() * 100 ); // Amount must convert to at least 100 stotinka.
-        $payment->setDescription( $card->getDescription() );
+        $payment->setCurrencyCode( $cart->getCurrencyCode() );
+        $payment->setTotalAmount( $cart->getTotalAmount() * 100 ); // Amount must convert to at least 100 stotinka.
+        $payment->setDescription( $cart->getDescription() );
         
         $user   = $this->tokenStorage->getToken()->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
@@ -68,18 +67,18 @@ class StripeCheckoutController extends AbstractCheckoutController
             ]
         ]);
         
-        $payment->setOrder( $card );
-        $em->persist( $card );
+        $payment->setOrder( $cart );
+        $em->persist( $cart );
         $em->flush();
         $storage->update( $payment );
         
         $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
-            $card->getPaymentMethod()->getGateway()->getGatewayName(),
+            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
             $payment,
             'vs_payment_stripe_checkout_done' // the route to redirect after capture
         );
         
-        if ( $card->getPaymentMethod()->getGateway()->getFactoryName() == 'stripe_js' ) {
+        if ( $cart->getPaymentMethod()->getGateway()->getFactoryName() == 'stripe_js' ) {
             $captureUrl = base64_encode( $captureToken->getTargetUrl() );
             return $this->redirect( $this->generateUrl( 'vs_payment_show_credit_card_form', ['formAction' => $captureUrl] ) );
         } else {

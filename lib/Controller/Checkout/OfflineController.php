@@ -1,7 +1,6 @@
-<?php
+<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
-namespace Vankosoft\PaymentBundle\Controller\Checkout;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 
 class OfflineController extends PayumController
@@ -40,8 +39,8 @@ class OfflineController extends PayumController
     /**
      * Done Action
      * 
-     * @param \IAPaymentBundle\Controller\Request $request
-     * @return \IAPaymentBundle\Controller\JsonResponse
+     * @param Request $request
+     * @return JsonResponse
      */
     public function doneAction(Request $request)
     {
@@ -63,13 +62,13 @@ class OfflineController extends PayumController
         // you have order and payment status 
         // so you can do whatever you want for example you can just print status and payment details.
 
-        return new JsonResponse(array(
+        return new JsonResponse([
             'status' => $status->getValue(),
-            'payment' => array(
+            'payment' => [
                 'total_amount' => $payment->getTotalAmount(),
                 'currency_code' => $payment->getCurrencyCode(),
                 'details' => $payment->getDetails(),
-            ),
-        ));
+            ],
+        ]);
     }
 }

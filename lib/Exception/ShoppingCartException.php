@@ -1,6 +1,8 @@
 <?php namespace Vankosoft\PaymentBundle\Exception;
 
-class ShoppingCardException extends \Exception
+use Exception;
+
+class ShoppingCartException extends Exception
 {
     
 }

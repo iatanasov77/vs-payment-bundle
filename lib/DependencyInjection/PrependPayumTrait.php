@@ -1,6 +1,8 @@
 <?php namespace Vankosoft\PaymentBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Filesystem\Filesystem;
+use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
 trait PrependPayumTrait
 {
@@ -14,13 +16,23 @@ trait PrependPayumTrait
         //echo "<pre>"; var_dump($vsPaymentConfig); die;
         $vsPaymentResources = $vsPaymentConfig[0]['resources'];
         
+        switch ( $vsPaymentConfig[0]['token_storage'] ) {
+            case ComponentPayment::TOKEN_STORAGE_FILESYSTEM:
+                $tokenStorageConfig = $this->originalPayumSecurity( $container );
+                break;
+            case ComponentPayment::TOKEN_STORAGE_DOCTRINE_ORM:
+                $tokenStorageConfig = $this->vankosoftPayumSecurity( $vsPaymentResources );
+                break;
+            default:
+                throw new ConfigurationException( 'Unsupported Token Storage !!!' );
+        }
+        
         $payumConfig        = $container->getExtensionConfig( 'payum' );
         $container->prependExtensionConfig( 'payum', [
             'storages'  => \array_merge( \array_pop( $payumConfig )['storages'] ?? [], [
                 $vsPaymentResources['payment']["classes"]["model"] => ['doctrine' => 'orm'],
             ]),
-            'security'  =>  $this->originalPayumSecurity(),
-            //'security'  =>  $this->vankosoftPayumSecurity( $vsPaymentResources ),
+            'security'  =>  $tokenStorageConfig,
             'dynamic_gateways' => \array_merge( \array_pop( $payumConfig )['dynamic_gateways'] ?? [], [
                 'sonata_admin'      => false,
                 'config_storage'    => [
@@ -42,8 +54,16 @@ trait PrependPayumTrait
         var_dump( $container->getExtensionConfig( 'payum' ) ); die;
     }
     
-    private function originalPayumSecurity()
+    private function originalPayumSecurity( ContainerBuilder $container )
     {
+        $projectRootDir = $container->getParameter( 'kernel.project_dir' );
+        $filesystem     = new Filesystem();
+        
+        if ( ! $filesystem->exists( $projectRootDir . '/var/payum' ) ) {
+            $filesystem->mkdir( $projectRootDir . '/var/payum' );
+            $filesystem->mkdir( $projectRootDir . '/var/payum/gateways' );
+        }
+            
         return [
             'token_storage' => [
                 'Payum\Core\Model\Token' => [
@@ -60,7 +80,7 @@ trait PrependPayumTrait
     {
         return [
             'token_storage' => [
-                $vsPaymentResources['token']["classes"]["model"] => ['doctrine' => 'orm'],
+                $vsPaymentResources['payment_token']["classes"]["model"] => ['doctrine' => 'orm'],
             ]
         ];
     }

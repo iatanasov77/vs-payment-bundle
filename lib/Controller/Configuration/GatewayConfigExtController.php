@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\Persistence\ManagerRegistry;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Factory\Factory;
 
 use Vankosoft\PaymentBundle\Form\GatewayConfigForm;
@@ -38,8 +38,8 @@ class GatewayConfigExtController extends PayumController
     /** @var string */
     protected $gatewayConfigClass;
     
-    /** @var EntityRepository */
-    protected EntityRepository $gatewayConfigRepository;
+    /** @var RepositoryInterface */
+    protected RepositoryInterface $gatewayConfigRepository;
     
     /** @var Factory */
     protected Factory $gatewayConfigFactory;
@@ -48,7 +48,7 @@ class GatewayConfigExtController extends PayumController
         Payum $payum,
         ManagerRegistry $doctrine,
         string $gatewayConfigClass,
-        EntityRepository $gatewayConfigRepository,
+        RepositoryInterface $gatewayConfigRepository,
         Factory $gatewayConfigFactory
     ) {
         parent::__construct( $payum );
