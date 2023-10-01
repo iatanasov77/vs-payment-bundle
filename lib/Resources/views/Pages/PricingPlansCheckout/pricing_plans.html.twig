@@ -50,7 +50,7 @@
                                                             {% else %}
                                                                 <button type="button"
                                                                     class="btn btn-primary btnChoosePlan"
-                                                                    data-url="{{ path( 'app_pricing_plans_select', {'pricingPlanId': plan.id} ) }}"
+                                                                    data-url="{{ path( 'vs_payment_select_pricing_plan_form', {'pricingPlanId': plan.id} ) }}"
                                                                 >
                                                                     <span>{{ 'vs_payment.template.pricing_plans.choose_plan' | trans( {},'VSPaymentBundle' ) }}</span>
                                                                 </button>

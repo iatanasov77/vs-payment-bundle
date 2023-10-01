@@ -55,6 +55,8 @@ services:
             - '@doctrine'
             - '@vs_payment.repository.order'
             - '@vs_payment_payment'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
 
     ########################################################################
     # Pricing Plans Controllers
@@ -77,3 +79,5 @@ services:
             - '@vs_payment.repository.pricing_plan'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
             - '@vs_payment_payment'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
