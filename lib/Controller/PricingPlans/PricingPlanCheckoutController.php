@@ -31,7 +31,7 @@ class PricingPlanCheckoutController extends AbstractController
     protected $orderItemsFactory;
     
     /** @var RepositoryInterface */
-    $pricingPlanCategoryRepository;
+    protected $pricingPlanCategoryRepository;
     
     /** @var RepositoryInterface */
     protected $pricingPlansRepository;
