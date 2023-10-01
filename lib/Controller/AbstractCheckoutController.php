@@ -15,6 +15,7 @@ use Payum\Core\Model\CreditCard;
 
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
@@ -133,6 +134,9 @@ abstract class AbstractCheckoutController extends AbstractController
         foreach( $order->getItems() as $item ) {
             $subscription   = $this->subscriptionFactory->createNew();
             $payableObject  = $item->getObject();
+            if ( ! ( $payableObject instanceof PricingPlanInterface ) ) {
+                continue;
+            }
             
             $subscription->setUser( $this->tokenStorage->getToken()->getUser() );
             $subscription->setPayedService( $payableObject );
