@@ -36,6 +36,9 @@ class PricingPlanCheckoutController extends AbstractController
     /** @var RepositoryInterface */
     protected $pricingPlansRepository;
     
+    /** @var RepositoryInterface */
+    protected $paymentMethodsRepository;
+    
     /** @var Factory */
     protected $paidSubscriptionFactory;
     
@@ -50,6 +53,7 @@ class PricingPlanCheckoutController extends AbstractController
         Factory $orderItemsFactory,
         RepositoryInterface $pricingPlanCategoryRepository,
         RepositoryInterface $pricingPlansRepository,
+        RepositoryInterface $paymentMethodsRepository,
         Factory $paidSubscriptionFactory,
         Payment $vsPayment
     ) {
@@ -60,6 +64,7 @@ class PricingPlanCheckoutController extends AbstractController
         $this->orderItemsFactory                = $orderItemsFactory;
         $this->pricingPlanCategoryRepository    = $pricingPlanCategoryRepository;
         $this->pricingPlansRepository           = $pricingPlansRepository;
+        $this->paymentMethodsRepository         = $paymentMethodsRepository;
         $this->paidSubscriptionFactory          = $paidSubscriptionFactory;
         $this->vsPayment                        = $vsPayment;
     }
