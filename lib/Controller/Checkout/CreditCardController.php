@@ -43,11 +43,19 @@ class CreditCardController extends AbstractController
                           ) ? $paymentMethod->getGateway()->getConfig() : '';
         $form           = $this->getCreditCardForm( base64_decode( $formAction ) );
         
-        return $this->render( '@VSPayment/Pages/CreditCard/credit_card.html.twig', [
-            'form'          => $form->createView(),
-            'paymentMethod' => $paymentMethod,
-            'captureKey'    => $gatewayConfig['publishable_key'],
-        ]);
+        if( $request->isXmlHttpRequest() ) {
+            return $this->render( '@VSPayment/Pages/CreditCard/Partial/StripeJsV2Form.html.twig', [
+                'form'          => $form->createView(),
+                'paymentMethod' => $paymentMethod,
+                'captureKey'    => $gatewayConfig['publishable_key'],
+            ]);
+        } else {
+            return $this->render( '@VSPayment/Pages/CreditCard/credit_card.html.twig', [
+                'form'          => $form->createView(),
+                'paymentMethod' => $paymentMethod,
+                'captureKey'    => $gatewayConfig['publishable_key'],
+            ]);
+        }
     }
     
     protected function getCreditCardForm( $captureUrl )
