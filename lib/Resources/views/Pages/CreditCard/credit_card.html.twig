@@ -7,10 +7,32 @@
     <div class="padding">
     	<div class="row">
     		<div class="col-sm-6">
-                {% include '@VSPayment/Pages/CreditCard/Partial/StripeJsV2Form.html.twig' with {
+    		
+                {#
+                 # Trying StripeJs V3 With NPM
+                 #}
+                {#
+                {% include '@VSPayment/Pages/CreditCard/Partial/StripeJsV3Form.html.twig' with {
                      'formAction': '',
                      'formMethod': 'POST'
                 } %}
+                #}
+                
+                {#
+                 # Trying StripeJs V2 Used in Payum/Stripe Action
+                 # With My CreditCardForm
+                 #}
+                {% include '@VSPayment/Pages/CreditCard/Partial/CreditCardForm.html.twig' with {
+                     'formAction': '',
+                     'formMethod': 'POST'
+                } %}
+                <div id="RealPaymentFormContainer" style="display: none;">
+                    {% include '@VSPayment/Pages/CreditCard/Partial/StripeJsV2Form.html.twig' with {
+                         'formAction': '',
+                         'formMethod': 'POST'
+                    } %}
+                </div>
+                
     		</div>
     	</div>
     </div>

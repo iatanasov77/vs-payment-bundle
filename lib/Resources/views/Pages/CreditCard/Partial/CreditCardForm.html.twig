@@ -1,0 +1,55 @@
+{{ form_start( form, {'action': formAction, 'method': formMethod, 'attr': {'id': 'credit_card_form'}} ) }}
+    {{ form_widget( form.captureUrl, {'attr': {'data-captureKey': captureKey}} ) }}
+    
+    <div class="card">
+        <div class="card-header">
+            <strong>{{ 'vs_payment.template.credit_card_title' | trans( {},'VSPaymentBundle' ) }}</strong>
+            <small>{{ 'vs_payment.template.credit_card_description' | trans( {},'VSPaymentBundle' ) }}</small>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        {{ form_row( form.name ) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        {{ form_label( form.number, null ) }}
+                        <div class="input-group">
+                            {{ form_widget( form.number, {'attr': {'class': 'form-control'}} ) }}
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="mdi mdi-credit-card"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    {{ form_row( form.ccmonth ) }}
+                </div>
+                <div class="form-group col-sm-4">
+                    {{ form_row( form.ccyear ) }}
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        {{ form_row( form.cvv ) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-success float-right" type="submit" name="{{ form.btnContinue.vars.full_name }}" id="{{ form.btnContinue.vars.id }}">
+                <i class="mdi mdi-gamepad-circle"></i> {{ form.btnContinue.vars.label }}
+            </button>
+            <button class="btn btn-sm btn-danger" type="reset" name="{{ form.btnReset.vars.full_name }}" id="{{ form.btnReset.vars.id }}">
+                <i class="mdi mdi-lock-reset"></i> {{ form.btnReset.vars.label }}
+            </button>
+        </div>
+    </div>
+{{ form_end( form, {'render_rest': false} ) }}
