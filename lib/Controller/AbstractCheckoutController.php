@@ -55,7 +55,7 @@ abstract class AbstractCheckoutController extends AbstractController
         string $paymentClass,
         RepositoryInterface $subscriptionRepository,
         Factory $subscriptionFactory,
-        string $urlRedirectOnDone
+        ?string $urlRedirectOnDone
     ) {
         $this->tokenStorage             = $tokenStorage;
         $this->doctrine                 = $doctrine;
