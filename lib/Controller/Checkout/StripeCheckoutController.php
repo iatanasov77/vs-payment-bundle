@@ -22,21 +22,6 @@ use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
  * ==========================
  * https://github.com/Payum/OmnipayBridge/blob/master/composer.json
  */
-/*
- * TEST MAIL: i.atanasov77@gmail.com
- *
- * TEST CARDS
- * ===========
- 
- Card Type  |	Card Number	    |  Exp. Date           | CVV Code
- --------------------------------------------------------
- Visa       | 4242424242424242  |   Any future date    | Any 3 digits
- ---------------------------------------------------------
- Visa       | 4263982640269299  |   02/2023            |  837
- --------------------------------------------------------
- Visa       | 4263982640269299  |   04/2023            |  738
- 
- */
 class StripeCheckoutController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response

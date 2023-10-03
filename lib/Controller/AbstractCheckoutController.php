@@ -40,6 +40,13 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var Factory */
     protected $subscriptionFactory;
     
+    /**
+     * If is set, Done Action will redirect to this url
+     * 
+     * @var string
+     */
+    protected $urlRedirectOnDone;
+    
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
@@ -47,7 +54,8 @@ abstract class AbstractCheckoutController extends AbstractController
         Payum $payum,
         string $paymentClass,
         RepositoryInterface $subscriptionRepository,
-        Factory $subscriptionFactory
+        Factory $subscriptionFactory,
+        string $urlRedirectOnDone
     ) {
         $this->tokenStorage             = $tokenStorage;
         $this->doctrine                 = $doctrine;
@@ -56,6 +64,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->paymentClass             = $paymentClass;
         $this->subscriptionRepository   = $subscriptionRepository;
         $this->subscriptionFactory      = $subscriptionFactory;
+        $this->urlRedirectOnDone        = $urlRedirectOnDone;
     }
     
     abstract public function prepareAction( Request $request ): Response;
@@ -80,8 +89,7 @@ abstract class AbstractCheckoutController extends AbstractController
             $request->getSession()->remove( 'vs_payment_basket_id' );
             
             //$this->setSubscription( $payment->getOrder() );
-            $routeRedirectOnDone    = $this->getParameter( 'vs_payment.route_redirect_on_done' );
-            var_dump( $routeRedirectOnDone ); die;
+            var_dump( $this->urlRedirectOnDone ); die;
             
             return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
                 'paymentStatus' => $status,

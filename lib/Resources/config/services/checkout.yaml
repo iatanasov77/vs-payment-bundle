@@ -1,3 +1,6 @@
+parameters:
+    vs_payment.url_redirect_on_done: null
+
 services:
     _defaults:
         autowire: true
@@ -19,6 +22,7 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '%vs_payment.url_redirect_on_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -33,6 +37,7 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '%vs_payment.url_redirect_on_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -47,6 +52,7 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '%vs_payment.url_redirect_on_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -61,6 +67,7 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '%vs_payment.url_redirect_on_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
@@ -75,6 +82,7 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '%vs_payment.url_redirect_on_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -89,8 +97,7 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '%vs_payment.url_redirect_on_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
-    
-    
 
