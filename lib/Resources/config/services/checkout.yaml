@@ -100,4 +100,19 @@ services:
             - '%vs_payment.url_redirect_on_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
+            
+    # PAYSERA
+    ##############################
+    Vankosoft\PaymentBundle\Controller\Checkout\PayseraController:
+        arguments:
+            - '@security.token_storage'
+            - '@doctrine'
+            - '@vs_payment.repository.order'
+            - '@payum'
+            - '%vs_payment.model.payment.class%'
+            - '@vs_users_subscriptions.repository.payed_service_subscriptions'
+            - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '%vs_payment.url_redirect_on_done%'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
 
