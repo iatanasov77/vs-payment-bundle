@@ -1,5 +1,6 @@
 parameters:
-    vs_payment.url_redirect_on_done: null
+    vs_payment.shopping_cart_redirect_on_payment_done: null
+    vs_payment.pricing_plans_redirect_on_payment_done: null
 
 services:
     _defaults:
@@ -16,13 +17,16 @@ services:
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController:
         arguments:
             - '@security.token_storage'
+            - '@translator'
             - '@doctrine'
             - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
-            - '%vs_payment.url_redirect_on_done%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -31,13 +35,16 @@ services:
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutRecurringController:
         arguments:
             - '@security.token_storage'
+            - '@translator'
             - '@doctrine'
             - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
-            - '%vs_payment.url_redirect_on_done%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -46,13 +53,16 @@ services:
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController:
         arguments:
             - '@security.token_storage'
+            - '@translator'
             - '@doctrine'
             - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
-            - '%vs_payment.url_redirect_on_done%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -61,13 +71,16 @@ services:
     Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController:
         arguments:
             - '@security.token_storage'
+            - '@translator'
             - '@doctrine'
             - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
-            - '%vs_payment.url_redirect_on_done%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
@@ -76,13 +89,16 @@ services:
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController:
         arguments:
             - '@security.token_storage'
+            - '@translator'
             - '@doctrine'
             - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
-            - '%vs_payment.url_redirect_on_done%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -91,13 +107,16 @@ services:
     Vankosoft\PaymentBundle\Controller\Checkout\BoricaController:
         arguments:
             - '@security.token_storage'
+            - '@translator'
             - '@doctrine'
             - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
-            - '%vs_payment.url_redirect_on_done%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
@@ -106,13 +125,16 @@ services:
     Vankosoft\PaymentBundle\Controller\Checkout\PayseraController:
         arguments:
             - '@security.token_storage'
+            - '@translator'
             - '@doctrine'
             - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order'
             - '@payum'
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
-            - '%vs_payment.url_redirect_on_done%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
 

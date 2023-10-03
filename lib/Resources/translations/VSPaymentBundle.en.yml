@@ -139,6 +139,8 @@ vs_payment:
         payment_description: Description
         payment_client_email: Client Email
         payment_total_amount: Total Amount
+        pricing_plan_payment_success: 'Pricing Plan Payed Successfull !!!'
+        shopping_cart_payment_success: 'Shopping Cart Payed Successfull !!!'
         
     validation:
         currency_code_unique: Currency code must be unique.
