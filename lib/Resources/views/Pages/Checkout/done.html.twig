@@ -25,19 +25,3 @@
         </div>
     </div>
 {% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    
-    {% include '@VSPayment/Pages/CreditCard/Partial/credit_card_css.html.twig' %}
-    
-    <style>
-        a {
-            color: #007bff !important;
-        }
-        a:hover {
-            color: #007bff !important;
-            text-decoration: underline !important;
-        }
-    </style>
-{% endblock %}

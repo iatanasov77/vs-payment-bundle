@@ -79,7 +79,9 @@ abstract class AbstractCheckoutController extends AbstractController
             $storage->update( $payment );
             $request->getSession()->remove( 'vs_payment_basket_id' );
             
-            $this->setSubscription( $payment->getOrder() );
+            //$this->setSubscription( $payment->getOrder() );
+            $routeRedirectOnDone    = $this->getParameter( 'vs_payment.route_redirect_on_done' );
+            var_dump( $routeRedirectOnDone ); die;
             
             return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
                 'paymentStatus' => $status,

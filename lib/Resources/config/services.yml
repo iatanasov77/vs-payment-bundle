@@ -12,6 +12,7 @@ imports:
 parameters:
     vs_payment.product_category.taxonomy_code: 'product-categories'
     vs_payment.pricing_plan_category.taxonomy_code: 'pricing-plan-categories'
+    vs_payment.route_redirect_on_done: null
 
 services:
     _defaults:
