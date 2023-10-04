@@ -1,3 +1,13 @@
+2.9.2	|	Release date: **04.10.2023**
+============================================
+* New Features and Improvements:
+  - Improve StripeJs.
+  - Improve CreditCardController
+  - Refactoring Credit Card Checkout
+  - Improve Checkout Done Action.
+  - Improve StripeJs Payment Process.
+
+
 2.9.1	|	Release date: **01.10.2023**
 ============================================
 * New Features , Fixes and Improvements:
