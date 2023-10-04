@@ -13,7 +13,12 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12"
+                                id="PaymentDoneMessage"
+                                data-routeRedirectOnShoppingCartDone="{{ routeRedirectOnShoppingCartDone }}"
+                                data-routeRedirectOnPricingPlanDone="{{ routeRedirectOnPricingPlanDone }}"
+                                data-hasPricingPlan="{{ hasPricingPlan }}"
+                            >
                                 {#    {{ dump( paymentStatus ) }}   #}
                                 {{ 'vs_payment.template.checkout_done_message' | trans( {},'VSPaymentBundle' ) }} <a href="{{ path('app_home') }}">home</a>.
                             </div>
@@ -24,20 +29,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    
-    {% include '@VSPayment/Pages/CreditCard/Partial/credit_card_css.html.twig' %}
-    
-    <style>
-        a {
-            color: #007bff !important;
-        }
-        a:hover {
-            color: #007bff !important;
-            text-decoration: underline !important;
-        }
-    </style>
 {% endblock %}

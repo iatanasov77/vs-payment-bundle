@@ -15,18 +15,3 @@ services:
         tags:
             - { name: payum.gateway_factory_builder, factory: paysera }
 
-    # PAYSERA CHECKOUT CONTROLLER
-    ##############################
-    Vankosoft\PaymentBundle\Controller\Checkout\PayseraController:
-        arguments:
-            - '@security.token_storage'
-            - '@doctrine'
-            - '@vs_payment.repository.order'
-            - '@payum'
-            - '%vs_payment.model.payment.class%'
-            - '@vs_users_subscriptions.repository.payed_service_subscriptions'
-            - '@vs_users_subscriptions.factory.payed_service_subscriptions'
-        calls:
-            - [ setContainer, [ '@service_container' ] ]
-
-
