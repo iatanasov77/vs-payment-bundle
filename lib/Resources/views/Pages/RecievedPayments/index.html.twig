@@ -33,8 +33,8 @@
                             <td>{{ item.description }}</td>
                             <td>{{ item.clientEmail }}</td>
                             <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
-                            <td>{{ item.createdAt }}</td>
-                            <td>{{ item.updatedAt }}</td>
+                            <td>{{ item.createdAt | date( "d.m.Y H:i" ) }}</td>
+                            <td>{{ item.updatedAt | date( "d.m.Y H:i" ) }}</td>
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-danger btnDeleteResource"
