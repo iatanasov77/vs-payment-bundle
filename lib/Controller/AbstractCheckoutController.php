@@ -196,11 +196,12 @@ abstract class AbstractCheckoutController extends AbstractController
         $hasPricingPlan = false;
         
         foreach( $order->getItems() as $item ) {
-            $subscription   = $this->subscriptionFactory->createNew();
             $payableObject  = $item->getObject();
             if ( ! ( $payableObject instanceof PricingPlanInterface ) ) {
                 continue;
             }
+            
+            $subscription   = $this->subscriptionFactory->createNew();
             
             $hasPricingPlan = true;
             $user           = $this->tokenStorage->getToken()->getUser();

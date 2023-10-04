@@ -21,13 +21,14 @@ use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
 
 use Vankosoft\PaymentBundle\Model\Payment;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
-use Vankosoft\PaymentBundle\Controller\General\RecievedPaymentsController;
+use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\RecievedPaymentsController;
 
 use Vankosoft\PaymentBundle\Model\PaymentToken;
 
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Repository\OrderRepository;
+use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\OrdersController;
 
 use Vankosoft\PaymentBundle\Model\OrderItem;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
@@ -189,6 +190,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'interface' )->defaultValue( OrderInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( OrderRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( OrdersController::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
