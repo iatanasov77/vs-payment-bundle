@@ -11,10 +11,10 @@ class RecievedPaymentsController extends AbstractCrudController
         $currencies = [];
         
         if ( $this->resources ) {
-            foreach ( $this->resources as $currency ) {
-                $currencies[$currency->getCode()]   = [
-                    'symbol'    => Currencies::getSymbol( $currency->getCode() ),
-                    'name'      => Currencies::getName( $currency->getCode() ),
+            foreach ( $this->resources as $payment ) {
+                $currencies[$payment->getCurrencyCode()]   = [
+                    'symbol'    => Currencies::getSymbol( $payment->getCurrencyCode() ),
+                    'name'      => Currencies::getName( $payment->getCurrencyCode() ),
                 ];
             }
         }
