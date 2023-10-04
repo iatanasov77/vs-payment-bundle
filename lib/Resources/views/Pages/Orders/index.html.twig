@@ -40,7 +40,7 @@
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-danger btnDeleteResource"
-                                        href="{{ path('vs_payment_payment_delete', {'id': item.id}) }}" 
+                                        href="{{ path('vs_payment_order_delete', {'id': item.id}) }}" 
                                         data-csrfToken="{{ csrf_token( item.id ) }}" 
                                         title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
                                     >
@@ -71,11 +71,11 @@
 
 {% block head_styles %}
     {{ parent() }}
-    {{ encore_entry_link_tags( 'js/recieved-payments' ) }}
+    {{ encore_entry_link_tags( 'js/orders' ) }}
 {% endblock %}
 
 {% block body_scripts %}
     {{ parent() }}
     
-    {{ encore_entry_script_tags( 'js/recieved-payments' ) }}
+    {{ encore_entry_script_tags( 'js/orders' ) }}
 {% endblock %}
