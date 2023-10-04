@@ -8,8 +8,10 @@ vs_application:
         payment_methods: Начини на Плащане
         create_new_payment_method: Създай Нов Начин на Плащане
         edit_a_payment_method: Редакция на Начин на Плащане
-        payment_general: Основни
+        paid_subscriptions: Платени Абонаменти
+        orders: Ордери
         recieved_payments: Получени Плащания
+        subscriptions: Абонаменти
         currency: Валута
         currencies: Валути
         create_new_currency: Създаване Нова Валута
