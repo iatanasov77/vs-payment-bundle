@@ -11,7 +11,8 @@ vs_application:
         paid_subscriptions: Paid Subscriptions
         orders: Orders
         recieved_payments: Recieved Payments
-        subscriptions: Subscriptions
+        paid_service_subscriptions: Paid Service Subscriptions
+        pricing_plan_subscriptions: Pricing Plan Subscriptions
         currency: Currency
         currencies: Currencies
         create_new_currency: Create New Currency

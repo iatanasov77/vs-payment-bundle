@@ -11,7 +11,8 @@ vs_application:
         paid_subscriptions: Платени Абонаменти
         orders: Ордери
         recieved_payments: Получени Плащания
-        subscriptions: Абонаменти
+        paid_service_subscriptions: Платенa Услуга Абонаменти
+        pricing_plan_subscriptions: Ценови План Абонаменти
         currency: Валута
         currencies: Валути
         create_new_currency: Създаване Нова Валута
@@ -26,11 +27,11 @@ vs_application:
         catalog_products: Продукти
         create_catalog_product: Създай Продукт
         edit_catalog_product: Редакция Продукт
-        pricing_plans: Pricing Plans
-        pricing_plan_categories: Pricing Plan Categories
-        create_pricing_plan_category: Create a Pricing Plan Category
-        edit_pricing_plan_category: Edit Pricing Plan Category
-        pricing_plans_listing: Pricing Plans
-        create_pricing_plan: Create a Pricing Plan
-        edit_pricing_plan: Edit Pricing Plan
+        pricing_plans: Ценови Планове
+        pricing_plan_categories: Ценови План Категории
+        create_pricing_plan_category: Създай Ценови План Категория
+        edit_pricing_plan_category: Редакция Ценови План Категория
+        pricing_plans_listing: Ценови Планове
+        create_pricing_plan: Създай Ценови План
+        edit_pricing_plan: Редакция Ценови План
 
