@@ -120,6 +120,7 @@ class PricingPlanForm extends AbstractForm
             
             ->add( 'currency', CurrencyChoiceType::class, [
                 'label'                 => 'vs_payment.form.pricing_plan.currency',
+                'placeholder'           => 'vs_payment.form.pricing_plan.currency_placeholder',
                 'translation_domain'    => 'VSPaymentBundle',
                 'required'              => true,
             ])

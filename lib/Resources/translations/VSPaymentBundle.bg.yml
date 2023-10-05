@@ -50,6 +50,7 @@ vs_payment:
             discount: Отстъпка
             price: Цена
             currency: Валута
+            currency_placeholder: '-- Избери Валута --'
             
         select_pricing_plan:
             name: Name

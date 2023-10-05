@@ -50,6 +50,7 @@ vs_payment:
             discount: Discount
             price: Price
             currency: Currency
+            currency_placeholder: '-- Select Currency --'
             
         select_pricing_plan:
             name: Name
