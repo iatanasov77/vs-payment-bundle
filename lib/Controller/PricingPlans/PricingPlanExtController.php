@@ -44,7 +44,7 @@ class PricingPlanExtController extends AbstractController
         foreach( $tree as $node ) {
             $data[$key]   = [
                 'id'        => $node->getId(),
-                'text'      => $node->getTitle(),
+                'text'      => $notLeafs ? $node->getTitle() . ' ' . $node->getPrice() . ' ' . $node->getCurrencyCode() : $node->getTitle(),
                 'children'  => [],
                 'disabled'  => ! $notLeafs
             ];
