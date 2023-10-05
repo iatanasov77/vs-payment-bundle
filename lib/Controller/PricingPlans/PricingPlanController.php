@@ -35,7 +35,7 @@ class PricingPlanController extends AbstractCrudController
     {
         $categories = new ArrayCollection();
         $pcr        = $this->get( 'vs_payment.repository.pricing_plan_category' );
-        $pspr       = $this->get( 'vs_payment.repository.pricing_plan_category' );
+        $pspr       = $this->get( 'vs_users_subscriptions.repository.payed_service_subscription_period' );
         
         $formLocale = $request->request->get( 'locale' );
         $formPost   = $request->request->all( 'pricing_plan_form' );
