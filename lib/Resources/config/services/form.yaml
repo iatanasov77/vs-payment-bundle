@@ -104,6 +104,7 @@ services:
             - "@request_stack"
             - '@vs_application.repository.locale'
             - '%vs_payment.model.pricing_plan_category.class%'
+            - '%vs_users_subscriptions.model.payed_service_subscription_period.class%'
             
     Vankosoft\PaymentBundle\Form\SelectPricingPlanForm:
         tags:

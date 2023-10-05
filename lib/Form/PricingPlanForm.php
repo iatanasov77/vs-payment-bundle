@@ -23,11 +23,15 @@ class PricingPlanForm extends AbstractForm
     /** @var string */
     protected $categoryClass;
     
+    /** @var string */
+    protected  $paidServicePeriodClass;
+    
     public function __construct(
         string $dataClass,
         RequestStack $requestStack,
         RepositoryInterface $localesRepository,
-        string $categoryClass
+        string $categoryClass,
+        string $paidServicePeriodClass
     ) {
         parent::__construct( $dataClass );
         
@@ -35,6 +39,7 @@ class PricingPlanForm extends AbstractForm
         $this->localesRepository        = $localesRepository;
         
         $this->categoryClass            = $categoryClass;
+        $this->paidServicePeriodClass   = $paidServicePeriodClass;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options ): void
@@ -125,12 +130,24 @@ class PricingPlanForm extends AbstractForm
                 'required'              => true,
             ])
             
-            ->add( 'paidServices', CollectionType::class, [
-                'entry_type'   => PricingPlanPaidServiceType::class,
-                'allow_add'    => true,
-                'allow_delete' => true,
-                'prototype'    => true,
-                'by_reference' => false
+            /*
+            ->add( 'paidServicesData', CollectionType::class, [
+                'entry_type'    => PricingPlanPaidServiceType::class,
+                'allow_add'     => true,
+                'allow_delete'  => true,
+                'prototype'     => true,
+                'by_reference'  => false,
+                'mapped'        => false,
+            ])
+            */
+            ->add( 'paidServicesData', EntityType::class, [
+                'class'                 => $this->paidServicePeriodClass,
+                'choice_label'          => 'title',
+                'label'                 => 'Paid Services',
+                'placeholder'           => '-- Select Paid Services --',
+                'translation_domain'    => 'VSPaymentBundle',
+                'required'              => true,
+                'mapped'                => false,
             ])
         ;
     }

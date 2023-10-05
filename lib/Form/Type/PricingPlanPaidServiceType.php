@@ -31,20 +31,7 @@ final class PricingPlanPaidServiceType extends AbstractType
                 'group_by'              => function ( PayedServiceSubscriptionPeriod $paidServicePeriod ): string {
                     return $paidServicePeriod ? $paidServicePeriod->getPayedService()->getTitle() : 'Undefined Group';
                 },
-                'required'              => true,
             ])
         ;
-    }
-    
-    public function configureOptions( OptionsResolver $resolver )
-    {
-        $resolver->setDefaults(array(
-            'data_class' => $this->paidServicePeriodClass
-        ));
-    }
-    
-    public function getName()
-    {
-        return 'PricingPlanPaidService';
     }
 }
