@@ -8,6 +8,7 @@ use Sylius\Component\Resource\Model\TranslationInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
+use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionInterface;
@@ -38,8 +39,8 @@ class PricingPlan implements PricingPlanInterface
      */
     protected $discount;
     
-    /** @var PayedServiceSubscriptionPeriodInterface */
-    protected $paidServicePeriod;
+    /** @var Collection|PayedServiceSubscriptionPeriodInterface[] */
+    protected $paidServices;
     
     /** @var string */
     protected $locale;
@@ -47,8 +48,18 @@ class PricingPlan implements PricingPlanInterface
     /** @var Collection|OrderItemInterface[] */
     protected $orderItems;
     
+    /** @var float */
+    protected $price;
+    
+    /** @var CurrencyInterface */
+    protected $currency;
+    
+    /** @var int */
+    protected $subscriptionPriority;
+    
     public function __construct()
     {
+        $this->paidServices = new ArrayCollection();
         $this->orderItems   = new ArrayCollection();
     }
     
@@ -77,13 +88,9 @@ class PricingPlan implements PricingPlanInterface
         return $this;
     }
     
-    public function getTitle():? string
+    public function getTitle()
     {
-        if( ! $this->title && ! $this->paidServicePeriod ) {
-            return null;
-        }
-        
-        return $this->title ?: $this->paidServicePeriod->getTitle();
+        return $this->title;
     }
     
     public function setTitle( $title ): PricingPlanInterface
@@ -93,13 +100,9 @@ class PricingPlan implements PricingPlanInterface
         return $this;
     }
     
-    public function getDescription():? string
+    public function getDescription()
     {
-        if( ! $this->description && ! $this->paidServicePeriod ) {
-            return null;
-        }
-        
-        return $this->description ?: $this->paidServicePeriod->getDescription();
+        return $this->description;
     }
     
     public function setDescription( $description ): PricingPlanInterface
@@ -136,34 +139,45 @@ class PricingPlan implements PricingPlanInterface
         return $this;
     }
     
-    public function getPaidServicePeriod():? PayedServiceSubscriptionPeriodInterface
+    public function getPaidServices(): Collection
     {
-        return $this->paidServicePeriod;
+        return $this->paidServices;
     }
     
-    public function setPaidServicePeriod( PayedServiceSubscriptionPeriodInterface $paidServicePeriod )
+    public function setPaidServices( Collection $paidServices )
     {
-        $this->paidServicePeriod  = $paidServicePeriod;
+        $this->paidServices  = $paidServices;
         
         return $this;
     }
     
-    /**
-     * @return Collection|PayedServiceSubscriptionInterface[]
-     */
-    public function getSubscriptions(): Collection
+    public function addPaidService( PayedServiceSubscriptionPeriodInterface $subscriptionPeriod )
     {
-        return $this->paidServicePeriod ? $this->paidServicePeriod->getSubscriptions() : [];
+        if( ! $this->paidServices->contains( $subscriptionPeriod ) ) {
+            $this->paidServices->add( $subscriptionPeriod );
+        }
+    }
+    
+    public function removePaidService( PayedServiceSubscriptionPeriodInterface $subscriptionPeriod )
+    {
+        if( $this->paidServices->contains( $subscriptionPeriod ) ) {
+            $this->paidServices->removeElement( $subscriptionPeriod );
+        }
     }
     
     public function getPrice()
     {
-        return $this->paidServicePeriod ? $this->paidServicePeriod->getPrice() : 0.00;
+        return $this->price;
+    }
+    
+    public function getCurrency()
+    {
+        return $this->currency;
     }
     
     public function getCurrencyCode()
     {
-        return $this->paidServicePeriod ? $this->paidServicePeriod->getCurrencyCode() : 'EUR';
+        return $this->currency ? $this->currency->getCode() : '';
     }
     
     public function getTranslatableLocale(): ?string
@@ -183,14 +197,9 @@ class PricingPlan implements PricingPlanInterface
         return $this->orderItems;
     }
     
-    public function getSubscriptionCode(): ?string
-    {
-        return $this->paidServicePeriod ? $this->paidServicePeriod->getPayedService()->getSubscriptionCode() : null;
-    }
-    
     public function getSubscriptionPriority(): ?int
     {
-        return $this->paidServicePeriod ? $this->paidServicePeriod->getPayedService()->getSubscriptionPriority() : null;
+        return $this->subscriptionPriority;
     }
     
     /*

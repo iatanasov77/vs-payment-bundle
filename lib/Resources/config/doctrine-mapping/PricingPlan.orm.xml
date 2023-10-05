@@ -23,6 +23,20 @@
         <field name="premium" column="premium" type="boolean" />
         <field name="discount" type="decimal" scale="2" precision="8" nullable="true" />
         
+        <field name="price" type="decimal" scale="2" precision="8" nullable="false">
+            <options>
+                <option name="default">0.00</option>
+            </options>
+        </field>
+        
+        <many-to-one field="currency" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface" />
+        
+        <field name="subscriptionPriority" column="subscription_priority" type="integer" length="4" nullable="false">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>
+        
         <many-to-one field="category" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanCategoryInterface" inversed-by="plans">
             <join-column name="category_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
             <cascade>
@@ -30,12 +44,16 @@
             </cascade>
         </many-to-one>
         
-        <!--NOT EXIST IN TARGET ENTITY
-            inversed-by="pricingPlan"
-        -->
-        <one-to-one field="paidServicePeriod" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface">
-            <join-column name="paid_service_period_id" referenced-column-name="id" nullable="false" />
-        </one-to-one>
+        <many-to-many field="paidServices" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface">
+            <join-table name="VSPAY_PricingPlan_PaidServices">
+                <join-columns>
+                    <join-column name="pricing_plan_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="paid_service_period_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
         
         <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="paidServiceSubscription" />
         

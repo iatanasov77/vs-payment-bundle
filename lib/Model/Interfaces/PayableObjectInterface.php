@@ -8,6 +8,6 @@ interface PayableObjectInterface extends ResourceInterface
     public function getCurrencyCode();
     public function getOrderItems();
     
-    public function getSubscriptionCode(): ?string;
+    //public function getSubscriptionCode(): ?string;
     public function getSubscriptionPriority(): ?int;
 }

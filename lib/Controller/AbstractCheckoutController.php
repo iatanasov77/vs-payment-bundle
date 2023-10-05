@@ -209,9 +209,6 @@ abstract class AbstractCheckoutController extends AbstractController
             $subscription->setUser( $user );
             $subscription->setPayedService( $payableObject->getPaidServicePeriod() );
             
-            $subscription->setSubscriptionCode( $payableObject->getSubscriptionCode() );
-            $subscription->setSubscriptionPriority( $payableObject->getSubscriptionPriority() );
-            
             $subscription->setDate( new \DateTime() );
             
             $em->persist( $subscription );
