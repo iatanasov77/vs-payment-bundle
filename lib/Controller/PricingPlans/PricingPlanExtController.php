@@ -15,11 +15,11 @@ class PricingPlanExtController extends AbstractController
     protected $paidServicesRepository;
     
     public function __construct(
-        RepositoryInterface $pricingPlansRepository,
-        RepositoryInterface $paidServicesRepository
+        RepositoryInterface $pricingPlanRepository,
+        RepositoryInterface $payedServiceRepository
     ) {
-        $this->pricingPlansRepository   = $pricingPlansRepository;
-        $this->paidServicesRepository   = $paidServicesRepository;
+        $this->pricingPlansRepository   = $pricingPlanRepository;
+        $this->paidServicesRepository   = $payedServiceRepository;
     }
     
     public function getPaidServicesJson( $id, Request $request ): Response
