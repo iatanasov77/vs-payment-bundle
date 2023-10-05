@@ -30,7 +30,7 @@ class PricingPlanExtController extends AbstractController
         $this->buildEasyuiCombotreeData(
             $this->paidServicesRepository->findAll(),
             $data,
-            \array_keys( $selectedValues ),
+            $selectedValues->getKeys(),
             [],
             false
         );
