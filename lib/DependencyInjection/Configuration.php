@@ -67,6 +67,8 @@ use Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanController;
 use Vankosoft\PaymentBundle\Form\PricingPlanForm;
 use Vankosoft\PaymentBundle\Repository\PricingPlansRepository;
 
+use Vankosoft\PaymentBundle\Model\PricingPlanSubscription;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
@@ -331,6 +333,22 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( PricingPlanController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( PricingPlanForm::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
+                        ->arrayNode( 'pricing_plan_subscription' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                    ->scalarNode( 'model' )->defaultValue( PricingPlanSubscription::class )->cannotBeEmpty()->end()
+                                    ->scalarNode( 'interface' )->defaultValue( PricingPlanSubscriptionInterface::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

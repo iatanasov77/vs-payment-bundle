@@ -57,6 +57,12 @@
         
         <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="paidServiceSubscription" />
         
+        <one-to-many field="subscriptions" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface" mapped-by="pricingPlan" orphan-removal="true">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+        
         <!--
             Used locale to override Translation listener`s locale
            this is not a mapped field of entity metadata, just a simple property
