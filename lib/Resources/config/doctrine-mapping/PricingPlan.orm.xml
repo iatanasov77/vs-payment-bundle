@@ -44,7 +44,10 @@
             </cascade>
         </many-to-one>
         
-        <many-to-many field="paidServices" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface">
+        <many-to-many field="paidServices" 
+            target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface"
+            index-by="id"
+        >
             <join-table name="VSPAY_PricingPlan_PaidServices">
                 <join-columns>
                     <join-column name="pricing_plan_id" referenced-column-name="id" />

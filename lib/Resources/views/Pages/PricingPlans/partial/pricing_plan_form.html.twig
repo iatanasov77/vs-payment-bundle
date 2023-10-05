@@ -60,6 +60,8 @@
         {{ form_widget(form.currency, {'attr': {'class': 'form-control'}}) }}
     </div>
     
+    {% include '@VSPayment/Pages/PricingPlans/partial/pricing-plan-paid-services.html.twig' %}
+    
     <fieldset class="border border-dark rounded p-3">
         <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.pricing_plan.set_as_premium' | trans( {},'VSPaymentBundle' ) }}</legend>
         
@@ -88,8 +90,6 @@
     </fieldset>
 
     <div class="row">&nbsp;</div>
-    
-    {% include '@VSPayment/Pages/PricingPlans/partial/pricing-plan-paid-services.html.twig' %}
     
     {{ vs_form.buttons( form ) }}
 {{ form_end(form, {'render_rest': false}) }}

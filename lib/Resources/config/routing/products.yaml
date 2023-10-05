@@ -34,5 +34,11 @@ vs_payment_pricing_plan:
                 ckeditor_extraPlugins: '%vs_users_subscriptions.form.payed_service.ckeditor_extraPlugins%'
                 ckeditor_removeButtons: '%vs_users_subscriptions.form.payed_service.ckeditor_removeButtons%'
     type: sylius.resource
+    
+vs_payment_pricing_plan_paid_services:
+    path: /json/pricing-plans/{id}/easyui-combotree-with-leafs
+    controller: Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanExtController::getPaidServicesJson
+    options:
+        expose: true
 
 
