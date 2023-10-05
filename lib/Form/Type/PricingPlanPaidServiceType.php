@@ -6,6 +6,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
+use Vankosoft\UsersSubscriptionsBundle\Model\PayedServiceSubscriptionPeriod;
+
 final class PricingPlanPaidServiceType extends AbstractType
 {
     /** @var string */

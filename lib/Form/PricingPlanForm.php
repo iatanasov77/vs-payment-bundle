@@ -17,7 +17,6 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Vankosoft\PaymentBundle\Form\Type\CurrencyChoiceType;
 use Vankosoft\PaymentBundle\Form\Type\PricingPlanPaidServiceType;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
-use Vankosoft\UsersSubscriptionsBundle\Model\PayedServiceSubscriptionPeriod;
 
 class PricingPlanForm extends AbstractForm
 {
