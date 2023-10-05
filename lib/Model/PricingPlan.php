@@ -127,7 +127,7 @@ class PricingPlan implements PricingPlanInterface
         return $this;
     }
     
-    public function getDiscount():? float
+    public function getDiscount(): ?float
     {
         return $this->discount;
     }
