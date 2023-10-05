@@ -35,6 +35,7 @@ class PricingPlanController extends AbstractCrudController
     {
         $categories = new ArrayCollection();
         $pcr        = $this->get( 'vs_payment.repository.pricing_plan_category' );
+        $pspr       = $this->get( 'vs_payment.repository.pricing_plan_category' );
         
         $formLocale = $request->request->get( 'locale' );
         $formPost   = $request->request->all( 'pricing_plan_form' );
@@ -50,6 +51,15 @@ class PricingPlanController extends AbstractCrudController
                 if ( $category ) {
                     $categories[]   = $category;
                     $entity->addCategory( $category );
+                }
+            }
+        }
+        
+        if ( ! empty( $formPost['paidServicesData'] ) ) {
+            foreach ( $formPost['paidServicesData'] as $paidServicePeriodId ) {
+                $paidServicePeriod  = $pspr->find( $paidServicePeriodId );
+                if ( $paidServicePeriod ) {
+                    $entity->addPaidService( $paidServicePeriod );
                 }
             }
         }
