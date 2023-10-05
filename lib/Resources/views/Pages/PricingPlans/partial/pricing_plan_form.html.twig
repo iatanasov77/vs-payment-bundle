@@ -89,9 +89,9 @@
 
     <div class="row">&nbsp;</div>
     
-    <fieldset class="fieldset-project-attributes">
-        <legend class="w-auto">Paid Services</legend>
-        <div class="attributesContainer"
+    <fieldset class="border border-dark rounded p-3">
+        <legend class="w-auto float-none ps-2 pe-2">Paid Services</legend>
+        <div id="paidServicesContainer"
             data-prototype="{% apply escape %}{% include '@VSPayment/Pages/PricingPlans/partial/add-paid-service-prototype.html.twig' with {'form': form.paidServices.vars.prototype} %}{% endapply %}"
         > 
             {% for paidService in form.paidServices %}
