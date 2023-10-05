@@ -10,8 +10,8 @@ use Doctrine\Common\Collections\Collection;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface;
-use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionInterface;
 
 class PricingPlan implements PricingPlanInterface
 {
@@ -57,10 +57,14 @@ class PricingPlan implements PricingPlanInterface
     /** @var int */
     protected $subscriptionPriority;
     
+    /** @var Collection|PricingPlanSubscriptionInterface[] */
+    protected $subscriptions;
+    
     public function __construct()
     {
-        $this->paidServices = new ArrayCollection();
-        $this->orderItems   = new ArrayCollection();
+        $this->paidServices     = new ArrayCollection();
+        $this->orderItems       = new ArrayCollection();
+        $this->subscriptions    = new ArrayCollection();
     }
     
     /**
@@ -192,14 +196,39 @@ class PricingPlan implements PricingPlanInterface
         return $this;
     }
     
-    public function getOrderItems()
+    public function getSubscriptionPriority(): ?int
+    {
+        return $this->subscriptionPriority;
+    }
+    
+    public function getOrderItems(): Collection
     {
         return $this->orderItems;
     }
     
-    public function getSubscriptionPriority(): ?int
+    public function getSubscriptions(): Collection
     {
-        return $this->subscriptionPriority;
+        return $this->subscriptions;
+    }
+    
+    public function addSubscription( PricingPlanSubscriptionInterface $subscription ): self
+    {
+        if ( ! $this->subscriptions->contains( $subscription ) ) {
+            $this->subscriptions[] = $subscription;
+            $subscription->setPricingPlan( $this );
+        }
+        
+        return $this;
+    }
+    
+    public function removeSubscription( PricingPlanSubscriptionInterface $subscription ): self
+    {
+        if ( $this->subscriptions->contains( $subscription ) ) {
+            $this->subscriptions->removeElement( $subscription );
+            $subscription->setPricingPlan( null );
+        }
+        
+        return $this;
     }
     
     /*
