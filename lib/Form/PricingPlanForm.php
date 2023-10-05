@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
+use Vankosoft\PaymentBundle\Form\Type\CurrencyChoiceType;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\PayedServiceSubscriptionPeriod;
 
@@ -99,17 +100,6 @@ class PricingPlanForm extends AbstractForm
                 ],
             ])
             
-            ->add( 'paidServicePeriod', EntityType::class, [
-                'label'                 => 'vs_payment.form.pricing_plan.paid_service_period',
-                'translation_domain'    => 'VSPaymentBundle',
-                'class'                 => $this->paidServicePeriodClass,
-                'choice_label'          => 'title',
-                'group_by'              => function ( PayedServiceSubscriptionPeriod $paidServicePeriod ): string {
-                    return $paidServicePeriod ? $paidServicePeriod->getPayedService()->getTitle() : 'Undefined Group';
-                },
-                'required'              => true,
-            ])
-            
             ->add( 'premium', CheckboxType::class, [
                 'label'                 => 'vs_payment.form.pricing_plan.premium',
                 'translation_domain'    => 'VSPaymentBundle',
@@ -122,6 +112,20 @@ class PricingPlanForm extends AbstractForm
                 'scale'                 => 2,
                 'rounding_mode'         => $options['rounding_mode'],
                 'required'              => false,
+            ])
+            
+            ->add( 'price', NumberType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan.price',
+                'translation_domain'    => 'VSPaymentBundle',
+                'scale'                 => 2,
+                'rounding_mode'         => $options['rounding_mode'],
+                'required'              => true,
+            ])
+            
+            ->add( 'currency', CurrencyChoiceType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan.paid_service_period',
+                'translation_domain'    => 'VSPaymentBundle',
+                'required'              => true,
             ])
         ;
     }
