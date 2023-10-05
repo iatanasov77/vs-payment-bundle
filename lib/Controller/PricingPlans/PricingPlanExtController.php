@@ -57,7 +57,7 @@ class PricingPlanExtController extends AbstractController
             }
             
             // Buld Child Categories After Leafs because Leafs override children keys
-            if ( $node->getSubscriptionPeriods()->count() ) {
+            if ( ! $notLeafs && $node->getSubscriptionPeriods()->count() ) {
                 $this->buildEasyuiCombotreeData( $node->getSubscriptionPeriods(), $data[$key]['children'], $selectedValues, $leafs, true );
             }
             
