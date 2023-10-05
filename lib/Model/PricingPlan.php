@@ -172,6 +172,11 @@ class PricingPlan implements PricingPlanInterface
         }
     }
     
+    public function getTotalAmount()
+    {
+        return $this->price;
+    }
+    
     public function getPrice()
     {
         return $this->price;

@@ -154,6 +154,7 @@ vs_payment:
         order_user: User
         order_session_id: Session ID
         pricing_plan_subscriptions_index_title: Pricing Plan Subscriptions
+        subscriptions: Subscriptions
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
