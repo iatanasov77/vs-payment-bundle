@@ -101,6 +101,12 @@ class PricingPlanForm extends AbstractForm
                 ],
             ])
             
+            ->add( 'recurringPayment', CheckboxType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan.recurring_payment',
+                'translation_domain'    => 'VSPaymentBundle',
+                'required'              => false,
+            ])
+            
             ->add( 'premium', CheckboxType::class, [
                 'label'                 => 'vs_payment.form.pricing_plan.premium',
                 'translation_domain'    => 'VSPaymentBundle',
@@ -143,9 +149,10 @@ class PricingPlanForm extends AbstractForm
             ->add( 'paidServicesData', EntityType::class, [
                 'class'                 => $this->paidServicePeriodClass,
                 'choice_label'          => 'title',
-                'label'                 => 'Paid Services',
-                'placeholder'           => '-- Select Paid Services --',
+                'label'                 => 'vs_payment.form.pricing_plan.paid_services',
+                'placeholder'           => 'vs_payment.form.pricing_plan.paid_services_placeholder',
                 'translation_domain'    => 'VSPaymentBundle',
+                'multiple'              => true,
                 'required'              => true,
                 'mapped'                => false,
             ])

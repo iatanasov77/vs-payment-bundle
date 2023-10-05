@@ -13,6 +13,16 @@
         <span class="custom-control-label">{{ 'vs_payment.form.active' | trans( {},'VSPaymentBundle' ) }}</span>
     </label>
     
+    <label class="custom-control custom-checkbox">  
+        <input type="checkbox" id="pricing_plan_form_recurringPayment"
+            class="custom-control-input form-check-input"
+            name="pricing_plan_form[recurringPayment]"
+            value="{{ item.recurringPayment }}"
+            {% if item.recurringPayment %}checked="checked"{% endif %}
+        />
+        <span class="custom-control-label">{{ 'vs_payment.form.recurring_payment' | trans( {},'VSPaymentBundle' ) }}</span>
+    </label>
+    
     <div class="form-group">
         {{ form_label(form.locale, null, {
             'label_attr': {'class': 'col-form-label'}
