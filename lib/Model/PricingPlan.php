@@ -174,9 +174,21 @@ class PricingPlan implements PricingPlanInterface
         return $this->price;
     }
     
+    public function setPrice($price)
+    {
+        $this->price    = $price;
+        return $this;
+    }
+    
     public function getCurrency()
     {
         return $this->currency;
+    }
+    
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+        return $this;
     }
     
     public function getCurrencyCode()
