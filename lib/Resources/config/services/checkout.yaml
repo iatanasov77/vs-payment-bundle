@@ -25,6 +25,8 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '@vs_payment.repository.pricing_plan_subscription'
+            - '@vs_payment.factory.pricing_plan_subscription'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -43,6 +45,8 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '@vs_payment.repository.pricing_plan_subscription'
+            - '@vs_payment.factory.pricing_plan_subscription'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -61,6 +65,8 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '@vs_payment.repository.pricing_plan_subscription'
+            - '@vs_payment.factory.pricing_plan_subscription'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -79,6 +85,8 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '@vs_payment.repository.pricing_plan_subscription'
+            - '@vs_payment.factory.pricing_plan_subscription'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -97,6 +105,8 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '@vs_payment.repository.pricing_plan_subscription'
+            - '@vs_payment.factory.pricing_plan_subscription'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -115,6 +125,8 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '@vs_payment.repository.pricing_plan_subscription'
+            - '@vs_payment.factory.pricing_plan_subscription'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -133,6 +145,8 @@ services:
             - '%vs_payment.model.payment.class%'
             - '@vs_users_subscriptions.repository.payed_service_subscriptions'
             - '@vs_users_subscriptions.factory.payed_service_subscriptions'
+            - '@vs_payment.repository.pricing_plan_subscription'
+            - '@vs_payment.factory.pricing_plan_subscription'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:

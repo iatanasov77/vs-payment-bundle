@@ -28,10 +28,35 @@ trait PaymentsUserTrait
     }
     
     /**
-     * @return Collection
+     * @return Collection|SubscriptionInterface[]
      */
     public function getPricingPlanSubscriptions(): Collection
     {
         return $this->pricingPlanSubscriptions;
+    }
+    
+    public function setPricingPlanSubscriptions( Collection $pricingPlanSubscriptions ): self
+    {
+        $this->pricingPlanSubscriptions  = $pricingPlanSubscriptions;
+        
+        return $this;
+    }
+    
+    public function addPricingPlanSubscription( SubscriptionInterface $pricingPlanSubscription ): self
+    {
+        if ( ! $this->pricingPlanSubscriptions->contains( $pricingPlanSubscription ) ) {
+            $this->pricingPlanSubscriptions[]    = $pricingPlanSubscription;
+        }
+        
+        return $this;
+    }
+    
+    public function removePricingPlanSubscription( SubscriptionInterface $pricingPlanSubscription ): self
+    {
+        if ( $this->pricingPlanSubscriptions->contains( $pricingPlanSubscription ) ) {
+            $this->pricingPlanSubscriptions->removeElement( $pricingPlanSubscription );
+        }
+        
+        return $this;
     }
 }
