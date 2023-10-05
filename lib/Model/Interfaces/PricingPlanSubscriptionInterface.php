@@ -5,6 +5,6 @@ use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscriptionInterface;
 
 interface PricingPlanSubscriptionInterface extends ResourceInterface, SubscriptionInterface
 {
-    public function getPayedService();
+    public function getPricingPlan(): PricingPlanInterface;
     public function isActive(): bool;
 }
