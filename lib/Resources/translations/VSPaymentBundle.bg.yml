@@ -46,8 +46,10 @@ vs_payment:
         pricing_plan:
             paid_service_period: Paid Service Subscription
             set_as_premium: Set as Premium
-            premium: Premium
-            discount: Discount
+            premium: Премиум
+            discount: Отстъпка
+            price: Цена
+            currency: Валута
             
         select_pricing_plan:
             name: Name

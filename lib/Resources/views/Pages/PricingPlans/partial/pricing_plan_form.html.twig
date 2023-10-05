@@ -89,5 +89,18 @@
 
     <div class="row">&nbsp;</div>
     
+    <fieldset class="fieldset-project-attributes">
+        <legend class="w-auto">Paid Services</legend>
+        <div class="attributesContainer"
+            data-prototype="{% apply escape %}{% include '@VSPayment/Pages/PricingPlans/partial/add-paid-service-prototype.html.twig' with {'form': form.paidServices.vars.prototype} %}{% endapply %}"
+        > 
+            {% for paidService in form.paidServices %}
+                {% include '@VSPayment/Pages/PricingPlans/partial/add-paid-service-prototype.html.twig' with {'form': paidService} %}
+            {% endfor %}
+        </div>
+    </fieldset>
+    
+    <div class="row">&nbsp;</div>
+    
     {{ vs_form.buttons( form ) }}
 {{ form_end(form, {'render_rest': false}) }}

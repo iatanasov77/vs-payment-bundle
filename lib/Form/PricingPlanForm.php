@@ -10,10 +10,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 use Vankosoft\PaymentBundle\Form\Type\CurrencyChoiceType;
+use Vankosoft\PaymentBundle\Form\Type\PricingPlanPaidServiceType;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\PayedServiceSubscriptionPeriod;
 
@@ -123,9 +125,17 @@ class PricingPlanForm extends AbstractForm
             ])
             
             ->add( 'currency', CurrencyChoiceType::class, [
-                'label'                 => 'vs_payment.form.pricing_plan.paid_service_period',
+                'label'                 => 'vs_payment.form.pricing_plan.currency',
                 'translation_domain'    => 'VSPaymentBundle',
                 'required'              => true,
+            ])
+            
+            ->add( 'paidServices', CollectionType::class, [
+                'entry_type'   => PricingPlanPaidServiceType::class,
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'prototype'    => true,
+                'by_reference' => false
             ])
         ;
     }

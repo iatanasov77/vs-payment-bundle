@@ -48,6 +48,8 @@ vs_payment:
             set_as_premium: Set as Premium
             premium: Premium
             discount: Discount
+            price: Price
+            currency: Currency
             
         select_pricing_plan:
             name: Name
