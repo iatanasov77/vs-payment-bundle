@@ -122,4 +122,23 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $expireAt;
     }
     
+    public function getSubscriptionPriority(): ?int
+    {
+        return $this->pricingPlan ? $this->pricingPlan->getSubscriptionPriority() : null;
+    }
+    
+    public function getPrice()
+    {
+        return $this->pricingPlan ? $this->pricingPlan->getPrice() : 0.00;
+    }
+    
+    public function getTotalAmount()
+    {
+        return $this->pricingPlan ? $this->pricingPlan->getPrice() : 0.00;
+    }
+    
+    public function getCurrencyCode()
+    {
+        return $this->pricingPlan ? $this->pricingPlan->getCurrencyCode() : 'EUR';
+    }
 }

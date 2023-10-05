@@ -153,6 +153,7 @@ vs_payment:
         order_status: Status
         order_user: User
         order_session_id: Session ID
+        pricing_plan_subscriptions_index_title: Pricing Plan Subscriptions
         
     validation:
         currency_code_unique: Currency code must be unique.

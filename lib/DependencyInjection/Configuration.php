@@ -69,6 +69,7 @@ use Vankosoft\PaymentBundle\Repository\PricingPlansRepository;
 
 use Vankosoft\PaymentBundle\Model\PricingPlanSubscription;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
+use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\PricingPlanSubscriptionsController;
 
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
@@ -345,10 +346,11 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode( 'classes' )
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                    ->scalarNode( 'model' )->defaultValue( PricingPlanSubscription::class )->cannotBeEmpty()->end()
-                                    ->scalarNode( 'interface' )->defaultValue( PricingPlanSubscriptionInterface::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'model' )->defaultValue( PricingPlanSubscription::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'interface' )->defaultValue( PricingPlanSubscriptionInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( PricingPlanSubscriptionsController::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
