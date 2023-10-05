@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints\File;
 
 class ProductPictureType extends AbstractType
 {
+    /** @var string */
     private $dataClass;
     
     public function __construct(

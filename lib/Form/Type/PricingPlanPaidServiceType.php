@@ -3,11 +3,21 @@
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 final class PricingPlanPaidServiceType extends AbstractType
 {
+    /** @var string */
+    private  $paidServicePeriodClass;
+    
+    public function __construct(
+        string $paidServicePeriodClass
+    ) {
+        $this->paidServicePeriodClass   = $paidServicePeriodClass;
+    }
+    
+    
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
@@ -22,6 +32,13 @@ final class PricingPlanPaidServiceType extends AbstractType
                 'required'              => true,
             ])
         ;
+    }
+    
+    public function configureOptions( OptionsResolver $resolver )
+    {
+        $resolver->setDefaults(array(
+            'data_class' => $this->paidServicePeriodClass
+        ));
     }
     
     public function getName()

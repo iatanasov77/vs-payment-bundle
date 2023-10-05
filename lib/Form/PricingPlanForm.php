@@ -24,15 +24,11 @@ class PricingPlanForm extends AbstractForm
     /** @var string */
     protected $categoryClass;
     
-    /** @var string */
-    protected $paidServicePeriodClass;
-    
     public function __construct(
         string $dataClass,
         RequestStack $requestStack,
         RepositoryInterface $localesRepository,
-        string $categoryClass,
-        string $paidServicePeriodClass
+        string $categoryClass
     ) {
         parent::__construct( $dataClass );
         
@@ -40,7 +36,6 @@ class PricingPlanForm extends AbstractForm
         $this->localesRepository        = $localesRepository;
         
         $this->categoryClass            = $categoryClass;
-        $this->paidServicePeriodClass   = $paidServicePeriodClass;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options ): void
