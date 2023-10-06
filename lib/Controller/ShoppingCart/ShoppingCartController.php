@@ -10,6 +10,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
+use Vankosoft\ApplicationBundle\Component\Status;
 
 class ShoppingCartController extends AbstractController
 {
