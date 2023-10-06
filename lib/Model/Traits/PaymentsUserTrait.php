@@ -3,6 +3,8 @@
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 
+use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscriptionInterface;
+
 trait PaymentsUserTrait
 {    
     /**
