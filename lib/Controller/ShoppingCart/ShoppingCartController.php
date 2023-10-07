@@ -99,17 +99,29 @@ class ShoppingCartController extends AbstractController
     {
         $em             = $this->doctrine->getManager();
         
-        $orderItem      = $this->orderItemsFactory->createNew();
-        $payableObject  = $this->productsRepository->find( $payableObjectId );
+        $orderItem      = null;
+        foreach ( $cart->getItems() as $item ) {
+            if ( $item->getProduct()->getId() == $payableObjectId ) {
+                $orderItem  = $item;
+            }
+        }
         
-        $orderItem->setProduct( $payableObject );
-        $orderItem->setPrice( $payableObject->getPrice() );
-        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+        if ( $orderItem ) {
+            $orderItem->setQty( $orderItem->getQty() + $qty );
+        } else {
+            $orderItem      = $this->orderItemsFactory->createNew();
+            $payableObject  = $this->productsRepository->find( $payableObjectId );
+            
+            $orderItem->setProduct( $payableObject );
+            $orderItem->setPrice( $payableObject->getPrice() );
+            $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+            
+            $cart->addItem( $orderItem );
+        }
         
-        $cart->addItem( $orderItem );
         $em->persist( $cart );
         $em->flush();
         
-        return $payableObject;
+        return $orderItem->getProduct();
     }
 }
