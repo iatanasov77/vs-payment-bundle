@@ -223,7 +223,9 @@ class PricingPlan implements PricingPlanInterface
     
     public function setSubscriptionPriority( $subscriptionPriority ): PricingPlanInterface
     {
-        return $this->subscriptionPriority  = $subscriptionPriority;
+        $this->subscriptionPriority  = $subscriptionPriority;
+        
+        return this;
     }
     
     public function getOrderItems(): Collection
