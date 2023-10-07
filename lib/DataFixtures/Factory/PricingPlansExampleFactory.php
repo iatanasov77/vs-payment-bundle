@@ -19,9 +19,16 @@ final class PricingPlansExampleFactory extends AbstractExampleFactory implements
     /** @var RepositoryInterface */
     private $categoriesRepository;
     
+    /** @var RepositoryInterface */
+    private $currenciesRepository;
+    
+    /** @var RepositoryInterface */
+    private $paidServicesPeriodRepository;
+    
     public function __construct(
         FactoryInterface $pricingPlansFactory,
         RepositoryInterface $categoriesRepository,
+        RepositoryInterface $currenciesRepository,
         RepositoryInterface $paidServicesPeriodRepository
     ) {
         $this->pricingPlansFactory          = $pricingPlansFactory;
@@ -30,6 +37,7 @@ final class PricingPlansExampleFactory extends AbstractExampleFactory implements
         $this->configureOptions( $this->optionsResolver );
         
         $this->categoriesRepository         = $categoriesRepository;
+        $this->currenciesRepository         = $currenciesRepository;
         $this->paidServicesPeriodRepository = $paidServicesPeriodRepository;
     }
     
@@ -39,6 +47,7 @@ final class PricingPlansExampleFactory extends AbstractExampleFactory implements
         
         $entity     = $this->pricingPlansFactory->createNew();
         $category   = $this->categoriesRepository->findByTaxonCode( $options['category_code'] );
+        $currency   = $this->currenciesRepository->findOneBy( ['code' => $options['currencyCode']] );
         
         $entity->setCategory( $category );
         $entity->setTranslatableLocale( $options['locale'] );
@@ -46,9 +55,13 @@ final class PricingPlansExampleFactory extends AbstractExampleFactory implements
         $entity->setDescription( $options['description'] );
         $entity->setEnabled( $options['active'] );
         $entity->setPremium( $options['premium'] );
+        $entity->setPrice( $options['price'] );
+        $entity->setCurrency( $currency );
         
-        $period = $this->paidServicesPeriodRepository->findOneBy( ['paidServicePeriodCode' => $options['paid_service_period']] );
-        $entity->setPaidServicePeriod( $period );
+        foreach( $options['paid_services'] as $ps ) {
+            $period = $this->paidServicesPeriodRepository->findOneBy( ['paidServicePeriodCode' => $ps['paidServicePeriodCode']] );
+            $entity->addPaidService( $period );
+        }
         
         return $entity;
     }
@@ -68,13 +81,21 @@ final class PricingPlansExampleFactory extends AbstractExampleFactory implements
             ->setDefault( 'locale', null )
             ->setAllowedTypes( 'locale', ['string'] )
             
-            ->setDefault( 'active', null )
+            ->setDefault( 'active', true )
             ->setAllowedTypes( 'active', ['bool'] )
             
-            ->setDefault( 'premium', null )
+            ->setDefault( 'premium', false )
             ->setAllowedTypes( 'premium', ['bool'] )
             
-            ->setDefault( 'paid_service_period', null )
+            ->setDefault( 'recurringPayment', false )
+            ->setAllowedTypes( 'recurringPayment', ['bool'] )
+            
+            ->setDefault( 'price', null )
+            ->setAllowedTypes( 'price', ['float'] )
+            
+            ->setDefault( 'currencyCode', null )
+            
+            ->setDefault( 'paid_services', null )
         ;
     }
 }
