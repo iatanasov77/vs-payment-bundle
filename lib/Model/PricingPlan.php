@@ -225,7 +225,7 @@ class PricingPlan implements PricingPlanInterface
     {
         $this->subscriptionPriority  = $subscriptionPriority;
         
-        return this;
+        return $this;
     }
     
     public function getOrderItems(): Collection
