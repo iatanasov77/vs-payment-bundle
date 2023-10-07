@@ -57,6 +57,7 @@ final class PricingPlansExampleFactory extends AbstractExampleFactory implements
         $entity->setPremium( $options['premium'] );
         $entity->setPrice( $options['price'] );
         $entity->setCurrency( $currency );
+        $entity->setSubscriptionPriority( $options['subscription_priority'] );
         
         foreach( $options['paid_services'] as $ps ) {
             $period = $this->paidServicesPeriodRepository->findOneBy( ['paidServicePeriodCode' => $ps['paidServicePeriodCode']] );
@@ -92,6 +93,9 @@ final class PricingPlansExampleFactory extends AbstractExampleFactory implements
             
             ->setDefault( 'price', null )
             ->setAllowedTypes( 'price', ['float'] )
+            
+            ->setDefault( 'subscription_priority', 1 )
+            ->setAllowedTypes( 'subscription_priority', ['int'] )
             
             ->setDefault( 'currencyCode', null )
             

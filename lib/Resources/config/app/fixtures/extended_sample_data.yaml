@@ -274,6 +274,7 @@ sylius_fixtures:
                               recurringPayment: false
                               price: 18.99
                               currencyCode: 'EUR'
+                              subscription_priority: 1
                               paid_services:
                                   - paidServicePeriodCode: 'recurring-plans-month'
                             - title: '3 Months'
@@ -285,6 +286,7 @@ sylius_fixtures:
                               recurringPayment: false
                               price: 49.99
                               currencyCode: 'EUR'
+                              subscription_priority: 1
                               paid_services:
                                   - paidServicePeriodCode: 'recurring-plans-quarteryear'
                             - title: '6 Months'
@@ -296,6 +298,7 @@ sylius_fixtures:
                               recurringPayment: false
                               price: 99.99
                               currencyCode: 'EUR'
+                              subscription_priority: 1
                               paid_services:
                                  - paidServicePeriodCode: 'recurring-plans-halfyear'
                               
