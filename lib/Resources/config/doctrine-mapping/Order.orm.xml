@@ -24,7 +24,7 @@
         <field name="currencyCode" column="currency_code" type="string" length="8" nullable="false" />
         <field name="description" column="description" type="string" nullable="false" />
         
-        <one-to-many field="items" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="order" >
+        <one-to-many field="items" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="order" index-by="id">
             <cascade>
                 <cascade-all/>
             </cascade>

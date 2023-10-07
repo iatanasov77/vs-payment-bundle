@@ -15,6 +15,18 @@ vs_payment_add_to_card:
     options:
         expose: true
 
+vs_payment_remove_from_card:
+    path: /vs_payment/remove-from-card/{itemId}
+    controller: Vankosoft\PaymentBundle\Controller\ShoppingCart\ShoppingCartController::removeFromCartAction
+    options:
+        expose: true
+        
+vs_payment_update_card:
+    path: /vs_payment/update-card
+    controller: Vankosoft\PaymentBundle\Controller\ShoppingCart\ShoppingCartController::updateCartAction
+    options:
+        expose: true
+
 ###############################################################################################
 # Credit Card Routes
 ###############################################################################################

@@ -45,6 +45,7 @@ services:
             - '@vs_payment.factory.order'
             - '@vs_payment.repository.order'
             - '@vs_payment.factory.order_item'
+            - '@vs_payment.repository.order_item'
             - '@vs_payment.repository.product'
         calls:
             - [ setContainer, [ '@service_container' ] ]

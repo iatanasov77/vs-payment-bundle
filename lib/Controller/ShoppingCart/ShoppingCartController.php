@@ -30,6 +30,9 @@ class ShoppingCartController extends AbstractController
     protected $orderItemsFactory;
     
     /** @var RepositoryInterface */
+    protected $orderItemsRepository;
+    
+    /** @var RepositoryInterface */
     protected $productsRepository;
     
     public function __construct(
@@ -38,6 +41,7 @@ class ShoppingCartController extends AbstractController
         Factory $ordersFactory,
         RepositoryInterface $ordersRepository,
         Factory $orderItemsFactory,
+        RepositoryInterface $orderItemsRepository,
         RepositoryInterface $productsRepository
     ) {
         $this->doctrine             = $doctrine;
@@ -45,6 +49,7 @@ class ShoppingCartController extends AbstractController
         $this->ordersFactory        = $ordersFactory;
         $this->ordersRepository     = $ordersRepository;
         $this->orderItemsFactory    = $orderItemsFactory;
+        $this->orderItemsRepository = $orderItemsRepository;
         $this->productsRepository   = $productsRepository;
     }
     
@@ -71,6 +76,55 @@ class ShoppingCartController extends AbstractController
         }
         
         $this->addProductToCart( $payableObjectId, $qty, $cart );
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+        ]);
+    }
+    
+    public function removeFromCartAction( $itemId, Request $request ): Response
+    {
+        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $cart   = $cartId ? $this->ordersRepository->find( $cartId ) : null;
+        if ( ! $cart ) {
+            throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
+        }
+        
+        $cartItem   = $this->orderItemsRepository->find( $itemId );
+        if( $cartItem ) {
+            $cart->removeItem( $cartItem );
+            
+            $em = $this->doctrine->getManager();
+            $em->persist( $cart );
+            $em->flush();
+        }
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+        ]);
+    }
+    
+    public function updateCartAction( Request $request ): Response
+    {
+        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $cart   = $cartId ? $this->ordersRepository->find( $cartId ) : null;
+        if ( ! $cart ) {
+            throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
+        }
+        
+        $em             = $this->doctrine->getManager();
+        $jsonCartItems  = $request->request->get( 'CartItems' );
+        $cartItems      = $cart->getItems();
+        foreach( \json_decode( $jsonCartItems ) as $itemId => $itemQty ) {
+            $cartItem   = $cartItems->get( $itemId );
+            if ( $cartItem ) {
+                $cartItem->setQty( $itemQty );
+                $em->persist( $cartItem );
+            }
+        }
+        
+        $em->persist( $cart );
+        $em->flush();
         
         return new JsonResponse([
             'status'    => Status::STATUS_OK,
