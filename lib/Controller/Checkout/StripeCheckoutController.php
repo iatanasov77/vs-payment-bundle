@@ -26,6 +26,12 @@ class StripeCheckoutController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
+        /**
+         * @TODO NEED TO CREATE RECURRING SUBSCRIPTIONS
+         * ============================================
+         * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
+         */
+        
         $em     = $this->doctrine->getManager();
         $cart   = $this->getShoppingCart( $request );
         

@@ -21,13 +21,14 @@ use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
 
 use Vankosoft\PaymentBundle\Model\Payment;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
-use Vankosoft\PaymentBundle\Controller\General\RecievedPaymentsController;
+use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\RecievedPaymentsController;
 
 use Vankosoft\PaymentBundle\Model\PaymentToken;
 
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Repository\OrderRepository;
+use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\OrdersController;
 
 use Vankosoft\PaymentBundle\Model\OrderItem;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
@@ -66,6 +67,9 @@ use Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanController;
 use Vankosoft\PaymentBundle\Form\PricingPlanForm;
 use Vankosoft\PaymentBundle\Repository\PricingPlansRepository;
 
+use Vankosoft\PaymentBundle\Model\PricingPlanSubscription;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
+use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\PricingPlanSubscriptionsController;
 
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
@@ -189,6 +193,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'interface' )->defaultValue( OrderInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( OrderRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( OrdersController::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -329,6 +334,23 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( PricingPlanController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( PricingPlanForm::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
+                        ->arrayNode( 'pricing_plan_subscription' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode( 'model' )->defaultValue( PricingPlanSubscription::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'interface' )->defaultValue( PricingPlanSubscriptionInterface::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( PricingPlanSubscriptionsController::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

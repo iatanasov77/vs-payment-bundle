@@ -4,9 +4,9 @@
 {% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
 {% from "@VSApplication/Macros/pagination.html.twig" import pagination %}
 
-{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payment_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.order_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
-{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payment_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.order_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="row">   
@@ -16,11 +16,11 @@
                     <thead>
                         <tr>
                             <th width="50">N</th>
-                            <th>{{ 'vs_payment.template.payment_number' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.payment_description' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.payment_client_email' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.payment_total_amount' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.payment_currency' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.payment_method' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.order_user' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.order_session_id' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.order_status' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_application.template.items_index_row_created' | trans( {},'VSApplicationBundle' ) }}</th>
                             <th>{{ 'vs_application.template.items_index_row_updated' | trans( {},'VSApplicationBundle' ) }}</th>
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
@@ -30,17 +30,17 @@
                     {% for item in resources %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ item.number }}</td>
-                            <td>{{ item.description }}</td>
-                            <td>{{ item.clientEmail }}</td>
-                            <td>{{ item.totalAmount }}</td>
-                            <td>{{ item.currencyCode }}</td>
+                            <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
+                            <td>{% if item.paymentMethod %}{{ item.paymentMethod.name }}{% endif %}</td>
+                            <td>{% if item.user %}{{ item.user.email }}{% endif %}</td>
+                            <td>{{ item.sessionId }}</td>
+                            <td>{{ item.status }}</td>
                             <td>{{ item.createdAt | date( "d.m.Y H:i" ) }}</td>
                             <td>{{ item.updatedAt | date( "d.m.Y H:i" ) }}</td>
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-danger btnDeleteResource"
-                                        href="{{ path('vs_payment_payment_delete', {'id': item.id}) }}" 
+                                        href="{{ path('vs_payment_order_delete', {'id': item.id}) }}" 
                                         data-csrfToken="{{ csrf_token( item.id ) }}" 
                                         title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
                                     >
@@ -71,11 +71,11 @@
 
 {% block head_styles %}
     {{ parent() }}
-    {{ encore_entry_link_tags( 'js/recieved-payments' ) }}
+    {{ encore_entry_link_tags( 'js/orders' ) }}
 {% endblock %}
 
 {% block body_scripts %}
     {{ parent() }}
     
-    {{ encore_entry_script_tags( 'js/recieved-payments' ) }}
+    {{ encore_entry_script_tags( 'js/orders' ) }}
 {% endblock %}

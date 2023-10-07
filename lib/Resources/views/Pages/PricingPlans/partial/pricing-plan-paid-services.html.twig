@@ -1,0 +1,50 @@
+{#
+<fieldset class="border border-dark rounded p-3">
+    <legend class="w-auto float-none ps-2 pe-2">Paid Services</legend>
+    <div id="paidServicesContainer"
+        data-prototype="{% apply escape %}{% include '@VSPayment/Pages/PricingPlans/partial/add-paid-service-prototype.html.twig' with {'form': form.paidServicesData.vars.prototype} %}{% endapply %}"
+    > 
+        {% for paidService in form.paidServicesData %}
+            {% include '@VSPayment/Pages/PricingPlans/partial/add-paid-service-prototype.html.twig' with {'form': paidService} %}
+        {% endfor %}
+    </div>
+</fieldset>
+
+<div class="row">&nbsp;</div>
+#}
+
+
+{% set comboDataSourceUrl  = path( 'vs_payment_pricing_plan_paid_services', {'id': item.id}) %}
+{% set comboTreePlaceholder = 'vs_payment.form.pricing_plan.paid_services_placeholder' | trans( {},'VSPaymentBundle' ) %}
+{% set comboDataOptions    = "
+        url:'" ~ comboDataSourceUrl ~ "',
+        required: true,
+        multiple: true,
+        checkbox : true,
+        onlyLeafCheck: true,
+        prompt:'" ~ comboTreePlaceholder ~"',
+        onCheck: function( node, checked ) {
+            var cc = $(this).combotree( 'combo' );
+            $( cc ).combotree( 'hidePanel' );
+            $( cc ).combotree( 'setValue', checked?node.id:null );
+        },
+        onBeforeLoad: function( node ) {
+            //showSpiner
+        },
+        onLoadSuccess: function( node ) {
+            //hideSpiner
+        }
+" %}
+<div class="form-group">
+    {{ form_label(form.paidServicesData, null, {
+        'label_attr': {'class': 'col-form-label'}
+        }) 
+    }}
+    
+    {{ form_widget(form.paidServicesData, {
+        'attr': {
+            'class': 'easyui-combotree',
+            'data-options': comboDataOptions,
+        }
+    }) }}
+</div>

@@ -4,6 +4,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
 
+use Symfony\Component\Intl\Currencies;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -23,11 +24,22 @@ class PricingPlanController extends AbstractCrudController
             $selectedTaxonIds[] = $entity->getCategory()->getTaxon()->getId();
         }
         
+        $currencies = [];
+        if ( $this->resources ) {
+            foreach ( $this->resources as $plan ) {
+                $currencies[$plan->getCurrencyCode()]   = [
+                    'symbol'    => Currencies::getSymbol( $plan->getCurrencyCode() ),
+                    'name'      => Currencies::getName( $plan->getCurrencyCode() ),
+                ];
+            }
+        }
+        
         return [
             'categories'        => $this->get( 'vs_payment.repository.pricing_plan_category' )->findAll(),
             'taxonomyId'        => $taxonomy ? $taxonomy->getId() : 0,
             'translations'      => $translations,
             'selectedTaxonIds'  => $selectedTaxonIds,
+            'intlCurrencies'    => $currencies,
         ];
     }
     
@@ -35,6 +47,7 @@ class PricingPlanController extends AbstractCrudController
     {
         $categories = new ArrayCollection();
         $pcr        = $this->get( 'vs_payment.repository.pricing_plan_category' );
+        $pspr       = $this->get( 'vs_users_subscriptions.repository.payed_service_subscription_period' );
         
         $formLocale = $request->request->get( 'locale' );
         $formPost   = $request->request->all( 'pricing_plan_form' );
@@ -50,6 +63,15 @@ class PricingPlanController extends AbstractCrudController
                 if ( $category ) {
                     $categories[]   = $category;
                     $entity->addCategory( $category );
+                }
+            }
+        }
+        
+        if ( ! empty( $formPost['paidServicesData'] ) ) {
+            foreach ( $formPost['paidServicesData'] as $paidServicePeriodId ) {
+                $paidServicePeriod  = $pspr->find( $paidServicePeriodId );
+                if ( $paidServicePeriod ) {
+                    $entity->addPaidService( $paidServicePeriod );
                 }
             }
         }

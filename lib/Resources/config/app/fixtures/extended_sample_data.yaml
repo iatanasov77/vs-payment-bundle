@@ -245,7 +245,7 @@ sylius_fixtures:
                                     title: '3 Months'
                                     paidServicePeriodCode: 'recurring-plans-quarteryear'
                                   - subscriptionPeriod: 'HalfYear'
-                                    price: 18.99
+                                    price: 99.99
                                     currencyCode: 'EUR'
                                     title: '6 Months'
                                     paidServicePeriodCode: 'recurring-plans-halfyear'
@@ -271,20 +271,35 @@ sylius_fixtures:
                               locale:  '%locale%'
                               active: true
                               premium: false
-                              paid_service_period: 'recurring-plans-month'
+                              recurringPayment: false
+                              price: 18.99
+                              currencyCode: 'EUR'
+                              subscription_priority: 1
+                              paid_services:
+                                  - paidServicePeriodCode: 'recurring-plans-month'
                             - title: '3 Months'
                               description: 'Test Pricing Plan 2'
                               category_code: 'recurring-subscription-plans-1'
                               locale:  '%locale%'
                               active: true
                               premium: false
-                              paid_service_period: 'recurring-plans-quarteryear'
+                              recurringPayment: false
+                              price: 49.99
+                              currencyCode: 'EUR'
+                              subscription_priority: 1
+                              paid_services:
+                                  - paidServicePeriodCode: 'recurring-plans-quarteryear'
                             - title: '6 Months'
                               description: 'Test Pricing Plan 3'
                               category_code: 'recurring-subscription-plans-1'
                               locale:  '%locale%'
                               active: true
                               premium: false
-                              paid_service_period: 'recurring-plans-halfyear'
+                              recurringPayment: false
+                              price: 99.99
+                              currencyCode: 'EUR'
+                              subscription_priority: 1
+                              paid_services:
+                                 - paidServicePeriodCode: 'recurring-plans-halfyear'
                               
                             

@@ -50,3 +50,53 @@ vs_payment_recieved_payments_index:
             template: "@VSPayment/Pages/RecievedPayments/index.html.twig"
     options:
         expose: true
+        
+vs_payment_orders:
+    resource: |
+        alias: vs_payment.order
+        except: ['create', 'update', 'show']
+        path: /payment/orders
+        templates: "@VSPayment/Pages/Orders"
+    type: sylius.resource
+    options:
+        expose: true
+    
+vs_payment_orders_index:
+    path: /payment/orders/
+    methods: [GET]
+    defaults:
+        _controller: vs_payment.controller.order::indexAction
+        _sylius:
+            paginate: 10
+            sortable: true
+            sorting:
+                createdAt: desc
+            filterable: true
+            template: "@VSPayment/Pages/Orders/index.html.twig"
+    options:
+        expose: true
+        
+vs_payment_pricing_plan_subscriptions:
+    resource: |
+        alias: vs_payment.pricing_plan_subscription
+        except: ['create', 'update', 'show']
+        path: /payment/pricing-plan-subscriptions
+        templates: "@VSPayment/Pages/PricingPlanSubscriptions"
+    type: sylius.resource
+    options:
+        expose: true
+    
+vs_payment_pricing_plan_subscriptions_index:
+    path: /payment/pricing-plan-subscriptions/
+    methods: [GET]
+    defaults:
+        _controller: vs_payment.controller.pricing_plan_subscription::indexAction
+        _sylius:
+            paginate: 10
+            sortable: true
+            sorting:
+                createdAt: desc
+            filterable: true
+            template: "@VSPayment/Pages/PricingPlanSubscriptions/index.html.twig"
+    options:
+        expose: true

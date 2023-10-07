@@ -8,11 +8,11 @@ interface PricingPlanInterface extends PayableObjectInterface
 {
     public function isActive(): bool;
     public function getCategory(): ?PricingPlanCategoryInterface;
-    public function getTitle():? string;
-    public function getDescription():? string;
+    public function getTitle();
+    public function getDescription();
     public function isPremium(): bool;
-    public function getDiscount():? float;
+    public function getDiscount(): ?float;
     
-    public function getPaidServicePeriod():? PayedServiceSubscriptionPeriodInterface;
+    public function getPaidServices(): Collection;
     public function getSubscriptions(): Collection;
 }

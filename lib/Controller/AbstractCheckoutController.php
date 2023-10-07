@@ -47,6 +47,12 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var Factory */
     protected $subscriptionFactory;
     
+    /** @var RepositoryInterface */
+    protected $pricingPlanSubscriptionRepository;
+    
+    /** @var Factory */
+    protected $pricingPlanSubscriptionFactory;
+    
     /**
      * If is set, Done Action will redirect to this url
      *
@@ -71,20 +77,24 @@ abstract class AbstractCheckoutController extends AbstractController
         string $paymentClass,
         RepositoryInterface $subscriptionRepository,
         Factory $subscriptionFactory,
+        RepositoryInterface $pricingPlanSubscriptionRepository,
+        Factory $pricingPlanSubscriptionFactory,
         ?string $routeRedirectOnShoppingCartDone,
         ?string $routeRedirectOnPricingPlanDone
     ) {
-        $this->tokenStorage                     = $tokenStorage;
-        $this->translator                       = $translator;
-        $this->doctrine                         = $doctrine;
-        $this->ordersRepository                 = $ordersRepository;
-        $this->ordersFactory                    = $ordersFactory;
-        $this->payum                            = $payum;
-        $this->paymentClass                     = $paymentClass;
-        $this->subscriptionRepository           = $subscriptionRepository;
-        $this->subscriptionFactory              = $subscriptionFactory;
-        $this->routeRedirectOnShoppingCartDone  = $routeRedirectOnShoppingCartDone;
-        $this->routeRedirectOnPricingPlanDone   = $routeRedirectOnPricingPlanDone;
+        $this->tokenStorage                         = $tokenStorage;
+        $this->translator                           = $translator;
+        $this->doctrine                             = $doctrine;
+        $this->ordersRepository                     = $ordersRepository;
+        $this->ordersFactory                        = $ordersFactory;
+        $this->payum                                = $payum;
+        $this->paymentClass                         = $paymentClass;
+        $this->subscriptionRepository               = $subscriptionRepository;
+        $this->subscriptionFactory                  = $subscriptionFactory;
+        $this->pricingPlanSubscriptionRepository    = $pricingPlanSubscriptionRepository;
+        $this->pricingPlanSubscriptionFactory       = $pricingPlanSubscriptionFactory;
+        $this->routeRedirectOnShoppingCartDone      = $routeRedirectOnShoppingCartDone;
+        $this->routeRedirectOnPricingPlanDone       = $routeRedirectOnPricingPlanDone;
     }
     
     abstract public function prepareAction( Request $request ): Response;
@@ -196,20 +206,50 @@ abstract class AbstractCheckoutController extends AbstractController
         $hasPricingPlan = false;
         
         foreach( $order->getItems() as $item ) {
-            $subscription   = $this->subscriptionFactory->createNew();
             $payableObject  = $item->getObject();
             if ( ! ( $payableObject instanceof PricingPlanInterface ) ) {
                 continue;
             }
             
+            $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
+            
             $hasPricingPlan = true;
             $user           = $this->tokenStorage->getToken()->getUser();
             
             $subscription->setUser( $user );
-            $subscription->setPayedService( $payableObject->getPaidServicePeriod() );
+            $subscription->setPricingPlan( $payableObject );
             
-            $subscription->setSubscriptionCode( $payableObject->getSubscriptionCode() );
-            $subscription->setSubscriptionPriority( $payableObject->getSubscriptionPriority() );
+            $subscription->setDate( new \DateTime() );
+            
+            $em->persist( $subscription );
+            $em->flush();
+            
+            $user->addPricingPlanSubscription( $subscription );
+            $em->persist( $user );
+            $em->flush();
+            
+            $this->setPaidServicePeriodSubscriptions( $payableObject );
+        }
+        
+        return $hasPricingPlan;
+    }
+    
+    /**
+     * THIS MAY BE NOT NEEDED IN FEATURE
+     * ==================================
+     * @param PricingPlanInterface $payableObject
+     */
+    protected function setPaidServicePeriodSubscriptions( PricingPlanInterface $payableObject ): void
+    {
+        $em = $this->doctrine->getManager();
+        
+        foreach( $payableObject->getPaidServices() as $item ) {
+            $subscription   = $this->subscriptionFactory->createNew();
+            
+            $user           = $this->tokenStorage->getToken()->getUser();
+            
+            $subscription->setUser( $user );
+            $subscription->setPayedService( $item );
             
             $subscription->setDate( new \DateTime() );
             
@@ -220,8 +260,6 @@ abstract class AbstractCheckoutController extends AbstractController
             $em->persist( $user );
             $em->flush();
         }
-        
-        return $hasPricingPlan;
     }
     
     protected function debugObject( $object )

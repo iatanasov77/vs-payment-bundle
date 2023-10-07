@@ -113,5 +113,11 @@ services:
             - '%vs_payment.model.pricing_plan.class%'
             - '%vs_payment.model.payment_method.class%'
             - '@vs_payment.repository.pricing_plan'
+            
+    Vankosoft\PaymentBundle\Form\Type\PricingPlanPaidServiceType:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_users_subscriptions.model.payed_service_subscription_period.class%'
 
 

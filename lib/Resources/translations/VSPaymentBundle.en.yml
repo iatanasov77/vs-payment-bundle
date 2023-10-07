@@ -48,6 +48,12 @@ vs_payment:
             set_as_premium: Set as Premium
             premium: Premium
             discount: Discount
+            price: Price
+            currency: Currency
+            currency_placeholder: '-- Select Currency --'
+            paid_services: Paid Services
+            paid_services_placeholder: '-- Select Paid Services --'
+            recurring_payment: Recurring Payment
             
         select_pricing_plan:
             name: Name
@@ -135,12 +141,20 @@ vs_payment:
         pricing_plan_active: Active
         pricing_plan_premium: Premium
         pricing_plan_subscription_period: Paid Service Subscription
+        payment_index_title: Recieved Payments
         payment_number: Payment Number
         payment_description: Description
         payment_client_email: Client Email
         payment_total_amount: Total Amount
+        payment_currency: Currency
         pricing_plan_payment_success: 'Pricing Plan Payed Successfull !!!'
         shopping_cart_payment_success: 'Shopping Cart Payed Successfull !!!'
+        order_index_title: Orders
+        order_status: Status
+        order_user: User
+        order_session_id: Session ID
+        pricing_plan_subscriptions_index_title: Pricing Plan Subscriptions
+        subscriptions: Subscriptions
         
     validation:
         currency_code_unique: Currency code must be unique.

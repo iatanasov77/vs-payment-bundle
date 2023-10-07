@@ -73,6 +73,7 @@ services:
         arguments:
             - '@vs_payment.factory.pricing_plan'
             - '@vs_payment.repository.pricing_plan_category'
+            - '@vs_payment.repository.currency'
             - '@vs_users_subscriptions.repository.payed_service_subscription_period'
 
 

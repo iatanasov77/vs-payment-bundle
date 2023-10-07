@@ -10,11 +10,13 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
+use Vankosoft\PaymentBundle\Form\Type\CurrencyChoiceType;
+use Vankosoft\PaymentBundle\Form\Type\PricingPlanPaidServiceType;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
-use Vankosoft\UsersSubscriptionsBundle\Model\PayedServiceSubscriptionPeriod;
 
 class PricingPlanForm extends AbstractForm
 {
@@ -22,7 +24,7 @@ class PricingPlanForm extends AbstractForm
     protected $categoryClass;
     
     /** @var string */
-    protected $paidServicePeriodClass;
+    protected  $paidServicePeriodClass;
     
     public function __construct(
         string $dataClass,
@@ -99,15 +101,10 @@ class PricingPlanForm extends AbstractForm
                 ],
             ])
             
-            ->add( 'paidServicePeriod', EntityType::class, [
-                'label'                 => 'vs_payment.form.pricing_plan.paid_service_period',
+            ->add( 'recurringPayment', CheckboxType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan.recurring_payment',
                 'translation_domain'    => 'VSPaymentBundle',
-                'class'                 => $this->paidServicePeriodClass,
-                'choice_label'          => 'title',
-                'group_by'              => function ( PayedServiceSubscriptionPeriod $paidServicePeriod ): string {
-                    return $paidServicePeriod ? $paidServicePeriod->getPayedService()->getTitle() : 'Undefined Group';
-                },
-                'required'              => true,
+                'required'              => false,
             ])
             
             ->add( 'premium', CheckboxType::class, [
@@ -122,6 +119,42 @@ class PricingPlanForm extends AbstractForm
                 'scale'                 => 2,
                 'rounding_mode'         => $options['rounding_mode'],
                 'required'              => false,
+            ])
+            
+            ->add( 'price', NumberType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan.price',
+                'translation_domain'    => 'VSPaymentBundle',
+                'scale'                 => 2,
+                'rounding_mode'         => $options['rounding_mode'],
+                'required'              => true,
+            ])
+            
+            ->add( 'currency', CurrencyChoiceType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan.currency',
+                'placeholder'           => 'vs_payment.form.pricing_plan.currency_placeholder',
+                'translation_domain'    => 'VSPaymentBundle',
+                'required'              => true,
+            ])
+            
+            /*
+            ->add( 'paidServicesData', CollectionType::class, [
+                'entry_type'    => PricingPlanPaidServiceType::class,
+                'allow_add'     => true,
+                'allow_delete'  => true,
+                'prototype'     => true,
+                'by_reference'  => false,
+                'mapped'        => false,
+            ])
+            */
+            ->add( 'paidServicesData', EntityType::class, [
+                'class'                 => $this->paidServicePeriodClass,
+                'choice_label'          => 'title',
+                'label'                 => 'vs_payment.form.pricing_plan.paid_services',
+                'placeholder'           => 'vs_payment.form.pricing_plan.paid_services_placeholder',
+                'translation_domain'    => 'VSPaymentBundle',
+                'multiple'              => true,
+                'required'              => true,
+                'mapped'                => false,
             ])
         ;
     }

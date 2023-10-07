@@ -10,6 +10,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
+use Vankosoft\ApplicationBundle\Component\Status;
 
 class ShoppingCartController extends AbstractController
 {
@@ -29,6 +30,9 @@ class ShoppingCartController extends AbstractController
     protected $orderItemsFactory;
     
     /** @var RepositoryInterface */
+    protected $orderItemsRepository;
+    
+    /** @var RepositoryInterface */
     protected $productsRepository;
     
     public function __construct(
@@ -37,6 +41,7 @@ class ShoppingCartController extends AbstractController
         Factory $ordersFactory,
         RepositoryInterface $ordersRepository,
         Factory $orderItemsFactory,
+        RepositoryInterface $orderItemsRepository,
         RepositoryInterface $productsRepository
     ) {
         $this->doctrine             = $doctrine;
@@ -44,6 +49,7 @@ class ShoppingCartController extends AbstractController
         $this->ordersFactory        = $ordersFactory;
         $this->ordersRepository     = $ordersRepository;
         $this->orderItemsFactory    = $orderItemsFactory;
+        $this->orderItemsRepository = $orderItemsRepository;
         $this->productsRepository   = $productsRepository;
     }
     
@@ -76,6 +82,55 @@ class ShoppingCartController extends AbstractController
         ]);
     }
     
+    public function removeFromCartAction( $itemId, Request $request ): Response
+    {
+        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $cart   = $cartId ? $this->ordersRepository->find( $cartId ) : null;
+        if ( ! $cart ) {
+            throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
+        }
+        
+        $cartItem   = $this->orderItemsRepository->find( $itemId );
+        if( $cartItem ) {
+            $cart->removeItem( $cartItem );
+            
+            $em = $this->doctrine->getManager();
+            $em->persist( $cart );
+            $em->flush();
+        }
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+        ]);
+    }
+    
+    public function updateCartAction( Request $request ): Response
+    {
+        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $cart   = $cartId ? $this->ordersRepository->find( $cartId ) : null;
+        if ( ! $cart ) {
+            throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
+        }
+        
+        $em             = $this->doctrine->getManager();
+        $jsonCartItems  = $request->request->get( 'CartItems' );
+        $cartItems      = $cart->getItems();
+        foreach( \json_decode( $jsonCartItems ) as $itemId => $itemQty ) {
+            $cartItem   = $cartItems->get( $itemId );
+            if ( $cartItem ) {
+                $cartItem->setQty( $itemQty );
+                $em->persist( $cartItem );
+            }
+        }
+        
+        $em->persist( $cart );
+        $em->flush();
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+        ]);
+    }
+    
     protected function createCart( Request $request )
     {
         $session = $request->getSession();
@@ -98,17 +153,29 @@ class ShoppingCartController extends AbstractController
     {
         $em             = $this->doctrine->getManager();
         
-        $orderItem      = $this->orderItemsFactory->createNew();
-        $payableObject  = $this->productsRepository->find( $payableObjectId );
+        $orderItem      = null;
+        foreach ( $cart->getItems() as $item ) {
+            if ( $item->getProduct()->getId() == $payableObjectId ) {
+                $orderItem  = $item;
+            }
+        }
         
-        $orderItem->setProduct( $payableObject );
-        $orderItem->setPrice( $payableObject->getPrice() );
-        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+        if ( $orderItem ) {
+            $orderItem->setQty( $orderItem->getQty() + $qty );
+        } else {
+            $orderItem      = $this->orderItemsFactory->createNew();
+            $payableObject  = $this->productsRepository->find( $payableObjectId );
+            
+            $orderItem->setProduct( $payableObject );
+            $orderItem->setPrice( $payableObject->getPrice() );
+            $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+            
+            $cart->addItem( $orderItem );
+        }
         
-        $cart->addItem( $orderItem );
         $em->persist( $cart );
         $em->flush();
         
-        return $payableObject;
+        return $orderItem->getProduct();
     }
 }

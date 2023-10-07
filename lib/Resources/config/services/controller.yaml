@@ -22,4 +22,11 @@ services:
             - '%vs_payment.model.payment_method.class%'
             - '@vs_payment.repository.payment_method'
             - '@vs_payment.factory.payment_method'
+            
+    Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanExtController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@vs_payment.repository.pricing_plan'
+            - '@vs_users_subscriptions.repository.payed_service'
 

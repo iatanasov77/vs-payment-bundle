@@ -67,12 +67,16 @@ class ShoppingCartCheckoutController extends AbstractController
             $em->flush();
             
             $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute( $formData['paymentMethod']->getGateway() );
-            return new JsonResponse([
-                'status'    => Status::STATUS_OK,
-                'data'      => [
-                    'paymentPrepareUrl'  => $paymentPrepareUrl,
-                ]
-            ]);
+            if( $request->isXmlHttpRequest() ) {
+                return new JsonResponse([
+                    'status'    => Status::STATUS_OK,
+                    'data'      => [
+                        'paymentPrepareUrl'  => $paymentPrepareUrl,
+                    ]
+                ]);
+            } else {
+                return $this->redirectToRoute( $paymentPrepareUrl );
+            }
         }
     }
 }
