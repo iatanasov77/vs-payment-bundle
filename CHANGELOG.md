@@ -1,3 +1,31 @@
+2.9.3	|	Release date: **07.10.2023**
+============================================
+* New Features , Fixes and Improvements:
+  - Fix RecievedPaymentsController .
+  - Fix RecievedPayments index Page.
+  - Add an Orders Conreoller and Index Page.
+  - Add Menu Translations.
+  - Add a JavaScript For Orders Index Page.
+  - Update Some Translations.
+  - Improve Pricing Plan Model.
+  - Add a PricingPlanSubscription Resource.
+  - Add a Dctrine Migration.
+  - Update Pricing Plans Templates.
+  - Update Pricing Plans Form.
+  - Add a Custom Controller to Create Json Tree for PaymentPlan Paid Services.
+  - Update Pricing Plans Form and Model.
+  - Add a Doctrine Migration.
+  - Improve PricingPlanController .
+  - Update AbstractCheckoutController About Add Pricing Plan Subscriptions.
+  - Create PricingPlanSubscriptions Preview Page.
+  - Improve Pricing Plan Pages.
+  - Fix PaymentsUserTrait .
+  - Fix ShoppingCartCheckoutController for non Ajax Requests.
+  - Improve ShoppingCartController .
+  - Update Installator Fixtures.
+  - Fix Install Fixtures .
+
+
 2.9.2	|	Release date: **04.10.2023**
 ============================================
 * New Features and Improvements:
