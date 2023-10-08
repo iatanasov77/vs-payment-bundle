@@ -16,8 +16,8 @@
                             {% if plan.enabled %}
                                 {% if
                                     app.user and
-                                    ( app.user.paidSubscriptions | length ) and
-                                    ( app.user.paidSubscriptions | last ).payedService == plan.paidServicePeriod
+                                    ( app.user.pricingPlanSubscriptions | length ) and
+                                    ( app.user.pricingPlanSubscriptions | last ).pricingPlan == plan
                                 %}
                                     {% set planActive = true %}
                                 {% else %}
