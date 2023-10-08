@@ -1,3 +1,9 @@
+2.9.4	|	Release date: **08.10.2023**
+============================================
+* New Features:
+  - Improve Pricing Plans Checkout Template.
+
+
 2.9.3	|	Release date: **07.10.2023**
 ============================================
 * New Features , Fixes and Improvements:
