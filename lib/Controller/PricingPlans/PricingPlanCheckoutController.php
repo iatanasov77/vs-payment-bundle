@@ -83,7 +83,7 @@ class PricingPlanCheckoutController extends AbstractController
     {
         $form   = $this->createForm( SelectPricingPlanForm::class, null, ['method' => 'POST'] );
         
-        return $this->render( '@VSPayment/Pages/PricingPlansCheckout/select-pricing-plan-form.html.twig', [
+        return $this->render( '@VSPayment/Pages/PricingPlansCheckout/Partial/select-pricing-plan-form.html.twig', [
             'form'          => $form->createView(),
             'pricingPlanId' => $pricingPlanId,
         ]);
