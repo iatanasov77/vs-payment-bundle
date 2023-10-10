@@ -1,3 +1,14 @@
+2.9.5	|	Release date: **10.10.2023**
+============================================
+* New Features and Improvements:
+  - Change PricingPlan Model ORM Mapping About Paid Service Relation.
+  - Add a Doctrine Migration.
+  - Improve PricingPlan Form.
+  - Update Visual Paradigm Diagrams.
+  - Fix Subscription Model.
+  - Improve Subscription Model.
+
+
 2.9.4	|	Release date: **08.10.2023**
 ============================================
 * New Features:
