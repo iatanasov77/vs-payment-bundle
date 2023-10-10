@@ -67,6 +67,11 @@ class Order implements Interfaces\OrderInterface
      */
     protected $sessionId;
     
+    /**
+     * @var bool
+     */
+    protected $recurringPayment = false;
+    
     public function __construct()
     {
         $this->items        = new ArrayCollection();
@@ -209,6 +214,18 @@ class Order implements Interfaces\OrderInterface
     public function setSessionId($sessionId)
     {
         $this->sessionId    = $sessionId;
+        
+        return $this;
+    }
+    
+    public function hasRecurringPayment(): bool
+    {
+        return $this->recurringPayment;
+    }
+    
+    public function setRecurringPayment($recurringPayment)
+    {
+        $this->recurringPayment    = $recurringPayment;
         
         return $this;
     }

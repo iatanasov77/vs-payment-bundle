@@ -4,6 +4,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface OrderInterface extends ResourceInterface
 {
+    public function hasRecurringPayment(): bool;
     public function getUser();
     public function getPaymentMethod();
     public function getPayment();

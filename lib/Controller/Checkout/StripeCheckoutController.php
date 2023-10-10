@@ -2,8 +2,10 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Payum\Stripe\Request\Api\CreatePlan;
 
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
 /**
  * USED MANUALS:
@@ -26,14 +28,14 @@ class StripeCheckoutController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
+        $em     = $this->doctrine->getManager();
+        $cart   = $this->getShoppingCart( $request );
+        
         /**
          * @TODO NEED TO CREATE RECURRING SUBSCRIPTIONS
          * ============================================
          * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
          */
-        
-        $em     = $this->doctrine->getManager();
-        $cart   = $this->getShoppingCart( $request );
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
@@ -75,5 +77,18 @@ class StripeCheckoutController extends AbstractCheckoutController
         } else {
             return $this->redirect( $captureToken->getTargetUrl() );
         }
+    }
+    
+    protected function createSubscriptionPlan( OrderInterface $order )
+    {
+        $plan   = new \ArrayObject([
+            "amount"    => $order->getTotalAmount(),
+            "interval"  => "month",
+            "name"      => "Amazing Gold Plan",
+            "currency"  => $order->getCurrencyCode(),
+            "id"        => "gold"
+        ]);
+        
+        return $plan;
     }
 }
