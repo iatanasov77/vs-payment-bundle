@@ -31,12 +31,6 @@ class StripeCheckoutController extends AbstractCheckoutController
         $em     = $this->doctrine->getManager();
         $cart   = $this->getShoppingCart( $request );
         
-        /**
-         * @TODO NEED TO CREATE RECURRING SUBSCRIPTIONS
-         * ============================================
-         * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
-         */
-        
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
@@ -49,16 +43,26 @@ class StripeCheckoutController extends AbstractCheckoutController
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
+        $paymentDetails   = [
+            'local' => []
+        ];
+        
+        if ( $cart->hasRecurringPayment() ) {
+            $plan   = $this->createSubscriptionPlan( $cart );
+            
+            /** @var \Payum\Core\Payum $payum */
+            $cart->getPaymentMethod()->getGateway()->execute( new CreatePlan( $plan ) );
+            
+            $paymentDetails['local']['customer']    = ['plan' => $plan['id']];
+        }
+        
         /*
          * Stripe. Store credit card and use later.
          * ====================================================================================
          * https://github.com/Payum/Payum/blob/master/docs/stripe/store-card-and-use-later.md
          */
-        $payment->setDetails([
-            'local' => [
-                'save_card' => true,
-            ]
-        ]);
+        $paymentDetails['local']['save_card']   = true;
+        $payment->setDetails( $paymentDetails );
         
         $payment->setOrder( $cart );
         $em->persist( $cart );
@@ -81,7 +85,9 @@ class StripeCheckoutController extends AbstractCheckoutController
     
     protected function createSubscriptionPlan( OrderInterface $order )
     {
-        $plan   = new \ArrayObject([
+        $pricingPlan        = $order->getItems()->first()->getPaidServiceSubscription();
+        
+        $subscriptionPlan   = new \ArrayObject([
             "amount"    => $order->getTotalAmount(),
             "interval"  => "month",
             "name"      => "Amazing Gold Plan",
@@ -89,6 +95,6 @@ class StripeCheckoutController extends AbstractCheckoutController
             "id"        => "gold"
         ]);
         
-        return $plan;
+        return $subscriptionPlan;
     }
 }

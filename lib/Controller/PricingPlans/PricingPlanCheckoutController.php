@@ -104,6 +104,7 @@ class PricingPlanCheckoutController extends AbstractController
             $pricingPlan    = $this->addPricingPlanToCart( $formData['pricingPlan'], $cart );
             $paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod'] );
             
+            $cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
             $cart->setPaymentMethod( $paymentMethod );
             $cart->setDescription( $pricingPlan->getDescription() );
             $em->persist( $cart );
