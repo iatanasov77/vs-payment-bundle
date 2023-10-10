@@ -53,6 +53,8 @@ vs_payment:
             currency_placeholder: '-- Избери Валута --'
             paid_services: Paid Services
             paid_services_placeholder: '-- Select Paid Services --'
+            paid_service: Paid Service
+            paid_service_placeholder: '-- Select Paid Service --'
             recurring_payment: Периодично Плащане
             
         select_pricing_plan:

@@ -72,9 +72,18 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     {
         $active     = false;
         $thisDate   = clone $this->date;
-        switch( $this->payedService->getSubscriptionPeriod() ) {
+        switch( $this->pricingPlan->getPaidService()->getSubscriptionPeriod() ) {
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_UNLIMITED:
+                $active = true;
+                break;
             case SubscriptionPeriod::SUBSCRIPTION_PERIOD_YEAR:
                 $active = ( $thisDate->add( new \DateInterval( 'P1Y' ) ) ) > ( new \DateTime() );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_HALFYEAR:
+                $active = ( $thisDate->add( new \DateInterval( 'P6M' ) ) ) > ( new \DateTime() );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_QUARTERYEAR:
+                $active = ( $thisDate->add( new \DateInterval( 'P3M' ) ) ) > ( new \DateTime() );
                 break;
             case SubscriptionPeriod::SUBSCRIPTION_PERIOD_MONTH:
                 $active = ( $thisDate->add( new \DateInterval( 'P1M' ) ) ) > ( new \DateTime() );
@@ -99,9 +108,15 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     {
         $expireAt   = null;
         $thisDate   = clone $this->date;
-        switch( $this->payedService->getSubscriptionPeriod() ) {
+        switch( $this->pricingPlan->getPaidService()->getSubscriptionPeriod() ) {
             case SubscriptionPeriod::SUBSCRIPTION_PERIOD_YEAR:
                 $expireAt   = $thisDate->add( new \DateInterval( 'P1Y' ) );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_HALFYEAR:
+                $expireAt   = $thisDate->add( new \DateInterval( 'P6M' ) );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_QUARTERYEAR:
+                $expireAt   = $thisDate->add( new \DateInterval( 'P3M' ) );
                 break;
             case SubscriptionPeriod::SUBSCRIPTION_PERIOD_MONTH:
                 $expireAt   = $thisDate->add( new \DateInterval( 'P1M' ) );

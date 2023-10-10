@@ -46,19 +46,12 @@
             </cascade>
         </many-to-one>
         
-        <many-to-many field="paidServices" 
-            target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface"
-            index-by="id"
-        >
-            <join-table name="VSPAY_PricingPlan_PaidServices">
-                <join-columns>
-                    <join-column name="pricing_plan_id" referenced-column-name="id" />
-                </join-columns>
-                <inverse-join-columns>
-                    <join-column name="paid_service_period_id" referenced-column-name="id" />
-                </inverse-join-columns>
-            </join-table>
-        </many-to-many>
+        <many-to-one field="paidService" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface">
+            <join-column name="paid_service_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </many-to-one>
         
         <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="paidServiceSubscription" />
         

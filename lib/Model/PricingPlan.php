@@ -39,8 +39,8 @@ class PricingPlan implements PricingPlanInterface
      */
     protected $discount;
     
-    /** @var Collection|PayedServiceSubscriptionPeriodInterface[] */
-    protected $paidServices;
+    /** @var PayedServiceSubscriptionPeriodInterface */
+    protected $paidService;
     
     /** @var string */
     protected $locale;
@@ -65,7 +65,6 @@ class PricingPlan implements PricingPlanInterface
     
     public function __construct()
     {
-        $this->paidServices     = new ArrayCollection();
         $this->orderItems       = new ArrayCollection();
         $this->subscriptions    = new ArrayCollection();
     }
@@ -146,30 +145,16 @@ class PricingPlan implements PricingPlanInterface
         return $this;
     }
     
-    public function getPaidServices(): Collection
+    public function getPaidService(): PayedServiceSubscriptionPeriodInterface
     {
-        return $this->paidServices;
+        return $this->paidService;
     }
     
-    public function setPaidServices( Collection $paidServices )
+    public function setPaidService( PayedServiceSubscriptionPeriodInterface $paidService )
     {
-        $this->paidServices  = $paidServices;
+        $this->paidService  = $paidService;
         
         return $this;
-    }
-    
-    public function addPaidService( PayedServiceSubscriptionPeriodInterface $subscriptionPeriod )
-    {
-        if( ! $this->paidServices->contains( $subscriptionPeriod ) ) {
-            $this->paidServices->add( $subscriptionPeriod );
-        }
-    }
-    
-    public function removePaidService( PayedServiceSubscriptionPeriodInterface $subscriptionPeriod )
-    {
-        if( $this->paidServices->contains( $subscriptionPeriod ) ) {
-            $this->paidServices->removeElement( $subscriptionPeriod );
-        }
     }
     
     public function getTotalAmount()
