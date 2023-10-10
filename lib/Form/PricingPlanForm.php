@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
+use Vankosoft\UsersSubscriptionsBundle\Model\PayedServiceSubscriptionPeriod;
 use Vankosoft\PaymentBundle\Form\Type\CurrencyChoiceType;
 use Vankosoft\PaymentBundle\Form\Type\PricingPlanPaidServiceType;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
@@ -139,6 +140,9 @@ class PricingPlanForm extends AbstractForm
             ->add( 'paidService', EntityType::class, [
                 'class'                 => $this->paidServicePeriodClass,
                 'choice_label'          => 'title',
+                'group_by'              => function ( PayedServiceSubscriptionPeriod $paidServicePeriod ): string {
+                    return $paidServicePeriod ? $paidServicePeriod->getPayedService()->getTitle() : 'Undefined Group';
+                },
                 'label'                 => 'vs_payment.form.pricing_plan.paid_service',
                 'placeholder'           => 'vs_payment.form.pricing_plan.paid_service_placeholder',
                 'translation_domain'    => 'VSPaymentBundle',
