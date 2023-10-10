@@ -51,7 +51,8 @@ class StripeCheckoutController extends AbstractCheckoutController
             $plan   = $this->createSubscriptionPlan( $cart );
             
             /** @var \Payum\Core\Payum $payum */
-            $cart->getPaymentMethod()->getGateway()->execute( new CreatePlan( $plan ) );
+            $gateway    = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
+            $gateway->execute( new CreatePlan( $plan ) );
             
             $paymentDetails['local']['customer']    = ['plan' => $plan['id']];
         }
