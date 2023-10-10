@@ -136,25 +136,15 @@ class PricingPlanForm extends AbstractForm
                 'required'              => true,
             ])
             
-            /*
-            ->add( 'paidServicesData', CollectionType::class, [
-                'entry_type'    => PricingPlanPaidServiceType::class,
-                'allow_add'     => true,
-                'allow_delete'  => true,
-                'prototype'     => true,
-                'by_reference'  => false,
-                'mapped'        => false,
-            ])
-            */
-            ->add( 'paidServicesData', EntityType::class, [
+            ->add( 'paidService', EntityType::class, [
                 'class'                 => $this->paidServicePeriodClass,
                 'choice_label'          => 'title',
-                'label'                 => 'vs_payment.form.pricing_plan.paid_services',
-                'placeholder'           => 'vs_payment.form.pricing_plan.paid_services_placeholder',
+                'label'                 => 'vs_payment.form.pricing_plan.paid_service',
+                'placeholder'           => 'vs_payment.form.pricing_plan.paid_service_placeholder',
                 'translation_domain'    => 'VSPaymentBundle',
-                'multiple'              => true,
+                'multiple'              => false,
                 'required'              => true,
-                'mapped'                => false,
+                'mapped'                => true,
             ])
         ;
     }

@@ -53,6 +53,8 @@ vs_payment:
             currency_placeholder: '-- Select Currency --'
             paid_services: Paid Services
             paid_services_placeholder: '-- Select Paid Services --'
+            paid_service: Paid Service
+            paid_service_placeholder: '-- Select Paid Service --'
             recurring_payment: Recurring Payment
             
         select_pricing_plan:

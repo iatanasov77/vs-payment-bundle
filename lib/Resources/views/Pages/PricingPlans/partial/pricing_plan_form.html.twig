@@ -75,7 +75,17 @@
         {{ form_widget(form.currency, {'attr': {'class': 'form-control'}}) }}
     </div>
     
+    {#
     {% include '@VSPayment/Pages/PricingPlans/partial/pricing-plan-paid-services.html.twig' %}
+    #}
+    <div class="form-group">
+        {{ form_label(form.paidService, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.paidService, {'attr': {'class': 'form-control'}}) }}
+    </div>
     
     <fieldset class="border border-dark rounded p-3">
         <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.pricing_plan.set_as_premium' | trans( {},'VSPaymentBundle' ) }}</legend>

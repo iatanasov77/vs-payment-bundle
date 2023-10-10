@@ -13,6 +13,6 @@ interface PricingPlanInterface extends PayableObjectInterface
     public function isPremium(): bool;
     public function getDiscount(): ?float;
     
-    public function getPaidServices(): Collection;
+    public function getPaidService(): PayedServiceSubscriptionPeriodInterface;
     public function getSubscriptions(): Collection;
 }
