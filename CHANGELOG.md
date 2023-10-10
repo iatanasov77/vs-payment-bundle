@@ -1,3 +1,9 @@
+2.9.6	|	Release date: **10.10.2023**
+============================================
+* Bug-Fixes:
+  - Fix AbstractCheckoutController .
+
+
 2.9.5	|	Release date: **10.10.2023**
 ============================================
 * New Features and Improvements:
