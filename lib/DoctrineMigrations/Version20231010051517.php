@@ -33,8 +33,6 @@ final class Version20231010051517 extends AbstractMigration
         $this->addSql('ALTER TABLE VSPAY_PricingPlans ADD CONSTRAINT FK_194B963287FFD8A7 FOREIGN KEY (paid_service_id) REFERENCES VSUS_PayedServiceSubscriptionPeriods (id) ON DELETE CASCADE');
         $this->addSql('CREATE INDEX IDX_194B963287FFD8A7 ON VSPAY_PricingPlans (paid_service_id)');
         $this->addSql('ALTER TABLE VSUM_UsersInfo CHANGE title title ENUM(\'mr\', \'mrs\', \'miss\')');
-        $this->addSql('ALTER TABLE VVP_VideoPlatformStorages CHANGE storage_type storage_type ENUM(\'coconut\', \'local\' , \'s3\' , \'digitalocean\')');
-        $this->addSql('ALTER TABLE VVP_Videos_Files CHANGE storage_type storage_type ENUM(\'coconut\', \'local\' , \'s3\' , \'digitalocean\')');
     }
 
     public function down(Schema $schema): void
@@ -53,7 +51,5 @@ final class Version20231010051517 extends AbstractMigration
         $this->addSql('DROP INDEX IDX_194B963287FFD8A7 ON VSPAY_PricingPlans');
         $this->addSql('ALTER TABLE VSPAY_PricingPlans DROP paid_service_id');
         $this->addSql('ALTER TABLE VSUM_UsersInfo CHANGE title title VARCHAR(255) DEFAULT NULL');
-        $this->addSql('ALTER TABLE VVP_VideoPlatformStorages CHANGE storage_type storage_type VARCHAR(255) DEFAULT NULL');
-        $this->addSql('ALTER TABLE VVP_Videos_Files CHANGE storage_type storage_type VARCHAR(255) DEFAULT NULL');
     }
 }
