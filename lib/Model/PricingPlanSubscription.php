@@ -72,7 +72,7 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     {
         $active     = false;
         $thisDate   = clone $this->date;
-        switch( $this->pricingPlan->getPaidService() ) {
+        switch( $this->pricingPlan->getPaidService()->getSubscriptionPeriod() ) {
             case SubscriptionPeriod::SUBSCRIPTION_PERIOD_UNLIMITED:
                 $active = true;
                 break;
@@ -108,7 +108,7 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     {
         $expireAt   = null;
         $thisDate   = clone $this->date;
-        switch( $this->pricingPlan->getPaidService() ) {
+        switch( $this->pricingPlan->getPaidService()->getSubscriptionPeriod() ) {
             case SubscriptionPeriod::SUBSCRIPTION_PERIOD_YEAR:
                 $expireAt   = $thisDate->add( new \DateInterval( 'P1Y' ) );
                 break;
