@@ -227,39 +227,9 @@ abstract class AbstractCheckoutController extends AbstractController
             $user->addPricingPlanSubscription( $subscription );
             $em->persist( $user );
             $em->flush();
-            
-            $this->setPaidServicePeriodSubscriptions( $payableObject );
         }
         
         return $hasPricingPlan;
-    }
-    
-    /**
-     * THIS MAY BE NOT NEEDED IN FEATURE
-     * ==================================
-     * @param PricingPlanInterface $payableObject
-     */
-    protected function setPaidServicePeriodSubscriptions( PricingPlanInterface $payableObject ): void
-    {
-        $em = $this->doctrine->getManager();
-        
-        foreach( $payableObject->getPaidServices() as $item ) {
-            $subscription   = $this->subscriptionFactory->createNew();
-            
-            $user           = $this->tokenStorage->getToken()->getUser();
-            
-            $subscription->setUser( $user );
-            $subscription->setPayedService( $item );
-            
-            $subscription->setDate( new \DateTime() );
-            
-            $em->persist( $subscription );
-            $em->flush();
-            
-            $user->addPaidSubscription( $subscription );
-            $em->persist( $user );
-            $em->flush();
-        }
     }
     
     protected function debugObject( $object )
