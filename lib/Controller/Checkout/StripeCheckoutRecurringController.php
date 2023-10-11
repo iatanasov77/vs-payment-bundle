@@ -44,11 +44,11 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
         $user   = $this->tokenStorage->getToken()->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
+        $payment->setOrder( $cart );
         
         $paymentDetails   = $this->createSubscription( $cart );
         $payment->setDetails( $paymentDetails );
         
-        $payment->setOrder( $cart );
         $em->persist( $cart );
         $em->flush();
         $storage->update( $payment );
@@ -85,11 +85,9 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
         $gateway        = $this->payum->getGateway( $order->getPaymentMethod()->getGateway()->getGatewayName() );
         $gateway->execute( new CreatePlan( $plan ) );
         
-        $payment        = $order->getPayment();
-        
         $paymentDetails   = [
-            'amount'    => $payment->getTotalAmount(),
-            'currency'  => $payment->getCurrencyCode(),
+            'amount'    => $order->getTotalAmount(),
+            'currency'  => $order->getCurrencyCode(),
             
             'local'     => [
                 'save_card' => true,
