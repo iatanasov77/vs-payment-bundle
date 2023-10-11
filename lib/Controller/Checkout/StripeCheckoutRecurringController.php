@@ -78,7 +78,7 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
             "currency"  => $order->getCurrencyCode(),
             
             // Pricing Plan Monthly ( Created From Stripe Dashbord )
-            "id"        => "price_1O04pPCozROjz2jXxpc9XnS7"
+            "id"        => "price_1O05sBCozROjz2jXEwka0bux"
         ]);
         
         /** @var \Payum\Core\Payum $payum */
