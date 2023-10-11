@@ -1,4 +1,4 @@
-<?php  namespace Vankosoft\PaymentBundle\Controller\Checkout;
+<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,32 +43,16 @@ class StripeCheckoutController extends AbstractCheckoutController
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
-        $paymentDetails   = [
-            'local' => []
-        ];
-        
-        
-        /**
-         * Create Stripe Recurring Payments
-         * =================================
-         * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
-         */
-        if ( $cart->hasRecurringPayment() ) {
-            $plan   = $this->createSubscriptionPlan( $cart );
-            
-            /** @var \Payum\Core\Payum $payum */
-            $gateway    = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
-            $gateway->execute( new CreatePlan( $plan ) );
-            
-            $paymentDetails['local']['customer']    = ['plan' => $plan['id']];
-        }
-        
         /*
          * Stripe. Store credit card and use later.
          * ====================================================================================
          * https://github.com/Payum/Payum/blob/master/docs/stripe/store-card-and-use-later.md
          */
-        $paymentDetails['local']['save_card']   = true;
+        $paymentDetails   = [
+            'local' => [
+                'save_card' => true,
+            ]
+        ];
         $payment->setDetails( $paymentDetails );
         
         $payment->setOrder( $cart );
@@ -88,30 +72,5 @@ class StripeCheckoutController extends AbstractCheckoutController
         } else {
             return $this->redirect( $captureToken->getTargetUrl() );
         }
-    }
-    
-    protected function createSubscriptionPlan( OrderInterface $order )
-    {
-        $pricingPlan        = $order->getItems()->first()->getPaidServiceSubscription();
-        
-        /*
-        $subscriptionPlan   = new \ArrayObject([
-            "amount"    => $order->getTotalAmount(),
-            "interval"  => "month",
-            "name"      => "Amazing Gold Plan",
-            "currency"  => $order->getCurrencyCode(),
-            "id"        => "gold"
-        ]);
-        */
-        
-        $subscriptionPlan   = new \ArrayObject([
-            "amount"    => $order->getTotalAmount(),
-            "interval"  => "month",
-            "name"      => "My Gold Plan",
-            "currency"  => $order->getCurrencyCode(),
-            "id"        => "my-gold"
-        ]);
-        
-        return $subscriptionPlan;
     }
 }

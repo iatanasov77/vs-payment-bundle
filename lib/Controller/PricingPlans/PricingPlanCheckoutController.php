@@ -105,7 +105,10 @@ class PricingPlanCheckoutController extends AbstractController
             $em->persist( $cart );
             $em->flush();
             
-            $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute( $paymentMethod->getGateway() );
+            $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute(
+                $paymentMethod->getGateway(),
+                $pricingPlan->isRecurringPayment()
+            );
             return new JsonResponse([
                 'status'    => Status::STATUS_OK,
                 'data'      => [

@@ -1,4 +1,4 @@
-<?php  namespace Vankosoft\PaymentBundle\Controller\Checkout;
+<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +16,10 @@ use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
  * 
  * https://github.com/Payum/Payum/blob/master/docs/stripe/store-card-and-use-later.md
  * 
+ * Create Stripe Recurring Payments
+ * =================================
+ * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
+ * 
  */
 class StripeCheckoutRecurringController extends AbstractCheckoutController
 {
@@ -23,6 +27,11 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
     {
         $em     = $this->doctrine->getManager();
         $cart   = $this->getShoppingCart( $request );
+        
+        if ( ! $cart->hasRecurringPayment() ) {
+            $message    = $flashMessage   = $this->translator->trans( 'pricing_plan_payment_success', [], 'VSPaymentBundle' );
+            throw new CheckoutException( $message );
+        }
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
@@ -36,26 +45,23 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
+        
+        $plan   = $this->createSubscriptionPlan( $cart );
+            
+        /** @var \Payum\Core\Payum $payum */
+        $gateway    = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
+        $gateway->execute( new CreatePlan( $plan ) );
+        
         $paymentDetails   = [
-            'local' => []
+            'amount'    => 2000,
+            'currency'  => 'USD',
+            
+            'local'     => [
+                'save_card' => true,
+                'customer'  => ['plan' => $plan['id']],
+            ]
         ];
         
-        if ( $cart->hasRecurringPayment() ) {
-            $plan   = $this->createSubscriptionPlan( $cart );
-            
-            /** @var \Payum\Core\Payum $payum */
-            $gateway    = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
-            $gateway->execute( new CreatePlan( $plan ) );
-            
-            $paymentDetails['local']['customer']    = ['plan' => $plan['id']];
-        }
-        
-        /*
-         * Stripe. Store credit card and use later.
-         * ====================================================================================
-         * https://github.com/Payum/Payum/blob/master/docs/stripe/store-card-and-use-later.md
-         */
-        $paymentDetails['local']['save_card']   = true;
         $payment->setDetails( $paymentDetails );
         
         $payment->setOrder( $cart );
