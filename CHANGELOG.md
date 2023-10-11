@@ -1,3 +1,18 @@
+2.9.7	|	Release date: **11.10.2023**
+============================================
+* New Features and Improvements:
+  - Start with Stripe Recurring Checkout.
+  - Update Order Model.
+  - Add a Doctrine Migration.
+  - Add Recurring Payment Feature to StripeCheckoutController .
+  - Add a StripeCheckoutRecurringController .
+  - Rename PaymentsUserTrait and Improve It.
+  - Add a Doctrine Migration.
+  - Add a Doctrine Migration.
+  - Update Fixtures and Factories.
+  - Some Improvement.
+
+
 2.9.6	|	Release date: **10.10.2023**
 ============================================
 * Bug-Fixes:
