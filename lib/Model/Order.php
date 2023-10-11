@@ -20,7 +20,7 @@ class Order implements Interfaces\OrderInterface
     protected $id;
     
     /**
-     * @var \Vankosoft\PaymentBundle\Model\Interfaces\PaymentsUserInterface
+     * @var \Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface
      */
     protected $user;
     
