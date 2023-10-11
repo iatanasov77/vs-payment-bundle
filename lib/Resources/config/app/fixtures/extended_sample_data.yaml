@@ -235,18 +235,12 @@ sylius_fixtures:
                               subscription_priority: 1
                               periods:
                                   - subscriptionPeriod: 'Month'
-                                    price: 18.99
-                                    currencyCode: 'EUR'
                                     title: '1 Month'
                                     paidServicePeriodCode: 'recurring-plans-month'
                                   - subscriptionPeriod: 'QuarterYear'
-                                    price: 49.99
-                                    currencyCode: 'EUR'
                                     title: '3 Months'
                                     paidServicePeriodCode: 'recurring-plans-quarteryear'
                                   - subscriptionPeriod: 'HalfYear'
-                                    price: 99.99
-                                    currencyCode: 'EUR'
                                     title: '6 Months'
                                     paidServicePeriodCode: 'recurring-plans-halfyear'
                 
@@ -254,8 +248,14 @@ sylius_fixtures:
                     name: pricing_plan_categories
                     options:
                         custom:
+                            - title: 'General Pricing Plans'
+                              description: 'Test Pricing Plans'
+                              parent: null
+                              taxonomy_code: 'pricing-plan-categories'
+                              taxon_code: 'general-pricing-plans'
+                              locale:  '%locale%'
                             - title: 'Recurring Subscription Plans'
-                              description: 'Test Category'
+                              description: 'Test Recurring Subscriptions'
                               parent: null
                               taxonomy_code: 'pricing-plan-categories'
                               taxon_code: 'recurring-subscription-plans-1'
@@ -267,7 +267,7 @@ sylius_fixtures:
                         custom:
                             - title: '1 MONTH'
                               description: 'Test Pricing Plan 1'
-                              category_code: 'recurring-subscription-plans-1'
+                              category_code: 'general-pricing-plans'
                               locale:  '%locale%'
                               active: true
                               premium: false
@@ -275,11 +275,10 @@ sylius_fixtures:
                               price: 18.99
                               currencyCode: 'EUR'
                               subscription_priority: 1
-                              paid_services:
-                                  - paidServicePeriodCode: 'recurring-plans-month'
+                              paidServicePeriodCode: 'recurring-plans-month'
                             - title: '3 Months'
                               description: 'Test Pricing Plan 2'
-                              category_code: 'recurring-subscription-plans-1'
+                              category_code: 'general-pricing-plans'
                               locale:  '%locale%'
                               active: true
                               premium: false
@@ -287,11 +286,10 @@ sylius_fixtures:
                               price: 49.99
                               currencyCode: 'EUR'
                               subscription_priority: 1
-                              paid_services:
-                                  - paidServicePeriodCode: 'recurring-plans-quarteryear'
+                              paidServicePeriodCode: 'recurring-plans-quarteryear'
                             - title: '6 Months'
                               description: 'Test Pricing Plan 3'
-                              category_code: 'recurring-subscription-plans-1'
+                              category_code: 'general-pricing-plans'
                               locale:  '%locale%'
                               active: true
                               premium: false
@@ -299,7 +297,39 @@ sylius_fixtures:
                               price: 99.99
                               currencyCode: 'EUR'
                               subscription_priority: 1
-                              paid_services:
-                                 - paidServicePeriodCode: 'recurring-plans-halfyear'
+                              paidServicePeriodCode: 'recurring-plans-halfyear'
+                            - title: '1 MONTH'
+                              description: 'Test Pricing Plan 1'
+                              category_code: 'recurring-subscription-plans-1'
+                              locale:  '%locale%'
+                              active: true
+                              premium: false
+                              recurringPayment: true
+                              price: 18.99
+                              currencyCode: 'EUR'
+                              subscription_priority: 1
+                              paidServicePeriodCode: 'recurring-plans-month'
+                            - title: '3 Months'
+                              description: 'Test Pricing Plan 2'
+                              category_code: 'recurring-subscription-plans-1'
+                              locale:  '%locale%'
+                              active: true
+                              premium: false
+                              recurringPayment: true
+                              price: 49.99
+                              currencyCode: 'EUR'
+                              subscription_priority: 1
+                              paidServicePeriodCode: 'recurring-plans-quarteryear'
+                            - title: '6 Months'
+                              description: 'Test Pricing Plan 3'
+                              category_code: 'recurring-subscription-plans-1'
+                              locale:  '%locale%'
+                              active: true
+                              premium: false
+                              recurringPayment: true
+                              price: 99.99
+                              currencyCode: 'EUR'
+                              subscription_priority: 1
+                              paidServicePeriodCode: 'recurring-plans-halfyear'
                               
                             

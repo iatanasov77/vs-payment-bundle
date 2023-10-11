@@ -13,23 +13,25 @@ use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
  * https://stackoverflow.com/questions/34908805/create-a-recurring-or-subscription-payment-using-payum-stripe-on-symfony-2
  * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
  * https://github.com/Payum/PayumBundle
- *
- * MANUALS for Overriding Payum Stripe Bundle templates
- * =====================================================
- * https://github.com/Payum/PayumBundle/issues/326
- * https://stackoverflow.com/questions/28452317/stripe-checkout-with-custom-form-symfony
- * https://github.com/makasim/PayumBundleSandbox/blob/ffea27445d6774dfdc8e646b914e9b58cbfa9765/src/Acme/PaymentBundle/Controller/SimplePurchaseStripeViaOmnipayController.php#L36
- *
- * OmnipayBridge is Very Old
- * ==========================
- * https://github.com/Payum/OmnipayBridge/blob/master/composer.json
+ * 
+ * https://github.com/Payum/Payum/blob/master/docs/stripe/store-card-and-use-later.md
+ * 
+ * Create Stripe Recurring Payments
+ * =================================
+ * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
+ * 
  */
-class StripeCheckoutController extends AbstractCheckoutController
+class StripeCheckoutRecurringController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
         $em     = $this->doctrine->getManager();
         $cart   = $this->getShoppingCart( $request );
+        
+        if ( ! $cart->hasRecurringPayment() ) {
+            $message    = $flashMessage   = $this->translator->trans( 'pricing_plan_payment_success', [], 'VSPaymentBundle' );
+            throw new CheckoutException( $message );
+        }
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
@@ -42,20 +44,11 @@ class StripeCheckoutController extends AbstractCheckoutController
         $user   = $this->tokenStorage->getToken()->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
+        $payment->setOrder( $cart );
         
-        /*
-         * Stripe. Store credit card and use later.
-         * ====================================================================================
-         * https://github.com/Payum/Payum/blob/master/docs/stripe/store-card-and-use-later.md
-         */
-        $paymentDetails   = [
-            'local' => [
-                'save_card' => true,
-            ]
-        ];
+        $paymentDetails   = $this->createSubscription( $cart );
         $payment->setDetails( $paymentDetails );
         
-        $payment->setOrder( $cart );
         $em->persist( $cart );
         $em->flush();
         $storage->update( $payment );
@@ -63,7 +56,7 @@ class StripeCheckoutController extends AbstractCheckoutController
         $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
             $cart->getPaymentMethod()->getGateway()->getGatewayName(),
             $payment,
-            'vs_payment_stripe_checkout_done' // the route to redirect after capture
+            'vs_payment_stripe_checkout_recurring_done' // the route to redirect after capture
         );
         
         if ( $cart->getPaymentMethod()->getGateway()->getFactoryName() == 'stripe_js' ) {
@@ -72,5 +65,36 @@ class StripeCheckoutController extends AbstractCheckoutController
         } else {
             return $this->redirect( $captureToken->getTargetUrl() );
         }
+    }
+    
+    protected function createSubscription( OrderInterface $order ): array
+    {
+        $pricingPlan    = $order->getItems()->first()->getPaidServiceSubscription();
+        
+        $plan           = new \ArrayObject([
+            "amount"    => $order->getTotalAmount(),
+            "interval"  => "month",
+            "name"      => $pricingPlan->getTitle(),
+            "currency"  => $order->getCurrencyCode(),
+            
+            // Pricing Plan Monthly ( Created From Stripe Dashbord )
+            "id"        => "price_1O05sBCozROjz2jXEwka0bux"
+        ]);
+        
+        /** @var \Payum\Core\Payum $payum */
+        $gateway        = $this->payum->getGateway( $order->getPaymentMethod()->getGateway()->getGatewayName() );
+        $gateway->execute( new CreatePlan( $plan ) );
+        
+        $paymentDetails   = [
+            'amount'    => $order->getTotalAmount(),
+            'currency'  => $order->getCurrencyCode(),
+            
+            'local'     => [
+                'save_card' => true,
+                'customer'  => ['plan' => $plan['id']],
+            ]
+        ];
+        
+        return $paymentDetails;
     }
 }

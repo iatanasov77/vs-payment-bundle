@@ -31,6 +31,7 @@
                         <th>{{ 'vs_payment.form.price' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_payment.template.subscriptions' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_application.template.items_index_row_enabled' | trans( {},'VSApplicationBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.pricing_plan_recurring' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_payment.template.pricing_plan_premium' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_application.template.items_index_row_translations' | trans( {},'VSApplicationBundle' ) }}</th>
                         <th width="150">{{ 'vs_application.template.items_index_row_action' | trans( {},'VSApplicationBundle' ) }}</th>
@@ -45,7 +46,7 @@
                         <td>{{ item.subscriptions | length }}</td>
                         
                         <td style="text-align: center;">
-                            {% if item.isActive() %}
+                            {% if item.active %}
                                 <i class="fas fa-check" style="color: #82c91e;">
                             {% else %}
                                 <i class="fas fa-times" style="color: #ff1e1e;"></i>
@@ -53,7 +54,15 @@
                         </td>
                         
                         <td style="text-align: center;">
-                            {% if item.isPremium() %}
+                            {% if item.recurringPayment %}
+                                <i class="fas fa-check" style="color: #82c91e;">
+                            {% else %}
+                                <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                            {% endif %}
+                        </td>
+                        
+                        <td style="text-align: center;">
+                            {% if item.premium %}
                                 <i class="fas fa-check" style="color: #82c91e;">
                             {% else %}
                                 <i class="fas fa-times" style="color: #ff1e1e;"></i>

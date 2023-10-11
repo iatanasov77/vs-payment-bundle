@@ -5,8 +5,15 @@ use Doctrine\Common\Collections\Collection;
 
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscriptionInterface;
 
-trait PaymentsUserTrait
-{    
+trait UserPaymentAwareTrait
+{
+    /**
+     * @var array
+     * 
+     * @ORM\Column(name="payment_details", type="json")
+     */
+    protected $paymentDetails   = [];
+    
     /**
      * @var Collection
      * 
@@ -20,6 +27,18 @@ trait PaymentsUserTrait
      * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface", mappedBy="user")
      */
     protected $pricingPlanSubscriptions;
+    
+    public function getPaymentDetails(): array
+    {
+        return $this->paymentDetails;
+    }
+    
+    public function setPaymentDetails( array $paymentDetails ): self
+    {
+        $this->paymentDetails   = $paymentDetails;
+        
+        return $this;
+    }
     
     /**
      * @return Collection

@@ -7,12 +7,14 @@ class Payment
     const TOKEN_STORAGE_FILESYSTEM      = 'filesystem';
     const TOKEN_STORAGE_DOCTRINE_ORM    = 'doctrine_orm';
     
-    public function getPaymentPrepareRoute( GatewayConfigInterface $gatewayConfig )
+    public function getPaymentPrepareRoute( GatewayConfigInterface $gatewayConfig, $isRecurring = false )
     {
         switch( $gatewayConfig->getFactoryName() ) {
             case 'stripe_checkout':
             case 'stripe_js':
-                $route  = 'vs_payment_stripe_checkout_prepare';
+                $route  = $isRecurring ?
+                            'vs_payment_stripe_checkout_recurring_prepare':
+                            'vs_payment_stripe_checkout_prepare';
                 break;
             case 'paypal_express_checkout':
                 $route  = 'vs_payment_paypal_express_checkout_prepare';

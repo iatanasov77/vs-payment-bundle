@@ -22,6 +22,19 @@ vs_payment_stripe_checkout_done:
    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::doneAction
 
 
+# Stripe Checkout Recurring
+#######################################################################################
+vs_payment_stripe_checkout_recurring_prepare:
+    path: /vs_payment/stripe-checkout-recurring/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutRecurringController::prepareAction
+    options:
+        expose: true
+
+vs_payment_stripe_checkout_recurring_done:
+   path: /vs_payment/stripe-checkout-recurring/done
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutRecurringController::doneAction
+   
+
 # PayPal Express Checkout
 #######################################################################################
 vs_payment_paypal_express_checkout_prepare:

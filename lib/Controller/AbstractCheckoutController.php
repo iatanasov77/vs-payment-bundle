@@ -42,12 +42,6 @@ abstract class AbstractCheckoutController extends AbstractController
     protected $paymentClass;
     
     /** @var RepositoryInterface */
-    protected $subscriptionRepository;
-    
-    /** @var Factory */
-    protected $subscriptionFactory;
-    
-    /** @var RepositoryInterface */
     protected $pricingPlanSubscriptionRepository;
     
     /** @var Factory */
@@ -75,8 +69,6 @@ abstract class AbstractCheckoutController extends AbstractController
         Factory $ordersFactory,
         Payum $payum,
         string $paymentClass,
-        RepositoryInterface $subscriptionRepository,
-        Factory $subscriptionFactory,
         RepositoryInterface $pricingPlanSubscriptionRepository,
         Factory $pricingPlanSubscriptionFactory,
         ?string $routeRedirectOnShoppingCartDone,
@@ -89,8 +81,6 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->ordersFactory                        = $ordersFactory;
         $this->payum                                = $payum;
         $this->paymentClass                         = $paymentClass;
-        $this->subscriptionRepository               = $subscriptionRepository;
-        $this->subscriptionFactory                  = $subscriptionFactory;
         $this->pricingPlanSubscriptionRepository    = $pricingPlanSubscriptionRepository;
         $this->pricingPlanSubscriptionFactory       = $pricingPlanSubscriptionFactory;
         $this->routeRedirectOnShoppingCartDone      = $routeRedirectOnShoppingCartDone;

@@ -94,8 +94,6 @@ final class PaidServicesExampleFactory extends AbstractExampleFactory implements
             $entity->setTranslatableLocale( $locale );
             
             $period->setSubscriptionPeriod( $sp['subscriptionPeriod'] );
-            $period->setPrice( $sp['price'] );
-            $period->setCurrencyCode( $sp['currencyCode'] );
             $period->setTitle( $sp['title'] );
             $period->setPaidServicePeriodCode( $sp['paidServicePeriodCode'] );
             

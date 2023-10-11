@@ -32,7 +32,7 @@
         "payum/paypal-pro-checkout-nvp": "*",
 		"payum/stripe": "^1.7",
 		
-		"vankosoft/users-subscriptions-bundle": ">=2.5.3",
+		
 		"sylius/currency": "^1.12",
 		"plumtreesystems/payum-paysera-gateway": "^0.3",
         "vankosoft/borica-bundle": "^0.2"

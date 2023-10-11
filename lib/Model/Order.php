@@ -20,7 +20,7 @@ class Order implements Interfaces\OrderInterface
     protected $id;
     
     /**
-     * @var \Vankosoft\PaymentBundle\Model\Interfaces\PaymentsUserInterface
+     * @var \Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface
      */
     protected $user;
     
@@ -66,6 +66,11 @@ class Order implements Interfaces\OrderInterface
      * @var string
      */
     protected $sessionId;
+    
+    /**
+     * @var bool
+     */
+    protected $recurringPayment = false;
     
     public function __construct()
     {
@@ -209,6 +214,18 @@ class Order implements Interfaces\OrderInterface
     public function setSessionId($sessionId)
     {
         $this->sessionId    = $sessionId;
+        
+        return $this;
+    }
+    
+    public function hasRecurringPayment(): bool
+    {
+        return $this->recurringPayment;
+    }
+    
+    public function setRecurringPayment($recurringPayment)
+    {
+        $this->recurringPayment    = $recurringPayment;
         
         return $this;
     }

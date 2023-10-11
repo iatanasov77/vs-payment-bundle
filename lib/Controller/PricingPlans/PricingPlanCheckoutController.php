@@ -40,9 +40,6 @@ class PricingPlanCheckoutController extends AbstractController
     /** @var RepositoryInterface */
     protected $paymentMethodsRepository;
     
-    /** @var Factory */
-    protected $paidSubscriptionFactory;
-    
     /** @var Payment */
     protected $vsPayment;
     
@@ -55,7 +52,6 @@ class PricingPlanCheckoutController extends AbstractController
         RepositoryInterface $pricingPlanCategoryRepository,
         RepositoryInterface $pricingPlansRepository,
         RepositoryInterface $paymentMethodsRepository,
-        Factory $paidSubscriptionFactory,
         Payment $vsPayment
     ) {
         $this->doctrine                         = $doctrine;
@@ -66,7 +62,6 @@ class PricingPlanCheckoutController extends AbstractController
         $this->pricingPlanCategoryRepository    = $pricingPlanCategoryRepository;
         $this->pricingPlansRepository           = $pricingPlansRepository;
         $this->paymentMethodsRepository         = $paymentMethodsRepository;
-        $this->paidSubscriptionFactory          = $paidSubscriptionFactory;
         $this->vsPayment                        = $vsPayment;
     }
     
@@ -104,12 +99,16 @@ class PricingPlanCheckoutController extends AbstractController
             $pricingPlan    = $this->addPricingPlanToCart( $formData['pricingPlan'], $cart );
             $paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod'] );
             
+            $cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
             $cart->setPaymentMethod( $paymentMethod );
             $cart->setDescription( $pricingPlan->getDescription() );
             $em->persist( $cart );
             $em->flush();
             
-            $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute( $paymentMethod->getGateway() );
+            $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute(
+                $paymentMethod->getGateway(),
+                $pricingPlan->isRecurringPayment()
+            );
             return new JsonResponse([
                 'status'    => Status::STATUS_OK,
                 'data'      => [
