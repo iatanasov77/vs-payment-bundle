@@ -45,23 +45,7 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
-        
-        $plan   = $this->createSubscriptionPlan( $cart );
-            
-        /** @var \Payum\Core\Payum $payum */
-        $gateway    = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
-        $gateway->execute( new CreatePlan( $plan ) );
-        
-        $paymentDetails   = [
-            'amount'    => 2000,
-            'currency'  => 'USD',
-            
-            'local'     => [
-                'save_card' => true,
-                'customer'  => ['plan' => $plan['id']],
-            ]
-        ];
-        
+        $paymentDetails   = $this->createSubscription( $cart );
         $payment->setDetails( $paymentDetails );
         
         $payment->setOrder( $cart );
@@ -83,28 +67,36 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
         }
     }
     
-    protected function createSubscriptionPlan( OrderInterface $order )
+    protected function createSubscription( OrderInterface $order ): array
     {
-        $pricingPlan        = $order->getItems()->first()->getPaidServiceSubscription();
+        $pricingPlan    = $order->getItems()->first()->getPaidServiceSubscription();
         
-        /*
-        $subscriptionPlan   = new \ArrayObject([
+        $plan           = new \ArrayObject([
             "amount"    => $order->getTotalAmount(),
             "interval"  => "month",
-            "name"      => "Amazing Gold Plan",
+            "name"      => $pricingPlan->getTitle(),
             "currency"  => $order->getCurrencyCode(),
-            "id"        => "gold"
-        ]);
-        */
-        
-        $subscriptionPlan   = new \ArrayObject([
-            "amount"    => $order->getTotalAmount(),
-            "interval"  => "month",
-            "name"      => "My Gold Plan",
-            "currency"  => $order->getCurrencyCode(),
-            "id"        => "my-gold"
+            
+            // Pricing Plan Monthly ( Created From Stripe Dashbord )
+            "id"        => "price_1O04pPCozROjz2jXxpc9XnS7"
         ]);
         
-        return $subscriptionPlan;
+        /** @var \Payum\Core\Payum $payum */
+        $gateway        = $this->payum->getGateway( $order->getPaymentMethod()->getGateway()->getGatewayName() );
+        $gateway->execute( new CreatePlan( $plan ) );
+        
+        $payment        = $order->getPayment();
+        
+        $paymentDetails   = [
+            'amount'    => $payment->getTotalAmount(),
+            'currency'  => $payment->getCurrencyCode(),
+            
+            'local'     => [
+                'save_card' => true,
+                'customer'  => ['plan' => $plan['id']],
+            ]
+        ];
+        
+        return $paymentDetails;
     }
 }
