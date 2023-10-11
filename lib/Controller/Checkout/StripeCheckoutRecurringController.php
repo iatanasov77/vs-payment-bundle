@@ -56,7 +56,7 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
         $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
             $cart->getPaymentMethod()->getGateway()->getGatewayName(),
             $payment,
-            'vs_payment_stripe_checkout_done' // the route to redirect after capture
+            'vs_payment_stripe_checkout_recurring_done' // the route to redirect after capture
         );
         
         if ( $cart->getPaymentMethod()->getGateway()->getFactoryName() == 'stripe_js' ) {
