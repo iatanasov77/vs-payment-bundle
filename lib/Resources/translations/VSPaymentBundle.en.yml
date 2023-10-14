@@ -102,6 +102,7 @@ vs_payment:
         pricing_plans:
             current_plan: Current Plan
             choose_plan: Choose Plan
+            lower_than_active: Lower Plan
                 
         currency_index_title: Currencies
         currency_index_code: Code
