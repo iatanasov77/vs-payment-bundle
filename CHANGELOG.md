@@ -1,3 +1,10 @@
+2.9.8	|	Release date: **13.11.2023**
+============================================
+* Bug-Fixes and Improvements:
+  - Improve Payment Admin Panel Menu.
+  - Fix UserPaymentAwareTrait.
+
+
 2.9.7	|	Release date: **11.10.2023**
 ============================================
 * New Features and Improvements:
