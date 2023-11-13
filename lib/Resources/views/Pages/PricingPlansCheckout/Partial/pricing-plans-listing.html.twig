@@ -11,22 +11,34 @@
                     <hr class="soft" />
                     <!-- end section title -->
                     
+                    {% if app.user %}
+                        {% set currentSubscription = app.user.pricingPlanSubscriptions | last %}
+                    {% endif %}
+                    
                     <ul class="thumbnails">
                         {% for plan in cat.plans %}
                             {% if plan.enabled %}
                                 {% if
                                     app.user and
-                                    ( app.user.pricingPlanSubscriptions | length ) and
-                                    ( app.user.pricingPlanSubscriptions | last ).pricingPlan == plan
+                                    currentSubscription is defined and
+                                    currentSubscription.pricingPlan == plan and
+                                    currentSubscription.active
                                 %}
                                     {% set planActive = true %}
+                                    {% set planLower = false %}
                                 {% else %}
                                     {% set planActive = false %}
+                                    {% if currentSubscription is defined  and 
+                                        ( not currentSubscription or currentSubscription.pricingPlan.price < plan.price ) %}
+                                        {% set planLower = false %}
+                                     {% else %}
+                                        {% set planLower = true %}
+                                    {% endif %}         
                                 {% endif %}
                                 
                                 <li class="span3">
                                     <div
-                                        class="thumbnail {% if planActive %} plan--active{% endif %}{% if plan.premium %} plan--premium{% endif %}"
+                                        class="thumbnail {% if planActive or planLower %} plan--active{% endif %}{% if plan.premium %} plan--premium{% endif %}"
                                     >
                                         <div class="caption">
                                             <h5>{{ plan.title }}</h5>
@@ -37,7 +49,11 @@
                                                     {% if planActive %}
                                                         <button type="button" class="btn">
                                                             <span>{{ 'vs_payment.template.pricing_plans.current_plan' | trans( {},'VSPaymentBundle' ) }}</span>
-                                                        </button> 
+                                                        </button>
+                                                    {% elseif planLower %}
+                                                        <button type="button" class="plan__btn">
+                                                            <span>{{ 'vs_payment.template.pricing_plans.lower_than_active' | trans( {},'VanzVideoPlayer' ) }}</span>
+                                                        </button>
                                                     {% else %}
                                                         <button type="button"
                                                             class="btn btn-primary btnChoosePlan"

@@ -17,14 +17,14 @@ trait UserPaymentAwareTrait
     /**
      * @var Collection
      * 
-     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $orders;
     
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $pricingPlanSubscriptions;
     
