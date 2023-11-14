@@ -21,13 +21,16 @@
                                 {% if
                                     app.user and
                                     currentSubscription is defined and
+                                    currentSubscription and
                                     currentSubscription.pricingPlan == plan and
                                     currentSubscription.active
                                 %}
-                                    {% set planActive = true %}
-                                    {% set planLower = false %}
+                                    {% set planNotPaid  = ( not currentSubscription.paid ) %}
+                                    {% set planActive   = true %}
+                                    {% set planLower    = false %}
                                 {% else %}
-                                    {% set planActive = false %}
+                                    {% set planNotPaid  = false %}
+                                    {% set planActive   = false %}
                                     {% if currentSubscription is defined  and 
                                         ( not currentSubscription or currentSubscription.pricingPlan.price < plan.price ) %}
                                         {% set planLower = false %}
@@ -46,12 +49,16 @@
                                             <p>{{ plan.price }} {{ plan.currencyCode }}</p>
                                             <h4 style="text-align:center">
                                                 {% if app.user %}
-                                                    {% if planActive %}
+                                                    {% if planNotPaid %}
+                                                        <button type="button" class="btn btn-primary btnPayPlan">
+                                                            <span>{{ 'vs_payment.template.pricing_plans.pay_plan' | trans( {},'VSPaymentBundle' ) }}</span>
+                                                        </button>
+                                                    {% elseif planActive %}
                                                         <button type="button" class="btn">
                                                             <span>{{ 'vs_payment.template.pricing_plans.current_plan' | trans( {},'VSPaymentBundle' ) }}</span>
                                                         </button>
                                                     {% elseif planLower %}
-                                                        <button type="button" class="plan__btn">
+                                                        <button type="button" class="btn">
                                                             <span>{{ 'vs_payment.template.pricing_plans.lower_than_active' | trans( {},'VanzVideoPlayer' ) }}</span>
                                                         </button>
                                                     {% else %}
