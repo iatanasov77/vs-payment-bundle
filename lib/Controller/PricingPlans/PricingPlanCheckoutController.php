@@ -40,6 +40,9 @@ class PricingPlanCheckoutController extends AbstractController
     /** @var RepositoryInterface */
     protected $paymentMethodsRepository;
     
+    /** @var RepositoryInterface */
+    protected $subscriptionsRepository;
+    
     /** @var Payment */
     protected $vsPayment;
     
@@ -52,6 +55,7 @@ class PricingPlanCheckoutController extends AbstractController
         RepositoryInterface $pricingPlanCategoryRepository,
         RepositoryInterface $pricingPlansRepository,
         RepositoryInterface $paymentMethodsRepository,
+        RepositoryInterface $subscriptionsRepository,
         Payment $vsPayment
     ) {
         $this->doctrine                         = $doctrine;
@@ -62,6 +66,7 @@ class PricingPlanCheckoutController extends AbstractController
         $this->pricingPlanCategoryRepository    = $pricingPlanCategoryRepository;
         $this->pricingPlansRepository           = $pricingPlansRepository;
         $this->paymentMethodsRepository         = $paymentMethodsRepository;
+        $this->subscriptionsRepository          = $subscriptionsRepository;
         $this->vsPayment                        = $vsPayment;
     }
     
@@ -102,7 +107,7 @@ class PricingPlanCheckoutController extends AbstractController
             
             $subscriptionId = intval( $formData['subscription'] );
             if ( $subscriptionId ) {
-                $subscription   = $this->paymentMethodsRepository->find( $subscriptionId );
+                $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
                 $cart->setSubscription( $subscription );
             }
             

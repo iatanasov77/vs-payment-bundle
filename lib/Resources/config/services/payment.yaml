@@ -80,6 +80,7 @@ services:
             - '@vs_payment.repository.pricing_plan_category'
             - '@vs_payment.repository.pricing_plan'
             - '@vs_payment.repository.payment_method'
+            - '@vs_payment.repository.pricing_plan_subscription'
             - '@vs_payment_payment'
         calls:
             - [ setContainer, [ '@service_container' ] ]
