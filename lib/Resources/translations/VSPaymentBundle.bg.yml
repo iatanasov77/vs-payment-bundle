@@ -103,6 +103,7 @@ vs_payment:
             current_plan: Текущ План
             choose_plan: Избери План
             lower_than_active: Lower Plan
+            pay_plan: Плати План
                 
         currency_index_title: Валути
         currency_index_code: Код
