@@ -206,13 +206,9 @@ abstract class AbstractCheckoutController extends AbstractController
             $hasPricingPlan = true;
             $user           = $this->tokenStorage->getToken()->getUser();
             
-            $subscription->setUser( $user );
             $subscription->setPricingPlan( $payableObject );
-            
             $subscription->setDate( new \DateTime() );
-            
-            $em->persist( $subscription );
-            $em->flush();
+            $subscription->setPaid( true );
             
             $user->addPricingPlanSubscription( $subscription );
             $em->persist( $user );

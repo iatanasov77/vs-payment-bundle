@@ -21,5 +21,12 @@
         <field name="date" column="date" type="datetime" nullable="false">
             <gedmo:timestampable on="create"/>
         </field>
+        
+        <field name="paid" column="paid" type="boolean" >
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        
     </mapped-superclass>
 </doctrine-mapping>

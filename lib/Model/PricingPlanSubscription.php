@@ -27,6 +27,9 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     /** @var \DateTimeInterface */
     protected $date;
     
+    /** @var bool */
+    protected $paid = false;
+    
     public function getId()
     {
         return $this->id;
@@ -64,6 +67,23 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     public function setDate($date)
     {
         $this->date = $date;
+        
+        return $this;
+    }
+    
+    public function isPaid(): bool
+    {
+        return $this->paid;
+    }
+    
+    public function getPaid(): bool
+    {
+        return $this->paid;
+    }
+    
+    public function setPaid( $paid )
+    {
+        $this->paid = $paid;
         
         return $this;
     }
