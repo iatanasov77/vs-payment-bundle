@@ -1,7 +1,10 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface;
 use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod;
 
@@ -29,6 +32,16 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     
     /** @var bool */
     protected $paid = false;
+    
+    /**
+     * @var Collection|OrderInterface[]
+     */
+    protected $orders;
+    
+    public function __construct()
+    {
+        $this->orders   = new ArrayCollection();
+    }
     
     public function getId()
     {
@@ -86,6 +99,11 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         $this->paid = $paid;
         
         return $this;
+    }
+    
+    public function getOrders(): Collection
+    {
+        return $this->orders;
     }
     
     public function isActive(): bool

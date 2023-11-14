@@ -28,5 +28,11 @@
             </options>
         </field>
         
+        <one-to-many field="orders" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" mapped-by="subscription" index-by="id">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+        
     </mapped-superclass>
 </doctrine-mapping>

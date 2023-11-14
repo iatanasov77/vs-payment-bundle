@@ -4,6 +4,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -36,6 +37,8 @@ class SelectPricingPlanForm extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
+            ->add( 'subscription', HiddenType::class, ['data' => '0'])
+        
             ->add( 'name', TextType::class, [
                 'label'                 => 'vs_payment.form.select_pricing_plan.name',
                 'translation_domain'    => 'VSPaymentBundle',
