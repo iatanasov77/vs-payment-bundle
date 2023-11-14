@@ -50,7 +50,10 @@
                                             <h4 style="text-align:center">
                                                 {% if app.user %}
                                                     {% if planNotPaid %}
-                                                        <button type="button" class="btn btn-primary btnPayPlan">
+                                                        <button type="button"
+                                                            class="btn btn-primary btnPayPlan"
+                                                            data-url="{{ path( 'vs_payment_select_pricing_plan_form', {'pricingPlanId': plan.id, 'subscriptionId': currentSubscription.id} ) }}"
+                                                        >
                                                             <span>{{ 'vs_payment.template.pricing_plans.pay_plan' | trans( {},'VSPaymentBundle' ) }}</span>
                                                         </button>
                                                     {% elseif planActive %}

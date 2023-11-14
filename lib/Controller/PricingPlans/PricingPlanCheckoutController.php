@@ -74,14 +74,14 @@ class PricingPlanCheckoutController extends AbstractController
         ]);
     }
     
-    public function showSelectPricingPlanForm( $pricingPlanId, Request $request ): Response
+    public function showSelectPricingPlanForm( $pricingPlanId, $subscriptionId, Request $request ): Response
     {
         $form   = $this->createForm( SelectPricingPlanForm::class, null, ['method' => 'POST'] );
         
         return $this->render( '@VSPayment/Pages/PricingPlansCheckout/Partial/select-pricing-plan-form.html.twig', [
             'form'              => $form->createView(),
             'pricingPlanId'     => $pricingPlanId,
-            'subscriptionId'    => 0,
+            'subscriptionId'    => $subscriptionId,
         ]);
     }
     
@@ -99,6 +99,12 @@ class PricingPlanCheckoutController extends AbstractController
             $formData       = $form->getData();
             $pricingPlan    = $this->addPricingPlanToCart( $formData['pricingPlan'], $cart );
             $paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod'] );
+            
+            $subscriptionId = intval( $formData['subscription'] );
+            if ( $subscriptionId ) {
+                $subscription   = $this->paymentMethodsRepository->find( $subscriptionId );
+                $cart->setSubscription( $subscription );
+            }
             
             $cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
             $cart->setPaymentMethod( $paymentMethod );

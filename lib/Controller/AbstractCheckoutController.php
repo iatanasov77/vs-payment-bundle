@@ -195,6 +195,15 @@ abstract class AbstractCheckoutController extends AbstractController
         $em             = $this->doctrine->getManager();
         $hasPricingPlan = false;
         
+        $subscription   = $order->getSubscription();
+        if ( $subscription ) {
+            $subscription->setPaid( true );
+            $em->persist( $subscription );
+            $em->flush();
+            
+            return true;
+        }
+        
         foreach( $order->getItems() as $item ) {
             $payableObject  = $item->getObject();
             if ( ! ( $payableObject instanceof PricingPlanInterface ) ) {
