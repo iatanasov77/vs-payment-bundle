@@ -66,6 +66,7 @@ services:
             - '@vs_payment.factory.order_item'
             - '@vs_payment.repository.order_item'
             - '@vs_payment.repository.product'
+            - '@vs_payment.order_factory'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
@@ -101,5 +102,6 @@ services:
             - '@vs_payment.repository.payment_method'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '@vs_payment_payment'
+            - '@vs_payment.order_factory'
         calls:
             - [ setContainer, [ '@service_container' ] ]

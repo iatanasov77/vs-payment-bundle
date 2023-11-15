@@ -61,6 +61,8 @@ class OrderFactory
             
             $em->persist( $shoppingCart );
             $em->flush();
+            
+            $this->request->getSession()->set( 'vs_payment_basket_id', $shoppingCart->getId() );
         }
         
         return $shoppingCart;

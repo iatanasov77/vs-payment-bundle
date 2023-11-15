@@ -9,6 +9,7 @@ use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
+use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
@@ -46,6 +47,9 @@ class PricingPlanCheckoutController extends AbstractController
     /** @var Payment */
     protected $vsPayment;
     
+    /** @vvar OrderFactory */
+    protected $orderFactory;
+    
     public function __construct(
         ManagerRegistry $doctrine,
         SecurityBridge $securityBridge,
@@ -56,7 +60,8 @@ class PricingPlanCheckoutController extends AbstractController
         RepositoryInterface $pricingPlansRepository,
         RepositoryInterface $paymentMethodsRepository,
         RepositoryInterface $subscriptionsRepository,
-        Payment $vsPayment
+        Payment $vsPayment,
+        OrderFactory $orderFactory
     ) {
         $this->doctrine                         = $doctrine;
         $this->securityBridge                   = $securityBridge;
@@ -68,6 +73,7 @@ class PricingPlanCheckoutController extends AbstractController
         $this->paymentMethodsRepository         = $paymentMethodsRepository;
         $this->subscriptionsRepository          = $subscriptionsRepository;
         $this->vsPayment                        = $vsPayment;
+        $this->orderFactory                     = $orderFactory;
     }
     
     public function showPricingPlans( Request $request ): Response
@@ -92,7 +98,7 @@ class PricingPlanCheckoutController extends AbstractController
     
     public function handlePricingPlanFormAction( Request $request ): Response
     {
-        $cart   = $this->createCart( $request );
+        $cart   = $this->orderFactory->getShoppingCart();
         if ( ! $cart ) {
             throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
         }
@@ -121,6 +127,7 @@ class PricingPlanCheckoutController extends AbstractController
                 $paymentMethod->getGateway(),
                 $pricingPlan->isRecurringPayment()
             );
+            
             return new JsonResponse([
                 'status'    => Status::STATUS_OK,
                 'data'      => [
@@ -129,24 +136,6 @@ class PricingPlanCheckoutController extends AbstractController
                 ]
             ]);
         }
-    }
-    
-    protected function createCart( Request $request )
-    {
-        $session = $request->getSession();
-        $session->start();  // Ensure Session is Started
-        
-        $em    = $this->doctrine->getManager();
-        $cart  = $this->ordersFactory->createNew();
-        
-        $cart->setUser( $this->securityBridge->getUser() );
-        $cart->setSessionId( $session->getId() );
-        
-        $em->persist( $cart );
-        $em->flush();
-        
-        $request->getSession()->set( 'vs_payment_basket_id', $cart->getId() );
-        return $cart;
     }
     
     protected function addPricingPlanToCart( $pricingPlanId, &$cart ): PayableObjectInterface

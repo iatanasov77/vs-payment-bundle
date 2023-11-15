@@ -16,7 +16,7 @@ final class PaymentDoneEvent
     /** @var string */
     private $action;
     
-    public function __construct( $resource, string $action)
+    public function __construct( $resource, string $action )
     {
         $this->resource     = $resource;
         $this->action       = $action;
