@@ -1,5 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
+use Sylius\Component\Resource\Model\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
@@ -10,6 +11,8 @@ use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod
 
 class PricingPlanSubscription implements PricingPlanSubscriptionInterface
 {
+    use TimestampableTrait;
+    
     /** @var integer */
     protected $id;
     
@@ -27,16 +30,19 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
      */
     protected $user;
     
-    /** @var \DateTimeInterface */
-    protected $date;
+    /** @var string */
+    protected $code;
     
     /** @var bool */
-    protected $paid = false;
+    protected $recurringPayment = false;
     
     /**
      * @var Collection|OrderInterface[]
      */
     protected $orders;
+    
+    /** @var \DateTimeInterface */
+    protected $expiresAt;
     
     public function __construct()
     {
@@ -72,31 +78,34 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
-    public function getDate()
+    public function getCode()
     {
-        return $this->date;
+        return $this->code;
     }
     
-    public function setDate($date)
+    public function setCode($code)
     {
-        $this->date = $date;
+        $this->code = $code;
         
         return $this;
     }
     
-    public function isPaid(): bool
+    public function isRecurringPayment(): bool
     {
-        return $this->paid;
+        return $this->recurringPayment;
     }
     
-    public function getPaid(): bool
+    public function getRecurringPayment(): bool
     {
-        return $this->paid;
+        return $this->recurringPayment;
     }
     
-    public function setPaid( $paid )
+    /**
+     * @param bool
+     */
+    public function setRecurringPayment( ?bool $recurringPayment ): PricingPlanInterface
     {
-        $this->paid = $paid;
+        $this->recurringPayment = (bool) $recurringPayment;
         
         return $this;
     }
@@ -106,73 +115,26 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this->orders;
     }
     
-    public function isActive(): bool
+    public function getExpiresAt()
     {
-        $active     = false;
-        $thisDate   = clone $this->date;
-        switch( $this->pricingPlan->getPaidService()->getSubscriptionPeriod() ) {
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_UNLIMITED:
-                $active = true;
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_YEAR:
-                $active = ( $thisDate->add( new \DateInterval( 'P1Y' ) ) ) > ( new \DateTime() );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_HALFYEAR:
-                $active = ( $thisDate->add( new \DateInterval( 'P6M' ) ) ) > ( new \DateTime() );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_QUARTERYEAR:
-                $active = ( $thisDate->add( new \DateInterval( 'P3M' ) ) ) > ( new \DateTime() );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_MONTH:
-                $active = ( $thisDate->add( new \DateInterval( 'P1M' ) ) ) > ( new \DateTime() );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_SEMIMONTH:
-                $active = ( $thisDate->add( new \DateInterval( 'P15D' ) ) ) > ( new \DateTime() );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_WEEK:
-                $active = ( $thisDate->add( new \DateInterval( 'P1W' ) ) ) > ( new \DateTime() );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_DAY:
-                $active = ( $thisDate->add( new \DateInterval( 'P1D' ) ) ) > ( new \DateTime() );
-                break;
-            default:
-                $active = false;
-        }
-        
-        return $active;
+        return $this->expiresAt;
     }
     
-    public function getExpireAt(): ?\DateTime
+    public function setExpiresAt($expiresAt)
     {
-        $expireAt   = null;
-        $thisDate   = clone $this->date;
-        switch( $this->pricingPlan->getPaidService()->getSubscriptionPeriod() ) {
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_YEAR:
-                $expireAt   = $thisDate->add( new \DateInterval( 'P1Y' ) );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_HALFYEAR:
-                $expireAt   = $thisDate->add( new \DateInterval( 'P6M' ) );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_QUARTERYEAR:
-                $expireAt   = $thisDate->add( new \DateInterval( 'P3M' ) );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_MONTH:
-                $expireAt   = $thisDate->add( new \DateInterval( 'P1M' ) );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_SEMIMONTH:
-                $expireAt   = $thisDate->add( new \DateInterval( 'P15D' ) );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_WEEK:
-                $expireAt   = $thisDate->add( new \DateInterval( 'P1W' ) );
-                break;
-            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_DAY:
-                $expireAt   = $thisDate->add( new \DateInterval( 'P1D' ) );
-                break;
-            default:
-                $expireAt   = null;
-        }
+        $this->expiresAt = $expiresAt;
         
-        return $expireAt;
+        return $this;
+    }
+    
+    public function isPaid(): bool
+    {
+        return $this->expiresAt && ( $this->expiresAt > ( new \DateTime() ) );
+    }
+    
+    public function isActive(): bool
+    {
+        return $this->isPaid();
     }
     
     public function getSubscriptionPriority(): ?int

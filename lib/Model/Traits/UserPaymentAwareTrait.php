@@ -24,7 +24,7 @@ trait UserPaymentAwareTrait
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface", mappedBy="user", indexBy="code", cascade={"persist", "remove"})
      */
     protected $pricingPlanSubscriptions;
     

@@ -135,7 +135,7 @@ abstract class AbstractCheckoutController extends AbstractController
         }
         
         return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
-            'shoppingCart'                      => $this->getShoppingCart( $request ),
+            'shoppingCart'                      => $this->orderFactory->getShoppingCart(),
             'paymentStatus'                     => $paymentStatus,
             'routeRedirectOnShoppingCartDone'   => $this->routeRedirectOnShoppingCartDone,
             'routeRedirectOnPricingPlanDone'    => $this->routeRedirectOnPricingPlanDone,
@@ -154,7 +154,7 @@ abstract class AbstractCheckoutController extends AbstractController
         
         throw new HttpException( 400, $this->getErrorMessage( $paymentStatus->getModel() ) );
         return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
-            'shoppingCart'                      => $this->getShoppingCart( $request ),
+            'shoppingCart'                      => $this->orderFactory->getShoppingCart(),
             'paymentStatus'                     => $paymentStatus,
             'routeRedirectOnShoppingCartDone'   => $this->routeRedirectOnShoppingCartDone,
             'routeRedirectOnPricingPlanDone'    => $this->routeRedirectOnPricingPlanDone,
