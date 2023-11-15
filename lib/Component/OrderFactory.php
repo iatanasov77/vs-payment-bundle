@@ -37,7 +37,7 @@ class OrderFactory
         $this->ordersRepository = $ordersRepository;
         $this->ordersFactory    = $ordersFactory;
         
-        $this->request          = $this->requestStack->getCurrentRequest();
+        $this->request          = $requestStack->getCurrentRequest();
         
         $token                  = $tokenStorage->getToken();
         if ( $token ) {
