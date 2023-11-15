@@ -64,7 +64,7 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.model.product_category.class%'
-            - "@request_stack"
+            - '@request_stack'
             - '@vs_application.repository.locale'
             - '@vs_payment.repository.product_category'
             
@@ -74,7 +74,7 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.model.product.class%'
-            - "@request_stack"
+            - '@request_stack'
             - '@vs_application.repository.locale'
             - '%vs_payment.model.product_category.class%'
             - '%vs_payment.model.currency.class%'
@@ -91,7 +91,7 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.model.pricing_plan_category.class%'
-            - "@request_stack"
+            - '@request_stack'
             - '@vs_application.repository.locale'
             - '@vs_payment.repository.pricing_plan_category'
             
@@ -101,7 +101,7 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.model.pricing_plan.class%'
-            - "@request_stack"
+            - '@request_stack'
             - '@vs_application.repository.locale'
             - '%vs_payment.model.pricing_plan_category.class%'
             - '%vs_users_subscriptions.model.payed_service_subscription_period.class%'

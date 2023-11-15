@@ -9,7 +9,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
-use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
+use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Form\PaymentForm;
 
 class ShoppingCartCheckoutController extends AbstractController

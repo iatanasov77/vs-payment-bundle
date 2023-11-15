@@ -131,6 +131,11 @@ class Order implements Interfaces\OrderInterface
         return $this;
     }
     
+    public function isSubscriptionPayment(): bool
+    {
+        return $this->subscription ? true : false;
+    }
+    
     public function getSubscription()
     {
         return $this->subscription;
