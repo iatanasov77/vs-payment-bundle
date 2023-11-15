@@ -111,8 +111,6 @@ abstract class AbstractCheckoutController extends AbstractController
         $storage->update( $payment );
         $request->getSession()->remove( 'vs_payment_basket_id' );
         
-        $this->setSubscription( $payment->getOrder() );
-        
         $hasPricingPlan = $payment->getOrder()->isSubscriptionPayment();
         
         if ( $hasPricingPlan ) {
