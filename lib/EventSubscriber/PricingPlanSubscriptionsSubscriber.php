@@ -7,12 +7,15 @@ use Sylius\Component\Resource\Factory\Factory;
 use Doctrine\Persistence\ManagerRegistry;
 use Vankosoft\UsersBundle\Model\UserInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
+
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
+use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
+use Vankosoft\PaymentBundle\EventSubscriber\Event\CreateSubscriptionEvent;
 
 /**
  * MANUAL: https://q.agency/blog/custom-events-with-symfony5/
  */
-final class PaymentDoneSubscriber implements EventSubscriberInterface
+final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterface
 {
     /** @var ManagerRegistry */
     private $doctrine;
@@ -50,34 +53,47 @@ final class PaymentDoneSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            PaymentDoneEvent::NAME    => 'createSubscription',
+            CreateSubscriptionEvent::NAME       => 'createSubscription',
+            SubscriptionsPaymentDoneEvent::NAME => 'setSubscriptionsPayment',
         ];
     }
 
-    public function createSubscription( PaymentDoneEvent $event )
+    public function createSubscription( CreateSubscriptionEvent $event )
     {
-        switch ( $event->getAction() ) {
-            case PaymentDoneEvent::ACTION_CREATE_SUBSCRIPTION:
-                throw new \Exception( 'Action Unimplemented !' );
-                break;
-            case PaymentDoneEvent::ACTION_PAY_SUBSCRIPTION:
-                $this->_setSubscriptionPayment( $event->getResource() );
-                break;
-            default:
-                throw new \Exception( 'Unknown Event Action !' );
-        }
+        $em             = $this->doctrine->getManager();
+        $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
+        
+        $subscription->setUser( $this->user );
+        $subscription->setPricingPlan( $event->getPricingPlan() );
+        $subscription->setCode( $event->getPricingPlan()->getSubscriptionCode() );
+        
+        $em->persist( $subscription );
+        $em->flush();
+        $em->clear();
     }
     
-    protected function _setSubscriptionPayment( $subscription )
+    public function setSubscriptionsPayment( SubscriptionsPaymentDoneEvent $event )
     {
-//         $order          = $this->orderFactory->getShoppingCart();
-//         $subscription   = $order->getSubscription();
-        $em             = $this->doctrine->getManager();
+        $em = $this->doctrine->getManager();
         
-        if ( $subscription ) {
-            $subscription->setPaid( true );
-            $em->persist( $subscription );
-            $em->flush();
+        foreach ( $event->getSubscriptions() as $subscription ) {
+            $this->setSubscriptionPaid( $subscription );
         }
+        
+        $em->flush();
+        $em->clear();
+    }
+    
+    private function setSubscriptionPaid( PricingPlanSubscriptionInterface $subscription )
+    {
+        $em = $this->doctrine->getManager();
+        
+        $startDate  = $subscription->getExpiresAt() ?: new \DateTime();
+        $endDate    = clone $startDate;
+        $endDate    = $endDate->add( $subscription->getPricingPlan()->getSubscriptionPeriod() );
+        
+        $subscription->setExpiresAt( $endDate );
+        
+        $em->persist( $subscription );
     }
 }

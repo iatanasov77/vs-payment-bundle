@@ -12,6 +12,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface;
+use Vankosoft\PaymentBundle\Component\Exception\PricingPlanException;
 
 class PricingPlan implements PricingPlanInterface
 {
@@ -247,6 +248,44 @@ class PricingPlan implements PricingPlanInterface
         $this->recurringPayment = (bool) $recurringPayment;
         
         return $this;
+    }
+    
+    public function getSubscriptionCode(): ?string
+    {
+        return $this->paidService->getPayedService()->getSubscriptionCode();
+    }
+    
+    public function getSubscriptionPeriod(): \DateInterval
+    {
+        $period = null;
+        
+        switch( $this->paidService->getSubscriptionPeriod() ) {
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_YEAR:
+                $period = new \DateInterval( 'P1Y' );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_HALFYEAR:
+                $period = new \DateInterval( 'P6M' );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_QUARTERYEAR:
+                $period = new \DateInterval( 'P3M' );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_MONTH:
+                $period = new \DateInterval( 'P1M' );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_SEMIMONTH:
+                $period = new \DateInterval( 'P15D' );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_WEEK:
+                $period = new \DateInterval( 'P1W' );
+                break;
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_DAY:
+                $period = new \DateInterval( 'P1D' );
+                break;
+            default:
+                throw new PricingPlanException( 'Unknown Pricing Plan Subscription Period' );
+        }
+        
+        return $period;
     }
     
     /*

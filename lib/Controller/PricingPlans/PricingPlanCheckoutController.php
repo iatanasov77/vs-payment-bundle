@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -14,11 +15,15 @@ use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\PaymentBundle\Form\SelectPricingPlanForm;
+use Vankosoft\PaymentBundle\EventSubscriber\Event\CreateSubscriptionEvent;
 
 class PricingPlanCheckoutController extends AbstractController
 {
     /** @var ManagerRegistry */
-    protected ManagerRegistry $doctrine;
+    protected $doctrine;
+    
+    /** @var EventDispatcherInterface */
+    protected $eventDispatcher;
     
     /** @var SecurityBridge */
     protected $securityBridge;
@@ -52,6 +57,7 @@ class PricingPlanCheckoutController extends AbstractController
     
     public function __construct(
         ManagerRegistry $doctrine,
+        EventDispatcherInterface $eventDispatcher,
         SecurityBridge $securityBridge,
         Factory $ordersFactory,
         RepositoryInterface $ordersRepository,
@@ -64,6 +70,7 @@ class PricingPlanCheckoutController extends AbstractController
         OrderFactory $orderFactory
     ) {
         $this->doctrine                         = $doctrine;
+        $this->eventDispatcher                  = $eventDispatcher;
         $this->securityBridge                   = $securityBridge;
         $this->ordersFactory                    = $ordersFactory;
         $this->ordersRepository                 = $ordersRepository;
@@ -109,26 +116,8 @@ class PricingPlanCheckoutController extends AbstractController
             $em             = $this->doctrine->getManager();
             $formData       = $form->getData();
             
-            
-            
-            $subscriptionId = intval( $formData['subscription'] );
-            if ( $subscriptionId ) {
-                $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
-                $cart->setSubscription( $subscription );
-            }
-            
-            
-            
-            $pricingPlan    = $this->addPricingPlanToCart( $formData['pricingPlan'], $cart );
             $paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod'] );
-            
-            
-            
-            $cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
-            $cart->setPaymentMethod( $paymentMethod );
-            $cart->setDescription( $pricingPlan->getDescription() );
-            $em->persist( $cart );
-            $em->flush();
+            $pricingPlan    = $this->prepareCart( $formData, $cart, $paymentMethod );
             
             $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute(
                 $paymentMethod->getGateway(),
@@ -145,21 +134,38 @@ class PricingPlanCheckoutController extends AbstractController
         }
     }
     
-    protected function addPricingPlanToCart( $pricingPlanId, &$cart ): PayableObjectInterface
+    protected function prepareCart( $formData, $cart, $paymentMethod )
     {
         $em             = $this->doctrine->getManager();
+        $pricingPlan    = $this->pricingPlansRepository->find( $formData['pricingPlan'] );
+        
+        $subscriptionId = intval( $formData['subscription'] );
+        if ( ! $subscriptionId ) {
+            $this->eventDispatcher->dispatch(
+                new CreateSubscriptionEvent( $pricingPlan ),
+                CreateSubscriptionEvent::NAME
+            );
+            $subscriptions  = $this->getUser()->getPricingPlanSubscriptions();
+            $subscription   = $subscriptions->last()
+        } else {
+            $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        }
         
         $orderItem      = $this->orderItemsFactory->createNew();
-        $payableObject  = $this->pricingPlansRepository->find( $pricingPlanId );
         
-        $orderItem->setPaidServiceSubscription( $payableObject );
-        $orderItem->setPrice( $payableObject->getPrice() );
-        $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+        $orderItem->setPaidServiceSubscription( $subscription );
+        $orderItem->setPrice( $pricingPlan->getPrice() );
+        $orderItem->setCurrencyCode( $pricingPlan->getCurrencyCode() );
         
         $cart->addItem( $orderItem );
+        
+        $cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
+        $cart->setPaymentMethod( $paymentMethod );
+        $cart->setDescription( $pricingPlan->getDescription() );
+        
         $em->persist( $cart );
         $em->flush();
         
-        return $payableObject;
+        return $pricingPlan;
     }
 }

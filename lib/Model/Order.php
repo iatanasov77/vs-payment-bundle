@@ -229,4 +229,17 @@ class Order implements Interfaces\OrderInterface
         
         return $this;
     }
+    
+    public function getSubscriptions(): array
+    {
+        $subscriptions  = [];
+        foreach ( $this->items as $item ) {
+            $subscription   = $item->getPaidServiceSubscription();
+            if ( $subscription ) {
+                $subscriptions[]    = $subscription;
+            }
+        }
+        
+        return $subscriptions;
+    }
 }

@@ -16,7 +16,7 @@ use Payum\Core\Request\GetHumanStatus;
 
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Order;
-use Vankosoft\PaymentBundle\EventSubscriber\PaymentDoneEvent;
+use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
@@ -111,12 +111,13 @@ abstract class AbstractCheckoutController extends AbstractController
         $storage->update( $payment );
         $request->getSession()->remove( 'vs_payment_basket_id' );
         
-        $hasPricingPlan = $payment->getOrder()->isSubscriptionPayment();
+        $subscriptions  = $payment->getOrder()->getSubscriptions();
+        $hasPricingPlan = ! empty( $subscriptions );
         
         if ( $hasPricingPlan ) {
             $this->eventDispatcher->dispatch(
-                new PaymentDoneEvent( $payment->getOrder()->getSubscription(), PaymentDoneEvent::ACTION_PAY_SUBSCRIPTION ),
-                PaymentDoneEvent::NAME
+                new SubscriptionsPaymentDoneEvent( $subscriptions ),
+                SubscriptionsPaymentDoneEvent::NAME
             );
             
             if ( $this->routeRedirectOnPricingPlanDone ) {
