@@ -69,7 +69,7 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
     
     protected function createSubscription( OrderInterface $order ): array
     {
-        $pricingPlan    = $order->getItems()->first()->getPaidServiceSubscription();
+        $pricingPlan    = $order->getItems()->first()->getPaidServiceSubscription()->getPricingPlan();
         
         $plan           = new \ArrayObject([
             "amount"    => $order->getTotalAmount(),
