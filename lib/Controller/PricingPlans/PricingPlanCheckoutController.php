@@ -146,7 +146,7 @@ class PricingPlanCheckoutController extends AbstractController
                 CreateSubscriptionEvent::NAME
             );
             $subscriptions  = $this->getUser()->getPricingPlanSubscriptions();
-            $subscription   = $subscriptions->last()
+            $subscription   = $subscriptions->last();
         } else {
             $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
         }
