@@ -45,9 +45,6 @@ class PricingPlan implements PricingPlanInterface
     /** @var string */
     protected $locale;
     
-    /** @var Collection|OrderItemInterface[] */
-    protected $orderItems;
-    
     /** @var float */
     protected $price;
     
@@ -65,7 +62,6 @@ class PricingPlan implements PricingPlanInterface
     
     public function __construct()
     {
-        $this->orderItems       = new ArrayCollection();
         $this->subscriptions    = new ArrayCollection();
     }
     
@@ -211,11 +207,6 @@ class PricingPlan implements PricingPlanInterface
         $this->subscriptionPriority  = $subscriptionPriority;
         
         return $this;
-    }
-    
-    public function getOrderItems(): Collection
-    {
-        return $this->orderItems;
     }
     
     public function getSubscriptions(): Collection

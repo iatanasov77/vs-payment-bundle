@@ -108,14 +108,21 @@ class PricingPlanCheckoutController extends AbstractController
         if ( $form->isSubmitted() ) {
             $em             = $this->doctrine->getManager();
             $formData       = $form->getData();
-            $pricingPlan    = $this->addPricingPlanToCart( $formData['pricingPlan'], $cart );
-            $paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod'] );
+            
+            
             
             $subscriptionId = intval( $formData['subscription'] );
             if ( $subscriptionId ) {
                 $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
                 $cart->setSubscription( $subscription );
             }
+            
+            
+            
+            $pricingPlan    = $this->addPricingPlanToCart( $formData['pricingPlan'], $cart );
+            $paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod'] );
+            
+            
             
             $cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
             $cart->setPaymentMethod( $paymentMethod );

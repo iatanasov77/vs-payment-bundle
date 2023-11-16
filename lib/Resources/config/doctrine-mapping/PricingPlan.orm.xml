@@ -53,8 +53,6 @@
             </cascade>
         </many-to-one>
         
-        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="paidServiceSubscription" />
-        
         <one-to-many field="subscriptions" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface" mapped-by="pricingPlan" orphan-removal="true">
             <cascade>
                 <cascade-all/>

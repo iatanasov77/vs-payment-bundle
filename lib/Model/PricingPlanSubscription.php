@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface;
 use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod;
 
@@ -36,17 +36,15 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     /** @var bool */
     protected $recurringPayment = false;
     
-    /**
-     * @var Collection|OrderInterface[]
-     */
-    protected $orders;
+    /** @var Collection|OrderItemInterface[] */
+    protected $orderItems;
     
     /** @var \DateTimeInterface */
     protected $expiresAt;
     
     public function __construct()
     {
-        $this->orders   = new ArrayCollection();
+        $this->orderItems   = new ArrayCollection();
     }
     
     public function getId()
@@ -110,9 +108,9 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
-    public function getOrders(): Collection
+    public function getOrderItems(): Collection
     {
-        return $this->orders;
+        return $this->orderItems;
     }
     
     public function getExpiresAt()
