@@ -4,7 +4,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface;
 use Doctrine\Common\Collections\Collection;
 
-interface PricingPlanInterface
+interface PricingPlanInterface extends ResourceInterface
 {
     public function isActive(): bool;
     public function getCategory(): ?PricingPlanCategoryInterface;
