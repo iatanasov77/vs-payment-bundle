@@ -35,11 +35,6 @@ class Order implements Interfaces\OrderInterface
     protected $payment;
     
     /**
-     * @var Interfaces\PricingPlanSubscriptionInterface|null
-     */
-    protected $subscription;
-    
-    /**
      * @var float
      */
     protected $totalAmount;
@@ -127,23 +122,6 @@ class Order implements Interfaces\OrderInterface
     public function setPayment($payment)
     {
         $this->payment = $payment;
-        
-        return $this;
-    }
-    
-    public function isSubscriptionPayment(): bool
-    {
-        return $this->subscription ? true : false;
-    }
-    
-    public function getSubscription()
-    {
-        return $this->subscription;
-    }
-    
-    public function setSubscription($subscription)
-    {
-        $this->subscription = $subscription;
         
         return $this;
     }

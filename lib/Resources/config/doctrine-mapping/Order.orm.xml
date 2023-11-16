@@ -20,8 +20,6 @@
             </cascade>
         </one-to-one>
         
-        <many-to-one field="subscription" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface" inversed-by="orders" />
-
         <field name="totalAmount" column="total_amount" type="float" nullable="false" />
         <field name="currencyCode" column="currency_code" type="string" length="8" nullable="false" />
         <field name="description" column="description" type="string" nullable="false" />
