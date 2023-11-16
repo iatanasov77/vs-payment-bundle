@@ -69,7 +69,6 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         
         $em->persist( $subscription );
         $em->flush();
-        $em->clear();
     }
     
     public function setSubscriptionsPayment( SubscriptionsPaymentDoneEvent $event )
@@ -81,7 +80,6 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         }
         
         $em->flush();
-        $em->clear();
     }
     
     private function setSubscriptionPaid( PricingPlanSubscriptionInterface $subscription )
