@@ -141,7 +141,7 @@ class PricingPlan implements PricingPlanInterface, Comparable
         return $this;
     }
     
-    public function getPaidService(): PayedServiceSubscriptionPeriodInterface
+    public function getPaidService(): ?PayedServiceSubscriptionPeriodInterface
     {
         return $this->paidService;
     }
