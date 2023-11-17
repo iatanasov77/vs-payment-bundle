@@ -8,9 +8,21 @@ services:
         autoconfigure: true
         public: true
 
-     # PAYPAL REST - CREDIT CARD
+    # PAYPAL REST
     ##############################
-    
+    Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController:
+        arguments:
+            - '@security.token_storage'
+            - '@event_dispatcher'
+            - '@translator'
+            - '@doctrine'
+            - '@payum'
+            - '@vs_payment.order_factory'
+            - '%vs_payment.model.payment.class%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
             
     # PAYPAL EXPRESS CHECKOUT
     ##############################
@@ -91,22 +103,6 @@ services:
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
-            
-    # PAYPAL REST
-    ##############################
-    Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController:
-        arguments:
-            - '@security.token_storage'
-            - '@event_dispatcher'
-            - '@translator'
-            - '@doctrine'
-            - '@payum'
-            - '@vs_payment.order_factory'
-            - '%vs_payment.model.payment.class%'
-            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
-            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
-        calls:
-            - [ setContainer, [ '@service_container' ] ]
     
     # BORICA
     ##############################
@@ -127,6 +123,22 @@ services:
     # PAYSERA
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PayseraController:
+        arguments:
+            - '@security.token_storage'
+            - '@event_dispatcher'
+            - '@translator'
+            - '@doctrine'
+            - '@payum'
+            - '@vs_payment.order_factory'
+            - '%vs_payment.model.payment.class%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+            
+    # AuthorizeNet
+    ##############################
+    Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController:
         arguments:
             - '@security.token_storage'
             - '@event_dispatcher'

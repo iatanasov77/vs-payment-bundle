@@ -84,5 +84,15 @@ vs_payment_borica_done:
     path:     /borica/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\BoricaController::doneAction
 
+# AuthorizeNet
+#######################################################################################
+vs_payment_authorize_net_prepare:
+    path:     /borica/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController::prepareAction
+    options:
+        expose: true
 
+vs_payment_authorize_net_done:
+    path:     /borica/done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController::doneAction
 
