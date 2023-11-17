@@ -114,7 +114,7 @@ sylius_fixtures:
                                   "config_path": "REPLACE/IT" # Point to the directory where your skd_config.ini is located.
                               currency: 'USD'
                             - title: 'Test Authorize.NET'
-                              description: 'Authorize.NET'
+                              description: 'Test Authorize.NET'
                               gateway_name: 'authorize_net_aim'
                               factory_name: 'authorize_net_aim'
                               use_sandbox: true

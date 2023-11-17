@@ -11,6 +11,7 @@ parameters:
         - 'stripe_js'
         - 'paysera'
         - 'borica'
+        - 'authorize_net_aim'
         
     vs_payment.form.type.currency.validation_groups:
         - 'VSPaymentBundle'
