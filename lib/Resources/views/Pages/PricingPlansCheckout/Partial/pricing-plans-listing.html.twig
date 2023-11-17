@@ -52,7 +52,7 @@
                                                     {% if planNotPaid %}
                                                         <button type="button"
                                                             class="btn btn-primary btnPayPlan"
-                                                            data-url="{{ path( 'vs_payment_select_pricing_plan_form', {'pricingPlanId': plan.id, 'subscriptionId': currentSubscription.id} ) }}"
+                                                            data-url="{{ path( 'vs_payment_select_pricing_plan_form', {'pricingPlanId': plan.id} ) }}"
                                                         >
                                                             <span>{{ 'vs_payment.template.pricing_plans.pay_plan' | trans( {},'VSPaymentBundle' ) }}</span>
                                                         </button>

@@ -63,10 +63,8 @@ vs_payment_pricing_plans:
         expose: true
         
 vs_payment_select_pricing_plan_form:
-    path: /vs_payment/pricing-plans-checkout/{pricingPlanId}-{subscriptionId}
+    path: /vs_payment/pricing-plans-checkout/{pricingPlanId}
     controller: Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCheckoutController::showSelectPricingPlanForm
-    defaults:
-        subscriptionId: 0
     options:
         expose: true
 

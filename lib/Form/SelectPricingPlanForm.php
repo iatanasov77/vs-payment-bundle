@@ -37,8 +37,6 @@ class SelectPricingPlanForm extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
-            ->add( 'subscription', HiddenType::class, ['data' => '0'])
-        
             ->add( 'name', TextType::class, [
                 'label'                 => 'vs_payment.form.select_pricing_plan.name',
                 'translation_domain'    => 'VSPaymentBundle',

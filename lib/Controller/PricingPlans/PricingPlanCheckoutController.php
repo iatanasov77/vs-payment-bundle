@@ -92,14 +92,13 @@ class PricingPlanCheckoutController extends AbstractController
         ]);
     }
     
-    public function showSelectPricingPlanForm( $pricingPlanId, $subscriptionId, Request $request ): Response
+    public function showSelectPricingPlanForm( $pricingPlanId, Request $request ): Response
     {
         $form   = $this->createForm( SelectPricingPlanForm::class, null, ['method' => 'POST'] );
         
         return $this->render( '@VSPayment/Pages/PricingPlansCheckout/Partial/select-pricing-plan-form.html.twig', [
             'form'              => $form->createView(),
             'pricingPlanId'     => $pricingPlanId,
-            'subscriptionId'    => $subscriptionId,
         ]);
     }
     
@@ -138,18 +137,7 @@ class PricingPlanCheckoutController extends AbstractController
     {
         $em             = $this->doctrine->getManager();
         $pricingPlan    = $this->pricingPlansRepository->find( $formData['pricingPlan'] );
-        
-        $subscriptionId = intval( $formData['subscription'] );
-        if ( ! $subscriptionId ) {
-            $this->eventDispatcher->dispatch(
-                new CreateSubscriptionEvent( $pricingPlan ),
-                CreateSubscriptionEvent::NAME
-            );
-            $subscriptions  = $this->securityBridge->getUser()->getPricingPlanSubscriptions();
-            $subscription   = $subscriptions->last();
-        } else {
-            $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
-        }
+        $subscription   = $this->getSubscription( $pricingPlan );
         
         $orderItem      = $this->orderItemsFactory->createNew();
         
@@ -167,5 +155,22 @@ class PricingPlanCheckoutController extends AbstractController
         $em->flush();
         
         return $pricingPlan;
+    }
+    
+    protected function getSubscription( $pricingPlan )
+    {
+        $userSubscriptions  = $this->securityBridge->getUser()->getPricingPlanSubscriptions();
+        
+        if ( $userSubscriptions->containsKey( $pricingPlan->geyCode() ) ) {
+            $subscription   = $userSubscriptions->get( $pricingPlan->geyCode() );
+        } else {
+            $this->eventDispatcher->dispatch(
+                new CreateSubscriptionEvent( $pricingPlan ),
+                CreateSubscriptionEvent::NAME
+            );
+            $subscription   = $this->securityBridge->getUser()->getPricingPlanSubscriptions()->get( $pricingPlan->geyCode() );
+        }
+        
+        return $subscription;
     }
 }
