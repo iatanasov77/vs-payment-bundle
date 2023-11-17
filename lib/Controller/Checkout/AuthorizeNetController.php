@@ -1,0 +1,46 @@
+<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
+
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Payum\Core\Security\SensitiveValue;
+
+class AuthorizeNetController extends AbstractCheckoutController
+{
+    public function prepareAction( Request $request ): Response
+    {
+        $cart   = $this->orderFactory->getShoppingCart();
+        
+        $storage = $this->payum->getStorage( $this->paymentClass );
+        $payment = $storage->create();
+        
+        $payment->setOrder( $cart );
+        $payment->setNumber( uniqid() );
+        $payment->setCurrencyCode( $cart->getCurrencyCode() );
+        $payment->setTotalAmount( $cart->getTotalAmount() );
+        $payment->setDescription( $cart->getDescription() );
+        
+        $user   = $this->tokenStorage->getToken()->getUser();
+        $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
+        $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
+        
+        $payment->setDetails([
+            'amount'        => $cart->getTotalAmount(),
+            'clientemail'   => $user ? $user->getEmail() : 'UNREGISTERED_USER',
+            
+            // Credit Card Details If You Want to Pass
+            'card_Num'      => new SensitiveValue( '1111222233334444' ),
+            'exp_date'      => new SensitiveValue( '15-11' ),
+        ]);
+        
+        $storage->update( $payment );
+        
+        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
+            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
+            $payment,
+            'vs_payment_authorize_net_done'
+        );
+        
+        return $this->redirect( $captureToken->getTargetUrl() );
+    }
+}
