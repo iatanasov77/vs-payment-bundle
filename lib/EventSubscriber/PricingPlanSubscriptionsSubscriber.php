@@ -11,6 +11,7 @@ use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\CreateSubscriptionEvent;
+use Vankosoft\PaymentBundle\EventSubscriber\Event\CreateNewUserSubscriptionEvent;
 
 /**
  * MANUAL: https://q.agency/blog/custom-events-with-symfony5/
@@ -53,8 +54,9 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     public static function getSubscribedEvents(): array
     {
         return [
-            CreateSubscriptionEvent::NAME       => 'createSubscription',
-            SubscriptionsPaymentDoneEvent::NAME => 'setSubscriptionsPayment',
+            CreateSubscriptionEvent::NAME           => 'createSubscription',
+            CreateNewUserSubscriptionEvent::NAME    => 'createNewUserSubscription',
+            SubscriptionsPaymentDoneEvent::NAME     => 'setSubscriptionsPayment',
         ];
     }
 
@@ -64,6 +66,19 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
         
         $subscription->setUser( $this->user );
+        $subscription->setPricingPlan( $event->getPricingPlan() );
+        $subscription->setCode( $event->getPricingPlan()->getSubscriptionCode() );
+        
+        $em->persist( $subscription );
+        $em->flush();
+    }
+    
+    public function createNewUserSubscription( CreateNewUserSubscriptionEvent $event )
+    {
+        $em             = $this->doctrine->getManager();
+        $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
+        
+        $subscription->setUser( $event->getUser() );
         $subscription->setPricingPlan( $event->getPricingPlan() );
         $subscription->setCode( $event->getPricingPlan()->getSubscriptionCode() );
         
