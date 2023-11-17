@@ -29,7 +29,7 @@
         
         <one-to-many field="plans" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface" mapped-by="category" orphan-removal="true">
             <cascade>
-                <cascade-all/>
+                <cascade-persist/>
             </cascade>
         </one-to-many>
     </mapped-superclass>
