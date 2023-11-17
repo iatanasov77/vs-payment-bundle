@@ -33,12 +33,6 @@
         
         <many-to-one field="currency" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface" />
         
-        <field name="subscriptionPriority" column="subscription_priority" type="integer" length="4" nullable="false">
-            <options>
-                <option name="default">1</option>
-            </options>
-        </field>
-        
         <many-to-one field="category" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanCategoryInterface" inversed-by="plans">
             <join-column name="category_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
             <cascade>

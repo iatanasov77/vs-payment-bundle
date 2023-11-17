@@ -5,6 +5,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
+use Doctrine\Common\Comparable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -12,9 +13,10 @@ use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface;
+use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod;
 use Vankosoft\PaymentBundle\Component\Exception\PricingPlanException;
 
-class PricingPlan implements PricingPlanInterface
+class PricingPlan implements PricingPlanInterface, Comparable
 {
     use ToggleableTrait;    // About enabled field - $enabled (active)
     use TranslatableTrait;
@@ -51,9 +53,6 @@ class PricingPlan implements PricingPlanInterface
     
     /** @var CurrencyInterface */
     protected $currency;
-    
-    /** @var int */
-    protected $subscriptionPriority;
     
     /** @var Collection|PricingPlanSubscriptionInterface[] */
     protected $subscriptions;
@@ -198,18 +197,6 @@ class PricingPlan implements PricingPlanInterface
         return $this;
     }
     
-    public function getSubscriptionPriority(): ?int
-    {
-        return $this->subscriptionPriority;
-    }
-    
-    public function setSubscriptionPriority( $subscriptionPriority ): PricingPlanInterface
-    {
-        $this->subscriptionPriority  = $subscriptionPriority;
-        
-        return $this;
-    }
-    
     public function getSubscriptions(): Collection
     {
         return $this->subscriptions;
@@ -255,6 +242,11 @@ class PricingPlan implements PricingPlanInterface
         return $this->paidService->getPayedService()->getSubscriptionCode();
     }
     
+    public function getSubscriptionPriority(): ?int
+    {
+        return $this->paidService->getPayedService()->getSubscriptionPriority();
+    }
+    
     public function getSubscriptionPeriod(): \DateInterval
     {
         $period = null;
@@ -286,6 +278,25 @@ class PricingPlan implements PricingPlanInterface
         }
         
         return $period;
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \Doctrine\Common\Comparable::compareTo($other)
+     */
+    public function compareTo( $other ): int
+    {
+        if ( $this->getSubscriptionCode() != $other->getSubscriptionCode() ) {
+            throw new \Exception( 'These Pricing Plans are Not Comparable !!!' );
+        }
+        
+        if ( $this->getSubscriptionPeriod() === $other->getSubscriptionPeriod() ) {
+            return 0;
+        } elseif ( $this->getSubscriptionPeriod() < $other->getSubscriptionPeriod() ) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
     
     /*
