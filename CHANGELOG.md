@@ -1,3 +1,24 @@
+2.9.9	|	Release date: **17.11.2023**
+============================================
+* New Features , Fixes and Improvements:
+  - Add Some Translations.
+  - Update Pricing Plans Listing Template.
+  - Improve AbstractCheckoutController::doneAction .
+  - Update Visual Paradigm Diagrams.
+  - Big Refactoring of AbstractCheckoutController .
+  - Improve PricingPlanSubscription Model .
+  - Use OrderFactory Component in ShoppingCartController and PricingPlanCheckoutController .
+  - Improve PricingPlan Models Associations.
+  - Refactoring of Pricing Plan Subscriptions Events.
+  - Fix Order Model Doctrine Mapping.
+  - Fix PricingPlanSubscriptionsSubscriber.
+  - Fix StripeCheckoutRecurringController .
+  - Improve Pricing Plan Checkout.
+  - Improve PricingPlan Model.
+  - Add Some Doctrine Migrations.
+  - Fix PricingPlanCheckoutController .
+
+
 2.9.8	|	Release date: **13.11.2023**
 ============================================
 * Bug-Fixes and Improvements:
