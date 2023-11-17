@@ -161,14 +161,15 @@ class PricingPlanCheckoutController extends AbstractController
     {
         $userSubscriptions  = $this->securityBridge->getUser()->getPricingPlanSubscriptions();
         
-        if ( $userSubscriptions->containsKey( $pricingPlan->geyCode() ) ) {
-            $subscription   = $userSubscriptions->get( $pricingPlan->geyCode() );
+        if ( $userSubscriptions->containsKey( $pricingPlan->getSubscriptionCode() ) ) {
+            $subscription   = $userSubscriptions->get( $pricingPlan->getSubscriptionCode() );
         } else {
             $this->eventDispatcher->dispatch(
                 new CreateSubscriptionEvent( $pricingPlan ),
                 CreateSubscriptionEvent::NAME
             );
-            $subscription   = $this->securityBridge->getUser()->getPricingPlanSubscriptions()->get( $pricingPlan->geyCode() );
+            $subscription   = $this->securityBridge->getUser()->getPricingPlanSubscriptions()
+                                                                ->get( $pricingPlan->getSubscriptionCode() );
         }
         
         return $subscription;
