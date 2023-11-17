@@ -14,4 +14,6 @@ interface OrderInterface extends ResourceInterface
     
     public function getStatus();
     public function getSessionId();
+    
+    public function getSubscriptions(): array;
 }

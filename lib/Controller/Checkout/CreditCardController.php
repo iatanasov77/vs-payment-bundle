@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
+use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
 
 class CreditCardController extends AbstractController

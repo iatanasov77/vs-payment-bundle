@@ -24,7 +24,7 @@ trait UserPaymentAwareTrait
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface", mappedBy="user", indexBy="code", cascade={"persist", "remove"})
      */
     protected $pricingPlanSubscriptions;
     
@@ -67,6 +67,7 @@ trait UserPaymentAwareTrait
     {
         if ( ! $this->pricingPlanSubscriptions->contains( $pricingPlanSubscription ) ) {
             $this->pricingPlanSubscriptions[]    = $pricingPlanSubscription;
+            $pricingPlanSubscription->setUser( $this );
         }
         
         return $this;
@@ -76,6 +77,7 @@ trait UserPaymentAwareTrait
     {
         if ( $this->pricingPlanSubscriptions->contains( $pricingPlanSubscription ) ) {
             $this->pricingPlanSubscriptions->removeElement( $pricingPlanSubscription );
+            $pricingPlanSubscription->setUser( null );
         }
         
         return $this;

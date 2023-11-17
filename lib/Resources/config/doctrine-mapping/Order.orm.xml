@@ -11,7 +11,13 @@
         </id>
         
         <many-to-one field="user" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface" inversed-by="orders" />
-        <many-to-one field="paymentMethod" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" inversed-by="orders" />
+        <many-to-one field="paymentMethod" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" inversed-by="orders">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-detach/>
+            </cascade>
+        </many-to-one>
         
         <one-to-one field="payment" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface" inversed-by="order" >
             <join-column name="payment_id" referencedColumnName="id" nullable="true" />
@@ -19,7 +25,7 @@
                 <cascade-all/>
             </cascade>
         </one-to-one>
-
+        
         <field name="totalAmount" column="total_amount" type="float" nullable="false" />
         <field name="currencyCode" column="currency_code" type="string" length="8" nullable="false" />
         <field name="description" column="description" type="string" nullable="false" />

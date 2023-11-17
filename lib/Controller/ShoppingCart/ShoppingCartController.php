@@ -8,7 +8,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Factory\Factory;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
-use Vankosoft\PaymentBundle\Exception\ShoppingCartException;
+use Vankosoft\PaymentBundle\Component\OrderFactory;
+use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\ApplicationBundle\Component\Status;
 
@@ -35,6 +36,9 @@ class ShoppingCartController extends AbstractController
     /** @var RepositoryInterface */
     protected $productsRepository;
     
+    /** @vvar OrderFactory */
+    protected $orderFactory;
+    
     public function __construct(
         ManagerRegistry $doctrine,
         SecurityBridge $securityBridge,
@@ -42,7 +46,8 @@ class ShoppingCartController extends AbstractController
         RepositoryInterface $ordersRepository,
         Factory $orderItemsFactory,
         RepositoryInterface $orderItemsRepository,
-        RepositoryInterface $productsRepository
+        RepositoryInterface $productsRepository,
+        OrderFactory $orderFactory
     ) {
         $this->doctrine             = $doctrine;
         $this->securityBridge       = $securityBridge;
@@ -51,6 +56,7 @@ class ShoppingCartController extends AbstractController
         $this->orderItemsFactory    = $orderItemsFactory;
         $this->orderItemsRepository = $orderItemsRepository;
         $this->productsRepository   = $productsRepository;
+        $this->orderFactory         = $orderFactory;
     }
     
     public function index( Request $request ): Response
@@ -58,8 +64,7 @@ class ShoppingCartController extends AbstractController
         $session = $request->getSession();
         $session->start();  // Ensure Session is Started
         
-        $cartId         = $session->get( 'vs_payment_basket_id' );
-        $shoppingCart   = $cartId ? $this->ordersRepository->find( $cartId ) : $this->createCart( $request );
+        $shoppingCart   = $this->orderFactory->getShoppingCart();
         
         return $this->render( '@VSPayment/Pages/ShoppingCart/index.html.twig', [
             'shoppingCart'  => $shoppingCart,
@@ -69,8 +74,7 @@ class ShoppingCartController extends AbstractController
     
     public function addToCartAction( $payableObjectId, $qty, Request $request ): Response
     {
-        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
-        $cart   = $cartId ? $this->ordersRepository->find( $cartId ) : $this->createCart( $request );
+        $cart   = $this->orderFactory->getShoppingCart();
         if ( ! $cart ) {
             throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
         }
@@ -129,24 +133,6 @@ class ShoppingCartController extends AbstractController
         return new JsonResponse([
             'status'    => Status::STATUS_OK,
         ]);
-    }
-    
-    protected function createCart( Request $request )
-    {
-        $session = $request->getSession();
-        $session->start();  // Ensure Session is Started
-        
-        $em    = $this->doctrine->getManager();
-        $cart  = $this->ordersFactory->createNew();
-        
-        $cart->setUser( $this->securityBridge->getUser() );
-        $cart->setSessionId( $session->getId() );
-        
-        $em->persist( $cart );
-        $em->flush();
-        
-        $request->getSession()->set( 'vs_payment_basket_id', $cart->getId() );
-        return $cart;
     }
     
     protected function addProductToCart( $payableObjectId, $qty, &$cart ): PayableObjectInterface

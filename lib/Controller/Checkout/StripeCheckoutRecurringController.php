@@ -26,7 +26,7 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
     public function prepareAction( Request $request ): Response
     {
         $em     = $this->doctrine->getManager();
-        $cart   = $this->getShoppingCart( $request );
+        $cart   = $this->orderFactory->getShoppingCart();
         
         if ( ! $cart->hasRecurringPayment() ) {
             $message    = $flashMessage   = $this->translator->trans( 'pricing_plan_payment_success', [], 'VSPaymentBundle' );
@@ -69,7 +69,7 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
     
     protected function createSubscription( OrderInterface $order ): array
     {
-        $pricingPlan    = $order->getItems()->first()->getPaidServiceSubscription();
+        $pricingPlan    = $order->getItems()->first()->getPaidServiceSubscription()->getPricingPlan();
         
         $plan           = new \ArrayObject([
             "amount"    => $order->getTotalAmount(),

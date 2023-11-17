@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Exception;
+<?php namespace Vankosoft\PaymentBundle\Component\Exception;
 
 use Exception;
 

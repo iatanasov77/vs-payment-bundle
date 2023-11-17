@@ -10,16 +10,41 @@
             <generator strategy="AUTO" />
         </id>
         
+        <many-to-one field="pricingPlan" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface" inversed-by="subscriptions" />
+        
         <many-to-one field="user" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface" inversed-by="pricingPlanSubscriptions">
             <cascade>
                 <cascade-all/>
             </cascade>
         </many-to-one>
         
-        <many-to-one field="pricingPlan" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface" inversed-by="subscriptions" />
+        <field name="code" column="code" type="string" length="255" nullable="false">
+            <options>
+                <option name="comment">The 'code' must be Unique for Every Pricing Plan Subscription of an User.</option>
+            </options>
+        </field>
         
-        <field name="date" column="date" type="datetime" nullable="false">
+        <field name="recurringPayment" column="recurring_payment" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        
+        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="paidServiceSubscription" />
+        
+        <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
         </field>
+        
+        <field name="updatedAt" column="updated_at" type="datetime" nullable="true">
+            <gedmo:timestampable on="update"/>
+        </field>
+        
+        <field name="expiresAt" column="expires_at" type="datetime" nullable="true">
+            <options>
+                <option name="comment">Is Updated when create a  New payment for this subscription.</option>
+            </options>
+        </field>
+        
     </mapped-superclass>
 </doctrine-mapping>

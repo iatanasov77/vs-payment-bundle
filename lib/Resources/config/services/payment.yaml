@@ -11,6 +11,25 @@ services:
         arguments:
             - '%vs_payment.model.payment_method.class%'
     
+    vs_payment.order_factory:
+        class: Vankosoft\PaymentBundle\Component\OrderFactory
+        arguments:
+            - '@security.token_storage'
+            - '@request_stack'
+            - '@doctrine'
+            - '@vs_payment.repository.order'
+            - '@vs_payment.factory.order'
+    
+    vs_payment.pricing_plan_subscriptions_subscriber:
+        class: Vankosoft\PaymentBundle\EventSubscriber\PricingPlanSubscriptionsSubscriber
+        arguments:
+            - '@security.token_storage'
+            - '@doctrine'
+            - '@vs_payment.repository.pricing_plan_subscription'
+            - '@vs_payment.factory.pricing_plan_subscription'
+            - '@vs_payment.order_factory'
+        tags: [kernel.event_subscriber]
+    
     ########################################################################
     # Checkout Controllers
     ########################################################################
@@ -47,6 +66,7 @@ services:
             - '@vs_payment.factory.order_item'
             - '@vs_payment.repository.order_item'
             - '@vs_payment.repository.product'
+            - '@vs_payment.order_factory'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
@@ -73,6 +93,7 @@ services:
         autowire: false
         arguments:
             - '@doctrine'
+            - '@event_dispatcher'
             - '@vs_users.security_bridge'
             - '@vs_payment.factory.order'
             - '@vs_payment.repository.order'
@@ -80,6 +101,8 @@ services:
             - '@vs_payment.repository.pricing_plan_category'
             - '@vs_payment.repository.pricing_plan'
             - '@vs_payment.repository.payment_method'
+            - '@vs_payment.repository.pricing_plan_subscription'
             - '@vs_payment_payment'
+            - '@vs_payment.order_factory'
         calls:
             - [ setContainer, [ '@service_container' ] ]

@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -13,39 +14,32 @@ use Sylius\Component\Resource\Factory\Factory;
 use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
 
+use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Order;
-use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
+use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
     /** @var TokenStorageInterface */
     protected $tokenStorage;
     
+    /** @var EventDispatcherInterface */
+    protected $eventDispatcher;
+    
     /** @var TranslatorInterface */
     protected $translator;
     
     /** @var ManagerRegistry */
-    protected ManagerRegistry $doctrine;
-    
-    /** @var RepositoryInterface */
-    protected $ordersRepository;
-    
-    /** @var Factory */
-    protected $ordersFactory;
+    protected $doctrine;
     
     /** @var Payum */
     protected $payum;
     
+    /** @vvar OrderFactory */
+    protected $orderFactory;
+    
     /** @var string */
     protected $paymentClass;
-    
-    /** @var RepositoryInterface */
-    protected $pricingPlanSubscriptionRepository;
-    
-    /** @var Factory */
-    protected $pricingPlanSubscriptionFactory;
     
     /**
      * If is set, Done Action will redirect to this url
@@ -63,26 +57,23 @@ abstract class AbstractCheckoutController extends AbstractController
     
     public function __construct(
         TokenStorageInterface $tokenStorage,
+        EventDispatcherInterface $eventDispatcher,
         TranslatorInterface $translator,
         ManagerRegistry $doctrine,
-        RepositoryInterface $ordersRepository,
-        Factory $ordersFactory,
         Payum $payum,
+        OrderFactory $orderFactory,
         string $paymentClass,
-        RepositoryInterface $pricingPlanSubscriptionRepository,
-        Factory $pricingPlanSubscriptionFactory,
         ?string $routeRedirectOnShoppingCartDone,
         ?string $routeRedirectOnPricingPlanDone
     ) {
         $this->tokenStorage                         = $tokenStorage;
+        $this->eventDispatcher                      = $eventDispatcher;
         $this->translator                           = $translator;
         $this->doctrine                             = $doctrine;
-        $this->ordersRepository                     = $ordersRepository;
-        $this->ordersFactory                        = $ordersFactory;
         $this->payum                                = $payum;
+        $this->orderFactory                         = $orderFactory;
+        
         $this->paymentClass                         = $paymentClass;
-        $this->pricingPlanSubscriptionRepository    = $pricingPlanSubscriptionRepository;
-        $this->pricingPlanSubscriptionFactory       = $pricingPlanSubscriptionFactory;
         $this->routeRedirectOnShoppingCartDone      = $routeRedirectOnShoppingCartDone;
         $this->routeRedirectOnPricingPlanDone       = $routeRedirectOnPricingPlanDone;
     }
@@ -120,12 +111,21 @@ abstract class AbstractCheckoutController extends AbstractController
         $storage->update( $payment );
         $request->getSession()->remove( 'vs_payment_basket_id' );
         
-        $hasPricingPlan = $this->setSubscription( $payment->getOrder() );
-        if ( $hasPricingPlan && $this->routeRedirectOnPricingPlanDone ) {
-            $flashMessage   = $this->translator->trans( 'pricing_plan_payment_success', [], 'VSPaymentBundle' );
-            $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
+        $subscriptions  = $payment->getOrder()->getSubscriptions();
+        $hasPricingPlan = ! empty( $subscriptions );
+        
+        if ( $hasPricingPlan ) {
+            $this->eventDispatcher->dispatch(
+                new SubscriptionsPaymentDoneEvent( $subscriptions ),
+                SubscriptionsPaymentDoneEvent::NAME
+            );
             
-            return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
+            if ( $this->routeRedirectOnPricingPlanDone ) {
+                $flashMessage   = $this->translator->trans( 'pricing_plan_payment_success', [], 'VSPaymentBundle' );
+                $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
+                
+                return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
+            }
         }
         
         if ( ! $hasPricingPlan && $this->routeRedirectOnShoppingCartDone ) {
@@ -136,7 +136,7 @@ abstract class AbstractCheckoutController extends AbstractController
         }
         
         return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
-            'shoppingCart'                      => $this->getShoppingCart( $request ),
+            'shoppingCart'                      => $this->orderFactory->getShoppingCart(),
             'paymentStatus'                     => $paymentStatus,
             'routeRedirectOnShoppingCartDone'   => $this->routeRedirectOnShoppingCartDone,
             'routeRedirectOnPricingPlanDone'    => $this->routeRedirectOnPricingPlanDone,
@@ -155,7 +155,7 @@ abstract class AbstractCheckoutController extends AbstractController
         
         throw new HttpException( 400, $this->getErrorMessage( $paymentStatus->getModel() ) );
         return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
-            'shoppingCart'                      => $this->getShoppingCart( $request ),
+            'shoppingCart'                      => $this->orderFactory->getShoppingCart(),
             'paymentStatus'                     => $paymentStatus,
             'routeRedirectOnShoppingCartDone'   => $this->routeRedirectOnShoppingCartDone,
             'routeRedirectOnPricingPlanDone'    => $this->routeRedirectOnPricingPlanDone,
@@ -163,63 +163,9 @@ abstract class AbstractCheckoutController extends AbstractController
         ]);
     }
     
-    protected function getShoppingCart( Request $request ): OrderInterface
-    {
-        $em      = $this->doctrine->getManager();
-        $session = $request->getSession();
-        $session->start();  // Ensure Session is Started
-        
-        $cartId         = $session->get( 'vs_payment_basket_id' );
-        $shoppingCart   = $cartId ? $this->ordersRepository->find( $cartId ) : null;
-        if ( ! $shoppingCart ) {
-            $shoppingCart   = $this->ordersFactory->createNew();
-            $user           = $this->tokenStorage->getToken()->getUser();
-            
-            $shoppingCart->setUser( $user );
-            $shoppingCart->setSessionId( $session->getId() );
-            
-            $em->persist( $shoppingCart );
-            $em->flush();
-        }
-        
-        return $shoppingCart;
-    }
-    
     protected function getErrorMessage( $details )
     {
         return 'STRIPE ERROR: ' . $details['error']['message'];
-    }
-    
-    protected function setSubscription( OrderInterface $order ): bool
-    {
-        $em             = $this->doctrine->getManager();
-        $hasPricingPlan = false;
-        
-        foreach( $order->getItems() as $item ) {
-            $payableObject  = $item->getObject();
-            if ( ! ( $payableObject instanceof PricingPlanInterface ) ) {
-                continue;
-            }
-            
-            $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
-            
-            $hasPricingPlan = true;
-            $user           = $this->tokenStorage->getToken()->getUser();
-            
-            $subscription->setUser( $user );
-            $subscription->setPricingPlan( $payableObject );
-            
-            $subscription->setDate( new \DateTime() );
-            
-            $em->persist( $subscription );
-            $em->flush();
-            
-            $user->addPricingPlanSubscription( $subscription );
-            $em->persist( $user );
-            $em->flush();
-        }
-        
-        return $hasPricingPlan;
     }
     
     protected function debugObject( $object )
