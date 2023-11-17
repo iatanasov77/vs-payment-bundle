@@ -113,6 +113,18 @@ sylius_fixtures:
                                   "client_secret": '%env(PAYPAL_CLIENT_SECRET)%'
                                   "config_path": "REPLACE/IT" # Point to the directory where your skd_config.ini is located.
                               currency: 'USD'
+                            - title: 'Test Authorize.NET'
+                              description: 'Authorize.NET'
+                              gateway_name: 'authorize_net_aim'
+                              factory_name: 'authorize_net_aim'
+                              use_sandbox: true
+                              config:
+                                  "login_id": '%env(AUTHORIZE_NET_LOGIN_ID)%'
+                                  "transaction_key": '%env(AUTHORIZE_NET_TRANSACTION_KEY)%'
+                              sandbox_config:
+                                  "login_id": '%env(AUTHORIZE_NET_LOGIN_ID)%'
+                                  "transaction_key": '%env(AUTHORIZE_NET_TRANSACTION_KEY)%'
+                              currency: 'EUR'
                 payment_methods:
                     name: payment_methods
                     options:

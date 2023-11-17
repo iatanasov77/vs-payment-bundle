@@ -28,6 +28,9 @@ class Payment
             case 'borica':
                 $route  = 'vs_payment_borica_prepare';
                 break;
+            case 'authorize_net_aim':
+                $route  = 'vs_payment_authorize_net_prepare';
+                break;
             default:
                 $route  = 'not_configured';
         }
