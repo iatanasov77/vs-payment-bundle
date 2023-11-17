@@ -20,9 +20,7 @@
                             <th>{{ 'vs_payment.template.payment_description' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.payment_client_email' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.payment_total_amount' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.payment_currency' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_application.template.items_index_row_created' | trans( {},'VSApplicationBundle' ) }}</th>
-                            <th>{{ 'vs_application.template.items_index_row_updated' | trans( {},'VSApplicationBundle' ) }}</th>
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
                     </thead>
@@ -33,10 +31,8 @@
                             <td>{{ item.number }}</td>
                             <td>{{ item.description }}</td>
                             <td>{{ item.clientEmail }}</td>
-                            <td>{{ item.totalAmount }}</td>
-                            <td>{{ item.currencyCode }}</td>
+                            <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
                             <td>{{ item.createdAt | date( "d.m.Y H:i" ) }}</td>
-                            <td>{{ item.updatedAt | date( "d.m.Y H:i" ) }}</td>
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-danger btnDeleteResource"
