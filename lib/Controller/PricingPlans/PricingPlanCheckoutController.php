@@ -159,7 +159,8 @@ class PricingPlanCheckoutController extends AbstractController
     
     protected function getSubscription( $pricingPlan )
     {
-        $userSubscriptions  = $this->securityBridge->getUser()->getPricingPlanSubscriptions();
+        $user               = $this->securityBridge->getUser();
+        $userSubscriptions  = $user->getPricingPlanSubscriptions();
         
         if ( $userSubscriptions->containsKey( $pricingPlan->getSubscriptionCode() ) ) {
             $subscription   = $userSubscriptions->get( $pricingPlan->getSubscriptionCode() );
@@ -168,8 +169,9 @@ class PricingPlanCheckoutController extends AbstractController
                 new CreateSubscriptionEvent( $pricingPlan ),
                 CreateSubscriptionEvent::NAME
             );
-            $subscription   = $this->securityBridge->getUser()->getPricingPlanSubscriptions()
-                                                                ->get( $pricingPlan->getSubscriptionCode() );
+            
+            $this->doctrine->getManager()->refresh( $user );
+            $subscription   = $user->getPricingPlanSubscriptions()->get( $pricingPlan->getSubscriptionCode() );
         }
         
         return $subscription;

@@ -290,13 +290,14 @@ class PricingPlan implements PricingPlanInterface, Comparable
             throw new \Exception( 'These Pricing Plans are Not Comparable !!!' );
         }
         
-        if ( $this->getSubscriptionPeriod() === $other->getSubscriptionPeriod() ) {
-            return 0;
-        } elseif ( $this->getSubscriptionPeriod() < $other->getSubscriptionPeriod() ) {
-            return -1;
-        } else {
+        $dateRef = new \DateTimeImmutable();
+        if ( $dateRef->add( $this->getSubscriptionPeriod() ) > $dateRef->add( $other->getSubscriptionPeriod() ) ) {
             return 1;
+        } elseif ( $dateRef->add( $this->getSubscriptionPeriod() ) < $dateRef->add( $other->getSubscriptionPeriod() ) ) {
+            return -1;
         }
+        
+        return 0;
     }
     
     /*
