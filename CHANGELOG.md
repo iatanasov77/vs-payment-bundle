@@ -1,3 +1,9 @@
+2.9.10	|	Release date: **17.11.2023**
+============================================
+* New Features:
+  - Create Subscription Event For New Users ( At User Registration. )
+
+
 2.9.9	|	Release date: **17.11.2023**
 ============================================
 * New Features , Fixes and Improvements:
