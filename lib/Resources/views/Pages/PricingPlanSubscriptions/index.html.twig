@@ -34,7 +34,7 @@
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-danger btnDeleteResource"
-                                        href="{{ path('vs_users_subscriptions_payed_service_subscriptions_delete', {'id': item.id}) }}" 
+                                        href="{{ path('vs_payment_pricing_plan_subscription_delete', {'id': item.id}) }}" 
                                         data-csrfToken="{{ csrf_token( item.id ) }}" 
                                         title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
                                     >
