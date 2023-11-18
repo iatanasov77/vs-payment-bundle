@@ -1,75 +1,37 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Payum\Bundle\PayumBundle\Controller\PayumController;
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OfflineController extends PayumController
 {
-    
-    /**
-     * Prepare Action
-     * 
-     * @return type
-     */
-    public function prepareAction() 
+    public function prepareAction( Request $request ): Response
     {
-        $gatewayName = 'offline';
+        $cart   = $this->orderFactory->getShoppingCart();
 
-        $storage = $this->get('payum')->getStorage('IAPaymentBundle\Entity\Payment');
-
+        $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
-        $payment->setNumber(uniqid());
-        $payment->setCurrencyCode('EUR');
-        $payment->setRealAmount( 1.23 ); // Need this for Real (Human Readable) Amount.
-        $payment->setTotalAmount(123); // 1.23 EUR
-        $payment->setDescription('A description');
-        $payment->setClientId('anId');
-        $payment->setClientEmail('foo@example.com');
+        
+        $payment->setOrder( $cart );
+        $payment->setNumber( uniqid() );
+        $payment->setCurrencyCode( $cart->getCurrencyCode() );
+        $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
+        $payment->setTotalAmount( $cart->getTotalAmount() );
+        $payment->setDescription( $cart->getDescription() );
+        
+        $user   = $this->tokenStorage->getToken()->getUser();
+        $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
+        $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
 
         $storage->update($payment);
 
         $captureToken = $this->get('payum')->getTokenFactory()->createCaptureToken(
-            $gatewayName, 
+            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
             $payment, 
-            'done' // the route to redirect after capture
+            'vs_payment_offline_done' // the route to redirect after capture
         );
 
         return $this->redirect($captureToken->getTargetUrl());    
-    }
-    
-    /**
-     * Done Action
-     * 
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function doneAction(Request $request)
-    {
-        $token = $this->get('payum')->getHttpRequestVerifier()->verify($request);
-
-        $gateway = $this->get('payum')->getGateway($token->getGatewayName());
-
-        // you can invalidate the token. The url could not be requested any more.
-        // $this->get('payum')->getHttpRequestVerifier()->invalidate($token);
-
-        // Once you have token you can get the model from the storage directly. 
-        //$identity = $token->getDetails();
-        //$payment = $payum->getStorage($identity->getClass())->find($identity);
-
-        // or Payum can fetch the model for you while executing a request (Preferred).
-        $gateway->execute($status = new GetHumanStatus($token));
-        $payment = $status->getFirstModel();
-
-        // you have order and payment status 
-        // so you can do whatever you want for example you can just print status and payment details.
-
-        return new JsonResponse([
-            'status' => $status->getValue(),
-            'payment' => [
-                'total_amount' => $payment->getTotalAmount(),
-                'currency_code' => $payment->getCurrencyCode(),
-                'details' => $payment->getDetails(),
-            ],
-        ]);
     }
 }

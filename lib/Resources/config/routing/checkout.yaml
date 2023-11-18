@@ -7,7 +7,17 @@ payum_capture:
 payum_notify:
     resource: "@PayumBundle/Resources/config/routing/notify.xml"
     
+# Offline
+#######################################################################################
+vs_payment_offline_prepare:
+    path: /vs_payment/offline/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\OfflineController::prepareAction
+    options:
+        expose: true
 
+vs_payment_offline_done:
+   path: /vs_payment/offline/done
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\OfflineController::doneAction
 
 # Stripe Checkout
 #######################################################################################

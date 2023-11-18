@@ -10,6 +10,9 @@ class Payment
     public function getPaymentPrepareRoute( GatewayConfigInterface $gatewayConfig, $isRecurring = false )
     {
         switch( $gatewayConfig->getFactoryName() ) {
+            case 'offline':
+                $route  = 'vs_payment_offline_prepare';
+                break;
             case 'stripe_checkout':
             case 'stripe_js':
                 $route  = $isRecurring ?
