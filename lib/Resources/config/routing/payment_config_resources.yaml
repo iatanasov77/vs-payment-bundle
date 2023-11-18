@@ -79,7 +79,7 @@ vs_payment_orders_index:
 vs_payment_pricing_plan_subscriptions:
     resource: |
         alias: vs_payment.pricing_plan_subscription
-        except: ['create', 'update', 'show']
+        except: ['create', 'update']
         path: /payment/pricing-plan-subscriptions
         templates: "@VSPayment/Pages/PricingPlanSubscriptions"
     type: sylius.resource

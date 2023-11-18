@@ -161,6 +161,7 @@ vs_payment:
         pricing_plan_subscriptions_index_title: Pricing Plan Subscriptions
         subscriptions: Subscriptions
         items_index_row_expires_at: Expires At
+        pricing_plan_subscriptions_show_title: List Subscription Payments
         
     validation:
         currency_code_unique: Currency code must be unique.
