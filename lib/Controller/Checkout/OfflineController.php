@@ -4,7 +4,7 @@ use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class OfflineController extends PayumController
+class OfflineController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
