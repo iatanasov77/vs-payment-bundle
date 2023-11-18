@@ -26,12 +26,12 @@ class OfflineController extends AbstractCheckoutController
 
         $storage->update($payment);
 
-        $captureToken = $this->get('payum')->getTokenFactory()->createCaptureToken(
+        $captureToken   = $this->payum->getTokenFactory()->createCaptureToken(
             $cart->getPaymentMethod()->getGateway()->getGatewayName(),
             $payment, 
             'vs_payment_offline_done' // the route to redirect after capture
         );
 
-        return $this->redirect($captureToken->getTargetUrl());    
+        return $this->redirect( $captureToken->getTargetUrl() );    
     }
 }
