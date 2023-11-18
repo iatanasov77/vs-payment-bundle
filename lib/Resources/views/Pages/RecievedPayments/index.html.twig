@@ -29,7 +29,7 @@
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ item.number }}</td>
-                            <td>{{ item.description }}</td>
+                            <td>{{ item.description | raw }}</td>
                             <td>{{ item.clientEmail }}</td>
                             <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
                             <td>{{ item.createdAt | date( "d.m.Y H:i" ) }}</td>

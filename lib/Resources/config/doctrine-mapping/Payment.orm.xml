@@ -10,6 +10,13 @@
             <generator strategy="AUTO" />
         </id>
         
+        <field name="realAmount" column="real_amount" type="decimal" scale="2" precision="8" nullable="false">
+            <options>
+                <option name="default">0.00</option>
+                <option name="comment">Need this for Real (Human Readable) Amount.</option>
+            </options>
+        </field>
+        
         <one-to-one field="order" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" mapped-by="payment" >
             <cascade>
                 <cascade-all/>

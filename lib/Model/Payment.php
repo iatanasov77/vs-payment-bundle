@@ -13,6 +13,11 @@ class Payment extends BasePayment implements Interfaces\PaymentInterface
     protected $id;
     
     /**
+     * @var float
+     */
+    protected $realAmount;
+    
+    /**
      * @var \Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface
      */
     protected $order;
@@ -20,6 +25,18 @@ class Payment extends BasePayment implements Interfaces\PaymentInterface
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function getRealAmount()
+    {
+        return $this->realAmount;
+    }
+    
+    public function setRealAmount($realAmount): self
+    {
+        $this->realAmount = $realAmount;
+        
+        return $this;
     }
     
     public function getOrder()
