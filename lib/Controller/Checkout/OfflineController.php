@@ -20,6 +20,7 @@ class OfflineController extends PayumController
         $payment = $storage->create();
         $payment->setNumber(uniqid());
         $payment->setCurrencyCode('EUR');
+        $payment->setRealAmount( 1.23 ); // Need this for Real (Human Readable) Amount.
         $payment->setTotalAmount(123); // 1.23 EUR
         $payment->setDescription('A description');
         $payment->setClientId('anId');

@@ -36,6 +36,7 @@ class StripeCheckoutController extends AbstractCheckoutController
         
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $cart->getCurrencyCode() );
+        $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
         $payment->setTotalAmount( $cart->getTotalAmount() * 100 ); // Amount must convert to at least 100 stotinka.
         $payment->setDescription( $cart->getDescription() );
         
