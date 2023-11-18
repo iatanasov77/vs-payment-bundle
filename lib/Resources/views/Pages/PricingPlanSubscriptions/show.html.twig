@@ -22,7 +22,7 @@
                     {% for orderItem in resource.orderItems %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ orderItem.order.totalAmount }} {{ intlCurrencies[orderItem.order..currencyCode]['symbol'] }}</td>
+                            <td>{{ orderItem.order.totalAmount }} {{ intlCurrencies[orderItem.order.currencyCode]['symbol'] }}</td>
                             <td>{{ orderItem.order.paymentMethod.name }}</td>
                             
                             <td></td>
