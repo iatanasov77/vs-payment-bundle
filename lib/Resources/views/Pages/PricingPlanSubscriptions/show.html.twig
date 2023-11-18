@@ -14,7 +14,7 @@
                             <th width="50">N</th>
                             <th>{{ 'vs_users_subscriptions.template.payment_total_amount' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.payment_method' | trans( {},'VSPaymentBundle' ) }}</th>
-                            
+                            <th>{{ 'vs_payment.template.order_is_paid' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th width="150">{{ 'vs_users_subscriptions.template.action' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                         </tr>
                     </thead>
@@ -24,7 +24,13 @@
                             <td>{{ loop.index }}</td>
                             <td>{{ orderItem.order.totalAmount }} {{ intlCurrencies[orderItem.order.currencyCode]['symbol'] }}</td>
                             <td>{{ orderItem.order.paymentMethod.name }}</td>
-                            
+                            <td style="text-align: center;">
+                                {% if orderItem.order.paid %}
+                                    <i class="fas fa-check" style="color: #82c91e;">
+                                {% else %}
+                                    <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                                {% endif %}
+                            </td>
                             <td></td>
                         </tr>
                     {% endfor %}

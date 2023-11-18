@@ -230,6 +230,11 @@ class Order implements Interfaces\OrderInterface
         return $this;
     }
     
+    public function isPaid()
+    {
+        return $this->status === self::STATUS_PAID_ORDER;
+    }
+    
     public function getSubscriptions(): array
     {
         $subscriptions  = [];
