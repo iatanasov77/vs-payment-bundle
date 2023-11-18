@@ -19,7 +19,7 @@ class PricingPlanSubscriptionsController extends AbstractCrudController
             }
         } elseif ( $this->classInfo['action'] == 'showAction' ) {
             foreach ( $entity->getOrderItems() as $orderItem ) {
-                $currencies[$subscription->getCurrencyCode()]   = [
+                $currencies[$orderItem->getOrder()->getCurrencyCode()]   = [
                     'symbol'    => Currencies::getSymbol( $orderItem->getOrder()->getCurrencyCode() ),
                     'name'      => Currencies::getName( $orderItem->getOrder()->getCurrencyCode() ),
                 ];
