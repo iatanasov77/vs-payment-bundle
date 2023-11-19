@@ -9,7 +9,8 @@ class OfflineController extends AbstractCheckoutController
     public function prepareAction( Request $request ): Response
     {
         $cart   = $this->orderFactory->getShoppingCart();
-
+        $this->debugGateway( $cart->getPaymentMethod()->getGateway() );
+        
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
@@ -33,5 +34,10 @@ class OfflineController extends AbstractCheckoutController
         );
 
         return $this->redirect( $captureToken->getTargetUrl() );    
+    }
+    
+    public function debugGateway( $gateway )
+    {
+        var_dump( $gateway ); die;
     }
 }
