@@ -13,6 +13,9 @@ class Payment
             case 'offline':
                 $route  = 'vs_payment_offline_prepare';
                 break;
+            case 'offline_bank_transfer':
+                $route  = 'vs_payment_offline_bank_transfer_prepare';
+                break;
             case 'stripe_checkout':
             case 'stripe_js':
                 $route  = $isRecurring ?

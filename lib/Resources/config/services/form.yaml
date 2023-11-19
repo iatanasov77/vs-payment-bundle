@@ -4,6 +4,7 @@ parameters:
     ##########################################################
     vs_payment.gateway_factories:
         - 'offline'
+        - 'offline_bank_transfer'
         - 'paypal_rest'
         - 'paypal_express_checkout'
         - 'paypal_pro_checkout'

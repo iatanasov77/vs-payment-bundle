@@ -8,6 +8,7 @@ imports:
     - { resource: services/currency.yaml }
     - { resource: services/fixtures_factories.yaml }
     - { resource: services/fixtures.yaml }
+    - { resource: services/offline_gateways.yaml }
 
 parameters:
     vs_payment.product_category.taxonomy_code: 'product-categories'

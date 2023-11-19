@@ -8,9 +8,10 @@ services:
         autoconfigure: true
         public: true
 
+    ##############################
     # Offline
     ##############################
-    Vankosoft\PaymentBundle\Controller\Checkout\OfflineController:
+    Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController:
         arguments:
             - '@security.token_storage'
             - '@event_dispatcher'
@@ -24,6 +25,21 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
+    Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController:
+        arguments:
+            - '@security.token_storage'
+            - '@event_dispatcher'
+            - '@translator'
+            - '@doctrine'
+            - '@payum'
+            - '@vs_payment.order_factory'
+            - '%vs_payment.model.payment.class%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+    
+    ##############################
     # PAYPAL REST
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController:
@@ -39,7 +55,8 @@ services:
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
-            
+    
+    ##############################
     # PAYPAL EXPRESS CHECKOUT
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController:
@@ -56,6 +73,7 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
+    #######################################
     # PAYPAL EXPRESS CHECKOUT RECURRING
     #######################################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutRecurringController:
@@ -72,6 +90,7 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
+    ##############################
     # PAYPAL PRO CHECKOUT
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController:
@@ -88,6 +107,7 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
+    ##############################
     # STRIPE CHECKOUT
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController:
@@ -104,6 +124,7 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
+    ##############################
     # STRIPE CHECKOUT RECURRING
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutRecurringController:
@@ -120,6 +141,7 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
+    ##############################
     # BORICA
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\BoricaController:
@@ -135,7 +157,8 @@ services:
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
-            
+    
+    ##############################
     # PAYSERA
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PayseraController:
@@ -151,7 +174,8 @@ services:
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
-            
+    
+    ##############################
     # AuthorizeNet
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController:

@@ -10,14 +10,24 @@ payum_notify:
 # Offline
 #######################################################################################
 vs_payment_offline_prepare:
-    path: /vs_payment/offline/prepare
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\OfflineController::prepareAction
+    path: /vs_payment/offline/offline-prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController::prepareAction
     options:
         expose: true
 
 vs_payment_offline_done:
-   path: /vs_payment/offline/done
-   controller: Vankosoft\PaymentBundle\Controller\Checkout\OfflineController::doneAction
+   path: /vs_payment/offline/offline-done
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController::doneAction
+
+vs_payment_offline_bank_transfer_prepare:
+    path: /vs_payment/offline/offline-prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController::prepareAction
+    options:
+        expose: true
+
+vs_payment_offline_bank_transfer_done:
+    path: /vs_payment/offline/offline-done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController::doneAction
 
 # Stripe Checkout
 #######################################################################################
