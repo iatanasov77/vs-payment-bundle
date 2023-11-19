@@ -9,7 +9,7 @@ class BankTransferController extends AbstractCheckoutController
     public function prepareAction( Request $request ): Response
     {
         $cart   = $this->orderFactory->getShoppingCart();
-        $this->debugGateway( $cart->getPaymentMethod()->getGateway() );
+        //$this->debugGateway( $cart->getPaymentMethod()->getGateway() );
         
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
