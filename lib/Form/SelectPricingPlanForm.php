@@ -61,7 +61,7 @@ class SelectPricingPlanForm extends AbstractType
                 'class'                 => $this->paymentMethodClass,
                 'choice_label'          => 'name',
                 'choice_attr'           => function ( $choice, string $key, mixed $value ) {
-                    return ['class' => 'PaymentMethod_' . \strtolower( $choice->getSlug() )];
+                    return ['data-paymentMethod' => $choice->getSlug()];
                 },
                 'expanded'              => true,
             ])
