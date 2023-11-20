@@ -60,6 +60,9 @@ class SelectPricingPlanForm extends AbstractType
                 'translation_domain'    => 'VSPaymentBundle',
                 'class'                 => $this->paymentMethodClass,
                 'choice_label'          => 'name',
+                'choice_attr'           => function ( $choice, string $key, mixed $value ) {
+                    return ['class' => 'PaymentMethod_' . \strtolower( $choice->getSlug() )];
+                },
                 'expanded'              => true,
             ])
             
