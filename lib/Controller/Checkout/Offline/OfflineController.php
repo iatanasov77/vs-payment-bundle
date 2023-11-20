@@ -1,14 +1,23 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Checkout\Offline;
 
-use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutOfflineController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @NOTE Used for Debug/Test Payum Offline Payments
  */
-class OfflineController extends AbstractCheckoutController
+class OfflineController extends AbstractCheckoutOfflineController
 {
+    public function getInfo( Request $request ): Response
+    {
+        $cart           = $this->orderFactory->getShoppingCart();
+        $gatewayConfig  = $cart->getPaymentMethod()->getGateway()->getConfig();
+        
+        return new JsonResponse( $gatewayConfig );
+    }
+    
     public function prepareAction( Request $request ): Response
     {
         $cart   = $this->orderFactory->getShoppingCart();
