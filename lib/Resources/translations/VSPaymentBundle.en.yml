@@ -64,6 +64,9 @@ vs_payment:
             choose_plan: Choose plan
             payment_method: Payment method
             submit: Proceed
+            bank: Bank
+            reciever: Reciever
+            reason: Reason
 
     template:
         gateway: Gateway

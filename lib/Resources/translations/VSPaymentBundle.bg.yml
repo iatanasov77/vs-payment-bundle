@@ -64,6 +64,9 @@ vs_payment:
             choose_plan: Choose plan
             payment_method: Payment method
             submit: Proceed
+            bank: Банка
+            reciever: Получател
+            reason: Основание
     
     template:
         gateway: Гейтуей
