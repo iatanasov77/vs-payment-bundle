@@ -55,6 +55,9 @@ class PricingPlanCheckoutController extends AbstractController
     /** @vvar OrderFactory */
     protected $orderFactory;
     
+    /** @var RepositoryInterface */
+    protected $gatewaysRepository;
+    
     public function __construct(
         ManagerRegistry $doctrine,
         EventDispatcherInterface $eventDispatcher,
@@ -67,7 +70,8 @@ class PricingPlanCheckoutController extends AbstractController
         RepositoryInterface $paymentMethodsRepository,
         RepositoryInterface $subscriptionsRepository,
         Payment $vsPayment,
-        OrderFactory $orderFactory
+        OrderFactory $orderFactory,
+        RepositoryInterface $gatewaysRepository
     ) {
         $this->doctrine                         = $doctrine;
         $this->eventDispatcher                  = $eventDispatcher;
@@ -81,6 +85,7 @@ class PricingPlanCheckoutController extends AbstractController
         $this->subscriptionsRepository          = $subscriptionsRepository;
         $this->vsPayment                        = $vsPayment;
         $this->orderFactory                     = $orderFactory;
+        $this->gatewaysRepository               = $gatewaysRepository;
     }
     
     public function showPricingPlans( Request $request ): Response
@@ -94,8 +99,8 @@ class PricingPlanCheckoutController extends AbstractController
     
     public function showSelectPricingPlanForm( $pricingPlanId, Request $request ): Response
     {
-        $form   = $this->createForm( SelectPricingPlanForm::class, null, ['method' => 'POST'] );
-        $bankTransferGateway    = $this->paymentMethodsRepository->findOneBy( ['slug' => 'bank-transfer'] );
+        $form                   = $this->createForm( SelectPricingPlanForm::class, null, ['method' => 'POST'] );
+        $bankTransferGateway    = $this->gatewaysRepository->findOneBy( ['factoryName' => 'offline_bank_transfer'] );
         
         return $this->render( '@VSPayment/Pages/PricingPlansCheckout/Partial/select-pricing-plan-form.html.twig', [
             'form'              => $form->createView(),
