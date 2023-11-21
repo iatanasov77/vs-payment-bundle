@@ -95,10 +95,12 @@ class PricingPlanCheckoutController extends AbstractController
     public function showSelectPricingPlanForm( $pricingPlanId, Request $request ): Response
     {
         $form   = $this->createForm( SelectPricingPlanForm::class, null, ['method' => 'POST'] );
+        $bankTransferGateway    = $this->paymentMethodsRepository->findOneBy( ['slug' => 'bank-transfer'] );
         
         return $this->render( '@VSPayment/Pages/PricingPlansCheckout/Partial/select-pricing-plan-form.html.twig', [
             'form'              => $form->createView(),
             'pricingPlanId'     => $pricingPlanId,
+            'bankTransferInfo'  => $bankTransferGateway ? $bankTransferGateway->getConfig() : null,
         ]);
     }
     
