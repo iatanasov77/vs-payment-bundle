@@ -12,6 +12,7 @@ class Order implements Interfaces\OrderInterface
     
     const STATUS_SHOPPING_CART  = 'shopping_cart';
     const STATUS_PAID_ORDER     = 'paid_order';
+    const STATUS_PENDING_ORDER  = 'pending_order';  // When Order is Waiting for Payment (For Example: Used Offline BankTransfer)
     const STATUS_FAILED_ORDER   = 'failed_order';
     
     /**

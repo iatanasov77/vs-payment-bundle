@@ -43,7 +43,7 @@
             <gedmo:timestampable on="update"/>
         </field>
         
-        <field name="status" type="string" length="32" nullable="false" column-definition="ENUM('shopping_cart', 'paid_order', 'failed_order')" >
+        <field name="status" type="string" length="32" nullable="false" column-definition="ENUM('shopping_cart', 'paid_order', 'pending_order', 'failed_order')" >
             <options>
                 <option name="comment">NEED THIS BECAUSE ORDER SHOULD BE CREATED BEFORE THE PAYMENT IS PRAPARED AND DONE.</option>
             </options>

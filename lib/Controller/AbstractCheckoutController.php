@@ -107,7 +107,12 @@ abstract class AbstractCheckoutController extends AbstractController
         $payment    = $paymentStatus->getFirstModel();
         //$this->debugObject( $payment );
         
-        $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
+        if ( $this instanceof AbstractCheckoutOfflineController ) {
+            $payment->getOrder()->setStatus( Order::STATUS_PENDING_ORDER );
+        } else {
+            $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
+        }
+        
         $storage->update( $payment );
         $request->getSession()->remove( 'vs_payment_basket_id' );
         
@@ -121,7 +126,7 @@ abstract class AbstractCheckoutController extends AbstractController
             );
             
             if ( $this->routeRedirectOnPricingPlanDone ) {
-                $flashMessage   = $this->translator->trans( 'pricing_plan_payment_success', [], 'VSPaymentBundle' );
+                $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
                 $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
                 
                 return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
@@ -129,7 +134,7 @@ abstract class AbstractCheckoutController extends AbstractController
         }
         
         if ( ! $hasPricingPlan && $this->routeRedirectOnShoppingCartDone ) {
-            $flashMessage   = $this->translator->trans( 'shopping_cart_payment_success', [], 'VSPaymentBundle' );
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.shopping_cart_payment_success', [], 'VSPaymentBundle' );
             $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
             
             return $this->redirectToRoute( $this->routeRedirectOnShoppingCartDone );
