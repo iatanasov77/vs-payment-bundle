@@ -29,12 +29,12 @@ class OrderActionsController extends AbstractController
         EventDispatcherInterface $eventDispatcher,
         TranslatorInterface $translator,
         ManagerRegistry $doctrine,
-        RepositoryInterface $ordersRepository
+        RepositoryInterface $orderRepository
     ) {
         $this->eventDispatcher  = $eventDispatcher;
         $this->translator       = $translator;
         $this->doctrine         = $doctrine;
-        $this->ordersRepository = $ordersRepository;
+        $this->ordersRepository = $orderRepository;
     }
     
     public function setOrderStatusPaid( $orderId, Request $request ): Response
