@@ -4,6 +4,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Payum\Stripe\Request\Api\CreatePlan;
 
+use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 

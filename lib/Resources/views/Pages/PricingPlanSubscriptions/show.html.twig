@@ -26,12 +26,26 @@
                             <td>{{ orderItem.order.paymentMethod.name }}</td>
                             <td style="text-align: center;">
                                 {% if orderItem.order.paid %}
-                                    <i class="fas fa-check" style="color: #82c91e;">
+                                    <i class="fas fa-check" style="color: #82c91e;"></i>
+                                {% elseif orderItem.order.pending %}
+                                    <i class="fas fa-clock-o" style="color: #82c91e;"></i>
                                 {% else %}
                                     <i class="fas fa-times" style="color: #ff1e1e;"></i>
                                 {% endif %}
                             </td>
-                            <td></td>
+                            <td>
+                                <div class="btn-group">
+                                    {% if orderItem.order.pending %}
+                                        <a class="btn btn-primary btnSetPaid"
+                                            href="{{ path( 'vs_payment_set_order_status_paid', {'orderId': orderItem.order.id} ) }}"
+                                            title="{{ 'vs_payment.template.action_set_order_status_paid' | trans( {},'VSPaymentBundle' ) }}"
+                                            data-subscriptionId="{{ resource.id }}"
+                                        >
+                                            <i class="fas fa-solid fa-dollar-sign"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -39,4 +53,10 @@
             </section>
         </div>
     </div>
+{% endblock %}
+
+{% block body_scripts %}
+    {{ parent() }}
+    
+    {{ encore_entry_script_tags( 'js/pricing-plan-subscription-payments' ) }}
 {% endblock %}

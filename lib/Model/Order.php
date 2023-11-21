@@ -236,6 +236,11 @@ class Order implements Interfaces\OrderInterface
         return $this->status === self::STATUS_PAID_ORDER;
     }
     
+    public function isPending()
+    {
+        return $this->status === self::STATUS_PENDING_ORDER;
+    }
+    
     public function getSubscriptions(): array
     {
         $subscriptions  = [];

@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
+<?php namespace Vankosoft\PaymentBundle\Component\Exception;
 
 use RuntimeException;
 

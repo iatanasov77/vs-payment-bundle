@@ -103,50 +103,31 @@ abstract class AbstractCheckoutController extends AbstractController
     
     protected function paymentSuccess( Request $request, $paymentStatus ): Response
     {
-        $storage    = $this->payum->getStorage( $this->paymentClass );
-        $payment    = $paymentStatus->getFirstModel();
-        //$this->debugObject( $payment );
-        
-        if ( $this instanceof AbstractCheckoutOfflineController ) {
-            $payment->getOrder()->setStatus( Order::STATUS_PENDING_ORDER );
-        } else {
-            $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
-        }
-        
-        $storage->update( $payment );
-        $request->getSession()->remove( 'vs_payment_basket_id' );
-        
+        $payment        = $this->_setPaymentSuccess( $paymentStatus );
         $subscriptions  = $payment->getOrder()->getSubscriptions();
         $hasPricingPlan = ! empty( $subscriptions );
+        $response       = null;
+        $request->getSession()->remove( 'vs_payment_basket_id' );
         
         if ( $hasPricingPlan ) {
-            $this->eventDispatcher->dispatch(
-                new SubscriptionsPaymentDoneEvent( $subscriptions ),
-                SubscriptionsPaymentDoneEvent::NAME
-            );
-            
-            if ( $this->routeRedirectOnPricingPlanDone ) {
-                $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
-                $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
-                
-                return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
-            }
+            $response   = $this->_setSubscriptionsPaymentDone( $request, $subscriptions );
         }
         
         if ( ! $hasPricingPlan && $this->routeRedirectOnShoppingCartDone ) {
-            $flashMessage   = $this->translator->trans( 'vs_payment.template.shopping_cart_payment_success', [], 'VSPaymentBundle' );
-            $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
-            
-            return $this->redirectToRoute( $this->routeRedirectOnShoppingCartDone );
+            $response   = $this->_setShoppingCartPaymentDone( $request );
         }
         
-        return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
-            'shoppingCart'                      => $this->orderFactory->getShoppingCart(),
-            'paymentStatus'                     => $paymentStatus,
-            'routeRedirectOnShoppingCartDone'   => $this->routeRedirectOnShoppingCartDone,
-            'routeRedirectOnPricingPlanDone'    => $this->routeRedirectOnPricingPlanDone,
-            'hasPricingPlan'                    => $hasPricingPlan,
-        ]);
+        if ( $response ) {
+            return $response;
+        } else {
+            return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
+                'shoppingCart'                      => $this->orderFactory->getShoppingCart(),
+                'paymentStatus'                     => $paymentStatus,
+                'routeRedirectOnShoppingCartDone'   => $this->routeRedirectOnShoppingCartDone,
+                'routeRedirectOnPricingPlanDone'    => $this->routeRedirectOnPricingPlanDone,
+                'hasPricingPlan'                    => $hasPricingPlan,
+            ]);
+        }
     }
     
     protected function paymentFailed( Request $request, $paymentStatus ): Response
@@ -166,6 +147,53 @@ abstract class AbstractCheckoutController extends AbstractController
             'routeRedirectOnPricingPlanDone'    => $this->routeRedirectOnPricingPlanDone,
             'hasPricingPlan'                    => false,
         ]);
+    }
+    
+    protected function _setPaymentSuccess( $paymentStatus ): Payment
+    {
+        $storage    = $this->payum->getStorage( $this->paymentClass );
+        $payment    = $paymentStatus->getFirstModel();
+        //$this->debugObject( $payment );
+        
+        if ( $this instanceof AbstractCheckoutOfflineController ) {
+            $payment->getOrder()->setStatus( Order::STATUS_PENDING_ORDER );
+        } else {
+            $payment->getOrder()->setStatus( Order::STATUS_PAID_ORDER );
+        }
+        
+        $storage->update( $payment );
+        
+        return  $payment;
+    }
+    
+    protected function _setSubscriptionsPaymentDone( Request $request, $subscriptions ): ?Response
+    {
+        if ( $this instanceof AbstractCheckoutOfflineController ) {
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
+        } else {
+            $this->eventDispatcher->dispatch(
+                new SubscriptionsPaymentDoneEvent( $subscriptions ),
+                SubscriptionsPaymentDoneEvent::NAME
+            );
+            
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
+        }
+        
+        if ( $this->routeRedirectOnPricingPlanDone ) {
+            $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
+            
+            return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
+        }
+        
+        return null;
+    }
+    
+    protected function _setShoppingCartPaymentDone( Request $request ): ?Response
+    {
+        $flashMessage   = $this->translator->trans( 'vs_payment.template.shopping_cart_payment_success', [], 'VSPaymentBundle' );
+        $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
+        
+        return $this->redirectToRoute( $this->routeRedirectOnShoppingCartDone );
     }
     
     protected function getErrorMessage( $details )

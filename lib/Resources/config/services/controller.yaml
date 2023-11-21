@@ -29,4 +29,13 @@ services:
         arguments:
             - '@vs_payment.repository.pricing_plan'
             - '@vs_users_subscriptions.repository.payed_service'
+            
+    Vankosoft\PaymentBundle\Controller\Checkout\OrderActionsController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@event_dispatcher'
+            - '@translator'
+            - '@doctrine'
+            - '@vs_payment.repository.order'
 
