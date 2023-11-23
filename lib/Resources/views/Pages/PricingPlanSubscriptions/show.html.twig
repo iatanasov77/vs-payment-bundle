@@ -12,6 +12,7 @@
                     <thead>
                         <tr>
                             <th width="50">N</th>
+                            <th>{{ 'vs_users_subscriptions.form.paid_service.subscription_code' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                             <th>{{ 'vs_users_subscriptions.template.payment_total_amount' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.payment_method' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.order_is_paid' | trans( {},'VSPaymentBundle' ) }}</th>
@@ -22,6 +23,7 @@
                     {% for orderItem in resource.orderItems %}
                         <tr>
                             <td>{{ loop.index }}</td>
+                            <td>{{ resource.code }}</td>
                             <td>{{ orderItem.order.totalAmount }} {{ intlCurrencies[orderItem.order.currencyCode]['symbol'] }}</td>
                             <td>{{ orderItem.order.paymentMethod.name }}</td>
                             <td style="text-align: center;">

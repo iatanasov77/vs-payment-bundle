@@ -16,6 +16,7 @@
                         <tr>
                             <th width="50">N</th>
                             <th>{{ 'vs_users_subscriptions.template.payed_service_subscription_user' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
+                            <th>{{ 'vs_users_subscriptions.form.paid_service.subscription_code' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                             <th>{{ 'vs_users_subscriptions.template.payment_total_amount' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                             <th>{{ 'vs_application.template.items_index_row_created' | trans( {},'VSApplicationBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.items_index_row_expires_at' | trans( {},'VSPaymentBundle' ) }}</th>
@@ -27,6 +28,7 @@
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{% if item.user %}{{ item.user.email }}{% endif %}</td>
+                            <td>{{ item.code }}</td>
                             <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
                             <td>{{ item.createdAt | date( "d.m.Y H:i" ) }}</td>
                             <td>{{ item.expiresAt | date( "d.m.Y H:i" ) }}</td>
