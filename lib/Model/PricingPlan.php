@@ -237,11 +237,26 @@ class PricingPlan implements PricingPlanInterface, Comparable
         return $this;
     }
     
-    public function getSubscriptionCode(): ?string
+    public function getServiceCode(): ?string
     {
         return $this->paidService->getPayedService()->getSubscriptionCode();
     }
     
+    public function getPeriodCode(): ?string
+    {
+        return $this->paidService->getPaidServicePeriodCode();
+    }
+    
+    public function getSubscriptionCode(): ?string
+    {
+        return $this->getServiceCode() . '-' . $this->getPeriodCode();
+    }
+    
+    /**
+     * @TODO Need to be removed. Use Compare Method.
+     * 
+     * @return int|NULL
+     */
     public function getSubscriptionPriority(): ?int
     {
         return $this->paidService->getPayedService()->getSubscriptionPriority();
@@ -286,7 +301,7 @@ class PricingPlan implements PricingPlanInterface, Comparable
      */
     public function compareTo( $other ): int
     {
-        if ( $this->getSubscriptionCode() != $other->getSubscriptionCode() ) {
+        if ( $this->getServiceCode() != $other->getServiceCode() ) {
             throw new \Exception( 'These Pricing Plans are Not Comparable !!!' );
         }
         
