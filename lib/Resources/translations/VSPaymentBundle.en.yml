@@ -95,6 +95,7 @@ vs_payment:
                 title: Payment Methods
                 payment_method: Payment Method
                 gateway: Gateway
+                gateway_use_sandbox: Gateway Use Sandbox
                 create_new_payment_method: Create New Payment Method
             config:
                 title: Payment Method Config

@@ -95,6 +95,7 @@ vs_payment:
                 title: Методи за Плащане
                 payment_method: Метод за Плащане
                 gatewayy: Гейтуей
+                gateway_use_sandbox: Гейтуейя използва Сенд-бокс
                 create_new_payment_method: Създаване Нов Метод за Плащане
             config:
                 title: Метод за Плащане Конфигурация

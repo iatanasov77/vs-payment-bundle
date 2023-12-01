@@ -65,7 +65,7 @@ class SelectPricingPlanForm extends AbstractType
                 },
                 'expanded'              => true,
                 'query_builder'         => function ( RepositoryInterface $er ) {
-                    return $er->createQueryBuilder( 'pm' )->where( 'pm.enabled = 1 );
+                    return $er->createQueryBuilder( 'pm' )->where( 'pm.enabled = 1' );
                 }
             ])
             
