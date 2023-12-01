@@ -16,6 +16,7 @@ use Payum\Core\Request\GetHumanStatus;
 
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Order;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 
 abstract class AbstractCheckoutController extends AbstractController
@@ -149,7 +150,7 @@ abstract class AbstractCheckoutController extends AbstractController
         ]);
     }
     
-    protected function _setPaymentSuccess( $paymentStatus ): Payment
+    protected function _setPaymentSuccess( $paymentStatus ): PaymentInterface
     {
         $storage    = $this->payum->getStorage( $this->paymentClass );
         $payment    = $paymentStatus->getFirstModel();
