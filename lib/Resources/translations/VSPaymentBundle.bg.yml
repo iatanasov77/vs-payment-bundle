@@ -155,8 +155,8 @@ vs_payment:
         payment_client_email: Client Email
         payment_total_amount: Total Amount
         payment_currency: Currency
-        pricing_plan_payment_success: 'Pricing Plan Payed Successfull !!!'
-        shopping_cart_payment_success: 'Shopping Cart Payed Successfull !!!'
+        pricing_plan_payment_success: 'Pricing Plan Paid Successfull !!!'
+        shopping_cart_payment_success: 'Shopping Cart Paid Successfull !!!'
         order_index_title: Orders
         order_status: Status
         order_user: User

@@ -64,6 +64,9 @@ class SelectPricingPlanForm extends AbstractType
                     return ['data-paymentMethod' => $choice->getSlug()];
                 },
                 'expanded'              => true,
+                'query_builder'         => function ( RepositoryInterface $er ) {
+                    return $er->createQueryBuilder( 'pm' )->where( 'pm.enabled = 1 );
+                }
             ])
             
             ->add( 'btnSubmit', SubmitType::class, [
