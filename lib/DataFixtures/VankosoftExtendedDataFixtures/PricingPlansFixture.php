@@ -20,7 +20,6 @@ final class PricingPlansFixture extends AbstractResourceFixture
                 ->scalarNode( 'locale' )->end()
                 ->booleanNode( 'active' )->defaultTrue()->end()
                 ->booleanNode( 'premium' )->defaultFalse()->end()
-                ->booleanNode( 'recurringPayment' )->defaultFalse()->end()
                 ->scalarNode( 'price' )->end()
                 ->scalarNode( 'currencyCode' )->end()
                 ->scalarNode( 'subscription_priority' )->end()

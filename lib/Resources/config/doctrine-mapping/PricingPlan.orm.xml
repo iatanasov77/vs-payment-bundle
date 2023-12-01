@@ -20,8 +20,6 @@
             <gedmo:translatable />
         </field>
         
-        <field name="recurringPayment" column="recurring_payment" type="boolean" />
-        
         <field name="premium" column="premium" type="boolean" />
         <field name="discount" type="decimal" scale="2" precision="8" nullable="true" />
         

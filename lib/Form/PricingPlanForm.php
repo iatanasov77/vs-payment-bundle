@@ -102,12 +102,6 @@ class PricingPlanForm extends AbstractForm
                 ],
             ])
             
-            ->add( 'recurringPayment', CheckboxType::class, [
-                'label'                 => 'vs_payment.form.pricing_plan.recurring_payment',
-                'translation_domain'    => 'VSPaymentBundle',
-                'required'              => false,
-            ])
-            
             ->add( 'premium', CheckboxType::class, [
                 'label'                 => 'vs_payment.form.pricing_plan.premium',
                 'translation_domain'    => 'VSPaymentBundle',

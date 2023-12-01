@@ -57,9 +57,6 @@ class PricingPlan implements PricingPlanInterface, Comparable
     /** @var Collection|PricingPlanSubscriptionInterface[] */
     protected $subscriptions;
     
-    /** @var bool */
-    protected $recurringPayment = false;
-    
     public function __construct()
     {
         $this->subscriptions    = new ArrayCollection();
@@ -218,21 +215,6 @@ class PricingPlan implements PricingPlanInterface, Comparable
             $this->subscriptions->removeElement( $subscription );
             $subscription->setPricingPlan( null );
         }
-        
-        return $this;
-    }
-    
-    public function isRecurringPayment(): bool
-    {
-        return $this->recurringPayment;
-    }
-    
-    /**
-     * @param bool
-     */
-    public function setRecurringPayment( ?bool $recurringPayment ): PricingPlanInterface
-    {
-        $this->recurringPayment = (bool) $recurringPayment;
         
         return $this;
     }
