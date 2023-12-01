@@ -51,6 +51,10 @@
         
         <field name="sessionId" type="string" length="255" nullable="true" />
         
-        <field name="recurringPayment" column="recurring_payment" type="boolean" />
+        <field name="recurringPayment" column="recurring_payment" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
     </mapped-superclass>
 </doctrine-mapping>

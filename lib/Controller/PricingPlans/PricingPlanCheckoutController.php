@@ -127,7 +127,8 @@ class PricingPlanCheckoutController extends AbstractController
             
             $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute(
                 $paymentMethod->getGateway(),
-                $pricingPlan->isRecurringPayment()
+                //$pricingPlan->isRecurringPayment()
+                false
             );
             
             return new JsonResponse([
@@ -154,7 +155,7 @@ class PricingPlanCheckoutController extends AbstractController
         
         $cart->addItem( $orderItem );
         
-        $cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
+        //$cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
         $cart->setPaymentMethod( $paymentMethod );
         $cart->setDescription( $pricingPlan->getDescription() );
         
