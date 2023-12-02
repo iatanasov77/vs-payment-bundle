@@ -108,7 +108,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $subscriptions  = $payment->getOrder()->getSubscriptions();
         $hasPricingPlan = ! empty( $subscriptions );
         $response       = null;
-        $request->getSession()->remove( 'vs_payment_basket_id' );
+        $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
         
         if ( $hasPricingPlan ) {
             $response   = $this->_setSubscriptionsPaymentDone( $request, $subscriptions );
@@ -138,7 +138,7 @@ abstract class AbstractCheckoutController extends AbstractController
         
         $payment->getOrder()->setStatus( Order::STATUS_FAILED_ORDER );
         $storage->update( $payment );
-        $request->getSession()->remove( 'vs_payment_basket_id' );
+        $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
         
         throw new HttpException( 400, $this->getErrorMessage( $paymentStatus->getModel() ) );
         return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [

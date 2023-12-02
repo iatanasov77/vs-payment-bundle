@@ -36,7 +36,7 @@ class ShoppingCartController extends AbstractController
     /** @var RepositoryInterface */
     protected $productsRepository;
     
-    /** @vvar OrderFactory */
+    /** @var OrderFactory */
     protected $orderFactory;
     
     public function __construct(
@@ -88,7 +88,7 @@ class ShoppingCartController extends AbstractController
     
     public function removeFromCartAction( $itemId, Request $request ): Response
     {
-        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $cartId = $request->getSession()->get( OrderFactory::SESSION_BASKET_KEY );
         $cart   = $cartId ? $this->ordersRepository->find( $cartId ) : null;
         if ( ! $cart ) {
             throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
@@ -110,7 +110,7 @@ class ShoppingCartController extends AbstractController
     
     public function updateCartAction( Request $request ): Response
     {
-        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $cartId = $request->getSession()->get( OrderFactory::SESSION_BASKET_KEY );
         $cart   = $cartId ? $this->ordersRepository->find( $cartId ) : null;
         if ( ! $cart ) {
             throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );

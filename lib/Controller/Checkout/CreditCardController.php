@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
+use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
 
@@ -27,7 +28,7 @@ class CreditCardController extends AbstractController
     
     public function showCreditCardFormAction( $formAction, Request $request ): Response
     {
-        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $cartId = $request->getSession()->get( OrderFactory::SESSION_BASKET_KEY );
         if ( ! $cartId ) {
             throw new ShoppingCartException( 'Shopping Cart not exist in session !!!' );
         }
