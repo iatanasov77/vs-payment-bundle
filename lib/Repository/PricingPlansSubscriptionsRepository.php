@@ -11,7 +11,7 @@ class PricingPlansSubscriptionsRepository extends EntityRepository
         
         $subscriptions  = [];
         foreach ( $collection as $subscription ) {
-            $collection[$subscription->getServiceCode()]    = $subscription;
+            $subscriptions[$subscription->getServiceCode()]    = $subscription;
         }
         
         return $subscriptions;
