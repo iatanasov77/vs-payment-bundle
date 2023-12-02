@@ -108,6 +108,10 @@ vs_payment:
             choose_plan: Избери План
             lower_than_active: Lower Plan
             pay_plan: Плати План
+            
+        subscriptions:
+            paid_service: Paid Service
+            paid_service_period: Service Period
                 
         currency_index_title: Валути
         currency_index_code: Код

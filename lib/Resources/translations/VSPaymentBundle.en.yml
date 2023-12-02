@@ -108,6 +108,10 @@ vs_payment:
             choose_plan: Choose Plan
             lower_than_active: Lower Plan
             pay_plan: Pay Plan
+            
+        subscriptions:
+            paid_service: Paid Service
+            paid_service_period: Service Period
                 
         currency_index_title: Currencies
         currency_index_code: Code
