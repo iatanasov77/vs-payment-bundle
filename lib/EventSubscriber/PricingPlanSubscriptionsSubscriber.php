@@ -67,7 +67,6 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         
         $subscription->setUser( $this->user );
         $subscription->setPricingPlan( $event->getPricingPlan() );
-        $subscription->setCode( $event->getPricingPlan()->getSubscriptionCode() );
         
         $em->persist( $subscription );
         $em->flush();
@@ -80,7 +79,6 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         
         $subscription->setUser( $event->getUser() );
         $subscription->setPricingPlan( $event->getPricingPlan() );
-        $subscription->setCode( $event->getPricingPlan()->getSubscriptionCode() );
         
         $em->persist( $subscription );
         $em->flush();

@@ -18,12 +18,6 @@
             </cascade>
         </many-to-one>
         
-        <field name="code" column="code" type="string" length="255" nullable="false">
-            <options>
-                <option name="comment">The 'code' must be Unique for Every Pricing Plan Subscription of an User.</option>
-            </options>
-        </field>
-        
         <field name="recurringPayment" column="recurring_payment" type="boolean">
             <options>
                 <option name="default">0</option>

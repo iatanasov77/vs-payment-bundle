@@ -30,9 +30,6 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
      */
     protected $user;
     
-    /** @var string */
-    protected $code;
-    
     /** @var bool */
     protected $recurringPayment = false;
     
@@ -72,18 +69,6 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     public function setUser($user)
     {
         $this->user = $user;
-        
-        return $this;
-    }
-    
-    public function getCode()
-    {
-        return $this->code;
-    }
-    
-    public function setCode($code)
-    {
-        $this->code = $code;
         
         return $this;
     }
@@ -133,6 +118,26 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     public function isActive(): bool
     {
         return $this->isPaid();
+    }
+    
+    public function getCode(): ?string
+    {
+        return $this->pricingPlan ? $this->pricingPlan->getSubscriptionCode() : null;
+    }
+    
+    public function getSubscriptionCode(): ?string
+    {
+        return $this->pricingPlan ? $this->pricingPlan->getSubscriptionCode() : null;
+    }
+    
+    public function getServiceCode(): ?string
+    {
+        return $this->pricingPlan ? $this->pricingPlan->getServiceCode() : null;
+    }
+    
+    public function getPeriodCode(): ?string
+    {
+        return $this->pricingPlan ? $this->pricingPlan->getPeriodCode() : null;
     }
     
     public function getSubscriptionPriority(): ?int

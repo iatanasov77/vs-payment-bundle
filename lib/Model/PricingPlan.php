@@ -249,6 +249,9 @@ class PricingPlan implements PricingPlanInterface, Comparable
         $period = null;
         
         switch( $this->paidService->getSubscriptionPeriod() ) {
+            case SubscriptionPeriod::SUBSCRIPTION_PERIOD_UNLIMITED:
+                $period = new \DateInterval( 'P1000Y' );
+                break;
             case SubscriptionPeriod::SUBSCRIPTION_PERIOD_YEAR:
                 $period = new \DateInterval( 'P1Y' );
                 break;
