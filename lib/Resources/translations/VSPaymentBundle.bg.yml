@@ -109,7 +109,7 @@ vs_payment:
             lower_than_active: Lower Plan
             pay_plan: Плати План
             
-        subscriptions:
+        pricing_plan_subscriptions:
             paid_service: Paid Service
             paid_service_period: Service Period
                 
