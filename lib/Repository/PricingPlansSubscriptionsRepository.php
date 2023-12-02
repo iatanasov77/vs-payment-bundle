@@ -7,6 +7,13 @@ class PricingPlansSubscriptionsRepository extends EntityRepository
 {
     public function getSubscriptionsByUser( UserPaymentAwareInterface $user )
     {
-        return null;
+        $collection     = $user->getPricingPlanSubscriptions();
+        
+        $subscriptions  = [];
+        foreach ( $collection as $subscription ) {
+            $collection[$subscription->getServiceCode()]    = $subscription;
+        }
+        
+        return $subscriptions;
     }
 }
