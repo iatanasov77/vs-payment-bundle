@@ -54,7 +54,10 @@ class OrderFactory
         $session->start();  // Ensure Session is Started
         
         $cartId         = $session->get( self::SESSION_BASKET_KEY );
-        $shoppingCart   = $cartId ? $this->ordersRepository->find( $cartId ) : null;
+        $shoppingCart   = $cartId ?
+                            $this->ordersRepository->find( $cartId ) :
+                            $this->ordersRepository->getShoppingCartByUser( $this->user );
+        
         if ( ! $shoppingCart ) {
             $shoppingCart   = $this->ordersFactory->createNew();
             

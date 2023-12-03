@@ -13,6 +13,7 @@ use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
+use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\PaymentBundle\Form\SelectPricingPlanForm;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\CreateSubscriptionEvent;
@@ -146,6 +147,9 @@ class PricingPlanCheckoutController extends AbstractController
         $em             = $this->doctrine->getManager();
         $pricingPlan    = $this->pricingPlansRepository->find( $formData['pricingPlan'] );
         $subscription   = $this->getSubscription( $pricingPlan );
+        if ( ! $subscription ) {
+            throw new CheckoutException( 'Subscription Cannot be Created !' );
+        }
         
         $orderItem      = $this->orderItemsFactory->createNew();
         
