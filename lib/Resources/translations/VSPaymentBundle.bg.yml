@@ -112,6 +112,14 @@ vs_payment:
         pricing_plan_subscriptions:
             paid_service: Paid Service
             paid_service_period: Service Period
+            
+        my_profile:
+            service: Service
+            paid: Paid
+            recurring: Recurring
+            expires_at: Expires At
+            actions: Actions
+            create_payment: Create Payment
                 
         currency_index_title: Валути
         currency_index_code: Код
