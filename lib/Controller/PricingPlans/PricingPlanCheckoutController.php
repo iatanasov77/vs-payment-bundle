@@ -146,7 +146,9 @@ class PricingPlanCheckoutController extends AbstractController
     {
         $em             = $this->doctrine->getManager();
         $pricingPlan    = $this->pricingPlansRepository->find( $formData['pricingPlan'] );
-        $subscription   = $this->getSubscription( $pricingPlan );
+        //$subscription   = $this->getSubscription( $pricingPlan );
+        $subscription   = $this->getSubscription_v2( $pricingPlan );
+        
         if ( ! $subscription ) {
             throw new CheckoutException( 'Subscription Cannot be Created !' );
         }
@@ -184,6 +186,24 @@ class PricingPlanCheckoutController extends AbstractController
             
             $this->doctrine->getManager()->refresh( $user );
             $subscription   = $user->getPricingPlanSubscriptions()->get( $pricingPlan->getSubscriptionCode() );
+        }
+        
+        return $subscription;
+    }
+    
+    protected function getSubscription_v2( $pricingPlan )
+    {
+        $user           = $this->securityBridge->getUser();
+        $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
+        
+        if ( ! $subscription ) {
+            $this->eventDispatcher->dispatch(
+                new CreateSubscriptionEvent( $pricingPlan ),
+                CreateSubscriptionEvent::NAME
+            );
+            
+            $this->doctrine->getManager()->refresh( $user );
+            $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
         }
         
         return $subscription;
