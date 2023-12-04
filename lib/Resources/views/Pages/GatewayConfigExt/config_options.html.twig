@@ -1,9 +1,9 @@
 {% if options is not empty %}
-	<fieldset class="border p-2 mb-4" style="width: 100%;">
+	<fieldset class="border border-dark rounded p-3 mb-4" style="width: 100%;">
         {% if sandbox %}
-            <legend class="w-100">{{ 'vs_payment.template.gateway_config_ext.config.sandbox_config_options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
+            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.template.gateway_config_ext.config.sandbox_config_options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
         {% else %}
-            <legend class="w-100">{{ 'vs_payment.template.gateway_config_ext.config.options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
+            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.template.gateway_config_ext.config.options_title' | trans( {},'VSPaymentBundle' ) }}</legend>
         {% endif %}
         
         {% if factory == 'paysera' %}

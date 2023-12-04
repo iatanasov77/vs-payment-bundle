@@ -54,8 +54,8 @@
                                     {{ form_widget(form.currency, {'attr': {'class': 'form-control'}}) }}
                                 </div>
     
-                                <fieldset class="border p-2 mb-4" style="width: 100%;">
-                                    <legend class="w-100 mb-3">{{ 'vs_payment.template.gateway_config_ext.config.payum_config_options' | trans( {},'VSPaymentBundle' ) }}</legend>
+                                <fieldset class="border border-dark rounded p-3">
+                                    <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.template.gateway_config_ext.config.payum_config_options' | trans( {},'VSPaymentBundle' ) }}</legend>
                                     
                                     <label class="custom-control custom-checkbox">  
                                         <input type="checkbox" id="gateway_config_form_useSandbox"
