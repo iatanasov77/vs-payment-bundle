@@ -22,6 +22,17 @@ vs_payment:
             use_sandbox: Използвай Сенд-бокс
             
         credit_card:
+            holder_name_label: Име на Картата
+            holder_name_placeholder: Въведете име 
+            card_number_label: Карта Номер
+            card_number_placeholder: '0000 0000 0000 0000'
+            exp_date_month: Месец
+            exp_date_year: Година
+            cvv_cvc: CVV/CVC
+            cvv_cvc_placeholder: '123'
+            reset: Изчисти
+            continue: Продължи
+            
             acct: 'Карта Номер'
             exp_date: 'Дата на Изтичане'
             cvv2: 'CVV2'
@@ -139,7 +150,7 @@ vs_payment:
         checkout_done_subtitle: Успешно Плащане
         checkout_done_message: Вие платихте успешно! Може да се върнете към приложението
         credit_card_title: Кредитна Карта
-        credit_card_description: въведете детайли за вашата карта
+        credit_card_description: Въведете детайли за вашата карта
         checkout_payment_title: Избери Метод за Плащане
         product_categories_index_title: Продукт Категории
         product_categories_create_title: СЪздай Продукт Категория

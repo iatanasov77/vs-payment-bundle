@@ -19,50 +19,50 @@ class CreditCardForm extends AbstractType
             ->add( 'captureUrl', HiddenType::class, ['empty_data' => $options['captureUrl']] )
             
             ->add( 'name', TextType::class, [
-                'label' => 'Name',
+                'label' => 'vs_payment.form.credit_card.holder_name_label',
                 'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
-                    'placeholder' => 'Enter your name'
+                    'placeholder' => 'vs_payment.form.credit_card.holder_name_placeholder'
                 ],
             ])
             
             ->add( 'number', NumberType::class, [
-                'label' => 'Credit Card Number',
+                'label' => 'vs_payment.form.credit_card.card_number_label',
                 'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
-                    'placeholder' => '0000 0000 0000 0000'
+                    'placeholder' => 'vs_payment.form.credit_card.card_number_placeholder'
                 ],
             ])
             
             ->add( 'ccmonth', ChoiceType::class, [
                 'choices'               => array_combine( range( 1, 12 ), range( 1, 12 ) ),
                 'mapped'                => false,
-                'label'                 => 'Month',
+                'label'                 => 'vs_payment.form.credit_card.exp_date_month',
                 'translation_domain'    => 'VSPaymentBundle',
             ])
             
             ->add( 'ccyear', ChoiceType::class, [
                 'choices'               => array_combine( range( 2014, 2025 ), range( 2014, 2025 ) ),
                 'mapped'                => false,
-                'label'                 => 'Year',
+                'label'                 => 'vs_payment.form.credit_card.exp_date_year',
                 'translation_domain'    => 'VSPaymentBundle',
             ])
             
             ->add( 'cvv', TextType::class, [
-                'label' => 'CVV/CVC',
+                'label' => 'vs_payment.form.credit_card.cvv_cvc',
                 'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
-                    'placeholder' => '123'
+                    'placeholder' => 'vs_payment.form.credit_card.cvv_cvc_placeholder'
                 ],
             ])
             
             ->add( 'btnReset', ResetType::class, [
-                'label' => 'Reset',
+                'label' => 'vs_payment.form.credit_card.reset',
                 'translation_domain' => 'VSPaymentBundle'
             ])
             
             ->add( 'btnContinue', SubmitType::class, [
-                'label' => 'Continue',
+                'label' => 'vs_payment.form.credit_card.continue',
                 'translation_domain' => 'VSPaymentBundle'
             ])
         ;
