@@ -72,4 +72,25 @@ class OrderFactory
         
         return $shoppingCart;
     }
+    
+    public function clearShoppingCart(): void
+    {
+        $em      = $this->doctrine->getManager();
+        $session = $this->request->getSession();
+        $session->start();  // Ensure Session is Started
+        
+        $cartId         = $session->get( self::SESSION_BASKET_KEY );
+        $shoppingCart   = $cartId ?
+                            $this->ordersRepository->find( $cartId ) :
+                            $this->ordersRepository->getShoppingCartByUser( $this->user );
+        
+        if ( $shoppingCart ) {
+            foreach ( $shoppingCart->getItems() as $item ) {
+                $shoppingCart->removeItem( $item );
+            }
+            
+            $em->persist( $shoppingCart );
+            $em->flush();
+        }
+    }
 }

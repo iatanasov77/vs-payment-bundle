@@ -117,6 +117,7 @@ class PricingPlanCheckoutController extends AbstractController
         if ( ! $cart ) {
             throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
         }
+        $this->orderFactory->clearShoppingCart();   // Remove Previous Order Items If Exists
         
         $form   = $this->createForm( SelectPricingPlanForm::class );
         $form->handleRequest( $request );
@@ -162,6 +163,7 @@ class PricingPlanCheckoutController extends AbstractController
         if ( ! $cart ) {
             throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
         }
+        $this->orderFactory->clearShoppingCart();   // Remove Previous Order Items If Exists
         
         $form   = $this->createForm( SelectPaymentMethodForm::class );
         $form->handleRequest( $request );
