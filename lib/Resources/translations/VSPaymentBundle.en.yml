@@ -120,6 +120,10 @@ vs_payment:
             lower_than_active: Lower Plan
             pay_plan: Pay Plan
             
+        pricing_plan_checkout:
+            choose_a_pricing_plan: Choose a Pricing Plan
+            choose_a_payment_method: Choose a Payment Method
+            
         pricing_plan_subscriptions:
             paid_service: Paid Service
             paid_service_period: Service Period
