@@ -156,6 +156,39 @@ class PricingPlanCheckoutController extends AbstractController
         ]);
     }
     
+    public function handlePaymentMetodFormAction( Request $request ): Response
+    {
+        $cart   = $this->orderFactory->getShoppingCart();
+        if ( ! $cart ) {
+            throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
+        }
+        
+        $form   = $this->createForm( SelectPaymentMethodForm::class );
+        $form->handleRequest( $request );
+        if ( $form->isSubmitted() ) {
+            $em             = $this->doctrine->getManager();
+            $formData       = $form->getData();
+            
+            //$paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod']['paymentMethod'] );
+            $paymentMethod  = $formData['paymentMethod']['paymentMethod'];
+            $pricingPlan    = $this->prepareCart( $formData, $cart, $paymentMethod );
+            
+            $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute(
+                $paymentMethod->getGateway(),
+                //$pricingPlan->isRecurringPayment()
+                false
+                );
+            
+            return new JsonResponse([
+                'status'    => Status::STATUS_OK,
+                'data'      => [
+                    'paymentPrepareUrl' => $paymentPrepareUrl,
+                    'gatewayFactory'    => $paymentMethod->getGateway()->getFactoryName(),
+                ]
+            ]);
+        }
+    }
+    
     protected function prepareCart( $formData, $cart, $paymentMethod )
     {
         $em             = $this->doctrine->getManager();
