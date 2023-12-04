@@ -16,6 +16,7 @@ use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\PaymentBundle\Form\SelectPricingPlanForm;
+use Vankosoft\PaymentBundle\Form\SelectPaymentMethodForm;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\CreateSubscriptionEvent;
 
 class PricingPlanCheckoutController extends AbstractController
@@ -123,7 +124,8 @@ class PricingPlanCheckoutController extends AbstractController
             $em             = $this->doctrine->getManager();
             $formData       = $form->getData();
             
-            $paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod'] );
+            //$paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod']['paymentMethod'] );
+            $paymentMethod  = $formData['paymentMethod']['paymentMethod'];
             $pricingPlan    = $this->prepareCart( $formData, $cart, $paymentMethod );
             
             $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute(
@@ -140,6 +142,18 @@ class PricingPlanCheckoutController extends AbstractController
                 ]
             ]);
         }
+    }
+    
+    public function showPaymentMethodForm( $pricingPlanId, Request $request ): Response
+    {
+        $form                   = $this->createForm( SelectPaymentMethodForm::class, null, ['method' => 'POST'] );
+        $bankTransferGateway    = $this->gatewaysRepository->findOneBy( ['factoryName' => 'offline_bank_transfer'] );
+        
+        return $this->render( '@VSPayment/Pages/PricingPlansCheckout/Partial/select-payment-method-form.html.twig', [
+            'form'              => $form->createView(),
+            'pricingPlanId'     => $pricingPlanId,
+            'bankTransferInfo'  => $bankTransferGateway ? $bankTransferGateway->getConfig() : null,
+        ]);
     }
     
     protected function prepareCart( $formData, $cart, $paymentMethod )

@@ -116,6 +116,12 @@ services:
             - '%vs_payment.model.payment_method.class%'
             - '@vs_payment.repository.pricing_plan'
             
+    Vankosoft\PaymentBundle\Form\SelectPaymentMethodForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.payment_method.class%'
+            
     Vankosoft\PaymentBundle\Form\Type\PricingPlanPaidServiceType:
         tags:
             - { name: form.type }

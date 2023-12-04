@@ -11,8 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Vankosoft\PaymentBundle\Form\Type\PaymentMethodType;
 
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
-
 class SelectPricingPlanForm extends AbstractType
 {
     /** @var string */

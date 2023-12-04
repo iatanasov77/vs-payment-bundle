@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Vankosoft\PaymentBundle\Form\Type\PaymentMethodType;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -27,18 +28,9 @@ class PaymentForm extends AbstractType
         $builder
             ->add( 'paymentDescription', HiddenType::class )
         
-            ->add( 'paymentMethod', EntityType::class, [
-                    
-                'expanded'              => true,
-                'class'                 => $this->paymentMethodClass,
-                'query_builder' => function( EntityRepository $repository ) {
-                    $qb = $repository->createQueryBuilder( 'pm' );
-                    return $qb->where( $qb->expr()->eq( 'pm.enabled', '?1' ) )->setParameter( '1', '1' );
-                },
-                'choice_label'          => 'name',
-                'label'                 => 'Payment Method',
-                'translation_domain'    => 'VSUsersBundle',
-            ])
+            ->add( 'paymentMethod', PaymentMethodType::class, [
+                'paymentMethodClass'    => $this->paymentMethodClass
+            ] )
             
             ->add( 'btnContinue', SubmitType::class, [
                 'label' => 'Continue',

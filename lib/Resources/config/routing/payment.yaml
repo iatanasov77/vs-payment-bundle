@@ -73,4 +73,10 @@ vs_payment_handle_pricing_plan_form:
     controller: Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCheckoutController::handlePricingPlanFormAction
     options:
         expose: true
+        
+vs_payment_select_payment_method_form:
+    path: /vs_payment/select-payment-method/{pricingPlanId}
+    controller: Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCheckoutController::showPaymentMethodForm
+    options:
+        expose: true
 

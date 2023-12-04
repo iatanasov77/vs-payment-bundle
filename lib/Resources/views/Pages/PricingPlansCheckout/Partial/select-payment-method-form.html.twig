@@ -1,0 +1,14 @@
+{{ form_start( form, {
+    'action': path( 'vs_payment_handle_pricing_plan_form' ),
+    'attr': {'class': 'modal__form', 'id': 'PricingPlanForm'}
+}) }}
+
+    {{ form_widget( form.pricingPlan, {'value': pricingPlanId} ) }}
+    
+    {% include '@VSPayment/Pages/PaymentMethod/select-payment-method-field.html.twig' %}
+    
+    <div class="control-group">&nbsp;</div>
+
+    {{ form_widget( form.btnSubmit, {'attr': {'class': 'btn btn-large btn-success'}, 'id': 'SelectPaymentMethodSubmit'} ) }}
+
+{{ form_end(form, {'render_rest': false}) }}
