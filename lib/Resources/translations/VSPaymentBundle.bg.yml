@@ -111,6 +111,7 @@ vs_payment:
                 payment_method: Метод за Плащане
                 gatewayy: Гейтуей
                 gateway_use_sandbox: Гейтуейя използва Сенд-бокс
+                gateway_support_recurring: Гейтуейя Поддържа Периодично Плащане
                 create_new_payment_method: Създаване Нов Метод за Плащане
             config:
                 title: Метод за Плащане Конфигурация

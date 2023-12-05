@@ -111,6 +111,7 @@ vs_payment:
                 payment_method: Payment Method
                 gateway: Gateway
                 gateway_use_sandbox: Gateway Use Sandbox
+                gateway_support_recurring: Gateway Support Recurring
                 create_new_payment_method: Create New Payment Method
             config:
                 title: Payment Method Config

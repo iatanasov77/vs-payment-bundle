@@ -1,0 +1,11 @@
+##############################
+# Stripe
+##############################
+gateway_config_stripe_subscription_plans_index:
+    path: /vs_payment/gateway-config/stripe/index
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::indexAction
+
+gateway_config_stripe_subscription_plans_create:
+    path: /vs_payment/gateway-config/stripe/create
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createAction
+
