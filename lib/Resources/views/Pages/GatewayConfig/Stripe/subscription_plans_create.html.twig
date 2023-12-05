@@ -30,9 +30,12 @@
                             {{ form_widget(form.name, {'attr': {'class': 'form-control' }}) }}
                         </div>
                         
-                        <button class="btn btn-sm btn-success float-right" type="submit" name="{{ form.btnSubmit.vars.full_name }}" id="{{ form.btnSubmit.vars.id }}">
-                            <i class="mdi mdi-gamepad-circle"></i> {{ form.btnSubmit.vars.label }}
-                        </button>
+                        <div class="input-group row vsFormButtonsGroup">
+                            <div class="col-sm-2">
+                                {{ form_widget(form.btnSubmit, {'attr': {'class': 'btn btn-primary', 'id':'btnSave'}}) }}
+                            </div>
+                            <div class="col-sm-6"></div>
+                        </div>
                     {{ form_end(form) }}
                 </div>
             </div>
