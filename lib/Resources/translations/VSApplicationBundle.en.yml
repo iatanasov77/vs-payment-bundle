@@ -35,4 +35,5 @@ vs_application:
         pricing_plans_listing: Pricing Plans
         create_pricing_plan: Create a Pricing Plan
         edit_pricing_plan: Edit Pricing Plan
+        stripe_subscription_plans: Stripe Subscription Plans
 
