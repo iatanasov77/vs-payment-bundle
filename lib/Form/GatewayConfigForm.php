@@ -42,6 +42,12 @@ class GatewayConfigForm extends AbstractForm
         $gatewayConfig  = $options['data'];
         
         $builder
+            ->add( 'supportRecurring', CheckboxType::class, [
+                'required'              => false,
+                'label'                 => 'vs_payment.form.gateway_config.support_recurring',
+                'translation_domain'    => 'VSPaymentBundle',
+                
+            ] )
             ->add( 'title', TextType::class, [
                 'required'              => true,
                 'label'                 => 'vs_payment.form.title',

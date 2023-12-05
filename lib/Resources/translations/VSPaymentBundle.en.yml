@@ -20,6 +20,7 @@ vs_payment:
         
         gateway_config:
             use_sandbox: Use Sandbox
+            support_recurring: Support Recurring Payment
             
         credit_card:
             holder_name_label: Name on card
@@ -94,6 +95,9 @@ vs_payment:
                 create_new_gateway: Create New Gateway
                 gateway_title: Title
                 gateway_description: Description
+                recurring_payment: Recurring Payment
+                supported: Supported
+                not_supported: Not Supported
             config:
                 title: Gateway Config
                 payum_config_options: Payum Config Options

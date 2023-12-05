@@ -20,6 +20,7 @@ vs_payment:
         
         gateway_config:
             use_sandbox: Използвай Сенд-бокс
+            support_recurring: Поддържа периодично плащане
             
         credit_card:
             holder_name_label: Име на Картата
@@ -94,6 +95,9 @@ vs_payment:
                 create_new_gateway: Създай Нов Гейтуей
                 gateway_title: Заглавие
                 gateway_description: Описание
+                recurring_payment: Периодично Плащане
+                supported: Поддържа
+                not_supported: Не Поддържа
             config:
                 title: Гейтуей Конфигурация
                 payum_config_options: Payum Конфигурация Опции

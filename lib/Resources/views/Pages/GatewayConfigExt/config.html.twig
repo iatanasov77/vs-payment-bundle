@@ -28,6 +28,16 @@
                                     </div>
                                 {% endif %}
                                 
+                                <label class="custom-control custom-checkbox">  
+                                    <input type="checkbox" id="gateway_config_form_supportRecurring"
+                                        class="custom-control-input form-check-input"
+                                        name="gateway_config_form[supportRecurring]"
+                                        value="{{ form.vars.value.supportRecurring }}"
+                                        {% if form.vars.value.supportRecurring %}checked="checked"{% endif %}
+                                    />
+                                    <span class="custom-control-label">{{ form.supportRecurring.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
+                                </label>
+                                
                                 <div class="form-group">
                                     {{ form_label(form.title, null, {
                                         'label_attr': {'class': 'col-form-label'}
