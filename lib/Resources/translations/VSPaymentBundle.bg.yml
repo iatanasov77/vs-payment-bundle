@@ -202,6 +202,7 @@ vs_payment:
         pricing_plan_subscriptions_show_title: List Subscription Payments
         order_is_paid: Paid
         action_set_order_status_paid: Set Paid
+        create_stripe_plan: Create Stripe Plan
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

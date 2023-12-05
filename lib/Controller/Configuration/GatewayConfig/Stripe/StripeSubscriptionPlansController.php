@@ -5,13 +5,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Payum\Core\Payum;
+use Payum\Core\Gateway;
 use Payum\Stripe\Request\Api\CreatePlan;
+use Vankosoft\PaymentBundle\Form\StripeSubscriptionPlanForm;
 
 class StripeSubscriptionPlansController extends AbstractController
 {
     /** @var ManagerRegistry */
     private $doctrine;
     
+    /** @var Gateway */
     private $gateway;
     
     public function __construct(
@@ -24,24 +27,35 @@ class StripeSubscriptionPlansController extends AbstractController
     
     public function indexAction( Request $request ): Response
     {
-        var_dump($this->gateway); die;
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_index.html.twig' );
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_index.html.twig', [
+            'items' => [],
+        ]);
     }
     
     public function createAction( Request $request ): Response
     {
-        $plan           = new \ArrayObject([
-            "amount"    => $order->getTotalAmount(),
-            "interval"  => "month",
-            "name"      => $pricingPlan->getTitle(),
-            "currency"  => $order->getCurrencyCode(),
+        $form   = $this->createForm( StripeSubscriptionPlanForm::class, null, ['method' => 'POST'] );
+        
+        $form->handleRequest( $request );
+        if ( $form->isSubmitted() ) {
+            $formData   = $form->getData();
             
-            // Pricing Plan Monthly ( Created From Stripe Dashbord )
-            "id"        => "price_1O05sBCozROjz2jXEwka0bux"
+            // $formData['pricingPlan']
+            $plan       = new \ArrayObject([
+                "amount"    => 10,
+                "interval"  => "month",
+                "name"      => "SugarBabes - Watch Movies - 1 Month",
+                "currency"  => "eur",
+                "id"        => "sugarbabes_movies_month"
+            ]);
+            
+            $this->gateway->execute( new CreatePlan( $plan ) );
+            
+            return $this->redirectToRoute( 'gateway_config_stripe_subscription_plans_index' );
+        }
+        
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_create.html.twig', [
+            'form'  => $form->createView(),
         ]);
-        
-        $this->gateway->execute( new CreatePlan( $plan ) );
-        
-        
     }
 }
