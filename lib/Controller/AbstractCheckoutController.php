@@ -170,7 +170,7 @@ abstract class AbstractCheckoutController extends AbstractController
     protected function _setSubscriptionsPaymentDone( Request $request, $subscriptions ): ?Response
     {
         if ( $this instanceof AbstractCheckoutOfflineController ) {
-            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_waiting', [], 'VSPaymentBundle' );
         } else {
             $this->eventDispatcher->dispatch(
                 new SubscriptionsPaymentDoneEvent( $subscriptions ),
@@ -191,10 +191,19 @@ abstract class AbstractCheckoutController extends AbstractController
     
     protected function _setShoppingCartPaymentDone( Request $request ): ?Response
     {
-        $flashMessage   = $this->translator->trans( 'vs_payment.template.shopping_cart_payment_success', [], 'VSPaymentBundle' );
-        $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
+        if ( $this instanceof AbstractCheckoutOfflineController ) {
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.shopping_cart_payment_waiting', [], 'VSPaymentBundle' );
+        } else {
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.shopping_cart_payment_success', [], 'VSPaymentBundle' );
+        }
         
-        return $this->redirectToRoute( $this->routeRedirectOnShoppingCartDone );
+        if ( $this->routeRedirectOnShoppingCartDone ) {
+            $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
+            
+            return $this->redirectToRoute( $this->routeRedirectOnShoppingCartDone );
+        }
+        
+        return null;
     }
     
     protected function getErrorMessage( $details )
