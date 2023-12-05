@@ -4,6 +4,7 @@ parameters:
     ##########################################################
     vs_payment.gateway_factories:
         - 'offline'
+        - 'offline_bank_transfer'
         - 'paypal_rest'
         - 'paypal_express_checkout'
         - 'paypal_pro_checkout'
@@ -11,6 +12,7 @@ parameters:
         - 'stripe_js'
         - 'paysera'
         - 'borica'
+        - 'authorize_net_aim'
         
     vs_payment.form.type.currency.validation_groups:
         - 'VSPaymentBundle'
@@ -113,6 +115,12 @@ services:
             - '%vs_payment.model.pricing_plan.class%'
             - '%vs_payment.model.payment_method.class%'
             - '@vs_payment.repository.pricing_plan'
+            
+    Vankosoft\PaymentBundle\Form\SelectPaymentMethodForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.payment_method.class%'
             
     Vankosoft\PaymentBundle\Form\Type\PricingPlanPaidServiceType:
         tags:

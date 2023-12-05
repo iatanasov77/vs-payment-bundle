@@ -1,3 +1,47 @@
+2.9.11	|	Release date: **05.12.2023**
+============================================
+* New Features, Fixes and Improvements:
+  - Improve Pricing Plan Listing Template .
+  - Add AuthorizeNet Payment Gateway.
+  - Fix PricingPlanCategoryForm .
+  - Fix Using 'vs_tree' Macros.
+  - Fox Pricing Plan Model.
+  - Update Recieved Payments Index Page
+  - Improve Payment Model.
+  - Use Real Amaount in Payment Model for Recieved Payments Page.
+  - Improve Recieved Payments Template.
+  - Update Checkout Offline Controller.
+  - Improve Pricing Plan Subscriptions Listing Template.
+  - Create Pricing Plan Subscription Show Payments Preview Page.
+  - Debug Offline Gateway.
+  - Create Offline BankTransfer Factory
+  - Create an Ofline Controllers.
+  - Improve PricingPlan Form .
+  - Improve Order Model
+  - Create an Order Actions Controller.
+  - Improve Subscriptions Payments Template Actions.
+  - Fix OrderActionsController .
+  - Improve Subscriptions Templates.
+  - Improve PricingPlan.
+  - Remove 'recurringPayment' field from PricingPlan Model.
+  - Add a Doctrine Migration.
+  - Fix PricingPlanCheckoutController .
+  - Add a Doctrine Migration.
+  - Fix AbstractCheckoutController .
+  - Improve SelectPricingPlanForm .
+  - Improve OrderFactory Component.
+  - Improve Subscription Model.
+  - Add a Doctrine Migration.
+  - Create a PricingPlansSubscriptionsRepository for Subscription Resource.
+  - Improve Subscriptions Repository.
+  - Add Some Translations.
+  - Create Payment Method Type as Sub Type.
+  - Create Separate Payment Mehod Form Template for Pricing Plan Checkouts.
+  - Improve CreditCardForm .
+  - Create a Separate Payment Method Form Template for Pricing Plan Subscription Payments.
+  - Improve OrderFactory Component.
+
+
 2.9.10	|	Release date: **17.11.2023**
 ============================================
 * New Features:

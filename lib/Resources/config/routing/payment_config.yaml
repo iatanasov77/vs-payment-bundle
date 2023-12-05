@@ -2,11 +2,13 @@
 vs_payment_gateways_index:
     path:     /gateways
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigExtController::indexAction
+    
 vs_payment_gateways_config:
     path:     /gateways/config/{gatewayName}
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigExtController::configAction
     defaults:
         gatewayName: '' # To Can be Added in the Menu
+        
 vs_payment_gateways_config_options:
     path:     /gateways/config/options/get
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigExtController::gatewayConfigAction
@@ -15,8 +17,15 @@ vs_payment_gateways_config_options:
 vs_payment_methods_index:
     path:     /payment_methods
     controller: Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigExtController::indexAction
+    
 vs_payment_methods_config:
     path:     /payment_methods/config/{id}
     controller: Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigExtController::configAction
     defaults:
         id: 0 # To Can be Added in the Menu
+        
+vs_payment_set_order_status_paid:
+    path: /vs_payment/set-order-status-paid/{orderId}
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\OrderActionsController::setOrderStatusPaid
+    options:
+        expose: true

@@ -16,6 +16,7 @@ class BoricaController extends AbstractCheckoutController
         $payment->setOrder( $cart );
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $cart->getCurrencyCode() );
+        $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
         $payment->setTotalAmount( $cart->getTotalAmount() );
         $payment->setDescription( $cart->getDescription() );
         

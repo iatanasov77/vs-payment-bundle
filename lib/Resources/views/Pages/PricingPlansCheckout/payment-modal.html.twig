@@ -1,0 +1,26 @@
+<!-- payment method modal -->
+<div class="modal hide fade in" id="payment-modal" 
+    tabindex="-1" 
+    aria-labelledby="plan-modal" 
+    aria-hidden="true" 
+    role="dialog"
+    data-easein="expandIn"
+>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="height: 40px;">
+                <div style="float: left;">
+                    <h4 class="modal-title">{{ 'vs_payment.template.pricing_plan_checkout.choose_a_payment_method' | trans( {},'VSPaymentBundle' ) }}</h4>
+                </div>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="float: right;">
+                <div id="selectPaymentMethodForm"></div>
+            </div>
+            <div class="modal-footer" style="float: right;"></div>
+        </div>
+    </div>
+</div>
+<!-- end payment method modal -->

@@ -8,10 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
+use Vankosoft\PaymentBundle\Form\Type\PaymentMethodType;
 
 class SelectPricingPlanForm extends AbstractType
 {
@@ -55,13 +53,9 @@ class SelectPricingPlanForm extends AbstractType
                 'choices'               => $this->pricingPlanRepository->findAllForForm(),
             ])
             
-            ->add( 'paymentMethod', EntityType::class, [
-                'label'                 => 'vs_payment.form.select_pricing_plan.payment_method',
-                'translation_domain'    => 'VSPaymentBundle',
-                'class'                 => $this->paymentMethodClass,
-                'choice_label'          => 'name',
-                'expanded'              => true,
-            ])
+            ->add( 'paymentMethod', PaymentMethodType::class, [
+                'paymentMethodClass'    => $this->paymentMethodClass
+            ] )
             
             ->add( 'btnSubmit', SubmitType::class, [
                 'label'                 => 'vs_payment.form.select_pricing_plan.submit',

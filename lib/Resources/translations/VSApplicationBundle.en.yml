@@ -10,6 +10,7 @@ vs_application:
         edit_a_payment_method: Edit a Payment Method
         paid_subscriptions: Paid Subscriptions
         orders: Orders
+        orders_and_payments: Orders and Payments
         recieved_payments: Recieved Payments
         paid_service_subscriptions: Paid Service Subscriptions
         pricing_plan_subscriptions: Pricing Plan Subscriptions

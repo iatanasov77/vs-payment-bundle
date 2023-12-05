@@ -1,0 +1,33 @@
+<div class="control-group">
+    {{ form_label(form.paymentMethod, null, {
+        'label_attr': {'class': 'control-label'}
+        }) 
+    }}
+    <div id="select_pricing_plan_form_paymentMethod" class="controls" style="width: 100%">
+        {% for paymentMethod in form.paymentMethod %}
+            {{ form_widget( paymentMethod, { 'attr': { 'style': 'float: left; margin-right: 5px;', 'checked': loop.index == 1 } } ) }}
+            {{ form_label( paymentMethod ) }}
+        {% endfor %}
+    </div>
+    
+    {% if bankTransferInfo %}
+        <div class="sign__text form_input_info mb-5" id="BankTransferInfo" style="display: none;">
+            <div class="row">
+                <div class="col-3">IBAN:</div>
+                <div class="col-9">{{ bankTransferInfo.iban }}</div>
+            </div>
+            <div class="row">
+                <div class="col-3">{{ 'vs_payment.form.select_pricing_plan.bank' | trans( {},'VSPaymentBundle' ) }}:</div>
+                <div class="col-7">{{ bankTransferInfo.bank_name }}</div>
+            </div>
+            <div class="row">
+                <div class="col-3">{{ 'vs_payment.form.select_pricing_plan.reciever' | trans( {},'VSPaymentBundle' ) }}:</div>
+                <div class="col-9">{{ bankTransferInfo.reciever_name }}</div>
+            </div>
+            <div class="row">
+                <div class="col-3">{{ 'vs_payment.form.select_pricing_plan.reason' | trans( {},'VSPaymentBundle' ) }}:</div>
+                <div class="col-9">{{ bankTransferInfo.reason }}</div>
+            </div>
+        </div>
+    {% endif %}
+</div>

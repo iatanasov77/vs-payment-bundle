@@ -22,6 +22,17 @@ vs_payment:
             use_sandbox: Използвай Сенд-бокс
             
         credit_card:
+            holder_name_label: Име на Картата
+            holder_name_placeholder: Въведете име 
+            card_number_label: Карта Номер
+            card_number_placeholder: '0000 0000 0000 0000'
+            exp_date_month: Месец
+            exp_date_year: Година
+            cvv_cvc: CVV/CVC
+            cvv_cvc_placeholder: '123'
+            reset: Изчисти
+            continue: Продължи
+            
             acct: 'Карта Номер'
             exp_date: 'Дата на Изтичане'
             cvv2: 'CVV2'
@@ -64,6 +75,9 @@ vs_payment:
             choose_plan: Choose plan
             payment_method: Payment method
             submit: Proceed
+            bank: Банка
+            reciever: Получател
+            reason: Основание
     
     template:
         gateway: Гейтуей
@@ -92,6 +106,7 @@ vs_payment:
                 title: Методи за Плащане
                 payment_method: Метод за Плащане
                 gatewayy: Гейтуей
+                gateway_use_sandbox: Гейтуейя използва Сенд-бокс
                 create_new_payment_method: Създаване Нов Метод за Плащане
             config:
                 title: Метод за Плащане Конфигурация
@@ -104,6 +119,22 @@ vs_payment:
             choose_plan: Избери План
             lower_than_active: Lower Plan
             pay_plan: Плати План
+            
+        pricing_plan_checkout:
+            choose_a_pricing_plan: Избор на План
+            choose_a_payment_method: Избор Метод за Плащане
+            
+        pricing_plan_subscriptions:
+            paid_service: Paid Service
+            paid_service_period: Service Period
+            
+        my_profile:
+            service: Service
+            paid: Paid
+            recurring: Recurring
+            expires_at: Expires At
+            actions: Actions
+            create_payment: Create Payment
                 
         currency_index_title: Валути
         currency_index_code: Код
@@ -123,7 +154,7 @@ vs_payment:
         checkout_done_subtitle: Успешно Плащане
         checkout_done_message: Вие платихте успешно! Може да се върнете към приложението
         credit_card_title: Кредитна Карта
-        credit_card_description: въведете детайли за вашата карта
+        credit_card_description: Въведете детайли за вашата карта
         checkout_payment_title: Избери Метод за Плащане
         product_categories_index_title: Продукт Категории
         product_categories_create_title: СЪздай Продукт Категория
@@ -152,14 +183,18 @@ vs_payment:
         payment_client_email: Client Email
         payment_total_amount: Total Amount
         payment_currency: Currency
-        pricing_plan_payment_success: 'Pricing Plan Payed Successfull !!!'
-        shopping_cart_payment_success: 'Shopping Cart Payed Successfull !!!'
+        pricing_plan_payment_success: 'Pricing Plan Paid Successfull !!!'
+        shopping_cart_payment_success: 'Shopping Cart Paid Successfull !!!'
         order_index_title: Orders
         order_status: Status
         order_user: User
         order_session_id: Session ID
         pricing_plan_subscriptions_index_title: Pricing Plan Subscriptions
         subscriptions: Subscriptions
+        items_index_row_expires_at: Expires At
+        pricing_plan_subscriptions_show_title: List Subscription Payments
+        order_is_paid: Paid
+        action_set_order_status_paid: Set Paid
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

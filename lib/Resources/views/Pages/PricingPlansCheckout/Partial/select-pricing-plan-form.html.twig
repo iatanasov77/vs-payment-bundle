@@ -29,19 +29,8 @@
             You can spend money from your account on the renewal of the connected packages, or to order cars on our website.
         </div>
     </div>
-
-    <div class="control-group">
-        {{ form_label(form.paymentMethod, null, {
-            'label_attr': {'class': 'control-label'}
-            }) 
-        }}
-        <div id="select_pricing_plan_form_paymentMethod" class="controls" style="width: 100%">
-            {% for paymentMethod in form.paymentMethod %}
-                {{ form_widget( paymentMethod, { 'attr': { 'style': 'float: left; margin-right: 5px;', 'checked': loop.index == 1 } } ) }}
-                {{ form_label( paymentMethod ) }}
-            {% endfor %}
-        </div>
-    </div>
+    
+    {% include '@VSPayment/Pages/PaymentMethod/select-payment-method-field.html.twig' %}
 
     <div class="control-group">&nbsp;</div>
 

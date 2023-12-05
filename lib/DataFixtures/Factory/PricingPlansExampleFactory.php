@@ -86,9 +86,6 @@ final class PricingPlansExampleFactory extends AbstractExampleFactory implements
             ->setDefault( 'premium', false )
             ->setAllowedTypes( 'premium', ['bool'] )
             
-            ->setDefault( 'recurringPayment', false )
-            ->setAllowedTypes( 'recurringPayment', ['bool'] )
-            
             ->setDefault( 'price', null )
             ->setAllowedTypes( 'price', ['float'] )
             

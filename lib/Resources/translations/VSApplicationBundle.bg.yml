@@ -10,6 +10,7 @@ vs_application:
         edit_a_payment_method: Редакция на Начин на Плащане
         paid_subscriptions: Платени Абонаменти
         orders: Ордери
+        orders_and_payments: Ордери и Плащания
         recieved_payments: Получени Плащания
         paid_service_subscriptions: Платенa Услуга Абонаменти
         pricing_plan_subscriptions: Ценови План Абонаменти

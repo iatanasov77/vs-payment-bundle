@@ -16,6 +16,6 @@ interface PricingPlanInterface extends ResourceInterface
     public function isPremium(): bool;
     public function getDiscount(): ?float;
     
-    public function getPaidService(): PayedServiceSubscriptionPeriodInterface;
+    public function getPaidService(): ?PayedServiceSubscriptionPeriodInterface;
     public function getSubscriptions(): Collection;
 }

@@ -20,8 +20,6 @@
             <gedmo:translatable />
         </field>
         
-        <field name="recurringPayment" column="recurring_payment" type="boolean" />
-        
         <field name="premium" column="premium" type="boolean" />
         <field name="discount" type="decimal" scale="2" precision="8" nullable="true" />
         
@@ -36,7 +34,7 @@
         <many-to-one field="category" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanCategoryInterface" inversed-by="plans">
             <join-column name="category_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
             <cascade>
-                <cascade-all/>
+                <cascade-persist/>
             </cascade>
         </many-to-one>
         

@@ -7,7 +7,39 @@ payum_capture:
 payum_notify:
     resource: "@PayumBundle/Resources/config/routing/notify.xml"
     
+# Offline
+#######################################################################################
+vs_payment_offline_info:
+    path: /vs_payment/offline/offline-info
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController::getInfo
+    options:
+        expose: true
 
+vs_payment_offline_prepare:
+    path: /vs_payment/offline/offline-prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController::prepareAction
+    options:
+        expose: true
+
+vs_payment_offline_done:
+   path: /vs_payment/offline/offline-done
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController::doneAction
+
+vs_payment_offline_bank_transfer_info:
+    path: /vs_payment/offline/bank-transfer-info
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController::getInfo
+    options:
+        expose: true
+
+vs_payment_offline_bank_transfer_prepare:
+    path: /vs_payment/offline/bank-transfer-prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController::prepareAction
+    options:
+        expose: true
+
+vs_payment_offline_bank_transfer_done:
+    path: /vs_payment/offline/bank-transfer-done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController::doneAction
 
 # Stripe Checkout
 #######################################################################################
@@ -84,5 +116,15 @@ vs_payment_borica_done:
     path:     /borica/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\BoricaController::doneAction
 
+# AuthorizeNet
+#######################################################################################
+vs_payment_authorize_net_prepare:
+    path:     /borica/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController::prepareAction
+    options:
+        expose: true
 
+vs_payment_authorize_net_done:
+    path:     /borica/done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController::doneAction
 

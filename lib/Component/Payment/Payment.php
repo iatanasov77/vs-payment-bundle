@@ -10,6 +10,12 @@ class Payment
     public function getPaymentPrepareRoute( GatewayConfigInterface $gatewayConfig, $isRecurring = false )
     {
         switch( $gatewayConfig->getFactoryName() ) {
+            case 'offline':
+                $route  = 'vs_payment_offline_prepare';
+                break;
+            case 'offline_bank_transfer':
+                $route  = 'vs_payment_offline_bank_transfer_prepare';
+                break;
             case 'stripe_checkout':
             case 'stripe_js':
                 $route  = $isRecurring ?
@@ -27,6 +33,9 @@ class Payment
                 break;
             case 'borica':
                 $route  = 'vs_payment_borica_prepare';
+                break;
+            case 'authorize_net_aim':
+                $route  = 'vs_payment_authorize_net_prepare';
                 break;
             default:
                 $route  = 'not_configured';

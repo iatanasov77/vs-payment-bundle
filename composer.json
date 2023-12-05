@@ -31,7 +31,7 @@
         "payum/paypal-rest": "*",
         "payum/paypal-pro-checkout-nvp": "*",
 		"payum/stripe": "^1.7",
-		
+		"payum/authorize-net-aim": "^1.7",
 		
 		"sylius/currency": "^1.12",
 		"plumtreesystems/payum-paysera-gateway": "^0.3",

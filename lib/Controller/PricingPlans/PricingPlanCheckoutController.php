@@ -13,9 +13,12 @@ use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
+use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\PaymentBundle\Form\SelectPricingPlanForm;
+use Vankosoft\PaymentBundle\Form\SelectPaymentMethodForm;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\CreateSubscriptionEvent;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 
 class PricingPlanCheckoutController extends AbstractController
 {
@@ -55,6 +58,9 @@ class PricingPlanCheckoutController extends AbstractController
     /** @vvar OrderFactory */
     protected $orderFactory;
     
+    /** @var RepositoryInterface */
+    protected $gatewaysRepository;
+    
     public function __construct(
         ManagerRegistry $doctrine,
         EventDispatcherInterface $eventDispatcher,
@@ -67,7 +73,8 @@ class PricingPlanCheckoutController extends AbstractController
         RepositoryInterface $paymentMethodsRepository,
         RepositoryInterface $subscriptionsRepository,
         Payment $vsPayment,
-        OrderFactory $orderFactory
+        OrderFactory $orderFactory,
+        RepositoryInterface $gatewaysRepository
     ) {
         $this->doctrine                         = $doctrine;
         $this->eventDispatcher                  = $eventDispatcher;
@@ -81,6 +88,7 @@ class PricingPlanCheckoutController extends AbstractController
         $this->subscriptionsRepository          = $subscriptionsRepository;
         $this->vsPayment                        = $vsPayment;
         $this->orderFactory                     = $orderFactory;
+        $this->gatewaysRepository               = $gatewaysRepository;
     }
     
     public function showPricingPlans( Request $request ): Response
@@ -94,11 +102,13 @@ class PricingPlanCheckoutController extends AbstractController
     
     public function showSelectPricingPlanForm( $pricingPlanId, Request $request ): Response
     {
-        $form   = $this->createForm( SelectPricingPlanForm::class, null, ['method' => 'POST'] );
+        $form                   = $this->createForm( SelectPricingPlanForm::class, null, ['method' => 'POST'] );
+        $bankTransferGateway    = $this->gatewaysRepository->findOneBy( ['factoryName' => 'offline_bank_transfer'] );
         
         return $this->render( '@VSPayment/Pages/PricingPlansCheckout/Partial/select-pricing-plan-form.html.twig', [
             'form'              => $form->createView(),
             'pricingPlanId'     => $pricingPlanId,
+            'bankTransferInfo'  => $bankTransferGateway ? $bankTransferGateway->getConfig() : null,
         ]);
     }
     
@@ -108,6 +118,7 @@ class PricingPlanCheckoutController extends AbstractController
         if ( ! $cart ) {
             throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
         }
+        $this->orderFactory->clearShoppingCart();   // Remove Previous Order Items If Exists
         
         $form   = $this->createForm( SelectPricingPlanForm::class );
         $form->handleRequest( $request );
@@ -115,12 +126,60 @@ class PricingPlanCheckoutController extends AbstractController
             $em             = $this->doctrine->getManager();
             $formData       = $form->getData();
             
-            $paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod'] );
+            //$paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod']['paymentMethod'] );
+            $paymentMethod  = $formData['paymentMethod']['paymentMethod'];
             $pricingPlan    = $this->prepareCart( $formData, $cart, $paymentMethod );
             
             $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute(
                 $paymentMethod->getGateway(),
-                $pricingPlan->isRecurringPayment()
+                //$pricingPlan->isRecurringPayment()
+                false
+            );
+            
+            return new JsonResponse([
+                'status'    => Status::STATUS_OK,
+                'data'      => [
+                    'paymentPrepareUrl' => $paymentPrepareUrl,
+                    'gatewayFactory'    => $paymentMethod->getGateway()->getFactoryName(),
+                ]
+            ]);
+        }
+    }
+    
+    public function showPaymentMethodForm( $pricingPlanId, Request $request ): Response
+    {
+        $form                   = $this->createForm( SelectPaymentMethodForm::class, null, ['method' => 'POST'] );
+        $bankTransferGateway    = $this->gatewaysRepository->findOneBy( ['factoryName' => 'offline_bank_transfer'] );
+        
+        return $this->render( '@VSPayment/Pages/PricingPlansCheckout/Partial/select-payment-method-form.html.twig', [
+            'form'              => $form->createView(),
+            'pricingPlanId'     => $pricingPlanId,
+            'bankTransferInfo'  => $bankTransferGateway ? $bankTransferGateway->getConfig() : null,
+        ]);
+    }
+    
+    public function handlePaymentMetodFormAction( Request $request ): Response
+    {
+        $cart   = $this->orderFactory->getShoppingCart();
+        if ( ! $cart ) {
+            throw new ShoppingCartException( 'Shopping Cart cannot be created !!!' );
+        }
+        $this->orderFactory->clearShoppingCart();   // Remove Previous Order Items If Exists
+        
+        $form   = $this->createForm( SelectPaymentMethodForm::class );
+        $form->handleRequest( $request );
+        if ( $form->isSubmitted() ) {
+            $em             = $this->doctrine->getManager();
+            $formData       = $form->getData();
+            
+            //$paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod']['paymentMethod'] );
+            $paymentMethod  = $formData['paymentMethod']['paymentMethod'];
+            $pricingPlan    = $this->prepareCart( $formData, $cart, $paymentMethod );
+            
+            $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute(
+                $paymentMethod->getGateway(),
+                //$pricingPlan->isRecurringPayment()
+                false
             );
             
             return new JsonResponse([
@@ -137,7 +196,12 @@ class PricingPlanCheckoutController extends AbstractController
     {
         $em             = $this->doctrine->getManager();
         $pricingPlan    = $this->pricingPlansRepository->find( $formData['pricingPlan'] );
-        $subscription   = $this->getSubscription( $pricingPlan );
+        //$subscription   = $this->getSubscription( $pricingPlan );
+        $subscription   = $this->getSubscription_v2( $pricingPlan );
+        
+        if ( ! $subscription ) {
+            throw new CheckoutException( 'Subscription Cannot be Created !' );
+        }
         
         $orderItem      = $this->orderItemsFactory->createNew();
         
@@ -147,7 +211,7 @@ class PricingPlanCheckoutController extends AbstractController
         
         $cart->addItem( $orderItem );
         
-        $cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
+        //$cart->setRecurringPayment( $pricingPlan->isRecurringPayment() );
         $cart->setPaymentMethod( $paymentMethod );
         $cart->setDescription( $pricingPlan->getDescription() );
         
@@ -157,7 +221,7 @@ class PricingPlanCheckoutController extends AbstractController
         return $pricingPlan;
     }
     
-    protected function getSubscription( $pricingPlan )
+    protected function getSubscription( $pricingPlan ): PricingPlanSubscriptionInterface
     {
         $user               = $this->securityBridge->getUser();
         $userSubscriptions  = $user->getPricingPlanSubscriptions();
@@ -172,6 +236,24 @@ class PricingPlanCheckoutController extends AbstractController
             
             $this->doctrine->getManager()->refresh( $user );
             $subscription   = $user->getPricingPlanSubscriptions()->get( $pricingPlan->getSubscriptionCode() );
+        }
+        
+        return $subscription;
+    }
+    
+    protected function getSubscription_v2( $pricingPlan ): PricingPlanSubscriptionInterface
+    {
+        $user           = $this->securityBridge->getUser();
+        $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
+        
+        if ( ! $subscription ) {
+            $this->eventDispatcher->dispatch(
+                new CreateSubscriptionEvent( $pricingPlan ),
+                CreateSubscriptionEvent::NAME
+            );
+            
+            $this->doctrine->getManager()->refresh( $user );
+            $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
         }
         
         return $subscription;

@@ -113,6 +113,18 @@ sylius_fixtures:
                                   "client_secret": '%env(PAYPAL_CLIENT_SECRET)%'
                                   "config_path": "REPLACE/IT" # Point to the directory where your skd_config.ini is located.
                               currency: 'USD'
+                            - title: 'Test Authorize.NET'
+                              description: 'Test Authorize.NET'
+                              gateway_name: 'authorize_net_aim'
+                              factory_name: 'authorize_net_aim'
+                              use_sandbox: true
+                              config:
+                                  "login_id": '%env(AUTHORIZE_NET_LOGIN_ID)%'
+                                  "transaction_key": '%env(AUTHORIZE_NET_TRANSACTION_KEY)%'
+                              sandbox_config:
+                                  "login_id": '%env(AUTHORIZE_NET_LOGIN_ID)%'
+                                  "transaction_key": '%env(AUTHORIZE_NET_TRANSACTION_KEY)%'
+                              currency: 'EUR'
                 payment_methods:
                     name: payment_methods
                     options:
@@ -271,7 +283,6 @@ sylius_fixtures:
                               locale:  '%locale%'
                               active: true
                               premium: false
-                              recurringPayment: false
                               price: 18.99
                               currencyCode: 'EUR'
                               subscription_priority: 1
@@ -282,7 +293,6 @@ sylius_fixtures:
                               locale:  '%locale%'
                               active: true
                               premium: false
-                              recurringPayment: false
                               price: 49.99
                               currencyCode: 'EUR'
                               subscription_priority: 1
@@ -293,7 +303,6 @@ sylius_fixtures:
                               locale:  '%locale%'
                               active: true
                               premium: false
-                              recurringPayment: false
                               price: 99.99
                               currencyCode: 'EUR'
                               subscription_priority: 1
@@ -304,7 +313,6 @@ sylius_fixtures:
                               locale:  '%locale%'
                               active: true
                               premium: false
-                              recurringPayment: true
                               price: 18.99
                               currencyCode: 'EUR'
                               subscription_priority: 1
@@ -315,7 +323,6 @@ sylius_fixtures:
                               locale:  '%locale%'
                               active: true
                               premium: false
-                              recurringPayment: true
                               price: 49.99
                               currencyCode: 'EUR'
                               subscription_priority: 1
@@ -326,7 +333,6 @@ sylius_fixtures:
                               locale:  '%locale%'
                               active: true
                               premium: false
-                              recurringPayment: true
                               price: 99.99
                               currencyCode: 'EUR'
                               subscription_priority: 1

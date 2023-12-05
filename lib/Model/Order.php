@@ -12,6 +12,7 @@ class Order implements Interfaces\OrderInterface
     
     const STATUS_SHOPPING_CART  = 'shopping_cart';
     const STATUS_PAID_ORDER     = 'paid_order';
+    const STATUS_PENDING_ORDER  = 'pending_order';  // When Order is Waiting for Payment (For Example: Used Offline BankTransfer)
     const STATUS_FAILED_ORDER   = 'failed_order';
     
     /**
@@ -228,6 +229,16 @@ class Order implements Interfaces\OrderInterface
         $this->recurringPayment    = $recurringPayment;
         
         return $this;
+    }
+    
+    public function isPaid()
+    {
+        return $this->status === self::STATUS_PAID_ORDER;
+    }
+    
+    public function isPending()
+    {
+        return $this->status === self::STATUS_PENDING_ORDER;
     }
     
     public function getSubscriptions(): array

@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 use Vankosoft\ApplicationBundle\Component\Status;
+use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Form\PaymentForm;
@@ -46,7 +47,7 @@ class ShoppingCartCheckoutController extends AbstractController
     
     public function handlePaymentMethodsFormAction( Request $request ): Response
     {
-        $cartId = $request->getSession()->get( 'vs_payment_basket_id' );
+        $cartId = $request->getSession()->get( OrderFactory::SESSION_BASKET_KEY );
         if ( ! $cartId ) {
             throw new ShoppingCartException( 'Shopping Cart not exist in session !!!' );
         }

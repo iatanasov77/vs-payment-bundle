@@ -11,6 +11,8 @@ use Vankosoft\UsersBundle\Model\UserInterface;
 
 class OrderFactory
 {
+    const SESSION_BASKET_KEY    = 'vs_payment_basket_id';
+    
     /** @var UserInterface|null */
     private $user;
     
@@ -51,8 +53,11 @@ class OrderFactory
         $session = $this->request->getSession();
         $session->start();  // Ensure Session is Started
         
-        $cartId         = $session->get( 'vs_payment_basket_id' );
-        $shoppingCart   = $cartId ? $this->ordersRepository->find( $cartId ) : null;
+        $cartId         = $session->get( self::SESSION_BASKET_KEY );
+        $shoppingCart   = $cartId ?
+                            $this->ordersRepository->find( $cartId ) :
+                            $this->ordersRepository->getShoppingCartByUser( $this->user );
+        
         if ( ! $shoppingCart ) {
             $shoppingCart   = $this->ordersFactory->createNew();
             
@@ -61,10 +66,30 @@ class OrderFactory
             
             $em->persist( $shoppingCart );
             $em->flush();
-            
-            $this->request->getSession()->set( 'vs_payment_basket_id', $shoppingCart->getId() );
         }
+        $session->set( self::SESSION_BASKET_KEY, $shoppingCart->getId() );
         
         return $shoppingCart;
+    }
+    
+    public function clearShoppingCart(): void
+    {
+        $em      = $this->doctrine->getManager();
+        $session = $this->request->getSession();
+        $session->start();  // Ensure Session is Started
+        
+        $cartId         = $session->get( self::SESSION_BASKET_KEY );
+        $shoppingCart   = $cartId ?
+                            $this->ordersRepository->find( $cartId ) :
+                            $this->ordersRepository->getShoppingCartByUser( $this->user );
+        
+        if ( $shoppingCart ) {
+            foreach ( $shoppingCart->getItems() as $item ) {
+                $shoppingCart->removeItem( $item );
+            }
+            
+            $em->persist( $shoppingCart );
+            $em->flush();
+        }
     }
 }

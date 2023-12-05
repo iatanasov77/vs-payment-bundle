@@ -104,5 +104,6 @@ services:
             - '@vs_payment.repository.pricing_plan_subscription'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
+            - '@vs_payment.repository.gateway_config'
         calls:
             - [ setContainer, [ '@service_container' ] ]

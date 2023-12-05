@@ -4,6 +4,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Payum\Stripe\Request\Api\CreatePlan;
 
+use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
@@ -38,6 +39,7 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
         
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $cart->getCurrencyCode() );
+        $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
         $payment->setTotalAmount( $cart->getTotalAmount() * 100 ); // Amount must convert to at least 100 stotinka.
         $payment->setDescription( $cart->getDescription() );
         

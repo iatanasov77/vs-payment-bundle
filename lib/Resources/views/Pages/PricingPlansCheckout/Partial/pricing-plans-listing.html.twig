@@ -35,7 +35,7 @@
                                 
                                 <li class="span3">
                                     <div
-                                        class="thumbnail {% if currentPlan or planLower %} plan--active{% endif %}{% if plan.premium %} plan--premium{% endif %}"
+                                        class="thumbnail {% if ( currentPlan and planSubscription.paid ) or planLower %} plan--active{% endif %}{% if plan.premium %} plan--premium{% endif %}"
                                     >
                                         <div class="caption">
                                             <h5>{{ plan.title }}</h5>
@@ -43,14 +43,14 @@
                                             <p>{{ plan.price }} {{ plan.currencyCode }}</p>
                                             <h4 style="text-align:center">
                                                 {% if app.user %}
-                                                    {% if planSubscription and not planSubscription.paid %}
+                                                    {% if currentPlan and not planSubscription.paid %}
                                                         <button type="button"
                                                             class="btn btn-primary btnPayPlan"
                                                             data-url="{{ path( 'vs_payment_select_pricing_plan_form', {'pricingPlanId': plan.id} ) }}"
                                                         >
                                                             <span>{{ 'vs_payment.template.pricing_plans.pay_plan' | trans( {},'VSPaymentBundle' ) }}</span>
                                                         </button>
-                                                    {% elseif currentPlan %}
+                                                    {% elseif currentPlan and planSubscription.paid %}
                                                         <button type="button" class="btn">
                                                             <span>{{ 'vs_payment.template.pricing_plans.current_plan' | trans( {},'VSPaymentBundle' ) }}</span>
                                                         </button>

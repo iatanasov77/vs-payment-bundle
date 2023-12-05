@@ -5,7 +5,6 @@
 {% from "@VSApplication/Macros/pagination.html.twig" import pagination %}
 
 {% block title %}{{ parent() }} :: {{ 'vs_payment.template.pricing_plan_subscriptions_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
-
 {% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.pricing_plan_subscriptions_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
@@ -16,9 +15,12 @@
                     <thead>
                         <tr>
                             <th width="50">N</th>
-                            <th>{{ 'vs_users_subscriptions.template.payment_total_amount' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                             <th>{{ 'vs_users_subscriptions.template.payed_service_subscription_user' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.pricing_plan_subscriptions.paid_service' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.pricing_plan_subscriptions.paid_service_period' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_users_subscriptions.template.payment_total_amount' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                             <th>{{ 'vs_application.template.items_index_row_created' | trans( {},'VSApplicationBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.items_index_row_expires_at' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th width="150">{{ 'vs_users_subscriptions.template.action' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                         </tr>
                     </thead>
@@ -26,13 +28,24 @@
                     {% for item in resources %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
                             <td>{% if item.user %}{{ item.user.email }}{% endif %}</td>
-                            <td>{{ item.date | date( "d.m.Y H:i" ) }}</td>
+                            <td>{{ item.serviceCode }}</td>
+                            <td>{{ item.periodCode }}</td>
+                            <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
+                            <td>{{ item.createdAt | date( "d.m.Y H:i" ) }}</td>
+                            <td>{{ item.expiresAt | date( "d.m.Y H:i" ) }}</td>
                             <td>
                                 <div class="btn-group">
+                                    <a class="btn btn-outline-primary"
+                                       href="{{ path('vs_payment_pricing_plan_subscription_show', {'id': item.id}) }}"
+                                       title="{{ 'vs_cms.template.button_preview' | trans( {},'VSCmsBundle' ) }}"   
+                                    >
+                                        <i class="fas fa-eye" style="color: #be4bdb;"></i>
+                                    </a>
+                                </div>
+                                <div class="btn-group">
                                     <a class="btn btn-danger btnDeleteResource"
-                                        href="{{ path('vs_users_subscriptions_payed_service_subscriptions_delete', {'id': item.id}) }}" 
+                                        href="{{ path('vs_payment_pricing_plan_subscription_delete', {'id': item.id}) }}" 
                                         data-csrfToken="{{ csrf_token( item.id ) }}" 
                                         title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
                                     >
