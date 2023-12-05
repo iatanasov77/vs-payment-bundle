@@ -28,8 +28,13 @@
             <gedmo:translatable />
         </field>
         
-        <field name="useSandbox" type="boolean" nullable="false" default="0" />
-        <field name="sandboxConfig" type="json" nullable="true" />
+        <field name="supportRecurring" column="support_recurring" type="boolean" nullable="false">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="useSandbox" column="use_sandbox" type="boolean" nullable="false" default="0" />
+        <field name="sandboxConfig" column="sandbox_config" type="json" nullable="true" />
         
         <one-to-many field="paymentMethods" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface" mapped-by="gateway" />
         <many-to-one field="currency" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface" />

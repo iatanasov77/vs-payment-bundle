@@ -27,6 +27,11 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
     /**
      * @var bool
      */
+    protected $supportRecurring;
+    
+    /**
+     * @var bool
+     */
     protected $useSandbox;
     
     /**
@@ -118,6 +123,18 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
     public function setSandboxConfig( array $sandboxConfig ): self
     {
         $this->sandboxConfig = $sandboxConfig;
+        
+        return $this;
+    }
+    
+    public function getSupportRecurring()
+    {
+        return $this->supportRecurring;
+    }
+    
+    public function setSupportRecurring($supportRecurring): self
+    {
+        $this->supportRecurring = $supportRecurring;
         
         return $this;
     }
