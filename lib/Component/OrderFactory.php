@@ -66,9 +66,8 @@ class OrderFactory
             
             $em->persist( $shoppingCart );
             $em->flush();
-            
-            $session->set( self::SESSION_BASKET_KEY, $shoppingCart->getId() );
         }
+        $session->set( self::SESSION_BASKET_KEY, $shoppingCart->getId() );
         
         return $shoppingCart;
     }

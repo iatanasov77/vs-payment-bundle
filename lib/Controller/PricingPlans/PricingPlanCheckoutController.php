@@ -18,6 +18,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\PaymentBundle\Form\SelectPricingPlanForm;
 use Vankosoft\PaymentBundle\Form\SelectPaymentMethodForm;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\CreateSubscriptionEvent;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 
 class PricingPlanCheckoutController extends AbstractController
 {
@@ -179,7 +180,7 @@ class PricingPlanCheckoutController extends AbstractController
                 $paymentMethod->getGateway(),
                 //$pricingPlan->isRecurringPayment()
                 false
-                );
+            );
             
             return new JsonResponse([
                 'status'    => Status::STATUS_OK,
@@ -220,7 +221,7 @@ class PricingPlanCheckoutController extends AbstractController
         return $pricingPlan;
     }
     
-    protected function getSubscription( $pricingPlan )
+    protected function getSubscription( $pricingPlan ): PricingPlanSubscriptionInterface
     {
         $user               = $this->securityBridge->getUser();
         $userSubscriptions  = $user->getPricingPlanSubscriptions();
@@ -240,7 +241,7 @@ class PricingPlanCheckoutController extends AbstractController
         return $subscription;
     }
     
-    protected function getSubscription_v2( $pricingPlan )
+    protected function getSubscription_v2( $pricingPlan ): PricingPlanSubscriptionInterface
     {
         $user           = $this->securityBridge->getUser();
         $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
