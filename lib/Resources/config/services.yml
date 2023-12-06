@@ -2,6 +2,7 @@ imports:
     - { resource: services/controller.yaml }
     - { resource: services/form.yaml }
     - { resource: services/menu.yaml }
+    - { resource: services/payum.yaml }
     - { resource: services/payment.yaml }
     - { resource: services/checkout.yaml }
     - { resource: services/paysera.yaml }

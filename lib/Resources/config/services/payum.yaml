@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+        
+    ########################################################################
+    # Custom Stripe Actions
+    ########################################################################
+    vs_payment.stripe_list_plans:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetPlansAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+
+
