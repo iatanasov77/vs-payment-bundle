@@ -5,6 +5,10 @@ use Payum\Core\Gateway;
 use Payum\Stripe\Request\Api\CreatePlan;
 
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPlans;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetProducts;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateProduct;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPrices;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreatePrice;
 
 final class Api
 {
@@ -23,7 +27,8 @@ final class Api
         $this->gateway->execute( $getPlansRequest = new GetPlans( $stripeRequest ) );
         
         $availablePlans = $getPlansRequest->getFirstModel()->getArrayCopy();
-        echo "<pre>"; var_dump( $availablePlans["data"] ); die;
+        
+        return $availablePlans["data"];
     }
     
     public function createPlan()
@@ -45,5 +50,35 @@ final class Api
         } catch ( \Exception $e ) {
             die( $e->getMessage() );
         }
+    }
+    
+    public function getProducts()
+    {
+        $stripeRequest      = new \ArrayObject( [] );
+        $this->gateway->execute( $getProductsRequest = new GetProducts( $stripeRequest ) );
+        
+        $availableProducts  = $getProductsRequest->getFirstModel()->getArrayCopy();
+        
+        return $availableProducts["data"];
+    }
+    
+    public function createProduct()
+    {
+        
+    }
+    
+    public function getPrices()
+    {
+        $stripeRequest      = new \ArrayObject( [] );
+        $this->gateway->execute( $getPricesRequest = new GetPrices( $stripeRequest ) );
+        
+        $availablePrices    = $getPricesRequest->getFirstModel()->getArrayCopy();
+        
+        return $availablePrices["data"];
+    }
+    
+    public function createPrice()
+    {
+        
     }
 }

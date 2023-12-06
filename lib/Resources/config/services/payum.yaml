@@ -16,5 +16,25 @@ services:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetPlansAction
         tags:
             - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_list_products:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetProductsAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_create_product:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\CreateProductAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_list_prices:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetPricesAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_create_price:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\CreatePriceAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
 
 
