@@ -29,7 +29,9 @@ class StripeSubscriptionPlansController extends AbstractController
     public function indexAction( Request $request ): Response
     {
         $stripeRequest  = new \ArrayObject( [] );
-        $this->gateway->execute( $availablePlans = new GetPlans( $stripeRequest ) );
+        $this->gateway->execute( $getPlansRequest = new GetPlans( $stripeRequest ) );
+        
+        $availablePlans = $getPlansRequest->getFirstModel();
         echo "<pre>"; var_dump( $availablePlans ); die;
         
         return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_index.html.twig', [
