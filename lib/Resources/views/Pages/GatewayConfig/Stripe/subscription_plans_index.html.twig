@@ -74,10 +74,10 @@
                 {% for item in availablePlans %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.amount / 100 }}</td>
+                        <td>{{ item.interval }}</td>
+                        <td>{{ item.product }}</td>
                     </tr>
                 {% else %}
                     <tr>
