@@ -32,14 +32,14 @@
                 {% for item in availablePlans %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.amount / 100 }}</td>
+                        <td>{{ item.interval }}</td>
+                        <td>{{ item.product }}</td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="7">
+                        <td colspan="5">
                             {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
                         </td>
                     </tr>
