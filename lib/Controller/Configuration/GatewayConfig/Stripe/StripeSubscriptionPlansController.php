@@ -32,7 +32,7 @@ class StripeSubscriptionPlansController extends AbstractController
         $this->gateway->execute( $getPlansRequest = new GetPlans( $stripeRequest ) );
         
         $availablePlans = $getPlansRequest->getFirstModel();
-        echo "<pre>"; var_dump( $availablePlans ); die;
+        echo "<pre>"; var_dump( $availablePlans["storage"]["data"] ); die;
         
         return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_index.html.twig', [
             'items' => [],
