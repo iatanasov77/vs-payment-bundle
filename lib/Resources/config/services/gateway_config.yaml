@@ -12,4 +12,4 @@ services:
         autowire: true
         arguments:
             - '@doctrine'
-            - '@payum'
+            - '@stripe_api'

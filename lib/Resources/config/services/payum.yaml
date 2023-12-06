@@ -7,6 +7,11 @@ services:
     ########################################################################
     # Custom Stripe Actions
     ########################################################################
+    vs_payment.stripe_api:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Api
+        arguments:
+            - '@payum'
+            
     vs_payment.stripe_list_plans:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetPlansAction
         tags:
