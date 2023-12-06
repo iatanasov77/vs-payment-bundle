@@ -140,6 +140,10 @@ vs_payment:
             expires_at: Expires At
             actions: Actions
             create_payment: Create Payment
+            
+        payum_stripe_objects:
+            stripe_plans: Stripe Plans
+            create_stripe_plan: Create Stripe Plan
                 
         currency_index_title: Currencies
         currency_index_code: Code
@@ -202,7 +206,6 @@ vs_payment:
         pricing_plan_subscriptions_show_title: List Subscription Payments
         order_is_paid: Paid
         action_set_order_status_paid: Set Paid
-        create_stripe_plan: Create Stripe Plan
         
     validation:
         currency_code_unique: Currency code must be unique.
