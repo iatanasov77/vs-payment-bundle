@@ -8,6 +8,7 @@ use Payum\Core\Payum;
 use Payum\Core\Gateway;
 use Payum\Stripe\Request\Api\CreatePlan;
 use Vankosoft\PaymentBundle\Form\StripeSubscriptionPlanForm;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPlans;
 
 class StripeSubscriptionPlansController extends AbstractController
 {
@@ -27,6 +28,10 @@ class StripeSubscriptionPlansController extends AbstractController
     
     public function indexAction( Request $request ): Response
     {
+        $stripeRequest  = new \ArrayObject( [] );
+        $this->gateway->execute( $availablePlans = new GetPlans( $stripeRequest ) );
+        var_dump( $availablePlans ); die;
+        
         return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_index.html.twig', [
             'items' => [],
         ]);
@@ -42,14 +47,22 @@ class StripeSubscriptionPlansController extends AbstractController
             
             // $formData['pricingPlan']
             $plan       = new \ArrayObject([
+                "id"        => "sugarbabes_movies_month",
+                
                 "amount"    => 10,
-                "interval"  => "month",
-                "name"      => "SugarBabes - Watch Movies - 1 Month",
                 "currency"  => "eur",
-                "id"        => "sugarbabes_movies_month"
+                "interval"  => "month",
+                
+                "product"   => [
+                    "name"  => "SugarBabes - Watch Movies - 1 Month",
+                ],
             ]);
             
-            $this->gateway->execute( new CreatePlan( $plan ) );
+            try {
+                $this->gateway->execute( new CreatePlan( $plan ) );
+            } catch ( \Exception $e ) {
+                die( $e->getMessage() );
+            }
             
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_plans_index' );
         }
