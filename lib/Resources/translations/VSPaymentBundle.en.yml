@@ -151,6 +151,7 @@ vs_payment:
             stripe_products: Stripe Products
             create_stripe_product: Create Stripe Product
             name: Name
+            product_name: Product Name
             default_price: Default Price
             stripe_prices: Stripe Prices
             create_stripe_price: Create Stripe Price

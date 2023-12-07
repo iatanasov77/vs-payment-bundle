@@ -5,24 +5,71 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 
 class StripeSubscriptionPlanForm extends AbstractType
 {
+    /** @var string */
+    private $currencyClass;
+    
+    public function __construct(
+        string $currencyClass
+    ) {
+        $this->currencyClass    = $currencyClass;
+    }
+    
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
-            ->add( 'name', TextType::class, [
-                'label' => 'vs_payment.form.credit_card.holder_name_label',
+            ->add( 'id', TextType::class, [
+                'label' => 'ID',
                 'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
-                    'placeholder' => 'vs_payment.form.credit_card.holder_name_placeholder'
+                    'placeholder' => 'ID'
+                ],
+            ])
+            
+            ->add( 'amount', TextType::class, [
+                'label' => 'vs_payment.template.payum_stripe_objects.amount',
+                'translation_domain' => 'VSPaymentBundle',
+                'attr'  => [
+                    'placeholder' => 'vs_payment.template.payum_stripe_objects.amount'
+                ],
+            ])
+            
+            ->add( 'currency', EntityType::class, [
+                'label' => 'vs_payment.form.currency_label',
+                'translation_domain'    => 'VSPaymentBundle',
+                'class'                 => $this->currencyClass,
+                'placeholder'           => 'vs_payment.form.currency_placeholder',
+                'choice_label'          => 'name',
+                'choice_value'          => function ( ?CurrencyInterface $entity ): string {
+                    return $entity ? $entity->getCode() : '';
+                },
+            ])
+            
+            ->add( 'interval', TextType::class, [
+                'label' => 'vs_payment.template.payum_stripe_objects.interval',
+                'translation_domain' => 'VSPaymentBundle',
+                'attr'  => [
+                    'placeholder' => 'vs_payment.template.payum_stripe_objects.interval'
+                ],
+            ])
+            
+            ->add( 'productName', TextType::class, [
+                'label' => 'vs_payment.template.payum_stripe_objects.product_name',
+                'translation_domain' => 'VSPaymentBundle',
+                'attr'  => [
+                    'placeholder' => 'vs_payment.template.payum_stripe_objects.product_name'
                 ],
             ])
             
             ->add( 'btnSubmit', SubmitType::class, [
-                'label' => 'vs_payment.form.credit_card.continue',
-                'translation_domain' => 'VSPaymentBundle'
+                'label' => 'vs_application.form.save',
+                'translation_domain' => 'VSApplicationBundle'
             ])
         ;
     }

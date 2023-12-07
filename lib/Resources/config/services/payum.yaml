@@ -7,6 +7,12 @@ services:
     ########################################################################
     # Custom Stripe Actions
     ########################################################################
+    Vankosoft\PaymentBundle\Form\StripeSubscriptionPlanForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.currency.class%'
+    
     vs_payment.stripe_api:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Api
         arguments:
