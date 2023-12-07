@@ -158,6 +158,9 @@ vs_payment:
             stripe_prices: Stripe Prices
             create_stripe_price: Create Stripe Price
             trial_period_days: Trial Period Days
+            pricing_plan: Pricing Plan
+            pricing_plan_placeholder: '-- Select Pricing Plan --'
+            pricing_plan_info: When Create a Payment on Pricing Plan and Set The Subscription with Recurring option, This Price will be used for Recurring Payments.
                 
         currency_index_title: Currencies
         currency_index_code: Code

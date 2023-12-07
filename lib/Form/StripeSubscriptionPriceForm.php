@@ -89,9 +89,9 @@ class StripeSubscriptionPriceForm extends AbstractType
             ])
             
             ->add( 'pricingPlan', EntityType::class, [
-                'label'                 => 'vs_payment.form.pricing_plan.paid_service',
+                'label'                 => 'vs_payment.template.payum_stripe_objects.pricing_plan',
                 'translation_domain'    => 'VSPaymentBundle',
-                'placeholder'           => 'vs_payment.form.pricing_plan.paid_service_placeholder',
+                'placeholder'           => 'vs_payment.template.payum_stripe_objects.pricing_plan_placeholder',
                 'class'                 => $this->pricingPlanClass,
                 'choice_label'          => 'title',
                 'group_by'              => function ( PricingPlanInterface $pricingPlan ): string {
