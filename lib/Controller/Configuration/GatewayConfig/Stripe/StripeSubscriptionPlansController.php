@@ -87,7 +87,8 @@ class StripeSubscriptionPlansController extends AbstractController
         if ( $form->isSubmitted() ) {
             $formData   = $form->getData();
             
-            $this->stripeApi->createPrice( $formData );
+            $priceData  = $this->stripeApi->createPrice( $formData );
+            
             
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }

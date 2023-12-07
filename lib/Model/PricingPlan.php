@@ -57,9 +57,17 @@ class PricingPlan implements PricingPlanInterface, Comparable
     /** @var Collection|PricingPlanSubscriptionInterface[] */
     protected $subscriptions;
     
+    /**
+     * This field will store: Subscription Plan Ids, etc.
+     * 
+     * @var array
+     */
+    protected $gatewayAttributes;
+    
     public function __construct()
     {
-        $this->subscriptions    = new ArrayCollection();
+        $this->subscriptions        = new ArrayCollection();
+        $this->gatewayAttributes    = [];
     }
     
     /**
@@ -215,6 +223,18 @@ class PricingPlan implements PricingPlanInterface, Comparable
             $this->subscriptions->removeElement( $subscription );
             $subscription->setPricingPlan( null );
         }
+        
+        return $this;
+    }
+    
+    public function getGatewayAttributes()
+    {
+        return $this->gatewayAttributes;
+    }
+    
+    public function setGatewayAttributes( array $gatewayAttributes ): self
+    {
+        $this->gatewayAttributes    = $gatewayAttributes;
         
         return $this;
     }

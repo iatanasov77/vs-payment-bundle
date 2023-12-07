@@ -161,7 +161,11 @@ vs_payment:
             pricing_plan: Pricing Plan
             pricing_plan_placeholder: '-- Select Pricing Plan --'
             pricing_plan_info: When Create a Payment on Pricing Plan and Set The Subscription with Recurring option, This Price will be used for Recurring Payments.
-                
+            interval_count: Interval Count
+            interval_count_info: The number of intervals between subscription billings. For example, interval=month and interval_count=3 bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+
+
+            
         currency_index_title: Currencies
         currency_index_code: Code
         currency_index_symbol: Symbol

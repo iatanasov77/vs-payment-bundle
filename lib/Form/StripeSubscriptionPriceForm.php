@@ -81,6 +81,14 @@ class StripeSubscriptionPriceForm extends AbstractType
                 ]),
             ])
             
+            ->add( 'intervalCount', NumberType::class, [
+                'label'                 => 'vs_payment.template.payum_stripe_objects.interval_count',
+                'translation_domain'    => 'VSPaymentBundle',
+                'attr'  => [
+                    'placeholder' => 'vs_payment.template.payum_stripe_objects.interval_count'
+                ],
+            ])
+            
             ->add( 'product', ChoiceType::class, [
                 'label'                 => 'vs_payment.template.payum_stripe_objects.product',
                 'translation_domain'    => 'VSPaymentBundle',

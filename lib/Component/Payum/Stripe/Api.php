@@ -90,7 +90,10 @@ final class Api
             'unit_amount'   => $formData['amount'] * 100,
             'currency'      => \strtolower( $formData['currency'] ),
             
-            'recurring'     => ['interval' => $formData['interval']],
+            'recurring'     => [
+                'interval'          => $formData['interval'],
+                'interval_count'    => $formData['intervalCount'],
+            ],
         ]);
         $this->gateway->execute( $createPriceRequest = new CreatePrice( $price ) );
         
