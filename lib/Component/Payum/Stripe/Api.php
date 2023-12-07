@@ -99,9 +99,7 @@ final class Api
         ]);
         $this->gateway->execute( $createPriceRequest = new CreatePrice( $price ) );
         
-        $createPriceResponse    = $createPriceRequest->getFirstModel()->getArrayCopy();
-        
-        return $createPriceResponse["data"];
+        return $createPriceRequest->getFirstModel()->getArrayCopy();
     }
     
     public function getProductPairs()

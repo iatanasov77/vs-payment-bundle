@@ -12,7 +12,7 @@ use Payum\Stripe\Constants;
 use Payum\Stripe\Keys;
 use Stripe\Stripe;
 use Stripe\Exception;
-use Stripe\Product;
+use Stripe\Price;
 
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreatePrice;
 
@@ -51,7 +51,7 @@ class CreatePriceAction implements ActionInterface, GatewayAwareInterface, ApiAw
      */
     public function execute( $request )
     {
-        /** @var $request GetProducts */
+        /** @var $request CreatePrice */
         RequestNotSupportedException::assertSupports( $this, $request );
         
         $model = ArrayObject::ensureArrayObject( $request->getModel() );
@@ -67,9 +67,9 @@ class CreatePriceAction implements ActionInterface, GatewayAwareInterface, ApiAw
                 );
             }
             
-            $product = Product::create( $model->toUnsafeArrayWithoutLocal() );
+            $price  = Price::create( $model->toUnsafeArrayWithoutLocal() );
             
-            $model->replace( $product->toArray( true ) );
+            $model->replace( $price->toArray( true ) );
         } catch ( Exception\ApiErrorException $e ) {
             $model->replace( $e->getJsonBody() );
         }
