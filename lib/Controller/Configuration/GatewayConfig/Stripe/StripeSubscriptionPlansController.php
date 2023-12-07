@@ -41,7 +41,45 @@ class StripeSubscriptionPlansController extends AbstractController
         ]);
     }
     
-    public function createAction( Request $request ): Response
+    public function createPlanAction( Request $request ): Response
+    {
+        $form   = $this->createForm( StripeSubscriptionPlanForm::class, null, ['method' => 'POST'] );
+        
+        $form->handleRequest( $request );
+        if ( $form->isSubmitted() ) {
+            $formData   = $form->getData();
+            
+            // $formData['pricingPlan']
+            $this->stripeApi->createPlan();
+            
+            return $this->redirectToRoute( 'gateway_config_stripe_subscription_plans_index' );
+        }
+        
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_create.html.twig', [
+            'form'  => $form->createView(),
+        ]);
+    }
+    
+    public function createProductAction( Request $request ): Response
+    {
+        $form   = $this->createForm( StripeSubscriptionPlanForm::class, null, ['method' => 'POST'] );
+        
+        $form->handleRequest( $request );
+        if ( $form->isSubmitted() ) {
+            $formData   = $form->getData();
+            
+            // $formData['pricingPlan']
+            $this->stripeApi->createPlan();
+            
+            return $this->redirectToRoute( 'gateway_config_stripe_subscription_plans_index' );
+        }
+        
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_create.html.twig', [
+            'form'  => $form->createView(),
+        ]);
+    }
+    
+    public function createPriceAction( Request $request ): Response
     {
         $form   = $this->createForm( StripeSubscriptionPlanForm::class, null, ['method' => 'POST'] );
         

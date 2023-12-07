@@ -142,8 +142,19 @@ vs_payment:
             create_payment: Create Payment
             
         payum_stripe_objects:
+            stripe_subscription_objects: Stripe Subscription Objects
             stripe_plans: Stripe Plans
             create_stripe_plan: Create Stripe Plan
+            amount: Amount
+            interval: Interval
+            product: Product
+            stripe_products: Stripe Products
+            create_stripe_product: Create Stripe Product
+            name: Name
+            default_price: Default Price
+            stripe_prices: Stripe Prices
+            create_stripe_price: Create Stripe Price
+            trial_period_days: Trial Period Days
                 
         currency_index_title: Currencies
         currency_index_code: Code
