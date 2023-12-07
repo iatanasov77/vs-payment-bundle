@@ -50,8 +50,16 @@ final class Api
         return $availableProducts["data"];
     }
     
-    public function createProduct( \ArrayObject $product )
+    public function createProduct( array $formData )
     {
+        $product    = new \ArrayObject([
+            //"id"        => "sugarbabes_movies_month",
+            //"id"    => $formData['id'],
+            
+            //"name"  => "SugarBabes - Watch Movies - 1 Month",
+            "name"  => $formData['name'],
+        ]);
+        
         try {
             $this->gateway->execute( new CreateProduct( $product ) );
         } catch ( \Exception $e ) {

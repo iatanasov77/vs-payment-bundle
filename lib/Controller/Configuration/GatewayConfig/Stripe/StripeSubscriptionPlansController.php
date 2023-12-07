@@ -83,15 +83,7 @@ class StripeSubscriptionPlansController extends AbstractController
         if ( $form->isSubmitted() ) {
             $formData   = $form->getData();
             
-            $product    = new \ArrayObject([
-                //"id"        => "sugarbabes_movies_month",
-                //"id"    => $formData['id'],
-                
-                //"name"  => "SugarBabes - Watch Movies - 1 Month",
-                "name"  => $formData['name'],
-            ]);
-            
-            $this->stripeApi->createProduct( $product );
+            $this->stripeApi->createProduct( $formData );
             
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }

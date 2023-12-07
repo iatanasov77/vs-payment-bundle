@@ -12,6 +12,12 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.model.currency.class%'
+            
+    Vankosoft\PaymentBundle\Form\StripeSubscriptionPriceForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.currency.class%'
     
     vs_payment.stripe_api:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Api
