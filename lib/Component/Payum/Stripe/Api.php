@@ -31,20 +31,8 @@ final class Api
         return $availablePlans["data"];
     }
     
-    public function createPlan()
+    public function createPlan( \ArrayObject $plan )
     {
-        $plan       = new \ArrayObject([
-            "id"        => "sugarbabes_movies_month",
-            
-            "amount"    => 10,
-            "currency"  => "eur",
-            "interval"  => "month",
-            
-            "product"   => [
-                "name"  => "SugarBabes - Watch Movies - 1 Month",
-            ],
-        ]);
-        
         try {
             $this->gateway->execute( new CreatePlan( $plan ) );
         } catch ( \Exception $e ) {

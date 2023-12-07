@@ -34,7 +34,7 @@ class StripeSubscriptionPlansController extends AbstractController
         $availablePrices    = $this->stripeApi->getPrices();
 //         echo "<pre>"; var_dump( $availablePrices ); die;
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_index.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_index.html.twig', [
             'availablePlans'    => $availablePlans,
             'availableProducts' => $availableProducts,
             'availablePrices'   => $availablePrices,
@@ -50,12 +50,24 @@ class StripeSubscriptionPlansController extends AbstractController
             $formData   = $form->getData();
             
             // $formData['pricingPlan']
-            $this->stripeApi->createPlan();
+            $plan       = new \ArrayObject([
+                "id"        => "sugarbabes_movies_month",
+                
+                "amount"    => 10,
+                "currency"  => "eur",
+                "interval"  => "month",
+                
+                "product"   => [
+                    "name"  => "SugarBabes - Watch Movies - 1 Month",
+                ],
+            ]);
             
-            return $this->redirectToRoute( 'gateway_config_stripe_subscription_plans_index' );
+            $this->stripeApi->createPlan( $plan );
+            
+            return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_create.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_plan.html.twig', [
             'form'  => $form->createView(),
         ]);
     }
@@ -71,10 +83,10 @@ class StripeSubscriptionPlansController extends AbstractController
             // $formData['pricingPlan']
             $this->stripeApi->createPlan();
             
-            return $this->redirectToRoute( 'gateway_config_stripe_subscription_plans_index' );
+            return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_create.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_plan.html.twig', [
             'form'  => $form->createView(),
         ]);
     }
@@ -90,10 +102,10 @@ class StripeSubscriptionPlansController extends AbstractController
             // $formData['pricingPlan']
             $this->stripeApi->createPlan();
             
-            return $this->redirectToRoute( 'gateway_config_stripe_subscription_plans_index' );
+            return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_plans_create.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_plan.html.twig', [
             'form'  => $form->createView(),
         ]);
     }
