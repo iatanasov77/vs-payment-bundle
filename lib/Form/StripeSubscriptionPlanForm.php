@@ -58,7 +58,7 @@ class StripeSubscriptionPlanForm extends AbstractType
             ->add( 'interval', ChoiceType::class, [
                 'label'                 => 'vs_payment.template.payum_stripe_objects.interval',
                 'translation_domain'    => 'VSPaymentBundle',
-                'placeholder'           => 'vs_payment.template.payum_stripe_objects.interval',
+                'placeholder'           => 'vs_payment.template.payum_stripe_objects.interval_placeholder',
                 'choices'               => \array_flip([
                     'day'   => 'Day',
                     'week'  => 'Week',
