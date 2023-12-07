@@ -31,13 +31,22 @@ final class Api
         return $availablePlans["data"];
     }
     
-    public function createPlan( \ArrayObject $plan )
+    public function createPlan( array $formData )
     {
-        try {
-            $this->gateway->execute( new CreatePlan( $plan ) );
-        } catch ( \Exception $e ) {
-            die( $e->getMessage() );
-        }
+        $plan       = new \ArrayObject([
+            //"id"        => "sugarbabes_movies_month",
+            "id"        => $formData['id'],
+            
+            "amount"    => $formData['amount'] * 100,
+            "currency"  => \strtolower( $formData['currency'] ),
+            "interval"  => $formData['interval'],
+            
+            "product"   => [
+                //"name"  => "SugarBabes - Watch Movies - 1 Month",
+                "name"  => $formData['productName'],
+            ],
+        ]);
+        $this->gateway->execute( new CreatePlan( $plan ) );
     }
     
     public function getProducts()
@@ -59,12 +68,7 @@ final class Api
             //"name"  => "SugarBabes - Watch Movies - 1 Month",
             "name"  => $formData['name'],
         ]);
-        
-        try {
-            $this->gateway->execute( new CreateProduct( $product ) );
-        } catch ( \Exception $e ) {
-            die( $e->getMessage() );
-        }
+        $this->gateway->execute( new CreateProduct( $product ) );
     }
     
     public function getPrices()
@@ -77,12 +81,33 @@ final class Api
         return $availablePrices["data"];
     }
     
-    public function createPrice( \ArrayObject $price )
+    public function createPrice( array $formData )
     {
-        try {
-            $this->gateway->execute( new CreatePrice( $price ) );
-        } catch ( \Exception $e ) {
-            die( $e->getMessage() );
+        $price      = new \ArrayObject([
+            //"id"            => $formData['id'],
+            'product'       => $formData['product'],
+            
+            'unit_amount'   => $formData['amount'] * 100,
+            'currency'      => \strtolower( $formData['currency'] ),
+            
+            'recurring'     => ['interval' => $formData['interval']],
+        ]);
+        $this->gateway->execute( $createPriceRequest = new CreatePrice( $price ) );
+        
+        $createPriceResponse    = $createPriceRequest->getFirstModel()->getArrayCopy();
+        
+        return $createPriceResponse["data"];
+    }
+    
+    public function getProductPairs()
+    {
+        $products       = $this->getProducts();
+        
+        $productPairs   = [];
+        foreach ( $products as $product ) {
+            $productPairs[$product['id']]   = $product['name'];
         }
+        
+        return $productPairs;
     }
 }

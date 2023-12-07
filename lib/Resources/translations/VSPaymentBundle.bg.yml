@@ -149,6 +149,7 @@ vs_payment:
             interval: Interval
             interval_placeholder: '-- Select Interval --'
             product: Product
+            product_placeholder: '-- Select Product --'
             stripe_products: Stripe Products
             create_stripe_product: Create Stripe Product
             name: Name

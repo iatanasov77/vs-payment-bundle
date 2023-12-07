@@ -51,21 +51,7 @@ class StripeSubscriptionPlansController extends AbstractController
         if ( $form->isSubmitted() ) {
             $formData   = $form->getData();
             
-            $plan       = new \ArrayObject([
-                //"id"        => "sugarbabes_movies_month",
-                "id"        => $formData['id'],
-                
-                "amount"    => $formData['amount'] * 100,
-                "currency"  => \strtolower( $formData['currency'] ),
-                "interval"  => $formData['interval'],
-                
-                "product"   => [
-                    //"name"  => "SugarBabes - Watch Movies - 1 Month",
-                    "name"  => $formData['productName'],
-                ],
-            ]);
-            
-            $this->stripeApi->createPlan( $plan );
+            $this->stripeApi->createPlan( $formData );
             
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
@@ -101,17 +87,7 @@ class StripeSubscriptionPlansController extends AbstractController
         if ( $form->isSubmitted() ) {
             $formData   = $form->getData();
             
-            $price      = new \ArrayObject([
-                "id"            => $formData['id'],
-                'product'       => $formData['product'],
-                
-                'unit_amount'   => $formData['amount'] * 100,
-                'currency'      => \strtolower( $formData['currency'] ),
-                
-                'recurring'     => ['interval' => $formData['interval']],
-            ]);
-            
-            $this->stripeApi->createPrice( $price );
+            $this->stripeApi->createPrice( $formData );
             
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }

@@ -14,7 +14,7 @@ use Stripe\Stripe;
 use Stripe\Exception;
 use Stripe\Product;
 
-use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetProducts;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateProduct;
 
 class CreateProductAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
@@ -51,7 +51,7 @@ class CreateProductAction implements ActionInterface, GatewayAwareInterface, Api
      */
     public function execute( $request )
     {
-        /** @var $request GetProducts */
+        /** @var $request CreateProduct */
         RequestNotSupportedException::assertSupports( $this, $request );
         
         $model = ArrayObject::ensureArrayObject( $request->getModel() );
