@@ -5,6 +5,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Vankosoft\PaymentBundle\Form\StripeSubscriptionPlanForm;
+use Vankosoft\PaymentBundle\Form\StripeSubscriptionProductForm;
+use Vankosoft\PaymentBundle\Form\StripeSubscriptionPriceForm;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
 class StripeSubscriptionPlansController extends AbstractController
@@ -55,7 +57,7 @@ class StripeSubscriptionPlansController extends AbstractController
                 
                 "amount"    => $formData['amount'] * 100,
                 "currency"  => \strtolower( $formData['currency'] ),
-                "interval"  => "month",
+                "interval"  => $formData['interval'],
                 
                 "product"   => [
                     //"name"  => "SugarBabes - Watch Movies - 1 Month",
@@ -75,38 +77,54 @@ class StripeSubscriptionPlansController extends AbstractController
     
     public function createProductAction( Request $request ): Response
     {
-        $form   = $this->createForm( StripeSubscriptionPlanForm::class, null, ['method' => 'POST'] );
+        $form   = $this->createForm( StripeSubscriptionProductForm::class, null, ['method' => 'POST'] );
         
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             $formData   = $form->getData();
             
-            // $formData['pricingPlan']
-            $this->stripeApi->createPlan();
+            $product    = new \ArrayObject([
+                //"id"        => "sugarbabes_movies_month",
+                //"id"    => $formData['id'],
+                
+                //"name"  => "SugarBabes - Watch Movies - 1 Month",
+                "name"  => $formData['name'],
+            ]);
+            
+            $this->stripeApi->createProduct( $product );
             
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_plan.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_product.html.twig', [
             'form'  => $form->createView(),
         ]);
     }
     
     public function createPriceAction( Request $request ): Response
     {
-        $form   = $this->createForm( StripeSubscriptionPlanForm::class, null, ['method' => 'POST'] );
+        $form   = $this->createForm( StripeSubscriptionPriceForm::class, null, ['method' => 'POST'] );
         
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             $formData   = $form->getData();
             
-            // $formData['pricingPlan']
-            $this->stripeApi->createPlan();
+            $price      = new \ArrayObject([
+                "id"            => $formData['id'],
+                'product'       => $formData['product'],
+                
+                'unit_amount'   => $formData['amount'] * 100,
+                'currency'      => \strtolower( $formData['currency'] ),
+                
+                'recurring'     => ['interval' => $formData['interval']],
+            ]);
+            
+            $this->stripeApi->createPrice( $price );
             
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_plan.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_price.html.twig', [
             'form'  => $form->createView(),
         ]);
     }

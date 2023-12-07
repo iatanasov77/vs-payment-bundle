@@ -50,9 +50,13 @@ final class Api
         return $availableProducts["data"];
     }
     
-    public function createProduct()
+    public function createProduct( \ArrayObject $product )
     {
-        
+        try {
+            $this->gateway->execute( new CreateProduct( $product ) );
+        } catch ( \Exception $e ) {
+            die( $e->getMessage() );
+        }
     }
     
     public function getPrices()
@@ -65,8 +69,12 @@ final class Api
         return $availablePrices["data"];
     }
     
-    public function createPrice()
+    public function createPrice( \ArrayObject $price )
     {
-        
+        try {
+            $this->gateway->execute( new CreatePrice( $price ) );
+        } catch ( \Exception $e ) {
+            die( $e->getMessage() );
+        }
     }
 }
