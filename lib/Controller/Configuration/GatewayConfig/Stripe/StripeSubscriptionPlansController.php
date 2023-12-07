@@ -49,16 +49,17 @@ class StripeSubscriptionPlansController extends AbstractController
         if ( $form->isSubmitted() ) {
             $formData   = $form->getData();
             
-            // $formData['pricingPlan']
             $plan       = new \ArrayObject([
-                "id"        => "sugarbabes_movies_month",
+                //"id"        => "sugarbabes_movies_month",
+                "id"        => $formData['id'],
                 
-                "amount"    => 10,
-                "currency"  => "eur",
+                "amount"    => $formData['amount'] * 100,
+                "currency"  => \strtolower( $formData['currency'] ),
                 "interval"  => "month",
                 
                 "product"   => [
-                    "name"  => "SugarBabes - Watch Movies - 1 Month",
+                    //"name"  => "SugarBabes - Watch Movies - 1 Month",
+                    "name"  => $formData['productName'],
                 ],
             ]);
             

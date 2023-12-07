@@ -5,7 +5,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
@@ -32,12 +34,14 @@ class StripeSubscriptionPlanForm extends AbstractType
                 ],
             ])
             
-            ->add( 'amount', TextType::class, [
-                'label' => 'vs_payment.template.payum_stripe_objects.amount',
-                'translation_domain' => 'VSPaymentBundle',
+            ->add( 'amount', NumberType::class, [
+                'label'                 => 'vs_payment.template.payum_stripe_objects.amount',
+                'translation_domain'    => 'VSPaymentBundle',
                 'attr'  => [
                     'placeholder' => 'vs_payment.template.payum_stripe_objects.amount'
                 ],
+                'scale'                 => 2,
+                'rounding_mode'         => \NumberFormatter::ROUND_HALFUP,
             ])
             
             ->add( 'currency', EntityType::class, [
@@ -51,12 +55,16 @@ class StripeSubscriptionPlanForm extends AbstractType
                 },
             ])
             
-            ->add( 'interval', TextType::class, [
-                'label' => 'vs_payment.template.payum_stripe_objects.interval',
-                'translation_domain' => 'VSPaymentBundle',
-                'attr'  => [
-                    'placeholder' => 'vs_payment.template.payum_stripe_objects.interval'
-                ],
+            ->add( 'interval', ChoiceType::class, [
+                'label'                 => 'vs_payment.template.payum_stripe_objects.interval',
+                'translation_domain'    => 'VSPaymentBundle',
+                'placeholder'           => 'vs_payment.template.payum_stripe_objects.interval',
+                'choices'               => \array_flip([
+                    'day'   => 'Day',
+                    'week'  => 'Week',
+                    'month' => 'Month',
+                    'year'  => 'Year',
+                ]),
             ])
             
             ->add( 'productName', TextType::class, [
