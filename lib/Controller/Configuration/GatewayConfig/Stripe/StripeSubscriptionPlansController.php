@@ -85,10 +85,17 @@ class StripeSubscriptionPlansController extends AbstractController
         
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
-            $formData   = $form->getData();
+            $formData       = $form->getData();
             
-            $priceData  = $this->stripeApi->createPrice( $formData );
+            $priceData      = $this->stripeApi->createPrice( $formData );
+            $ppAttributes   = $formData['pricingPlan']->getGatewayAttributes();
+            $ppAttributes   = $ppAttributes ?: [];
             
+            $ppAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY]    = $priceData['id'];
+            $formData['pricingPlan']->setGatewayAttributes( $ppAttributes );
+            
+            $this->doctrine->getManager()->persist( $formData['pricingPlan'] );
+            $this->doctrine->getManager()->flush();
             
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }

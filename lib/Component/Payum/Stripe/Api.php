@@ -12,6 +12,8 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreatePrice;
 
 final class Api
 {
+    const PRICING_PLAN_ATTRIBUTE_KEY    = 'stripe_plan_id';
+    
     /** @var Gateway */
     private $gateway;
     
