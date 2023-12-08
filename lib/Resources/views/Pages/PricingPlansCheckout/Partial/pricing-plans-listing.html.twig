@@ -16,26 +16,16 @@
                             {% if plan.enabled %}
                                 
                                 {% if app.user %}
-                                    {% set planSubscription = app.user.pricingPlanSubscriptions.get( plan.subscriptionCode ) %}
-                                    {% set currentPlan      = planSubscription and ( planSubscription.pricingPlan.id == plan.id ) %}
+                                    {% set currentPlan  = plan.hasActiveSubscription( app.user.pricingPlanSubscriptions ) %}
+                                    {% set planLower    = false %}
                                 {% else %}
-                                    {% set planSubscription = null %}
-                                    {% set currentPlan      = null %}
-                                {% endif %}
-                            
-                                {% if planSubscription %}
-                                    {% set currentPlan  = planSubscription.pricingPlan.id == plan.id %}
-                                    {% set planLower    = ( planSubscription.code == plan.subscriptionCode ) and
-                                                            ( planSubscription.pricingPlan.compareTo( plan ) == 1 )
-                                    %}
-                                {% else %}
-                                    {% set currentPlan  = false %}
+                                    {% set currentPlan  = null %}
                                     {% set planLower    = false %}
                                 {% endif %}
                                 
                                 <li class="span3">
                                     <div
-                                        class="thumbnail {% if ( currentPlan and planSubscription.paid ) or planLower %} plan--active{% endif %}{% if plan.premium %} plan--premium{% endif %}"
+                                        class="thumbnail {% if currentPlan or planLower %} plan--active{% endif %}{% if plan.premium %} plan--premium{% endif %}"
                                     >
                                         <div class="caption">
                                             <h5>{{ plan.title }}</h5>
@@ -43,14 +33,7 @@
                                             <p>{{ plan.price }} {{ plan.currencyCode }}</p>
                                             <h4 style="text-align:center">
                                                 {% if app.user %}
-                                                    {% if currentPlan and not planSubscription.paid %}
-                                                        <button type="button"
-                                                            class="btn btn-primary btnPayPlan"
-                                                            data-url="{{ path( 'vs_payment_select_pricing_plan_form', {'pricingPlanId': plan.id} ) }}"
-                                                        >
-                                                            <span>{{ 'vs_payment.template.pricing_plans.pay_plan' | trans( {},'VSPaymentBundle' ) }}</span>
-                                                        </button>
-                                                    {% elseif currentPlan and planSubscription.paid %}
+                                                    {% if currentPlan %}
                                                         <button type="button" class="btn">
                                                             <span>{{ 'vs_payment.template.pricing_plans.current_plan' | trans( {},'VSPaymentBundle' ) }}</span>
                                                         </button>
