@@ -29,11 +29,6 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
         $em     = $this->doctrine->getManager();
         $cart   = $this->orderFactory->getShoppingCart();
         
-        if ( ! $cart->hasRecurringPayment() ) {
-            $message    = $flashMessage   = $this->translator->trans( 'pricing_plan_payment_success', [], 'VSPaymentBundle' );
-            throw new CheckoutException( $message );
-        }
-        
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         

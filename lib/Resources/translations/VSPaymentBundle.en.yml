@@ -79,6 +79,7 @@ vs_payment:
             bank: Bank
             reciever: Reciever
             reason: Reason
+            set_recurring_payments: Recurring Payments
 
     template:
         gateway: Gateway

@@ -5,6 +5,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class PaymentMethodType extends AbstractType
@@ -12,13 +13,22 @@ class PaymentMethodType extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
+            ->add( 'setRecurringPayments', CheckboxType::class, [
+                'required'              => false,
+                'label'                 => 'vs_payment.form.select_pricing_plan.set_recurring_payments',
+                'translation_domain'    => 'VSPaymentBundle',
+            ] )
+        
             ->add( 'paymentMethod', EntityType::class, [
                 'label'                 => 'vs_payment.form.select_pricing_plan.payment_method',
                 'translation_domain'    => 'VSPaymentBundle',
                 'class'                 => $options['paymentMethodClass'],
                 'choice_label'          => 'name',
                 'choice_attr'           => function ( $choice, string $key, mixed $value ) {
-                    return ['data-paymentMethod' => $choice->getSlug()];
+                    return [
+                        'data-paymentMethod'    => $choice->getSlug(),
+                        'data-supportRecurring' => (string)$choice->getGateway()->getSupportRecurring(),
+                    ];
                 },
                 'expanded'              => true,
                 'query_builder'         => function ( RepositoryInterface $er ) {

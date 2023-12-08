@@ -79,6 +79,7 @@ vs_payment:
             bank: Банка
             reciever: Получател
             reason: Основание
+            set_recurring_payments: Периодични плащания
     
     template:
         gateway: Гейтуей

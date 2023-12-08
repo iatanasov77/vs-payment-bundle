@@ -46,7 +46,6 @@ class GatewayConfigForm extends AbstractForm
                 'required'              => false,
                 'label'                 => 'vs_payment.form.gateway_config.support_recurring',
                 'translation_domain'    => 'VSPaymentBundle',
-                
             ] )
             ->add( 'title', TextType::class, [
                 'required'              => true,
