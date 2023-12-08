@@ -76,6 +76,10 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
         $config = $this->useSandbox || $forSandbox ? $this->sandboxConfig : $this->config;
         
         if ( $this->factoryName == 'paypal_express_checkout' ) {
+            /**
+             * Must to be Boolean.
+             * @see \Payum\Paypal\ExpressCheckout\Nvp\Api
+             */
             $config['sandbox']  = $this->useSandbox || $forSandbox;
         }
         

@@ -18,6 +18,7 @@ use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
+use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
@@ -140,7 +141,11 @@ abstract class AbstractCheckoutController extends AbstractController
         $storage->update( $payment );
         $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
         
-        throw new HttpException( 400, $this->getErrorMessage( $paymentStatus->getModel() ) );
+        throw new CheckoutException(
+            $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName(),
+            $paymentStatus->getModel()
+        );
+        
         return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
             'shoppingCart'                      => $this->orderFactory->getShoppingCart(),
             'paymentStatus'                     => $paymentStatus,
@@ -204,11 +209,6 @@ abstract class AbstractCheckoutController extends AbstractController
         }
         
         return null;
-    }
-    
-    protected function getErrorMessage( $details )
-    {
-        return 'STRIPE ERROR: ' . $details['error']['message'];
     }
     
     protected function debugObject( $object )
