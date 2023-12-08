@@ -320,6 +320,17 @@ class PricingPlan implements PricingPlanInterface, Comparable
         return 0;
     }
     
+    public function hasActiveSubscription( $userSubscriptions ): bool
+    {
+        foreach ( $userSubscriptions as $subscription ) {
+            if ( $subscription->getPricingPlan() == $this && $subscription->isActive() ) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     /*
      * @NOTE: Decalared abstract in TranslatableTrait
      */

@@ -61,6 +61,11 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
+    public function isForPricingPlan( PricingPlanInterface $pricingPlan ): bool
+    {
+        return $this->pricingPlan == $pricingPlan;
+    }
+    
     public function getUser()
     {
         return $this->user;
@@ -86,7 +91,7 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     /**
      * @param bool
      */
-    public function setRecurringPayment( ?bool $recurringPayment ): PricingPlanInterface
+    public function setRecurringPayment( ?bool $recurringPayment )
     {
         $this->recurringPayment = (bool) $recurringPayment;
         
