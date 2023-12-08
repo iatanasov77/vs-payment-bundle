@@ -67,6 +67,7 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         
         $subscription->setUser( $this->user );
         $subscription->setPricingPlan( $event->getPricingPlan() );
+        $subscription->setRecurringPayment( $event->getSetRecurringPayments() );
         
         $em->persist( $subscription );
         $em->flush();

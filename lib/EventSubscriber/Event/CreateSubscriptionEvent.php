@@ -10,13 +10,22 @@ final class CreateSubscriptionEvent
     /** @var object */
     private $pricingPlan;
     
-    public function __construct( $pricingPlan )
+    /** @var bool */
+    private $setRecurringPayments;
+    
+    public function __construct( $pricingPlan, $setRecurringPayments )
     {
-        $this->pricingPlan    = $pricingPlan;
+        $this->pricingPlan          = $pricingPlan;
+        $this->setRecurringPayments = $setRecurringPayments;
     }
     
     public function getPricingPlan()
     {
         return $this->pricingPlan;
+    }
+    
+    public function getSetRecurringPayments()
+    {
+        return $this->setRecurringPayments;
     }
 }

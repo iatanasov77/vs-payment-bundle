@@ -32,11 +32,13 @@
     {% endif %}
 </div>
 
-<label class="custom-control custom-checkbox">  
-    <input type="checkbox" id="select_pricing_plan_form_paymentMethod_setRecurringPayments"
-        name="select_pricing_plan_form[paymentMethod][setRecurringPayments]"
-        value="0"
-        {#checked="checked"#}
-    >
-    <span class="custom-control-label">{{ 'vs_payment.form.select_pricing_plan.set_recurring_payments' | trans( {},'VSPaymentBundle' ) }}</span>
-</label>
+<div id="SetRecurringPayments">
+    <label class="custom-control custom-checkbox">  
+        <input type="checkbox" id="select_pricing_plan_form_paymentMethod_setRecurringPayments"
+            name="select_pricing_plan_form[paymentMethod][setRecurringPayments]"
+            value="0"
+            {#checked="checked"#}
+        >
+        <span class="custom-control-label">{{ 'vs_payment.form.select_pricing_plan.set_recurring_payments' | trans( {},'VSPaymentBundle' ) }}</span>
+    </label>
+</div>

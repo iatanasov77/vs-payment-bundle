@@ -7,6 +7,7 @@ use Payum\Stripe\Request\Api\CreatePlan;
 use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
 /**
  * USED MANUALS:
@@ -26,9 +27,25 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
-        $em     = $this->doctrine->getManager();
-        $cart   = $this->orderFactory->getShoppingCart();
+        $cart           = $this->orderFactory->getShoppingCart();
+        $payment        = $this->preparePayment( $cart );
         
+        $captureToken   = $this->payum->getTokenFactory()->createCaptureToken(
+            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
+            $payment,
+            'vs_payment_stripe_checkout_recurring_done' // the route to redirect after capture
+        );
+        
+        if ( $cart->getPaymentMethod()->getGateway()->getFactoryName() == 'stripe_js' ) {
+            $captureUrl = base64_encode( $captureToken->getTargetUrl() );
+            return $this->redirect( $this->generateUrl( 'vs_payment_show_credit_card_form', ['formAction' => $captureUrl] ) );
+        } else {
+            return $this->redirect( $captureToken->getTargetUrl() );
+        }
+    }
+    
+    protected function preparePayment( OrderInterface $cart )
+    {
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
@@ -43,54 +60,33 @@ class StripeCheckoutRecurringController extends AbstractCheckoutController
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         $payment->setOrder( $cart );
         
-        $paymentDetails   = $this->createSubscription( $cart );
+        $paymentDetails   = $this->preparePaymentDetails( $cart );
         $payment->setDetails( $paymentDetails );
         
-        $em->persist( $cart );
-        $em->flush();
+        $this->doctrine->getManager()->persist( $cart );
+        $this->doctrine->getManager()->flush();
         $storage->update( $payment );
         
-        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
-            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
-            $payment,
-            'vs_payment_stripe_checkout_recurring_done' // the route to redirect after capture
-        );
-        
-        if ( $cart->getPaymentMethod()->getGateway()->getFactoryName() == 'stripe_js' ) {
-            $captureUrl = base64_encode( $captureToken->getTargetUrl() );
-            return $this->redirect( $this->generateUrl( 'vs_payment_show_credit_card_form', ['formAction' => $captureUrl] ) );
-        } else {
-            return $this->redirect( $captureToken->getTargetUrl() );
-        }
+        return $payment;
     }
     
-    protected function createSubscription( OrderInterface $order ): array
+    protected function preparePaymentDetails( OrderInterface $cart ): array
     {
-        $pricingPlan    = $order->getItems()->first()->getPaidServiceSubscription()->getPricingPlan();
-        
-        $plan           = new \ArrayObject([
-            "amount"    => $order->getTotalAmount(),
-            "interval"  => "month",
-            "name"      => $pricingPlan->getTitle(),
-            "currency"  => $order->getCurrencyCode(),
-            
-            // Pricing Plan Monthly ( Created From Stripe Dashbord )
-            "id"        => "price_1O05sBCozROjz2jXEwka0bux"
-        ]);
-        
-        /** @var \Payum\Core\Payum $payum */
-        $gateway        = $this->payum->getGateway( $order->getPaymentMethod()->getGateway()->getGatewayName() );
-        $gateway->execute( new CreatePlan( $plan ) );
-        
         $paymentDetails   = [
-            'amount'    => $order->getTotalAmount(),
-            'currency'  => $order->getCurrencyCode(),
-            
-            'local'     => [
+            'local' => [
                 'save_card' => true,
-                'customer'  => ['plan' => $plan['id']],
             ]
         ];
+        
+        $gateway        = $cart->getPaymentMethod()->getGateway();
+        $pricingPlan    = $cart->getItems()->first()->getPaidServiceSubscription()->getPricingPlan();
+        $gtAttributes   = $pricingPlan->getGatewayAttributes();
+        
+        if ( $gateway->getSupportRecurring() && \array_key_exists( StripeApi::PRICING_PLAN_ATTRIBUTE_KEY, $gtAttributes ) ) {
+            $paymentDetails['local']['customer']    = [
+                'plan' => $gtAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY]
+            ];
+        }
         
         return $paymentDetails;
     }

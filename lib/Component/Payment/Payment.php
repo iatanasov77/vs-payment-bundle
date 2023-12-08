@@ -18,9 +18,10 @@ class Payment
                 break;
             case 'stripe_checkout':
             case 'stripe_js':
-                $route  = $isRecurring ?
-                            'vs_payment_stripe_checkout_recurring_prepare':
-                            'vs_payment_stripe_checkout_prepare';
+                $route  = 'vs_payment_stripe_checkout_prepare';
+//                 $route  = $isRecurring ?
+//                             'vs_payment_stripe_checkout_recurring_prepare':
+//                             'vs_payment_stripe_checkout_prepare';
                 break;
             case 'paypal_express_checkout':
                 $route  = 'vs_payment_paypal_express_checkout_prepare';
