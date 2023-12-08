@@ -25,7 +25,9 @@ class PaypalExpressCheckoutController extends AbstractCheckoutController
         $payment->setCurrencyCode( $cart->getCurrencyCode() );
         $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
         $payment->setTotalAmount( $cart->getTotalAmount() );
-        $payment->setDescription( $cart->getDescription() );
+        
+        // Maximum length is 127 alphanumeric characters.
+        $payment->setDescription( \substr( $cart->getDescription(), 0, 120 ) );
         
         $user   = $this->tokenStorage->getToken()->getUser();
         $payment->setClientId( $user ?$user->getId() : 'UNREGISTERED_USER' );
