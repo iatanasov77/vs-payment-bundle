@@ -73,7 +73,13 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
         if( $fromParent )
             return parent::getConfig();
         
-        return $this->useSandbox || $forSandbox ? $this->sandboxConfig : $this->config;
+        $config = $this->useSandbox || $forSandbox ? $this->sandboxConfig : $this->config;
+        
+        if ( $this->factoryName == 'paypal_express_checkout' ) {
+            $config['sandbox']  = $this->useSandbox || $forSandbox;
+        }
+        
+        return $config;
     }
     
     public function __construct()

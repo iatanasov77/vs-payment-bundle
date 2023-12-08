@@ -73,40 +73,6 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
-    #######################################
-    # PAYPAL EXPRESS CHECKOUT RECURRING
-    #######################################
-    Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutRecurringController:
-        arguments:
-            - '@security.token_storage'
-            - '@event_dispatcher'
-            - '@translator'
-            - '@doctrine'
-            - '@payum'
-            - '@vs_payment.order_factory'
-            - '%vs_payment.model.payment.class%'
-            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
-            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
-        calls:
-            - [ setContainer, [ '@service_container' ] ]
-    
-    ##############################
-    # PAYPAL PRO CHECKOUT
-    ##############################
-    Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController:
-        arguments:
-            - '@security.token_storage'
-            - '@event_dispatcher'
-            - '@translator'
-            - '@doctrine'
-            - '@payum'
-            - '@vs_payment.order_factory'
-            - '%vs_payment.model.payment.class%'
-            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
-            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
-        calls:
-            - [ setContainer, [ '@service_container' ] ]
-    
     ##############################
     # STRIPE CHECKOUT
     ##############################
