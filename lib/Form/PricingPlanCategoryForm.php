@@ -67,11 +67,11 @@ class PricingPlanCategoryForm extends AbstractForm
                     }
                     
                     return $qb;
-            },
-            'choice_label'  => 'name',
-            
-            'required'      => false,
-            'placeholder'   => 'vs_payment.form.parent_category_placeholder',
+                },
+                'choice_label'  => 'name',
+                
+                'required'      => false,
+                'placeholder'   => 'vs_payment.form.parent_category_placeholder',
             ])
         ;
     }

@@ -35,4 +35,5 @@ vs_application:
         pricing_plans_listing: Ценови Планове
         create_pricing_plan: Създай Ценови План
         edit_pricing_plan: Редакция Ценови План
+        stripe_subscription_plans: Страйп Абонаментни Обекти
 

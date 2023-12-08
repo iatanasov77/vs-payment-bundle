@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+        
+    ##############################
+    # Stripe
+    ##############################
+    Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
+            - '@doctrine'
+            - '@vs_payment.stripe_api'

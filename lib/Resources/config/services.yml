@@ -2,6 +2,7 @@ imports:
     - { resource: services/controller.yaml }
     - { resource: services/form.yaml }
     - { resource: services/menu.yaml }
+    - { resource: services/payum.yaml }
     - { resource: services/payment.yaml }
     - { resource: services/checkout.yaml }
     - { resource: services/paysera.yaml }
@@ -9,6 +10,7 @@ imports:
     - { resource: services/fixtures_factories.yaml }
     - { resource: services/fixtures.yaml }
     - { resource: services/offline_gateways.yaml }
+    - { resource: services/gateway_config.yaml }
 
 parameters:
     vs_payment.product_category.taxonomy_code: 'product-categories'

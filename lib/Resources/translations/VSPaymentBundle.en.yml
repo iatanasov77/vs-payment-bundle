@@ -20,6 +20,7 @@ vs_payment:
         
         gateway_config:
             use_sandbox: Use Sandbox
+            support_recurring: Support Recurring Payment
             
         credit_card:
             holder_name_label: Name on card
@@ -94,6 +95,9 @@ vs_payment:
                 create_new_gateway: Create New Gateway
                 gateway_title: Title
                 gateway_description: Description
+                recurring_payment: Recurring Payment
+                supported: Supported
+                not_supported: Not Supported
             config:
                 title: Gateway Config
                 payum_config_options: Payum Config Options
@@ -107,6 +111,7 @@ vs_payment:
                 payment_method: Payment Method
                 gateway: Gateway
                 gateway_use_sandbox: Gateway Use Sandbox
+                gateway_support_recurring: Gateway Support Recurring
                 create_new_payment_method: Create New Payment Method
             config:
                 title: Payment Method Config
@@ -135,7 +140,32 @@ vs_payment:
             expires_at: Expires At
             actions: Actions
             create_payment: Create Payment
-                
+            
+        payum_stripe_objects:
+            stripe_subscription_objects: Stripe Subscription Objects
+            stripe_plans: Stripe Plans
+            create_stripe_plan: Create Stripe Plan
+            amount: Amount
+            interval: Interval
+            interval_placeholder: '-- Select Interval --'
+            product: Product
+            product_placeholder: '-- Select Product --'
+            stripe_products: Stripe Products
+            create_stripe_product: Create Stripe Product
+            name: Name
+            product_name: Product Name
+            default_price: Default Price
+            stripe_prices: Stripe Prices
+            create_stripe_price: Create Stripe Price
+            trial_period_days: Trial Period Days
+            pricing_plan: Pricing Plan
+            pricing_plan_placeholder: '-- Select Pricing Plan --'
+            pricing_plan_info: When Create a Payment on Pricing Plan and Set The Subscription with Recurring option, This Price will be used for Recurring Payments.
+            interval_count: Interval Count
+            interval_count_info: The number of intervals between subscription billings. For example, interval=month and interval_count=3 bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+
+
+            
         currency_index_title: Currencies
         currency_index_code: Code
         currency_index_symbol: Symbol
@@ -185,6 +215,8 @@ vs_payment:
         payment_currency: Currency
         pricing_plan_payment_success: 'Pricing Plan Paid Successfull !!!'
         shopping_cart_payment_success: 'Shopping Cart Paid Successfull !!!'
+        pricing_plan_payment_waiting: 'We will wait for Your Paiment and then we will Update Your Subscription !!!'
+        shopping_cart_payment_waiting: 'We will wait for Your Paiment and then we will Send You Ordered Products !!!'
         order_index_title: Orders
         order_status: Status
         order_user: User

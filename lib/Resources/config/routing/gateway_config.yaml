@@ -1,0 +1,19 @@
+##############################
+# Stripe
+##############################
+gateway_config_stripe_subscription_objects_index:
+    path: /vs_payment/gateway-config/stripe/index
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::indexAction
+
+gateway_config_stripe_subscription_objects_create_plan:
+    path: /vs_payment/gateway-config/stripe/create-plan
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createPlanAction
+    
+gateway_config_stripe_subscription_objects_create_product:
+    path: /vs_payment/gateway-config/stripe/create-product
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createProductAction
+    
+gateway_config_stripe_subscription_objects_create_price:
+    path: /vs_payment/gateway-config/stripe/create-price
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createPriceAction
+

@@ -21,6 +21,7 @@
                             <th>{{ 'vs_payment.template.gateway_config_ext.index.gateway_factory' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.form.currency_label' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.gateway_config_ext.index.use_sandbox' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.gateway_config_ext.index.recurring_payment' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
                     </thead>
@@ -40,6 +41,13 @@
                                     <i class="fas fa-check" style="color: #82c91e;">
                                 {% else %}
                                     <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.supportRecurring %}
+                                    {{ 'vs_payment.template.gateway_config_ext.index.supported' | trans( {},'VSPaymentBundle' ) }}
+                                {% else %}
+                                    {{ 'vs_payment.template.gateway_config_ext.index.not_supported' | trans( {},'VSPaymentBundle' ) }}
                                 {% endif %}
                             </td>
                             <td>

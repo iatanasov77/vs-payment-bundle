@@ -57,9 +57,17 @@ class PricingPlan implements PricingPlanInterface, Comparable
     /** @var Collection|PricingPlanSubscriptionInterface[] */
     protected $subscriptions;
     
+    /**
+     * This field will store: Subscription Plan Ids, etc.
+     * 
+     * @var array
+     */
+    protected $gatewayAttributes;
+    
     public function __construct()
     {
-        $this->subscriptions    = new ArrayCollection();
+        $this->subscriptions        = new ArrayCollection();
+        $this->gatewayAttributes    = [];
     }
     
     /**
@@ -219,6 +227,18 @@ class PricingPlan implements PricingPlanInterface, Comparable
         return $this;
     }
     
+    public function getGatewayAttributes()
+    {
+        return $this->gatewayAttributes;
+    }
+    
+    public function setGatewayAttributes( array $gatewayAttributes ): self
+    {
+        $this->gatewayAttributes    = $gatewayAttributes;
+        
+        return $this;
+    }
+    
     public function getServiceCode(): ?string
     {
         return $this->paidService->getPayedService()->getSubscriptionCode();
@@ -298,6 +318,17 @@ class PricingPlan implements PricingPlanInterface, Comparable
         }
         
         return 0;
+    }
+    
+    public function hasActiveSubscription( $userSubscriptions ): bool
+    {
+        foreach ( $userSubscriptions as $subscription ) {
+            if ( $subscription->getPricingPlan() == $this && $subscription->isActive() ) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     /*

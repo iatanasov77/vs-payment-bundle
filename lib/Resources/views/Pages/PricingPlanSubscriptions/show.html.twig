@@ -16,6 +16,7 @@
                             <th>{{ 'vs_payment.template.pricing_plan_subscriptions.paid_service_period' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_users_subscriptions.template.payment_total_amount' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.payment_method' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_application.template.items_index_row_created' | trans( {},'VSApplicationBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.order_is_paid' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th width="150">{{ 'vs_users_subscriptions.template.action' | trans( {},'VSUsersSubscriptionsBundle' ) }}</th>
                         </tr>
@@ -28,6 +29,7 @@
                             <td>{{ resource.periodCode }}</td>
                             <td>{{ orderItem.order.totalAmount }} {{ intlCurrencies[orderItem.order.currencyCode]['symbol'] }}</td>
                             <td>{{ orderItem.order.paymentMethod.name }}</td>
+                            <td>{{ orderItem.order.payment.updatedAt | date( "d.m.Y H:i" ) }}</td>
                             <td style="text-align: center;">
                                 {% if orderItem.order.paid %}
                                     <i class="fas fa-check" style="color: #82c91e;"></i>

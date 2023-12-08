@@ -18,6 +18,7 @@
                             <th>{{ 'vs_payment.template.payment_method_config_ext.index.payment_method' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.payment_method_config_ext.index.gateway' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.payment_method_config_ext.index.gateway_use_sandbox' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.payment_method_config_ext.index.gateway_support_recurring' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.active' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
@@ -30,6 +31,13 @@
                             <td>{{ item.gateway.gatewayName }}</td>
                             <td>
                                 {% if item.gateway.useSandbox %}
+                                    <i class="fas fa-check" style="color: #82c91e;">
+                                {% else %}
+                                    <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.gateway.supportRecurring %}
                                     <i class="fas fa-check" style="color: #82c91e;">
                                 {% else %}
                                     <i class="fas fa-times" style="color: #ff1e1e;"></i>
