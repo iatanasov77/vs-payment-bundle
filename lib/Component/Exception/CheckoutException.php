@@ -17,7 +17,7 @@ class CheckoutException extends RuntimeException
                 $message    = 'PAYPAL ERROR: ' . $errorModel['L_LONGMESSAGE0'];
                 break;
             case 'authorize_net_aim':
-                $message    = 'Authorize.Net ERROR' . $errorModel['error_message'];
+                $message    = $errorModel['error_message'];
                 break;
             default:
                 $message    = "Checkout Error !!!";
