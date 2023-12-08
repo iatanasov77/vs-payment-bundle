@@ -7,6 +7,7 @@ class CheckoutException extends RuntimeException
 {
     public function __construct ( string $factory, ?ArrayObject $errorModel, $code = null )
     {
+        // echo '<pre>'; var_dump( $errorModel ); die;
         switch ( $factory ) {
             case 'stripe_checkout':
             case 'stripe_js':
@@ -14,6 +15,9 @@ class CheckoutException extends RuntimeException
                 break;
             case 'paypal_express_checkout':
                 $message    = 'PAYPAL ERROR: ' . $errorModel['L_LONGMESSAGE0'];
+                break;
+            case 'authorize_net_aim':
+                $message    = 'Authorize.Net ERROR' . $errorModel['error_message'];
                 break;
             default:
                 $message    = "Checkout Error !!!";
