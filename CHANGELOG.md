@@ -1,3 +1,17 @@
+1.9.12	|	Release date: **08.12.2023**
+============================================
+* New Features and Improvements:
+  - Improve Show Payments For Subscription.
+  - Imptove Recieved Payments Page.
+  - Improve Flash Messages for Offline Payments on Payment Done.
+  - Add 'supportRecurring' field into Gateway Config.
+  - Add a Doctrine Migration.
+  - Improve Gateway Config.
+  - Create a Stripe Config Controller
+  - Create Some Custom Stripe API Actions.
+  - Improve Subscription Models.
+
+
 2.9.11	|	Release date: **05.12.2023**
 ============================================
 * New Features, Fixes and Improvements:
