@@ -2,9 +2,10 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Payum\Stripe\Request\Api\CreatePlan;
 
-use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
@@ -32,7 +33,7 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
  * ==========================
  * https://github.com/Payum/OmnipayBridge/blob/master/composer.json
  */
-class StripeCheckoutController extends AbstractCheckoutController
+class StripeCheckoutController extends AbstractCheckoutRecurringController
 {
     public function prepareAction( Request $request ): Response
     {
@@ -51,6 +52,16 @@ class StripeCheckoutController extends AbstractCheckoutController
         } else {
             return $this->redirect( $captureToken->getTargetUrl() );
         }
+    }
+    
+    public function createRecurringPaymentAction( $packagePlanId, Request $request ): Response
+    {
+        throw new HttpException( 'Not Needed and Not Implemented !!!' );
+    }
+    
+    public function cancelAction( $paymentId, Request $request ): Response
+    {
+        // $paymentDetails['local']['customer']['subscriptions']['data'][0]['id']
     }
     
     protected function preparePayment( OrderInterface $cart )

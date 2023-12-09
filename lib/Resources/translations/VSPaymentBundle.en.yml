@@ -141,6 +141,8 @@ vs_payment:
             expires_at: Expires At
             actions: Actions
             create_payment: Create Payment
+            start_recurring: Setup Recurring Payments
+            stop_recurring: Cancel Recurring Payments
             
         payum_stripe_objects:
             stripe_subscription_objects: Stripe Subscription Objects

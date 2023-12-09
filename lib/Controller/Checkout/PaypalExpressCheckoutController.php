@@ -1,8 +1,10 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
 
-use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
 /*
  * 
@@ -11,12 +13,40 @@ use Symfony\Component\HttpFoundation\Response;
  * PayPal Express Checkout is deprecated. Please, use new PayPal Commerce Platform integration.
  * PayPal Commerce Platform: https://github.com/Sylius/PayPalPlugin
  */
-class PaypalExpressCheckoutController extends AbstractCheckoutController
+class PaypalExpressCheckoutController extends AbstractCheckoutRecurringController
 {   
     public function prepareAction( Request $request ): Response
     {
-        $cart   = $this->orderFactory->getShoppingCart();
+        $cart       = $this->orderFactory->getShoppingCart();
+        $payment    = $this->preparePayment( $cart );
         
+        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
+            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
+            $payment,
+            'vs_payment_paypal_express_checkout_done'
+        );
+        
+        return $this->redirect( $captureToken->getTargetUrl() );
+    }
+    
+    public function createRecurringPaymentAction( $packagePlanId, Request $request ): Response
+    {
+        $doneToken = $this->payum->getTokenFactory()->createToken(
+            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
+            $recurringPayment,
+            'vs_payment_paypal_express_checkout_done'
+        );
+        
+        return $this->redirect( $doneToken->getTargetUrl() );
+    }
+    
+    public function cancelAction( $paymentId, Request $request ): Response
+    {
+        
+    }
+    
+    protected function preparePayment( OrderInterface $cart )
+    {
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
@@ -39,12 +69,6 @@ class PaypalExpressCheckoutController extends AbstractCheckoutController
         ]);
         $storage->update( $payment );
         
-        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
-            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
-            $payment,
-            'vs_payment_paypal_express_checkout_done'
-        );
-        
-        return $this->redirect( $captureToken->getTargetUrl() );
+        return $payment;
     }
 }
