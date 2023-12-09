@@ -97,6 +97,7 @@ class PricingPlanCheckoutController extends AbstractController
         
         return $this->render( '@VSPayment/Pages/PricingPlansCheckout/pricing_plans.html.twig', [
             'pricingPlanCategories' => $pricingPlanCategories,
+            'subscriptions'         => $this->subscriptionsRepository->getSubscriptionsByUser( $this->securityBridge->getUser() )
         ]);
     }
     
