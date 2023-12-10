@@ -1,0 +1,57 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payum_stripe_objects.create_stripe_product' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payum_stripe_objects.create_stripe_product' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <!-- ============================================================== -->
+        <!-- basic tabs  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">{{ 'vs_payment.template.payum_stripe_objects.create_stripe_product' | trans( {},'VSPaymentBundle' ) }}</h5>
+                <div class="card-body">
+                    {% if form_errors(form) is not empty %}
+                        <div class="alert alert-block alert-danger fade in">
+                            <button type="button" class="close close-sm" data-bs-dismiss="alert">
+                                <i class="icon-remove"></i>
+                            </button>
+                            <strong>{{ 'vs_application.form.errors_title' | trans( {},'VSApplicationBundle' ) }}</strong> {{ form_errors( form ) }}
+                        </div>
+                    {% endif %}
+                    
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
+                        <div class="form-group">
+                            {{ form_label(form.enabled_events, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.enabled_events, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.url, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.url, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <div class="input-group row vsFormButtonsGroup mt-5">
+                            <div class="col-sm-2">
+                                {{ form_widget(form.btnSubmit, {'attr': {'class': 'btn btn-primary', 'id':'btnSave'}}) }}
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-secondary" href="{{ path( 'gateway_config_stripe_subscription_objects_index' ) }}">
+                                    {{ 'vs_application.form.cancel' | trans( {},'VSApplicationBundle' ) }}
+                                </a>
+                            </div>
+                            <div class="col-sm-6"></div>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>  
+{% endblock content %}

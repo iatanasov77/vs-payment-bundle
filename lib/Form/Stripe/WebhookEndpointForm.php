@@ -1,28 +1,28 @@
-<?php namespace Vankosoft\PaymentBundle\Form;
+<?php namespace Vankosoft\PaymentBundle\Form\Stripe;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class StripeSubscriptionProductForm extends AbstractType
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
+
+class WebhookEndpointForm extends AbstractType
 {
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
-            /*
-            ->add( 'id', TextType::class, [
-                'label' => 'ID',
-                'translation_domain' => 'VSPaymentBundle',
-                'attr'  => [
-                    'placeholder' => 'ID'
-                ],
+            ->add( 'enabled_events', ChoiceType::class, [
+                'label'                 => 'vs_payment.template.payum_stripe_objects.enabled_events',
+                'translation_domain'    => 'VSPaymentBundle',
+                'choices'               => \array_combine( StripeApi::STRIPE_EVENTS, StripeApi::STRIPE_EVENTS ),
+                'multiple'              => true,
             ])
-            */
         
-            ->add( 'name', TextType::class, [
+            ->add( 'url', TextType::class, [
                 'label' => 'vs_payment.template.payum_stripe_objects.name',
                 'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
@@ -50,6 +50,6 @@ class StripeSubscriptionProductForm extends AbstractType
     
     public function getName()
     {
-        return 'vs_payment.stripe_subscription_product';
+        return 'vs_payment.stripe_subscription_webhook_endpoint';
     }
 }

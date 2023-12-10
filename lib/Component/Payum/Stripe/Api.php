@@ -9,10 +9,17 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetProducts;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateProduct;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPrices;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreatePrice;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetWebhookEndpoints;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateWebhookEndpoint;
 
 final class Api
 {
     const PRICING_PLAN_ATTRIBUTE_KEY    = 'stripe_plan_id';
+    
+    const STRIPE_EVENTS                 = [
+                                            'charge.succeeded',
+                                            'charge.failed'
+                                        ];
     
     /** @var Gateway */
     private $gateway;
@@ -100,6 +107,25 @@ final class Api
         $this->gateway->execute( $createPriceRequest = new CreatePrice( $price ) );
         
         return $createPriceRequest->getFirstModel()->getArrayCopy();
+    }
+    
+    public function getWebhookEndpoints()
+    {
+        $stripeRequest      = new \ArrayObject( [] );
+        $this->gateway->execute( $getWebhookEndpointsRequest = new GetWebhookEndpoints( $stripeRequest ) );
+        
+        $availableWebhookEndpoints  = $getWebhookEndpointsRequest->getFirstModel()->getArrayCopy();
+        
+        return $availableWebhookEndpoints["data"];
+    }
+    
+    public function createWebhookEndpoint( array $formData )
+    {
+        $webhookEndpoint    = new \ArrayObject([
+            'enabled_events'    => ['charge.succeeded', 'charge.failed'],
+            'url'               => 'https://example.com/my/webhook/endpoint',
+        ]);
+        $this->gateway->execute( new CreateWebhookEndpoint( $webhookEndpoint ) );
     }
     
     public function getProductPairs()
