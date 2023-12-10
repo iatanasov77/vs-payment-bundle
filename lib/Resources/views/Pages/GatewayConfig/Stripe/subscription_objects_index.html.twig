@@ -149,10 +149,8 @@
                     <tr>
                         <th width="50">N</th>
                         <th>ID</th>
-                        <th>{{ 'vs_payment.template.payum_stripe_objects.product' | trans( {},'VSPaymentBundle' ) }}</th>
-                        <th>{{ 'vs_payment.template.payum_stripe_objects.amount' | trans( {},'VSPaymentBundle' ) }}</th>
-                        <th>{{ 'vs_payment.template.payum_stripe_objects.interval' | trans( {},'VSPaymentBundle' ) }}</th>
-                        <th>{{ 'vs_payment.template.payum_stripe_objects.trial_period_days' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.enabled_events' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.url' | trans( {},'VSPaymentBundle' ) }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -160,10 +158,8 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ item.id }}</td>
-                        <td>{{ item.product }}</td>
-                        <td>{{ ( item.unit_amount / 100 ) | number_format( 2 ) }} {{ item.currency }}</td>
-                        <td>{{ item.recurring.interval_count }} {{ item.recurring.interval }}</td>
-                        <td>{{ item.recurring.trial_period_days }}</td>
+                        <td>{{ item.enabled_events | join( ', ' ) }}</td>
+                        <td>{{ item.url }}</td>
                     </tr>
                 {% else %}
                     <tr>
