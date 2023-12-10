@@ -16,7 +16,7 @@ use Stripe\Subscription;
 
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
 
-class CancelSubscriptionAction
+class CancelSubscriptionAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
     use ApiAwareTrait {
         setApi as _setApi;
