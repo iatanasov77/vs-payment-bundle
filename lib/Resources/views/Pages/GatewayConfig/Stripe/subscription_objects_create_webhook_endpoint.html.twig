@@ -55,3 +55,15 @@
         </div>
     </div>  
 {% endblock content %}
+
+{% block head_styles %}
+    {{ parent() }}
+    
+    {{ encore_entry_link_tags( 'js/stripe-webhook-endpoint' ) }}
+{% endblock %}
+
+{% block body_scripts %}
+    {{ parent() }}
+    
+    {{ encore_entry_script_tags( 'js/stripe-webhook-endpoint' ) }}
+{% endblock %}

@@ -23,10 +23,10 @@ class WebhookEndpointForm extends AbstractType
             ])
         
             ->add( 'url', TextType::class, [
-                'label' => 'vs_payment.template.payum_stripe_objects.name',
+                'label' => 'vs_payment.template.payum_stripe_objects.url',
                 'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
-                    'placeholder' => 'vs_payment.template.payum_stripe_objects.name'
+                    'placeholder' => 'vs_payment.template.payum_stripe_objects.url'
                 ],
             ])
             
