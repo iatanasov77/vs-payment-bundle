@@ -20,6 +20,7 @@ class WebhookEndpointForm extends AbstractType
                 'translation_domain'    => 'VSPaymentBundle',
                 'choices'               => \array_combine( StripeApi::STRIPE_EVENTS, StripeApi::STRIPE_EVENTS ),
                 'multiple'              => true,
+                'required'              => false,
             ])
         
             ->add( 'url', TextType::class, [

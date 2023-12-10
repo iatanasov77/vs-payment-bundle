@@ -116,7 +116,12 @@ class StripeSubscriptionPlansController extends AbstractController
         
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
+            $formData       = $form->getData();
+            if ( empty( $formData['enabled_events'] ) ) {
+                throw new \RuntimeException( 'Enabled Events field cannot be empty !!!' );
+            }
             
+            $this->stripeApi->createWebhookEndpoint( $formData );
             
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }

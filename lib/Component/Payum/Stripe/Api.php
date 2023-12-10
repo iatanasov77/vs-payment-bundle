@@ -17,9 +17,17 @@ final class Api
     const PRICING_PLAN_ATTRIBUTE_KEY    = 'stripe_plan_id';
     
     const STRIPE_EVENTS                 = [
-                                            'charge.succeeded',
-                                            'charge.failed'
-                                        ];
+        'charge.succeeded',
+        'charge.failed',
+        'invoice.finalized',
+        'invoice.finalization_failed',
+        'invoice.paid',
+        'invoice.payment_failed',
+        'invoice.payment_succeeded',
+        'subscription_schedule.canceled',
+        'subscription_schedule.created',
+        'subscription_schedule.completed',
+    ];
     
     /** @var Gateway */
     private $gateway;
@@ -122,8 +130,8 @@ final class Api
     public function createWebhookEndpoint( array $formData )
     {
         $webhookEndpoint    = new \ArrayObject([
-            'enabled_events'    => ['charge.succeeded', 'charge.failed'],
-            'url'               => 'https://example.com/my/webhook/endpoint',
+            'enabled_events'    => $formData['enabled_events'],
+            'url'               => $formData['url'],
         ]);
         $this->gateway->execute( new CreateWebhookEndpoint( $webhookEndpoint ) );
     }
