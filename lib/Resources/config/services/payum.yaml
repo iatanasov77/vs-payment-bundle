@@ -51,6 +51,16 @@ services:
         tags:
             - { name: payum.action, factory: stripe_js }
             
+    vs_payment.stripe_list_subscriptions:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetSubscriptionsAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_cancel_subscription:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\CancelSubscriptionAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+            
     vs_payment.stripe_list_webhook_endpoints:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetWebhookEndpointsAction
         tags:

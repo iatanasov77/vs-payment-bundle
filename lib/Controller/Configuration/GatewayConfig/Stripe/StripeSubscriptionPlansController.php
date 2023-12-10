@@ -37,6 +37,9 @@ class StripeSubscriptionPlansController extends AbstractController
         $availablePrices            = $this->stripeApi->getPrices();
 //         echo "<pre>"; var_dump( $availablePrices ); die;
 
+        $availableSubscriptions     = $this->stripeApi->getSubscriptions();
+//         echo "<pre>"; var_dump( $availableSubscriptions ); die;
+        
         $availableWebhookEndpoints  = $this->stripeApi->getWebhookEndpoints();
 //         echo "<pre>"; var_dump( $availableWebhookEndpoints ); die;
         
@@ -44,6 +47,7 @@ class StripeSubscriptionPlansController extends AbstractController
             'availablePlans'            => $availablePlans,
             'availableProducts'         => $availableProducts,
             'availablePrices'           => $availablePrices,
+            'availableSubscriptions'    => $availableSubscriptions,
             'availableWebhookEndpoints' => $availableWebhookEndpoints,
         ]);
     }
@@ -108,6 +112,13 @@ class StripeSubscriptionPlansController extends AbstractController
         return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_price.html.twig', [
             'form'  => $form->createView(),
         ]);
+    }
+    
+    public function cancelSubscriptionAction( $id, Request $request ): Response
+    {
+        $this->stripeApi->cancelSubscription( $id );
+        
+        return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
     }
     
     public function createWebhookEndpointAction( Request $request ): Response

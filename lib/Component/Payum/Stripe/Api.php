@@ -9,6 +9,8 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetProducts;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateProduct;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPrices;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreatePrice;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetSubscriptions;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetWebhookEndpoints;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateWebhookEndpoint;
 
@@ -115,6 +117,24 @@ final class Api
         $this->gateway->execute( $createPriceRequest = new CreatePrice( $price ) );
         
         return $createPriceRequest->getFirstModel()->getArrayCopy();
+    }
+    
+    public function getSubscriptions()
+    {
+        $stripeRequest      = new \ArrayObject( [] );
+        $this->gateway->execute( $getSubscriptionsRequest = new GetSubscriptions( $stripeRequest ) );
+        
+        $availableSubscriptions = $getSubscriptionsRequest->getFirstModel()->getArrayCopy();
+        
+        return $availableSubscriptions["data"];
+    }
+    
+    public function cancelSubscription( $id )
+    {
+        $subscription   = new \ArrayObject([
+            "id"    => $id,
+        ]);
+        $this->gateway->execute( new CancelSubscription( $subscription ) );
     }
     
     public function getWebhookEndpoints()
