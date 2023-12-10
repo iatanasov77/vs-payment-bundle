@@ -17,6 +17,8 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateWebhookEndp
 final class Api
 {
     const PRICING_PLAN_ATTRIBUTE_KEY    = 'stripe_plan_id';
+    const CUSTOMER_ATTRIBUTE_KEY        = 'stripe_customer_id';
+    const PRICE_ATTRIBUTE_KEY           = 'stripe_price_id';
     
     const STRIPE_EVENTS                 = [
         'charge.succeeded',
@@ -119,9 +121,9 @@ final class Api
         return $createPriceRequest->getFirstModel()->getArrayCopy();
     }
     
-    public function getSubscriptions()
+    public function getSubscriptions( array $params = [] )
     {
-        $stripeRequest      = new \ArrayObject( [] );
+        $stripeRequest      = new \ArrayObject( $params );
         $this->gateway->execute( $getSubscriptionsRequest = new GetSubscriptions( $stripeRequest ) );
         
         $availableSubscriptions = $getSubscriptionsRequest->getFirstModel()->getArrayCopy();

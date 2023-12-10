@@ -39,9 +39,18 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     /** @var \DateTimeInterface */
     protected $expiresAt;
     
+    /**
+     * This field will store: Subscription Customer and Price Ids
+     * to Can Find Subscription Id for Canceling and etc.
+     *
+     * @var array
+     */
+    protected $gatewayAttributes;
+    
     public function __construct()
     {
-        $this->orderItems   = new ArrayCollection();
+        $this->orderItems           = new ArrayCollection();
+        $this->gatewayAttributes    = [];
     }
     
     public function getId()
@@ -111,6 +120,18 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     public function setExpiresAt($expiresAt)
     {
         $this->expiresAt = $expiresAt;
+        
+        return $this;
+    }
+    
+    public function getGatewayAttributes()
+    {
+        return $this->gatewayAttributes;
+    }
+    
+    public function setGatewayAttributes( array $gatewayAttributes ): self
+    {
+        $this->gatewayAttributes    = $gatewayAttributes;
         
         return $this;
     }

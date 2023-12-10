@@ -40,5 +40,7 @@
             </options>
         </field>
         
+        <field name="gatewayAttributes" column="gateway_attributes" type="json" nullable="true" />
+        
     </mapped-superclass>
 </doctrine-mapping>

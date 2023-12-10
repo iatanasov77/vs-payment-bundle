@@ -111,7 +111,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
         
         if ( $hasPricingPlan ) {
-            $response   = $this->_setSubscriptionsPaymentDone( $request, $subscriptions );
+            $response   = $this->_setSubscriptionsPaymentDone( $request, $subscriptions, $payment );
         }
         
         if ( ! $hasPricingPlan && $this->routeRedirectOnShoppingCartDone ) {
@@ -171,13 +171,13 @@ abstract class AbstractCheckoutController extends AbstractController
         return  $payment;
     }
     
-    protected function _setSubscriptionsPaymentDone( Request $request, $subscriptions ): ?Response
+    protected function _setSubscriptionsPaymentDone( Request $request, $subscriptions, $payment ): ?Response
     {
         if ( $this instanceof AbstractCheckoutOfflineController ) {
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_waiting', [], 'VSPaymentBundle' );
         } else {
             $this->eventDispatcher->dispatch(
-                new SubscriptionsPaymentDoneEvent( $subscriptions ),
+                new SubscriptionsPaymentDoneEvent( $subscriptions, $payment ),
                 SubscriptionsPaymentDoneEvent::NAME
             );
             

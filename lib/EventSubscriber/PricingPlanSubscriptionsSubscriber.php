@@ -7,6 +7,7 @@ use Sylius\Component\Resource\Factory\Factory;
 use Doctrine\Persistence\ManagerRegistry;
 use Vankosoft\UsersBundle\Model\UserInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
@@ -90,13 +91,13 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         $em = $this->doctrine->getManager();
         
         foreach ( $event->getSubscriptions() as $subscription ) {
-            $this->setSubscriptionPaid( $subscription );
+            $this->setSubscriptionPaid( $subscription, $event->getPayment() );
         }
         
         $em->flush();
     }
     
-    private function setSubscriptionPaid( PricingPlanSubscriptionInterface $subscription )
+    private function setSubscriptionPaid( PricingPlanSubscriptionInterface $subscription, $payment )
     {
         $em = $this->doctrine->getManager();
         
@@ -105,6 +106,18 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         $endDate    = $endDate->add( $subscription->getPricingPlan()->getSubscriptionPeriod() );
         
         $subscription->setExpiresAt( $endDate );
+        
+        if ( $subscription->isRecurringPayment() ) {
+            $paymentData    = $payment->getDetails();
+            $gtAttributes   = $subscription->getGatewayAttributes();
+            $gtAttributes   = $gtAttributes ?: [];
+            
+            $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY]    = isset( $paymentData['local']['customer'] ) ?
+                                                                    $paymentData['local']['customer']['id'] : null;
+            $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]       = isset( $paymentData['local']['customer'] ) ?
+                                                                    $paymentData['local']['customer']['plan'] : null;
+            $subscription->setGatewayAttributes( $gtAttributes );
+        }
         
         $em->persist( $subscription );
     }
