@@ -53,6 +53,17 @@ vs_payment_stripe_checkout_done:
    path: /vs_payment/stripe-checkout/done
    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::doneAction
    
+vs_payment_stripe_checkout_create_recurring_payment:
+   path: /vs_payment/stripe-checkout/create-recurring-payment
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::createRecurringPaymentAction
+   options:
+        expose: true
+   
+vs_payment_stripe_checkout_cancel_recurring_payment:
+   path: /vs_payment/stripe-checkout/cancel-recurring-payment
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::cancelAction
+   options:
+        expose: true
 
 # PayPal Express Checkout
 #######################################################################################
