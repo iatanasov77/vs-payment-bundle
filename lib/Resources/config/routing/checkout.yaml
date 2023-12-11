@@ -54,13 +54,13 @@ vs_payment_stripe_checkout_done:
    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::doneAction
    
 vs_payment_stripe_checkout_create_recurring_payment:
-   path: /vs_payment/stripe-checkout/create-recurring-payment
+   path: /vs_payment/stripe-checkout/create-recurring-payment/{subscriptionId}
    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::createRecurringPaymentAction
    options:
         expose: true
    
 vs_payment_stripe_checkout_cancel_recurring_payment:
-   path: /vs_payment/stripe-checkout/cancel-recurring-payment
+   path: /vs_payment/stripe-checkout/cancel-recurring-payment/{subscriptionId}
    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::cancelAction
    options:
         expose: true
