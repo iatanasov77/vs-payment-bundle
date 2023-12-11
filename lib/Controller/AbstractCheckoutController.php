@@ -39,6 +39,9 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @vvar OrderFactory */
     protected $orderFactory;
     
+    /** @var RepositoryInterface */
+    protected $subscriptionsRepository;
+    
     /** @var string */
     protected $paymentClass;
     
@@ -63,6 +66,7 @@ abstract class AbstractCheckoutController extends AbstractController
         ManagerRegistry $doctrine,
         Payum $payum,
         OrderFactory $orderFactory,
+        RepositoryInterface $subscriptionsRepository,
         string $paymentClass,
         ?string $routeRedirectOnShoppingCartDone,
         ?string $routeRedirectOnPricingPlanDone
@@ -73,6 +77,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->doctrine                             = $doctrine;
         $this->payum                                = $payum;
         $this->orderFactory                         = $orderFactory;
+        $this->subscriptionsRepository              = $subscriptionsRepository;
         
         $this->paymentClass                         = $paymentClass;
         $this->routeRedirectOnShoppingCartDone      = $routeRedirectOnShoppingCartDone;

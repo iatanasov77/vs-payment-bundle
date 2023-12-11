@@ -54,12 +54,12 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         }
     }
     
-    public function createRecurringPaymentAction( $packagePlanId, Request $request ): Response
+    public function createRecurringPaymentAction( $subscriptionId, Request $request ): Response
     {
         throw new HttpException( 'Not Needed and Not Implemented !!!' );
     }
     
-    public function cancelAction( $paymentId, Request $request ): Response
+    public function cancelAction( $subscriptionId, Request $request ): Response
     {
         // $paymentDetails['local']['customer']['subscriptions']['data'][0]['id']
     }
@@ -98,14 +98,19 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             ]
         ];
         
-        $gateway        = $cart->getPaymentMethod()->getGateway();
-        $pricingPlan    = $cart->getItems()->first()->getPaidServiceSubscription()->getPricingPlan();
-        $gtAttributes   = $pricingPlan->getGatewayAttributes();
+        $subscriptions  = $payment->getOrder()->getSubscriptions();
+        $hasPricingPlan = ! empty( $subscriptions );
         
-        if ( $gateway->getSupportRecurring() && \array_key_exists( StripeApi::PRICING_PLAN_ATTRIBUTE_KEY, $gtAttributes ) ) {
-            $paymentDetails['local']['customer']    = [
-                'plan' => $gtAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY]
-            ];
+        if ( $hasPricingPlan ) {
+            $gateway        = $cart->getPaymentMethod()->getGateway();
+            $pricingPlan    = $subscriptions[0]->getPricingPlan();
+            $gtAttributes   = $pricingPlan->getGatewayAttributes();
+            
+            if ( $gateway->getSupportRecurring() && \array_key_exists( StripeApi::PRICING_PLAN_ATTRIBUTE_KEY, $gtAttributes ) ) {
+                $paymentDetails['local']['customer']    = [
+                    'plan' => $gtAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY]
+                ];
+            }
         }
         
         return $paymentDetails;
