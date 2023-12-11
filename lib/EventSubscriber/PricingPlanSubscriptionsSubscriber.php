@@ -34,17 +34,22 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     /** @vvar OrderFactory */
     private $orderFactory;
     
+    /** @var StripeApi */
+    private $stripeApi;
+    
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
         RepositoryInterface $pricingPlanSubscriptionRepository,
         Factory $pricingPlanSubscriptionFactory,
-        OrderFactory $orderFactory
+        OrderFactory $orderFactory,
+        StripeApi $stripeApi
     ) {
         $this->doctrine                             = $doctrine;
         $this->pricingPlanSubscriptionRepository    = $pricingPlanSubscriptionRepository;
         $this->pricingPlanSubscriptionFactory       = $pricingPlanSubscriptionFactory;
         $this->orderFactory                         = $orderFactory;
+        $this->stripeApi                            = $stripeApi;
         
         $token          = $tokenStorage->getToken();
         if ( $token ) {
@@ -112,13 +117,31 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
             $gtAttributes   = $subscription->getGatewayAttributes();
             $gtAttributes   = $gtAttributes ?: [];
             
-            $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY]    = isset( $paymentData['local']['customer'] ) ?
-                                                                    $paymentData['local']['customer']['id'] : null;
-            $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]       = isset( $paymentData['local']['customer'] ) ?
-                                                                    $paymentData['local']['customer']['plan'] : null;
-            $subscription->setGatewayAttributes( $gtAttributes );
+            $paymentFactory = $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName();
+            if ( $paymentFactory == '' || $paymentFactory == '' ) {
+                $this->setStripePaymentAttributes( $subscription, $paymentData );
+            }
         }
         
         $em->persist( $subscription );
+    }
+    
+    private function setStripePaymentAttributes( &$subscription, $paymentData )
+    {
+        $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY]    = isset( $paymentData['local']['customer'] ) ?
+                                                                $paymentData['local']['customer']['id'] : null;
+        $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]       = isset( $paymentData['local']['customer'] ) ?
+                                                                $paymentData['local']['customer']['plan'] : null;
+        
+        if ( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] && $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] ) {
+            $stripeSubscriptions                                    = $this->stripeApi->getSubscriptions([
+                'customer'  => $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY],
+                'price'     => $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY],
+            ]);
+            $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY]    = ! empty( $stripeSubscriptions ) ?
+                                                                        $stripeSubscriptions[0]['id'] : null;
+        }
+            
+        $subscription->setGatewayAttributes( $gtAttributes );
     }
 }

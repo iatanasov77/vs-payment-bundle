@@ -28,6 +28,7 @@ services:
             - '@vs_payment.repository.pricing_plan_subscription'
             - '@vs_payment.factory.pricing_plan_subscription'
             - '@vs_payment.order_factory'
+            - '@vs_payment.stripe_api'
         tags: [kernel.event_subscriber]
     
     ########################################################################

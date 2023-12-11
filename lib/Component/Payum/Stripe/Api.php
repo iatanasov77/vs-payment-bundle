@@ -17,6 +17,7 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateWebhookEndp
 final class Api
 {
     const PRICING_PLAN_ATTRIBUTE_KEY    = 'stripe_plan_id';
+    const SUBSCRIPTION_ATTRIBUTE_KEY    = 'stripe_subscription_id';
     const CUSTOMER_ATTRIBUTE_KEY        = 'stripe_customer_id';
     const PRICE_ATTRIBUTE_KEY           = 'stripe_price_id';
     

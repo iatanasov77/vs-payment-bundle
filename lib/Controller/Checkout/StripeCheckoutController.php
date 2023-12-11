@@ -3,7 +3,8 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Payum\Stripe\Request\Api\CreatePlan;
+use Payum\Stripe\Request\Api\CreateSubscription;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
 
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
@@ -56,12 +57,65 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     
     public function createRecurringPaymentAction( $subscriptionId, Request $request ): Response
     {
-        throw new HttpException( 'Not Needed and Not Implemented !!!' );
+        $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        $gtAttributes   = $subscription->getGatewayAttributes();
+        $gtAttributes   = $gtAttributes ?: [];
+        if (
+            ! isset( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] ) ||
+            ! isset( $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] )
+        ) {
+            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+        }
+        
+        $cart           = $this->orderFactory->getShoppingCart();
+        $payment        = $this->preparePayment( $cart );
+        
+        $gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
+        $stripeRequest  = new \ArrayObject([
+            'customer'  => $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY],
+            'items'     => [
+                ['price' => $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]]
+            ],
+        ]);
+        $gateway->execute( new CreateSubscription( $stripeRequest ) );
+        
+        $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
+        $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
+        
+        if ( $this->routeRedirectOnPricingPlanDone ) {
+            return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
+        } else {
+            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+        }
     }
     
     public function cancelAction( $subscriptionId, Request $request ): Response
     {
         // $paymentDetails['local']['customer']['subscriptions']['data'][0]['id']
+        $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        $gtAttributes   = $subscription->getGatewayAttributes();
+        $gtAttributes   = $gtAttributes ?: [];
+        if ( ! isset( $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY] ) ) {
+            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+        }
+        
+        $cart           = $this->orderFactory->getShoppingCart();
+        $payment        = $this->preparePayment( $cart );
+        
+        $gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
+        $stripeRequest  = new \ArrayObject([
+            "id"    => $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY],
+        ]);
+        $gateway->execute( new CancelSubscription( $stripeRequest ) );
+        
+        $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
+        $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
+        
+        if ( $this->routeRedirectOnPricingPlanDone ) {
+            return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
+        } else {
+            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+        }
     }
     
     protected function preparePayment( OrderInterface $cart )
