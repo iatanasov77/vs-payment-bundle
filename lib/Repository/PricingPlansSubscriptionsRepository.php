@@ -6,11 +6,14 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 
 class PricingPlansSubscriptionsRepository extends EntityRepository
 {
-    public function getSubscriptionsByUser( UserPaymentAwareInterface $user )
+    public function getSubscriptionsByUser( ?UserPaymentAwareInterface $user )
     {
-        $collection     = $user->getPricingPlanSubscriptions();
-        
         $subscriptions  = [];
+        if ( ! $user ) {
+            return $subscriptions;
+        }
+        
+        $collection     = $user->getPricingPlanSubscriptions();
         foreach ( $collection as $subscription ) {
             $subscriptions[$subscription->getServiceCode()]    = $subscription;
         }
@@ -18,11 +21,14 @@ class PricingPlansSubscriptionsRepository extends EntityRepository
         return $subscriptions;
     }
     
-    public function getSubscribedServicesByUser( UserPaymentAwareInterface $user )
+    public function getSubscribedServicesByUser( ?UserPaymentAwareInterface $user )
     {
-        $collection     = $user->getPricingPlanSubscriptions();
-        
         $subscriptions  = [];
+        if ( ! $user ) {
+            return $subscriptions;
+        }
+        
+        $collection     = $user->getPricingPlanSubscriptions();
         foreach ( $collection as $subscription ) {
             if ( ! isset( $subscriptions[$subscription->getServiceCode()] ) ) {
                 $subscriptions[$subscription->getServiceCode()] = [];
@@ -33,8 +39,12 @@ class PricingPlansSubscriptionsRepository extends EntityRepository
         return $subscriptions;
     }
     
-    public function getSubscriptionByUserOnPricingPlan( UserPaymentAwareInterface $user, PricingPlanInterface $pricingPlan )
+    public function getSubscriptionByUserOnPricingPlan( ?UserPaymentAwareInterface $user, PricingPlanInterface $pricingPlan )
     {
+        if ( ! $user ) {
+            return null;
+        }
+        
         $subscription   = $this->findOneBy( ['user' => $user, 'pricingPlan' => $pricingPlan] );
         
         return $subscription;
