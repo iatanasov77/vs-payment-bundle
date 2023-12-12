@@ -152,7 +152,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             ]
         ];
         
-        $subscriptions  = $payment->getOrder()->getSubscriptions();
+        $subscriptions  = $cart->getSubscriptions();
         $hasPricingPlan = ! empty( $subscriptions );
         
         if ( $hasPricingPlan ) {
