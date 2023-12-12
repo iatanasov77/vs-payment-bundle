@@ -68,25 +68,39 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
 
     public function createSubscription( CreateSubscriptionEvent $event )
     {
-        $em             = $this->doctrine->getManager();
+        $pricingPlan    = $event->getPricingPlan();
+        $previousSubscription   = $this->user->getActivePricingPlanSubscriptionByService(
+            $pricingPlan->getPaidService()->getPayedService()
+        );
+        
         $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
         
         $subscription->setUser( $this->user );
-        $subscription->setPricingPlan( $event->getPricingPlan() );
+        $subscription->setPricingPlan( $pricingPlan );
         $subscription->setRecurringPayment( $event->getSetRecurringPayments() );
         
+        $startDate      = $previousSubscription ? $previousSubscription->getExpiresAt() : new \DateTime();
+        $expiresDate    = $startDate->add( $pricingPlan->getSubscriptionPeriod() );
+        $subscription->setExpiresAt( $expiresDate );
+        
+        $em             = $this->doctrine->getManager();
         $em->persist( $subscription );
         $em->flush();
     }
     
     public function createNewUserSubscription( CreateNewUserSubscriptionEvent $event )
     {
-        $em             = $this->doctrine->getManager();
+        $pricingPlan    = $event->getPricingPlan();
         $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
         
         $subscription->setUser( $event->getUser() );
-        $subscription->setPricingPlan( $event->getPricingPlan() );
+        $subscription->setPricingPlan( $pricingPlan );
         
+        $startDate      = new \DateTime();
+        $expiresDate    = $startDate->add( $pricingPlan->getSubscriptionPeriod() );
+        $subscription->setExpiresAt( $expiresDate );
+        
+        $em             = $this->doctrine->getManager();
         $em->persist( $subscription );
         $em->flush();
     }
@@ -104,13 +118,15 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     
     private function setSubscriptionPaid( PricingPlanSubscriptionInterface $subscription, $payment )
     {
-        $em = $this->doctrine->getManager();
+        $previousSubscription   = $this->user->getActivePricingPlanSubscriptionByService(
+            $subscription->getPricingPlan()->getPaidService()->getPayedService()
+        );
+        if ( $previousSubscription ) {
+            $previousSubscription->setActive( false );
+            $this->doctrine->getManager()->persist( $previousSubscription );
+        }
         
-        $startDate  = $subscription->getExpiresAt() ?: new \DateTime();
-        $endDate    = clone $startDate;
-        $endDate    = $endDate->add( $subscription->getPricingPlan()->getSubscriptionPeriod() );
-        
-        $subscription->setExpiresAt( $endDate );
+        $subscription->setActive( true );
         
         if ( $subscription->isRecurringPayment() ) {
             $paymentData    = $payment->getDetails();
@@ -118,12 +134,12 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
             $gtAttributes   = $gtAttributes ?: [];
             
             $paymentFactory = $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName();
-            if ( $paymentFactory == '' || $paymentFactory == '' ) {
+            if ( $paymentFactory == 'stripe_checkout' || $paymentFactory == 'stripe_js' ) {
                 $this->setStripePaymentAttributes( $subscription, $paymentData );
             }
         }
         
-        $em->persist( $subscription );
+        $this->doctrine->getManager()->persist( $subscription );
     }
     
     private function setStripePaymentAttributes( &$subscription, $paymentData )

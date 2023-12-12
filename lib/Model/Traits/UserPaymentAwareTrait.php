@@ -4,6 +4,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscriptionInterface;
+use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 
 trait UserPaymentAwareTrait
 {
@@ -81,5 +83,34 @@ trait UserPaymentAwareTrait
         }
         
         return $this;
+    }
+    
+    /**
+     * @return SubscriptionInterface|null
+     */
+    public function getActivePricingPlanSubscriptionByPlan( PricingPlanInterface $pricingPlan ): ?SubscriptionInterface
+    {
+        foreach ( $this->pricingPlanSubscriptions as $subscription ) {
+            if ( $subscription->isActive() && $subscription->getPricingPlan() == $pricingPlan ) {
+                return $subscription;
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+     * @return SubscriptionInterface|null
+     */
+    public function getActivePricingPlanSubscriptionByService( PayedServiceInterface $paidService ): ?SubscriptionInterface
+    {
+        foreach ( $this->pricingPlanSubscriptions as $subscription ) {
+            $thisPaidService    = $subscription->getPricingPlan()->getPaidService()->getPayedService();
+            if ( $subscription->isActive() && $thisPaidService == $paidService ) {
+                return $subscription;
+            }
+        }
+        
+        return null;
     }
 }
