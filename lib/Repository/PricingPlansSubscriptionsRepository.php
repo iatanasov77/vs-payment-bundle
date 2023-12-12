@@ -6,6 +6,10 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 
 class PricingPlansSubscriptionsRepository extends EntityRepository
 {
+    /*
+     * MANUAL: https://www.boxuk.com/insight/filtering-associations-with-doctrine-2/
+     *          THERE IS AN EXAMPLE HOW TO FILTER COLLECTION IN ENTITY CLASS
+     */
     public function getActiveSubscriptionsByUser( ?UserPaymentAwareInterface $user )
     {
         if ( ! $user ) {
