@@ -15,7 +15,7 @@ class PricingPlansSubscriptionsRepository extends EntityRepository
         $qb = $this->createQueryBuilder( 'pps' )
                     ->innerJoin( 'pps.user', 'u' )
                     ->where( 'u.id = :userId' )
-                    ->where( 'pps.active = 1' )
+                    ->andWhere( 'pps.active = 1' )
                     ->setParameter( 'userId', $user->getId() );
         
         return $qb->getQuery()->getResult();
