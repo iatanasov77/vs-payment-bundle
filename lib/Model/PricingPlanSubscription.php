@@ -109,6 +109,20 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
+    /**
+     * For Backward compatibility
+     * 
+     * {@inheritDoc}
+     * @see \Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface::getOrderItems()
+     */
+    public function getOrderItems()
+    {
+        $collection = new ArrayCollection();
+        $collection->add( $this->orderItem );
+        
+        return new $collection;
+    }
+    
     public function getOrderItem(): OrderItemInterface
     {
         return $this->orderItem;
