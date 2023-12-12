@@ -150,7 +150,7 @@ class OrderItem implements OrderItemInterface
     {
         switch ( $this->getPayableObjectType() ) {
             case 'App\Entity\Payment\PricingPlan':
-                return $this->getPaidServiceSubscription();
+                return $this->getSubscription();
                 break;
             case 'App\Entity\Payment\Product':
                 return $this->getProduct();
