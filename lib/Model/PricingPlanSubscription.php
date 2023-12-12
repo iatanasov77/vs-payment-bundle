@@ -149,7 +149,7 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     
     public function getGatewayAttributes()
     {
-        return $this->gatewayAttributes;
+        return $this->gatewayAttributes ?: [];
     }
     
     public function setGatewayAttributes( array $gatewayAttributes ): self
