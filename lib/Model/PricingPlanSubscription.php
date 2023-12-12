@@ -109,7 +109,7 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
-    public function getOrderItem()
+    public function getOrderItem(): OrderItemInterface
     {
         return $this->orderItem;
     }
