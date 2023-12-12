@@ -16,4 +16,12 @@ gateway_config_stripe_subscription_objects_create_product:
 gateway_config_stripe_subscription_objects_create_price:
     path: /vs_payment/gateway-config/stripe/create-price
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createPriceAction
+    
+gateway_config_stripe_subscription_objects_cancel_subscription:
+    path: /vs_payment/gateway-config/stripe/cancel-subscription/{id}
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::cancelSubscriptionAction
+
+gateway_config_stripe_subscription_objects_create_webhook_endpoint:
+    path: /vs_payment/gateway-config/stripe/create-webhook-endpoint
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createWebhookEndpointAction
 

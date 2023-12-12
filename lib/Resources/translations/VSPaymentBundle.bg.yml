@@ -79,6 +79,7 @@ vs_payment:
             bank: Банка
             reciever: Получател
             reason: Основание
+            set_recurring_payments: Периодични плащания
     
     template:
         gateway: Гейтуей
@@ -140,6 +141,8 @@ vs_payment:
             expires_at: Expires At
             actions: Actions
             create_payment: Create Payment
+            start_recurring: Setup Recurring Payments
+            stop_recurring: Cancel Recurring Payments
             
         payum_stripe_objects:
             stripe_subscription_objects: Stripe Subscription Objects
@@ -163,6 +166,16 @@ vs_payment:
             pricing_plan_info: When Create a Payment on Pricing Plan and Set The Subscription with Recurring option, This Price will be used for Recurring Payments.
             interval_count: Interval Count
             interval_count_info: The number of intervals between subscription billings. For example, interval=month and interval_count=3 bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+            
+            stripe_subscriptions: Stripe Subscriptions
+            customer: Customer
+            price: Price
+            cancel_subscription: Cancel/Delete Subscription
+            
+            stripe_webhook_endpoints: Webhook Endpoints
+            create_webhook_endpoint: Create Webhook Endpoint
+            enabled_events: Enabled Events
+            url: Url
             
         currency_index_title: Валути
         currency_index_code: Код

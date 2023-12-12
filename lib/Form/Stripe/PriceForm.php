@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Form;
+<?php namespace Vankosoft\PaymentBundle\Form\Stripe;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,22 +10,35 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 
-class StripeSubscriptionPlanForm extends AbstractType
+class PriceForm extends AbstractType
 {
+    /** @var StripeApi */
+    private $stripeApi;
+    
     /** @var string */
     private $currencyClass;
     
+    /** @var string */
+    private $pricingPlanClass;
+    
     public function __construct(
-        string $currencyClass
+        StripeApi $stripeApi,
+        string $currencyClass,
+        string $pricingPlanClass
     ) {
+        $this->stripeApi        = $stripeApi;
         $this->currencyClass    = $currencyClass;
+        $this->pricingPlanClass = $pricingPlanClass;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
+            /*
             ->add( 'id', TextType::class, [
                 'label' => 'ID',
                 'translation_domain' => 'VSPaymentBundle',
@@ -33,7 +46,8 @@ class StripeSubscriptionPlanForm extends AbstractType
                     'placeholder' => 'ID'
                 ],
             ])
-            
+            */
+        
             ->add( 'amount', NumberType::class, [
                 'label'                 => 'vs_payment.template.payum_stripe_objects.amount',
                 'translation_domain'    => 'VSPaymentBundle',
@@ -67,12 +81,30 @@ class StripeSubscriptionPlanForm extends AbstractType
                 ]),
             ])
             
-            ->add( 'productName', TextType::class, [
-                'label' => 'vs_payment.template.payum_stripe_objects.product_name',
-                'translation_domain' => 'VSPaymentBundle',
+            ->add( 'intervalCount', NumberType::class, [
+                'label'                 => 'vs_payment.template.payum_stripe_objects.interval_count',
+                'translation_domain'    => 'VSPaymentBundle',
                 'attr'  => [
-                    'placeholder' => 'vs_payment.template.payum_stripe_objects.product_name'
+                    'placeholder' => 'vs_payment.template.payum_stripe_objects.interval_count'
                 ],
+            ])
+            
+            ->add( 'product', ChoiceType::class, [
+                'label'                 => 'vs_payment.template.payum_stripe_objects.product',
+                'translation_domain'    => 'VSPaymentBundle',
+                'placeholder'           => 'vs_payment.template.payum_stripe_objects.product_placeholder',
+                'choices'               => \array_flip( $this->stripeApi->getProductPairs() ),
+            ])
+            
+            ->add( 'pricingPlan', EntityType::class, [
+                'label'                 => 'vs_payment.template.payum_stripe_objects.pricing_plan',
+                'translation_domain'    => 'VSPaymentBundle',
+                'placeholder'           => 'vs_payment.template.payum_stripe_objects.pricing_plan_placeholder',
+                'class'                 => $this->pricingPlanClass,
+                'choice_label'          => 'title',
+                'group_by'              => function ( PricingPlanInterface $pricingPlan ): string {
+                    return $pricingPlan ? $pricingPlan->getCategory()->getName() : 'Undefined Category';
+                },
             ])
             
             ->add( 'btnSubmit', SubmitType::class, [
@@ -95,6 +127,6 @@ class StripeSubscriptionPlanForm extends AbstractType
     
     public function getName()
     {
-        return 'vs_payment.stripe_subscription_plan';
+        return 'vs_payment.stripe_subscription_price';
     }
 }

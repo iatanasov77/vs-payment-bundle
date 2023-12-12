@@ -94,9 +94,12 @@ class PricingPlanCheckoutController extends AbstractController
     public function showPricingPlans( Request $request ): Response
     {
         $pricingPlanCategories  = $this->pricingPlanCategoryRepository->findAll();
+        $activeSubscriptions    = $this->subscriptionsRepository
+                                        ->getActiveSubscriptionsByUser( $this->securityBridge->getUser() );
         
         return $this->render( '@VSPayment/Pages/PricingPlansCheckout/pricing_plans.html.twig', [
             'pricingPlanCategories' => $pricingPlanCategories,
+            'subscriptions'         => $activeSubscriptions,
         ]);
     }
     
@@ -126,7 +129,6 @@ class PricingPlanCheckoutController extends AbstractController
             $em             = $this->doctrine->getManager();
             $formData       = $form->getData();
             
-            //$paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod']['paymentMethod'] );
             $paymentMethod  = $formData['paymentMethod']['paymentMethod'];
             $pricingPlan    = $this->prepareCart( $formData, $cart, $paymentMethod );
             
@@ -172,7 +174,6 @@ class PricingPlanCheckoutController extends AbstractController
             $em             = $this->doctrine->getManager();
             $formData       = $form->getData();
             
-            //$paymentMethod  = $this->paymentMethodsRepository->find( $formData['paymentMethod']['paymentMethod'] );
             $paymentMethod  = $formData['paymentMethod']['paymentMethod'];
             $pricingPlan    = $this->prepareCart( $formData, $cart, $paymentMethod );
             
@@ -196,8 +197,7 @@ class PricingPlanCheckoutController extends AbstractController
     {
         $em             = $this->doctrine->getManager();
         $pricingPlan    = $this->pricingPlansRepository->find( $formData['pricingPlan'] );
-        //$subscription   = $this->getSubscription( $pricingPlan );
-        $subscription   = $this->getSubscription_v2( $pricingPlan );
+        $subscription   = $this->getSubscription( $pricingPlan, $formData );
         
         if ( ! $subscription ) {
             throw new CheckoutException( 'Subscription Cannot be Created !' );
@@ -205,7 +205,7 @@ class PricingPlanCheckoutController extends AbstractController
         
         $orderItem      = $this->orderItemsFactory->createNew();
         
-        $orderItem->setPaidServiceSubscription( $subscription );
+        $orderItem->setSubscription( $subscription );
         $orderItem->setPrice( $pricingPlan->getPrice() );
         $orderItem->setCurrencyCode( $pricingPlan->getCurrencyCode() );
         
@@ -221,34 +221,16 @@ class PricingPlanCheckoutController extends AbstractController
         return $pricingPlan;
     }
     
-    protected function getSubscription( $pricingPlan ): PricingPlanSubscriptionInterface
-    {
-        $user               = $this->securityBridge->getUser();
-        $userSubscriptions  = $user->getPricingPlanSubscriptions();
-        
-        if ( $userSubscriptions->containsKey( $pricingPlan->getSubscriptionCode() ) ) {
-            $subscription   = $userSubscriptions->get( $pricingPlan->getSubscriptionCode() );
-        } else {
-            $this->eventDispatcher->dispatch(
-                new CreateSubscriptionEvent( $pricingPlan ),
-                CreateSubscriptionEvent::NAME
-            );
-            
-            $this->doctrine->getManager()->refresh( $user );
-            $subscription   = $user->getPricingPlanSubscriptions()->get( $pricingPlan->getSubscriptionCode() );
-        }
-        
-        return $subscription;
-    }
-    
-    protected function getSubscription_v2( $pricingPlan ): PricingPlanSubscriptionInterface
+    protected function getSubscription( $pricingPlan, $formData ): PricingPlanSubscriptionInterface
     {
         $user           = $this->securityBridge->getUser();
         $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
         
         if ( ! $subscription ) {
+            $setRecurringPayments   = isset( $formData['paymentMethod']['setRecurringPayments'] ) && $formData['paymentMethod']['setRecurringPayments'];
+            
             $this->eventDispatcher->dispatch(
-                new CreateSubscriptionEvent( $pricingPlan ),
+                new CreateSubscriptionEvent( $pricingPlan, $setRecurringPayments ),
                 CreateSubscriptionEvent::NAME
             );
             

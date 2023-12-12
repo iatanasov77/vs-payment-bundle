@@ -33,15 +33,26 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     /** @var bool */
     protected $recurringPayment = false;
     
-    /** @var Collection|OrderItemInterface[] */
-    protected $orderItems;
+    /** @var OrderItemInterface */
+    protected $orderItem;
     
     /** @var \DateTimeInterface */
     protected $expiresAt;
     
+    /**
+     * This field will store: Subscription Customer and Price Ids
+     * to Can Find Subscription Id for Canceling and etc.
+     *
+     * @var array
+     */
+    protected $gatewayAttributes;
+    
+    /** @var bool */
+    protected $active = false;
+    
     public function __construct()
     {
-        $this->orderItems   = new ArrayCollection();
+        $this->gatewayAttributes    = [];
     }
     
     public function getId()
@@ -98,9 +109,30 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
-    public function getOrderItems(): Collection
+    /**
+     * For Backward compatibility
+     * 
+     * {@inheritDoc}
+     * @see \Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface::getOrderItems()
+     */
+    public function getOrderItems()
     {
-        return $this->orderItems;
+        $collection = new ArrayCollection();
+        $collection->add( $this->orderItem );
+        
+        return new $collection;
+    }
+    
+    public function getOrderItem(): OrderItemInterface
+    {
+        return $this->orderItem;
+    }
+    
+    public function setOrderItem(OrderItemInterface $orderItem)
+    {
+        $this->orderItem    = $orderItem;
+        
+        return $this;
     }
     
     public function getExpiresAt()
@@ -115,14 +147,41 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
-    public function isPaid(): bool
+    public function getGatewayAttributes()
     {
-        return $this->expiresAt && ( $this->expiresAt > ( new \DateTime() ) );
+        return $this->gatewayAttributes ?: [];
+    }
+    
+    public function setGatewayAttributes( array $gatewayAttributes ): self
+    {
+        $this->gatewayAttributes    = $gatewayAttributes;
+        
+        return $this;
+    }
+    
+    public function getActive(): bool
+    {
+        return $this->active;
+    }
+    
+    /**
+     * @param bool
+     */
+    public function setActive( ?bool $active )
+    {
+        $this->active = (bool) $active;
+        
+        return $this;
     }
     
     public function isActive(): bool
     {
-        return $this->isPaid();
+        return $this->active;
+    }
+    
+    public function isPaid(): bool
+    {
+        return $this->expiresAt && ( $this->expiresAt > ( new \DateTime() ) );
     }
     
     public function getCode(): ?string

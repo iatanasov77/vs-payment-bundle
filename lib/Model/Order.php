@@ -245,7 +245,7 @@ class Order implements Interfaces\OrderInterface
     {
         $subscriptions  = [];
         foreach ( $this->items as $item ) {
-            $subscription   = $item->getPaidServiceSubscription();
+            $subscription   = $item->getSubscription();
             if ( $subscription ) {
                 $subscriptions[]    = $subscription;
             }

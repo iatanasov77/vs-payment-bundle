@@ -19,9 +19,9 @@ class OrderItem implements OrderItemInterface
     protected $order;
     
     /**
-     * @var Interfaces\PricingPlanInterface
+     * @var Interfaces\PricingPlanSubscriptionInterface
      */
-    protected $paidServiceSubscription;
+    protected $subscription;
     
     /**
      * @var Interfaces\ProductInterface
@@ -72,15 +72,15 @@ class OrderItem implements OrderItemInterface
         return $this;
     }
     
-    public function getPaidServiceSubscription()
+    public function getSubscription()
     {
-        return $this->paidServiceSubscription;
+        return $this->subscription;
     }
     
-    public function setPaidServiceSubscription($paidServiceSubscription)
+    public function setSubscription($subscription)
     {
-        $this->paidServiceSubscription  = $paidServiceSubscription;
-        $this->payableObjectType        = get_class( $paidServiceSubscription );
+        $this->subscription         = $subscription;
+        $this->payableObjectType    = get_class( $subscription );
         
         return $this;
     }
@@ -150,7 +150,7 @@ class OrderItem implements OrderItemInterface
     {
         switch ( $this->getPayableObjectType() ) {
             case 'App\Entity\Payment\PricingPlan':
-                return $this->getPaidServiceSubscription();
+                return $this->getSubscription();
                 break;
             case 'App\Entity\Payment\Product':
                 return $this->getProduct();

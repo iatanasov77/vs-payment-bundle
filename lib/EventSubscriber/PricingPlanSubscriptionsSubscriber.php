@@ -7,6 +7,7 @@ use Sylius\Component\Resource\Factory\Factory;
 use Doctrine\Persistence\ManagerRegistry;
 use Vankosoft\UsersBundle\Model\UserInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
@@ -33,17 +34,22 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     /** @vvar OrderFactory */
     private $orderFactory;
     
+    /** @var StripeApi */
+    private $stripeApi;
+    
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
         RepositoryInterface $pricingPlanSubscriptionRepository,
         Factory $pricingPlanSubscriptionFactory,
-        OrderFactory $orderFactory
+        OrderFactory $orderFactory,
+        StripeApi $stripeApi
     ) {
         $this->doctrine                             = $doctrine;
         $this->pricingPlanSubscriptionRepository    = $pricingPlanSubscriptionRepository;
         $this->pricingPlanSubscriptionFactory       = $pricingPlanSubscriptionFactory;
         $this->orderFactory                         = $orderFactory;
+        $this->stripeApi                            = $stripeApi;
         
         $token          = $tokenStorage->getToken();
         if ( $token ) {
@@ -62,24 +68,39 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
 
     public function createSubscription( CreateSubscriptionEvent $event )
     {
-        $em             = $this->doctrine->getManager();
+        $pricingPlan    = $event->getPricingPlan();
+        $previousSubscription   = $this->user->getActivePricingPlanSubscriptionByService(
+            $pricingPlan->getPaidService()->getPayedService()
+        );
+        
         $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
         
         $subscription->setUser( $this->user );
-        $subscription->setPricingPlan( $event->getPricingPlan() );
+        $subscription->setPricingPlan( $pricingPlan );
+        $subscription->setRecurringPayment( $event->getSetRecurringPayments() );
         
+        $startDate      = $previousSubscription ? $previousSubscription->getExpiresAt() : new \DateTime();
+        $expiresDate    = $startDate->add( $pricingPlan->getSubscriptionPeriod() );
+        $subscription->setExpiresAt( $expiresDate );
+        
+        $em             = $this->doctrine->getManager();
         $em->persist( $subscription );
         $em->flush();
     }
     
     public function createNewUserSubscription( CreateNewUserSubscriptionEvent $event )
     {
-        $em             = $this->doctrine->getManager();
+        $pricingPlan    = $event->getPricingPlan();
         $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
         
         $subscription->setUser( $event->getUser() );
-        $subscription->setPricingPlan( $event->getPricingPlan() );
+        $subscription->setPricingPlan( $pricingPlan );
         
+        $startDate      = new \DateTime();
+        $expiresDate    = $startDate->add( $pricingPlan->getSubscriptionPeriod() );
+        $subscription->setExpiresAt( $expiresDate );
+        
+        $em             = $this->doctrine->getManager();
         $em->persist( $subscription );
         $em->flush();
     }
@@ -89,22 +110,54 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         $em = $this->doctrine->getManager();
         
         foreach ( $event->getSubscriptions() as $subscription ) {
-            $this->setSubscriptionPaid( $subscription );
+            $this->setSubscriptionPaid( $subscription, $event->getPayment() );
         }
         
         $em->flush();
     }
     
-    private function setSubscriptionPaid( PricingPlanSubscriptionInterface $subscription )
+    private function setSubscriptionPaid( PricingPlanSubscriptionInterface $subscription, $payment )
     {
-        $em = $this->doctrine->getManager();
+        $previousSubscription   = $this->user->getActivePricingPlanSubscriptionByService(
+            $subscription->getPricingPlan()->getPaidService()->getPayedService()
+        );
+        if ( $previousSubscription ) {
+            $previousSubscription->setActive( false );
+            $this->doctrine->getManager()->persist( $previousSubscription );
+        }
         
-        $startDate  = $subscription->getExpiresAt() ?: new \DateTime();
-        $endDate    = clone $startDate;
-        $endDate    = $endDate->add( $subscription->getPricingPlan()->getSubscriptionPeriod() );
+        $subscription->setActive( true );
         
-        $subscription->setExpiresAt( $endDate );
+        if ( $subscription->isRecurringPayment() ) {
+            $paymentData    = $payment->getDetails();
+            $gtAttributes   = $subscription->getGatewayAttributes();
+            $gtAttributes   = $gtAttributes ?: [];
+            
+            $paymentFactory = $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName();
+            if ( $paymentFactory == 'stripe_checkout' || $paymentFactory == 'stripe_js' ) {
+                $this->setStripePaymentAttributes( $subscription, $paymentData );
+            }
+        }
         
-        $em->persist( $subscription );
+        $this->doctrine->getManager()->persist( $subscription );
+    }
+    
+    private function setStripePaymentAttributes( &$subscription, $paymentData )
+    {
+        $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY]    = isset( $paymentData['local']['customer'] ) ?
+                                                                $paymentData['local']['customer']['id'] : null;
+        $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]       = isset( $paymentData['local']['customer'] ) ?
+                                                                $paymentData['local']['customer']['plan'] : null;
+        
+        if ( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] && $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] ) {
+            $stripeSubscriptions                                    = $this->stripeApi->getSubscriptions([
+                'customer'  => $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY],
+                'price'     => $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY],
+            ]);
+            $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY]    = ! empty( $stripeSubscriptions ) ?
+                                                                        $stripeSubscriptions[0]['id'] : null;
+        }
+            
+        $subscription->setGatewayAttributes( $gtAttributes );
     }
 }

@@ -3,7 +3,6 @@
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -18,6 +17,7 @@ use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
+use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
@@ -38,6 +38,9 @@ abstract class AbstractCheckoutController extends AbstractController
     
     /** @vvar OrderFactory */
     protected $orderFactory;
+    
+    /** @var RepositoryInterface */
+    protected $subscriptionsRepository;
     
     /** @var string */
     protected $paymentClass;
@@ -63,6 +66,7 @@ abstract class AbstractCheckoutController extends AbstractController
         ManagerRegistry $doctrine,
         Payum $payum,
         OrderFactory $orderFactory,
+        RepositoryInterface $subscriptionsRepository,
         string $paymentClass,
         ?string $routeRedirectOnShoppingCartDone,
         ?string $routeRedirectOnPricingPlanDone
@@ -73,6 +77,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->doctrine                             = $doctrine;
         $this->payum                                = $payum;
         $this->orderFactory                         = $orderFactory;
+        $this->subscriptionsRepository              = $subscriptionsRepository;
         
         $this->paymentClass                         = $paymentClass;
         $this->routeRedirectOnShoppingCartDone      = $routeRedirectOnShoppingCartDone;
@@ -111,7 +116,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
         
         if ( $hasPricingPlan ) {
-            $response   = $this->_setSubscriptionsPaymentDone( $request, $subscriptions );
+            $response   = $this->_setSubscriptionsPaymentDone( $request, $subscriptions, $payment );
         }
         
         if ( ! $hasPricingPlan && $this->routeRedirectOnShoppingCartDone ) {
@@ -140,7 +145,11 @@ abstract class AbstractCheckoutController extends AbstractController
         $storage->update( $payment );
         $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
         
-        throw new HttpException( 400, $this->getErrorMessage( $paymentStatus->getModel() ) );
+        throw new CheckoutException(
+            $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName(),
+            $paymentStatus->getModel()
+        );
+        
         return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
             'shoppingCart'                      => $this->orderFactory->getShoppingCart(),
             'paymentStatus'                     => $paymentStatus,
@@ -167,13 +176,13 @@ abstract class AbstractCheckoutController extends AbstractController
         return  $payment;
     }
     
-    protected function _setSubscriptionsPaymentDone( Request $request, $subscriptions ): ?Response
+    protected function _setSubscriptionsPaymentDone( Request $request, $subscriptions, $payment ): ?Response
     {
         if ( $this instanceof AbstractCheckoutOfflineController ) {
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_waiting', [], 'VSPaymentBundle' );
         } else {
             $this->eventDispatcher->dispatch(
-                new SubscriptionsPaymentDoneEvent( $subscriptions ),
+                new SubscriptionsPaymentDoneEvent( $subscriptions, $payment ),
                 SubscriptionsPaymentDoneEvent::NAME
             );
             
@@ -204,11 +213,6 @@ abstract class AbstractCheckoutController extends AbstractController
         }
         
         return null;
-    }
-    
-    protected function getErrorMessage( $details )
-    {
-        return 'STRIPE ERROR: ' . $details['error']['message'];
     }
     
     protected function debugObject( $object )

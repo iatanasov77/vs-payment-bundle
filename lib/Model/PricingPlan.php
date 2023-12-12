@@ -229,7 +229,7 @@ class PricingPlan implements PricingPlanInterface, Comparable
     
     public function getGatewayAttributes()
     {
-        return $this->gatewayAttributes;
+        return $this->gatewayAttributes ?: [];
     }
     
     public function setGatewayAttributes( array $gatewayAttributes ): self

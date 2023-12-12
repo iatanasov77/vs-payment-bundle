@@ -9,10 +9,30 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetProducts;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateProduct;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPrices;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreatePrice;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetSubscriptions;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetWebhookEndpoints;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateWebhookEndpoint;
 
 final class Api
 {
     const PRICING_PLAN_ATTRIBUTE_KEY    = 'stripe_plan_id';
+    const SUBSCRIPTION_ATTRIBUTE_KEY    = 'stripe_subscription_id';
+    const CUSTOMER_ATTRIBUTE_KEY        = 'stripe_customer_id';
+    const PRICE_ATTRIBUTE_KEY           = 'stripe_price_id';
+    
+    const STRIPE_EVENTS                 = [
+        'charge.succeeded',
+        'charge.failed',
+        'invoice.finalized',
+        'invoice.finalization_failed',
+        'invoice.paid',
+        'invoice.payment_failed',
+        'invoice.payment_succeeded',
+        'subscription_schedule.canceled',
+        'subscription_schedule.created',
+        'subscription_schedule.completed',
+    ];
     
     /** @var Gateway */
     private $gateway;
@@ -100,6 +120,43 @@ final class Api
         $this->gateway->execute( $createPriceRequest = new CreatePrice( $price ) );
         
         return $createPriceRequest->getFirstModel()->getArrayCopy();
+    }
+    
+    public function getSubscriptions( array $params = [] )
+    {
+        $stripeRequest      = new \ArrayObject( $params );
+        $this->gateway->execute( $getSubscriptionsRequest = new GetSubscriptions( $stripeRequest ) );
+        
+        $availableSubscriptions = $getSubscriptionsRequest->getFirstModel()->getArrayCopy();
+        
+        return $availableSubscriptions["data"];
+    }
+    
+    public function cancelSubscription( $id )
+    {
+        $subscription   = new \ArrayObject([
+            "id"    => $id,
+        ]);
+        $this->gateway->execute( new CancelSubscription( $subscription ) );
+    }
+    
+    public function getWebhookEndpoints()
+    {
+        $stripeRequest      = new \ArrayObject( [] );
+        $this->gateway->execute( $getWebhookEndpointsRequest = new GetWebhookEndpoints( $stripeRequest ) );
+        
+        $availableWebhookEndpoints  = $getWebhookEndpointsRequest->getFirstModel()->getArrayCopy();
+        
+        return $availableWebhookEndpoints["data"];
+    }
+    
+    public function createWebhookEndpoint( array $formData )
+    {
+        $webhookEndpoint    = new \ArrayObject([
+            'enabled_events'    => $formData['enabled_events'],
+            'url'               => $formData['url'],
+        ]);
+        $this->gateway->execute( new CreateWebhookEndpoint( $webhookEndpoint ) );
     }
     
     public function getProductPairs()

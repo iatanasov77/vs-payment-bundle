@@ -12,7 +12,13 @@
         <many-to-one field="order" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" inversed-by="items" />
         
         <!-- 'object' is for paid services -->
-        <many-to-one field="paidServiceSubscription" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface" inversed-by="orderItems" />
+        <one-to-one field="subscription" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface" inversed-by="orderItem" >
+            <join-column name="subscription_id" referencedColumnName="id" nullable="true" />
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-one>
+        
         <!-- 'product' is for products -->
         <many-to-one field="product" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface" inversed-by="orderItems" />
         

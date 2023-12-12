@@ -24,7 +24,11 @@
             </options>
         </field>
         
-        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="paidServiceSubscription" />
+        <one-to-one field="orderItem" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="subscription">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-one>
         
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
@@ -37,6 +41,15 @@
         <field name="expiresAt" column="expires_at" type="datetime" nullable="true">
             <options>
                 <option name="comment">Is Updated when create a  New payment for this subscription.</option>
+            </options>
+        </field>
+        
+        <field name="gatewayAttributes" column="gateway_attributes" type="json" nullable="true" />
+        
+        <field name="active" type="boolean">
+            <options>
+                <option name="default">0</option>
+                <option name="comment">One Active Subscription for an User and for PaidService. Wnen the Payment succeed set active true and set active false for previous active for this paid service.</option>
             </options>
         </field>
         

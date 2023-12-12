@@ -1,11 +1,11 @@
 <div class="control-group">
-    {{ form_label(form.paymentMethod, null, {
+    {{ form_label(form.paymentMethod.paymentMethod, null, {
         'label_attr': {'class': 'control-label'}
         }) 
     }}
     <div id="select_pricing_plan_form_paymentMethod" class="controls" style="width: 100%">
-        {% for paymentMethod in form.paymentMethod %}
-            {{ form_widget( paymentMethod, { 'attr': { 'style': 'float: left; margin-right: 5px;', 'checked': loop.index == 1 } } ) }}
+        {% for paymentMethod in form.paymentMethod.paymentMethod %}
+            {{ form_widget( paymentMethod, { 'attr': { 'class': 'rPaymentMethod', 'style': 'float: left; margin-right: 5px;', 'checked': loop.index == 1 } } ) }}
             {{ form_label( paymentMethod ) }}
         {% endfor %}
     </div>
@@ -30,4 +30,15 @@
             </div>
         </div>
     {% endif %}
+</div>
+
+<div id="SetRecurringPayments">
+    <label class="custom-control custom-checkbox">  
+        <input type="checkbox" id="select_pricing_plan_form_paymentMethod_setRecurringPayments"
+            name="select_pricing_plan_form[paymentMethod][setRecurringPayments]"
+            value="0"
+            {#checked="checked"#}
+        >
+        <span class="custom-control-label">{{ 'vs_payment.form.select_pricing_plan.set_recurring_payments' | trans( {},'VSPaymentBundle' ) }}</span>
+    </label>
 </div>
