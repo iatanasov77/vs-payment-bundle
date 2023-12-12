@@ -1,3 +1,31 @@
+2.9.13	|	Release date: **12.12.2023**
+============================================
+* New Features , Fixes and Improvements:
+  - Add a Recurring Checkbox on Select Payment Method Form.
+  - Improve StripeCheckoutController .
+  - Remove StripeCheckoutRecurringController .
+  - Improve Gateway Config Model for PayPal Express Checout Factory.
+  - Improve Checkout Exception to Get Errors for Different Gateways.
+  - Fix PaypalExpressCheckoutController .
+  - Add Error Message for Authorize.Net Checkout Error
+  - Improve PricingPlansCheckoutController .
+  - Make some Checkout Controllers to Support Recurring Payments.
+  - Add Webhook Endpoints Actions to Payum Stripe.
+  - Add Payum Actions for Stripe Subscriptions.
+  - Add Gateway Attributes Field into PricingPlanSubscription Model.
+  - Add a Doctrine Migration.
+  - Fix PricingPlansSubscriptionsRepository .
+  - Improve AbstractCheckoutController .
+  - Improve PricingPlanSubscriptionsSubscriber .
+  - Create Routes for Stripe Checkout Create and Cancel Subscriptions.
+  - Improve Model Relation Between OrderItem and PricingPlanSubscription .
+  - Add a Doctrine Migration.
+  - Improve PricingPlanSubscriptionsSubscriber .
+  - Litle Fix for PricingPlanCheckoutController .
+  - Fix Order and OrderItem Models.
+  - Fix PricingPlan Model.
+
+
 2.9.12	|	Release date: **08.12.2023**
 ============================================
 * New Features:
