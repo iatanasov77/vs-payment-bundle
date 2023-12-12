@@ -19,6 +19,14 @@ services:
             - '@doctrine'
             - '@vs_payment.repository.order'
             - '@vs_payment.factory.order'
+            
+#     vs_payment.subscription_factory:
+#         class: Vankosoft\PaymentBundle\Component\Subscription\SubscriptionFactory
+#         arguments:
+#             - '@security.token_storage'
+#             - '@vs_payment_payment'
+#             - '@vs_payment.repository.pricing_plan_subscription'
+#             - '@vs_payment.factory.pricing_plan_subscription'
     
     vs_payment.pricing_plan_subscriptions_subscriber:
         class: Vankosoft\PaymentBundle\EventSubscriber\PricingPlanSubscriptionsSubscriber

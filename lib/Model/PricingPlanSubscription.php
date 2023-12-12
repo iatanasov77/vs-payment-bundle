@@ -33,8 +33,8 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     /** @var bool */
     protected $recurringPayment = false;
     
-    /** @var Collection|OrderItemInterface[] */
-    protected $orderItems;
+    /** @var OrderItemInterface */
+    protected $orderItem;
     
     /** @var \DateTimeInterface */
     protected $expiresAt;
@@ -47,9 +47,11 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
      */
     protected $gatewayAttributes;
     
+    /** @var bool */
+    protected $active = false;
+    
     public function __construct()
     {
-        $this->orderItems           = new ArrayCollection();
         $this->gatewayAttributes    = [];
     }
     
@@ -107,9 +109,16 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
-    public function getOrderItems(): Collection
+    public function getOrderItem()
     {
-        return $this->orderItems;
+        return $this->orderItem;
+    }
+    
+    public function setOrderItem(OrderItemInterface $orderItem)
+    {
+        $this->orderItem    = $orderItem;
+        
+        return $this;
     }
     
     public function getExpiresAt()
@@ -136,14 +145,29 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
-    public function isPaid(): bool
+    public function getActive(): bool
     {
-        return $this->expiresAt && ( $this->expiresAt > ( new \DateTime() ) );
+        return $this->active;
+    }
+    
+    /**
+     * @param bool
+     */
+    public function setActive( ?bool $active )
+    {
+        $this->active = (bool) $active;
+        
+        return $this;
     }
     
     public function isActive(): bool
     {
-        return $this->isPaid();
+        return $this->active;
+    }
+    
+    public function isPaid(): bool
+    {
+        return $this->expiresAt && ( $this->expiresAt > ( new \DateTime() ) );
     }
     
     public function getCode(): ?string

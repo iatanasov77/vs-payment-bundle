@@ -24,7 +24,11 @@
             </options>
         </field>
         
-        <one-to-many field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="paidServiceSubscription" />
+        <one-to-one field="orderItems" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface" mapped-by="paidServiceSubscription">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-one>
         
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
