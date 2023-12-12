@@ -94,10 +94,12 @@ class PricingPlanCheckoutController extends AbstractController
     public function showPricingPlans( Request $request ): Response
     {
         $pricingPlanCategories  = $this->pricingPlanCategoryRepository->findAll();
+        $activeSubscriptions    = $this->subscriptionsRepository
+                                        ->getActiveSubscriptionsByUser( $this->securityBridge->getUser() );
         
         return $this->render( '@VSPayment/Pages/PricingPlansCheckout/pricing_plans.html.twig', [
             'pricingPlanCategories' => $pricingPlanCategories,
-            'subscriptions'         => $this->subscriptionsRepository->getSubscriptionsByUser( $this->securityBridge->getUser() )
+            'subscriptions'         => $activeSubscriptions,
         ]);
     }
     
