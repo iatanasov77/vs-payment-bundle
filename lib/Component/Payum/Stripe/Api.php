@@ -3,6 +3,7 @@
 use Payum\Core\Payum;
 use Payum\Core\Gateway;
 use Payum\Stripe\Request\Api\CreatePlan;
+use Stripe\Event as StripeEvent;
 
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPlans;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetProducts;
@@ -157,6 +158,11 @@ final class Api
             'url'               => $formData['url'],
         ]);
         $this->gateway->execute( new CreateWebhookEndpoint( $webhookEndpoint ) );
+    }
+    
+    public function getEvent( $eventId )
+    {
+        return StripeEvent::retrieve( $eventId );
     }
     
     public function getProductPairs()

@@ -1,3 +1,9 @@
+2.9.14	|	Release date: **15.12.2023**
+============================================
+* New Features:
+  - Add a Method into Stripe Api.
+
+
 2.9.13	|	Release date: **12.12.2023**
 ============================================
 * New Features , Fixes and Improvements:
