@@ -36,4 +36,6 @@ vs_application:
         create_pricing_plan: Create a Pricing Plan
         edit_pricing_plan: Edit Pricing Plan
         stripe_subscription_plans: Stripe Subscription Objects
+        developement: Developement
+        delete_all_orders: Delete All Orders
 

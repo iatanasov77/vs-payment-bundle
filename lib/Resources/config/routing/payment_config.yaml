@@ -1,4 +1,6 @@
-# Payum Gateways Config
+###############################################################################################
+# Payum Gateways Config Routes
+###############################################################################################
 vs_payment_gateways_index:
     path:     /gateways
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigExtController::indexAction
@@ -13,7 +15,9 @@ vs_payment_gateways_config_options:
     path:     /gateways/config/options/get
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigExtController::gatewayConfigAction
 
-# Payment Methods Config
+###############################################################################################
+# Payment Methods Config Routes
+###############################################################################################
 vs_payment_methods_index:
     path:     /payment_methods
     controller: Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigExtController::indexAction
@@ -29,3 +33,12 @@ vs_payment_set_order_status_paid:
     controller: Vankosoft\PaymentBundle\Controller\Checkout\OrderActionsController::setOrderStatusPaid
     options:
         expose: true
+        
+###############################################################################################
+# Developement Routes
+###############################################################################################
+vs_payment_developement_delete_all_orders:
+    path:     /developement/delete-all-orders
+    controller: Vankosoft\PaymentBundle\Controller\DevelopementController::deleteAllOrdersAction
+
+
