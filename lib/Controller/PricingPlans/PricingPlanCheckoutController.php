@@ -198,7 +198,6 @@ class PricingPlanCheckoutController extends AbstractController
         $em             = $this->doctrine->getManager();
         $pricingPlan    = $this->pricingPlansRepository->find( $formData['pricingPlan'] );
         
-        //$subscription   = $this->getSubscription( $pricingPlan, $formData );
         $subscription   = $this->createSubscription( $pricingPlan, $formData );
         
         if ( ! $subscription ) {
@@ -223,26 +222,6 @@ class PricingPlanCheckoutController extends AbstractController
         return $pricingPlan;
     }
     
-    protected function getSubscription( $pricingPlan, $formData ): PricingPlanSubscriptionInterface
-    {
-        $user           = $this->securityBridge->getUser();
-        $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
-        
-        if ( ! $subscription ) {
-            $setRecurringPayments   = isset( $formData['paymentMethod']['setRecurringPayments'] ) && $formData['paymentMethod']['setRecurringPayments'];
-            
-            $this->eventDispatcher->dispatch(
-                new CreateSubscriptionEvent( $pricingPlan, $setRecurringPayments ),
-                CreateSubscriptionEvent::NAME
-            );
-            
-            $this->doctrine->getManager()->refresh( $user );
-            $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
-        }
-        
-        return $subscription;
-    }
-    
     /**
      * For Every Payment Create New Subscription because Subscription / OrderItem Assossiation is OneToOne
      * 
@@ -261,7 +240,12 @@ class PricingPlanCheckoutController extends AbstractController
         );
         
         $this->doctrine->getManager()->refresh( $user );
-        $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
+        $subscriptions  = $this->subscriptionsRepository->getSubscriptionsByUserOnPricingPlan( $user, $pricingPlan );
+        
+        $subscription   = \end( $subscriptions );
+        if ( ! $subscription ) {
+            throw new \RuntimeException( "Subscription Cannot be Created !!!" );
+        }
         
         return $subscription;
     }
