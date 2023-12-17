@@ -13,21 +13,25 @@ class PaypalRestController extends AbstractCheckoutController
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
-        $payment->setOrder( $cart );
         $payment->setNumber( uniqid() );
-        $payment->setCurrencyCode( $cart->getCurrencyCode() );
-        $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
         $payment->setTotalAmount( $cart->getTotalAmount() );
+        $payment->setCurrencyCode( $cart->getCurrencyCode() );
+        
+        $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
         $payment->setDescription( $cart->getDescription() );
+        $payment->setOrder( $cart );
         
         $user   = $this->tokenStorage->getToken()->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
+        /*
         $payment->setDetails([
             'PAYMENTREQUEST_0_AMT'          => $cart->getTotalAmount(),
             'PAYMENTREQUEST_0_CURRENCYCODE' => $cart->getCurrencyCode(),
         ]);
+        */
+        
         $storage->update( $payment );
         
         $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
