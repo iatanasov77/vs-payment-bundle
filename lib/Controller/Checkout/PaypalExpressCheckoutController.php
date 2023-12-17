@@ -54,7 +54,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $cart->getCurrencyCode() );
         $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
-        $payment->setTotalAmount( $cart->getTotalAmount() );
+        $payment->setTotalAmount( $cart->getTotalAmount() * 100 ); // Amount must convert to at least 100 stotinka.
         
         // Maximum length is 127 alphanumeric characters.
         $payment->setDescription( \substr( $cart->getDescription(), 0, 120 ) );
@@ -64,7 +64,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
         $payment->setDetails([
-            'PAYMENTREQUEST_0_AMT'          => $cart->getTotalAmount(),
+            'PAYMENTREQUEST_0_AMT'          => $cart->getTotalAmount() * 100,
             'PAYMENTREQUEST_0_CURRENCYCODE' => $cart->getCurrencyCode(),
         ]);
         $storage->update( $payment );

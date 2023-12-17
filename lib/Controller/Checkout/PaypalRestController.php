@@ -8,8 +8,20 @@ class PaypalRestController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
-        $cart   = $this->orderFactory->getShoppingCart();
+        $cart       = $this->orderFactory->getShoppingCart();
+        $payment    = $this->preparePayment( $cart );
         
+        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
+            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
+            $payment,
+            'vs_payment_paypal_rest_done'
+        );
+        
+        return $this->redirect( $captureToken->getTargetUrl() );
+    }
+    
+    protected function preparePayment( OrderInterface $cart )
+    {
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
@@ -32,12 +44,6 @@ class PaypalRestController extends AbstractCheckoutController
         
         $storage->update( $payment );
         
-        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
-            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
-            $payment,
-            'vs_payment_paypal_rest_done'
-        );
-        
-        return $this->redirect( $captureToken->getTargetUrl() );
+        return $payment;
     }
 }
