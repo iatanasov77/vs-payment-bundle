@@ -197,7 +197,9 @@ class PricingPlanCheckoutController extends AbstractController
     {
         $em             = $this->doctrine->getManager();
         $pricingPlan    = $this->pricingPlansRepository->find( $formData['pricingPlan'] );
-        $subscription   = $this->getSubscription( $pricingPlan, $formData );
+        
+        //$subscription   = $this->getSubscription( $pricingPlan, $formData );
+        $subscription   = $this->createSubscription( $pricingPlan, $formData );
         
         if ( ! $subscription ) {
             throw new CheckoutException( 'Subscription Cannot be Created !' );
@@ -237,6 +239,29 @@ class PricingPlanCheckoutController extends AbstractController
             $this->doctrine->getManager()->refresh( $user );
             $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
         }
+        
+        return $subscription;
+    }
+    
+    /**
+     * For Every Payment Create New Subscription because Subscription / OrderItem Assossiation is OneToOne
+     * 
+     * @param unknown $pricingPlan
+     * @param unknown $formData
+     * @return PricingPlanSubscriptionInterface
+     */
+    protected function createSubscription( $pricingPlan, $formData ): PricingPlanSubscriptionInterface
+    {
+        $user                   = $this->securityBridge->getUser();
+        $setRecurringPayments   = isset( $formData['paymentMethod']['setRecurringPayments'] ) && $formData['paymentMethod']['setRecurringPayments'];
+        
+        $this->eventDispatcher->dispatch(
+            new CreateSubscriptionEvent( $pricingPlan, $setRecurringPayments ),
+            CreateSubscriptionEvent::NAME
+        );
+        
+        $this->doctrine->getManager()->refresh( $user );
+        $subscription   = $this->subscriptionsRepository->getSubscriptionByUserOnPricingPlan( $user, $pricingPlan );
         
         return $subscription;
     }
