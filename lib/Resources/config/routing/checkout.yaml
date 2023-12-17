@@ -89,6 +89,18 @@ vs_payment_paypal_rest_prepare:
 vs_payment_paypal_rest_done:
     path:     /paypal_rest/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::doneAction
+    
+# PayPal Pro Checkout
+#######################################################################################
+vs_payment_paypal_pro_checkout_prepare:
+    path:     /paypal_pro_checkout/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController::prepareAction
+    options:
+        expose: true
+
+vs_payment_paypal_pro_checkout_done:
+    path:     /paypal_pro_checkout/done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController::doneAction
 
 # Paysera
 #######################################################################################

@@ -29,6 +29,9 @@ class Payment
             case 'paypal_rest':
                 $route  = 'vs_payment_paypal_rest_prepare';
                 break;
+            case 'paypal_pro_checkout':
+                $route  = 'vs_payment_paypal_pro_checkout_prepare';
+                break;
             case 'paysera':
                 $route  = 'vs_payment_paysera_prepare';
                 break;
