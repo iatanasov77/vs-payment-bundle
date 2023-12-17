@@ -14,7 +14,7 @@ class PaypalRestController extends AbstractCheckoutController
         $payment = $storage->create();
         
         $payment->setNumber( uniqid() );
-        $payment->setTotalAmount( $cart->getTotalAmount() );
+        $payment->setTotalAmount( $cart->getTotalAmount() * 100  ); // Amount must convert to at least 100 stotinka.
         $payment->setCurrencyCode( $cart->getCurrencyCode() );
         
         $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
@@ -25,12 +25,10 @@ class PaypalRestController extends AbstractCheckoutController
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
-        /*
         $payment->setDetails([
-            'PAYMENTREQUEST_0_AMT'          => $cart->getTotalAmount(),
+            'PAYMENTREQUEST_0_AMT'          => $cart->getTotalAmount() * 100,
             'PAYMENTREQUEST_0_CURRENCYCODE' => $cart->getCurrencyCode(),
         ]);
-        */
         
         $storage->update( $payment );
         
