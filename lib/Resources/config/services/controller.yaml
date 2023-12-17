@@ -48,4 +48,6 @@ services:
             - '@vs_payment.repository.payment'
             - '@vs_payment.repository.payment_token'
             - '@vs_payment.repository.pricing_plan_subscription'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
 
