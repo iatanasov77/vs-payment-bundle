@@ -45,6 +45,9 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var string */
     protected $paymentClass;
     
+    /** @var bool */
+    protected $throwExceptionOnPaymentDone;
+    
     /**
      * If is set, Done Action will redirect to this url
      *
@@ -68,6 +71,7 @@ abstract class AbstractCheckoutController extends AbstractController
         OrderFactory $orderFactory,
         RepositoryInterface $subscriptionsRepository,
         string $paymentClass,
+        bool $throwExceptionOnPaymentDone,
         ?string $routeRedirectOnShoppingCartDone,
         ?string $routeRedirectOnPricingPlanDone
     ) {
@@ -80,6 +84,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->subscriptionsRepository              = $subscriptionsRepository;
         
         $this->paymentClass                         = $paymentClass;
+        $this->throwExceptionOnPaymentDone          = $throwExceptionOnPaymentDone;
         $this->routeRedirectOnShoppingCartDone      = $routeRedirectOnShoppingCartDone;
         $this->routeRedirectOnPricingPlanDone       = $routeRedirectOnPricingPlanDone;
     }
@@ -145,10 +150,12 @@ abstract class AbstractCheckoutController extends AbstractController
         $storage->update( $payment );
         $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
         
-        throw new CheckoutException(
-            $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName(),
-            $paymentStatus->getModel()
-        );
+        if ( $this->throwExceptionOnPaymentDone ) {
+            throw new CheckoutException(
+                $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName(),
+                $paymentStatus->getModel()
+            );
+        }
         
         return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
             'shoppingCart'                      => $this->orderFactory->getShoppingCart(),

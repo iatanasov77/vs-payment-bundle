@@ -1,4 +1,5 @@
 parameters:
+    vs_payment.checkout.throw_exception_on_payment_done: false
     vs_payment.shopping_cart_redirect_on_payment_done: null
     vs_payment.pricing_plans_redirect_on_payment_done: null
 
@@ -21,6 +22,7 @@ services:
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -36,6 +38,7 @@ services:
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -54,6 +57,7 @@ services:
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -72,6 +76,7 @@ services:
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -90,6 +95,7 @@ services:
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -108,6 +114,7 @@ services:
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -126,6 +133,7 @@ services:
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -144,6 +152,7 @@ services:
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:
@@ -162,6 +171,7 @@ services:
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
         calls:

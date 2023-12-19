@@ -33,9 +33,11 @@
         </div>
     </div>
     
+    {{ form_rest( form ) }}
+    
     <input type="submit"
         value="{{ 'vs_payment.form.credit_card.continue' | trans( {},'VSPaymentBundle' ) }}"
         class="sign__btn sign__btn--modal sign__btn--text"
     />
 
-{{ form_end( form, {'render_rest': false} ) }}
+{{ form_end( form ) }}
