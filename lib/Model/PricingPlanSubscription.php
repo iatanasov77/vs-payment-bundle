@@ -224,7 +224,7 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this->pricingPlan ? $this->pricingPlan->getCurrencyCode() : 'EUR';
     }
     
-    public function getGatewayFactory(): OrderItemInterface
+    public function getGatewayFactory(): string
     {
         return $this->orderItem->getOrder()->getPaymentMethod()->getGateway()->getFactoryName();
     }
