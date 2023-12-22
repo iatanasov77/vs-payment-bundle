@@ -147,7 +147,8 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     {
         $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY]    = isset( $paymentData['local']['customer'] ) ?
                                                                 $paymentData['local']['customer']['id'] : null;
-        $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]       = isset( $paymentData['local']['customer'] ) ?
+        
+        $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]       = isset( $paymentData['local']['customer']['plan'] ) ?
                                                                 $paymentData['local']['customer']['plan'] : null;
         
         if ( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] && $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] ) {
