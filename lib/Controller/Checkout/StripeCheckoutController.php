@@ -64,6 +64,9 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             ! isset( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] ) ||
             ! isset( $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] )
         ) {
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
+            $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
+            
             return $this->redirectToRoute( 'vs_payment_pricing_plans' );
         }
         
@@ -87,28 +90,6 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         } else {
             return $this->redirectToRoute( 'vs_payment_pricing_plans' );
         }
-    }
-    
-    public function create( $subscriptionId, Request $request ): Response
-    {
-        $previousSubscription   = $this->subscriptionsRepository->find( $subscriptionId );
-        
-        
-        
-        $subscription   = $this->subscriptionsFactory->createNew();
-        
-        
-        $subscription->setUser( $this->user );
-        $subscription->setPricingPlan( $pricingPlan );
-        $subscription->setRecurringPayment( $event->getSetRecurringPayments() );
-        
-        $startDate      = $previousSubscription ? $previousSubscription->getExpiresAt() : new \DateTime();
-        $expiresDate    = $startDate->add( $pricingPlan->getSubscriptionPeriod() );
-        $subscription->setExpiresAt( $expiresDate );
-        
-        $em             = $this->doctrine->getManager();
-        $em->persist( $subscription );
-        $em->flush();
     }
     
     public function cancelAction( $subscriptionId, Request $request ): Response
@@ -182,7 +163,11 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             $pricingPlan    = $subscriptions[0]->getPricingPlan();
             $gtAttributes   = $pricingPlan->getGatewayAttributes();
             
-            if ( $gateway->getSupportRecurring() && \array_key_exists( StripeApi::PRICING_PLAN_ATTRIBUTE_KEY, $gtAttributes ) ) {
+            if (
+                $gateway->getSupportRecurring() &&
+                $cart->hasRecurringPayment() &&
+                \array_key_exists( StripeApi::PRICING_PLAN_ATTRIBUTE_KEY, $gtAttributes )
+            ) {
                 $paymentDetails['local']['customer']    = [
                     'plan' => $gtAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY]
                 ];
