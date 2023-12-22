@@ -64,7 +64,9 @@ final class Payment
     
     public function getPaymentCreateRecurringRoute( GatewayConfigInterface $gatewayConfig, $isRecurring = false )
     {
+        /*  
         $this->router->generate( 'vs_payment_stripe_checkout_create_recurring_payment', [] );
+        */
         
         switch( $gatewayConfig->getFactoryName() ) {
             case 'offline':
