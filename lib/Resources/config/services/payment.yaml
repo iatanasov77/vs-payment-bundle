@@ -5,6 +5,9 @@ services:
         
     vs_payment_payment:
         class: Vankosoft\PaymentBundle\Component\Payment\Payment
+        arguments:
+            - '@router'
+            - '@vs_payment.order_factory'
     
     Vankosoft\PaymentBundle\Form\PaymentForm:
         tags: ['form.type']

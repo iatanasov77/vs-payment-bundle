@@ -89,6 +89,28 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         }
     }
     
+    public function create( $subscriptionId, Request $request ): Response
+    {
+        $previousSubscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        
+        
+        
+        $subscription   = $this->subscriptionsFactory->createNew();
+        
+        
+        $subscription->setUser( $this->user );
+        $subscription->setPricingPlan( $pricingPlan );
+        $subscription->setRecurringPayment( $event->getSetRecurringPayments() );
+        
+        $startDate      = $previousSubscription ? $previousSubscription->getExpiresAt() : new \DateTime();
+        $expiresDate    = $startDate->add( $pricingPlan->getSubscriptionPeriod() );
+        $subscription->setExpiresAt( $expiresDate );
+        
+        $em             = $this->doctrine->getManager();
+        $em->persist( $subscription );
+        $em->flush();
+    }
+    
     public function cancelAction( $subscriptionId, Request $request ): Response
     {
         // $paymentDetails['local']['customer']['subscriptions']['data'][0]['id']

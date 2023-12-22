@@ -42,6 +42,9 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var RepositoryInterface */
     protected $subscriptionsRepository;
     
+    /** @var Factory */
+    protected $subscriptionsFactory;
+    
     /** @var string */
     protected $paymentClass;
     
@@ -70,6 +73,7 @@ abstract class AbstractCheckoutController extends AbstractController
         Payum $payum,
         OrderFactory $orderFactory,
         RepositoryInterface $subscriptionsRepository,
+        Factory $subscriptionsFactory,
         string $paymentClass,
         bool $throwExceptionOnPaymentDone,
         ?string $routeRedirectOnShoppingCartDone,
@@ -82,6 +86,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->payum                                = $payum;
         $this->orderFactory                         = $orderFactory;
         $this->subscriptionsRepository              = $subscriptionsRepository;
+        $this->subscriptionsFactory                 = $subscriptionsFactory;
         
         $this->paymentClass                         = $paymentClass;
         $this->throwExceptionOnPaymentDone          = $throwExceptionOnPaymentDone;
