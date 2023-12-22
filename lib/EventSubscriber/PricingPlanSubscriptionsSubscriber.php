@@ -127,13 +127,14 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         }
         
         $subscription->setActive( true );
+        $gateway    = $payment->getOrder()->getPaymentMethod()->getGateway();
         
-        if ( $subscription->isRecurringPayment() ) {
+        if ( $gateway->getSupportRecurring() ) {
             $paymentData    = $payment->getDetails();
             $gtAttributes   = $subscription->getGatewayAttributes();
             $gtAttributes   = $gtAttributes ?: [];
             
-            $paymentFactory = $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName();
+            $paymentFactory = $gateway->getFactoryName();
             if ( $paymentFactory == 'stripe_checkout' || $paymentFactory == 'stripe_js' ) {
                 $this->setStripePaymentAttributes( $subscription, $paymentData );
             }
