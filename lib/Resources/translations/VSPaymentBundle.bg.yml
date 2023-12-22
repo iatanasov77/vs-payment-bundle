@@ -238,6 +238,10 @@ vs_payment:
         pricing_plan_subscriptions_show_title: List Subscription Payments
         order_is_paid: Paid
         action_set_order_status_paid: Set Paid
+        
+        pricing_plan_subscription_missing_attributes: 'Missing Pricing Plan Subscription Attributes Needed to Create Recurring Payment !!!'
+        pricing_plan_create_subscription_recurring_success: 'Setting up Recurring Payments for the Subscription Successfull !!!'
+        pricing_plan_cancel_subscription_recurring_success: 'Canceling Recurring Payments for the Subscription Successfull !!!'
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

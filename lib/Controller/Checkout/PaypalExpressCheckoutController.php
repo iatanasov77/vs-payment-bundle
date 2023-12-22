@@ -40,7 +40,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         return $this->redirect( $doneToken->getTargetUrl() );
     }
     
-    public function cancelAction( $paymentId, Request $request ): Response
+    public function cancelRecurringPaymentAction( $paymentId, Request $request ): Response
     {
         
     }

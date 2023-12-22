@@ -60,13 +60,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
         $gtAttributes   = $subscription->getGatewayAttributes();
         $gtAttributes   = $gtAttributes ?: [];
-        if (
-            ! isset( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] ) ||
-            ! isset( $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] )
-        ) {
-            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
-            $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
-            
+        if ( ! $this->checkSubscriptionAttributes( $request, $gtAttributes ) ) {
             return $this->redirectToRoute( 'vs_payment_pricing_plans' );
         }
         
@@ -82,7 +76,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         ]);
         $gateway->execute( new CreateSubscription( $stripeRequest ) );
         
-        $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
+        $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_create_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
         if ( $this->routeRedirectOnPricingPlanDone ) {
@@ -92,7 +86,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         }
     }
     
-    public function cancelAction( $subscriptionId, Request $request ): Response
+    public function cancelRecurringPaymentAction( $subscriptionId, Request $request ): Response
     {
         // $paymentDetails['local']['customer']['subscriptions']['data'][0]['id']
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
@@ -111,7 +105,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         ]);
         $gateway->execute( new CancelSubscription( $stripeRequest ) );
         
-        $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
+        $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_cancel_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
         if ( $this->routeRedirectOnPricingPlanDone ) {
@@ -175,5 +169,28 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         }
         
         return $paymentDetails;
+    }
+    
+    /**
+     * 
+     * @param Request $request
+     * @param array $gtAttributes
+     * 
+     * @return bool // true on valid attributes
+     *              // false on missing attributes 
+     */
+    private function checkSubscriptionAttributes( Request $request, array $gtAttributes ): bool
+    {
+        if (
+            ! isset( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] ) ||
+            ! isset( $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] )
+        ) {
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_subscription_missing_attributes', [], 'VSPaymentBundle' );
+            $request->getSession()->getFlashBag()->add( 'error', $flashMessage );
+            
+            return false;
+        }
+        
+        return true;
     }
 }
