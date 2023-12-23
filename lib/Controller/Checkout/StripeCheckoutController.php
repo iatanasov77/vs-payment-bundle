@@ -175,15 +175,13 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $gtAttributes   = $subscription->getGatewayAttributes();
         $gtAttributes   = $gtAttributes ?: [];
         
-        if (
-            ! isset( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] ) ||
-            ! isset( $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] )
-        ) {
+        if ( ! isset( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] ) ) {
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_subscription_missing_attributes', [], 'VSPaymentBundle' );
             $request->getSession()->getFlashBag()->add( 'error', $flashMessage );
             
             return null;
         }
+        
         $ppAttributes   = $subscription->getPricingPlan()->getGatewayAttributes();
         if ( ! isset( $ppAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY] ) ) {
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_subscription_missing_attributes', [], 'VSPaymentBundle' );
