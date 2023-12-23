@@ -8,6 +8,7 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscriptio
 
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
 /**
@@ -58,23 +59,17 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     public function createRecurringPaymentAction( $subscriptionId, Request $request ): Response
     {
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
-        $gtAttributes   = $subscription->getGatewayAttributes();
-        $gtAttributes   = $gtAttributes ?: [];
-        if ( ! $this->checkSubscriptionAttributes( $request, $gtAttributes ) ) {
+        $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
+        
+        if ( ! \is_array( $gtAttributes ) ) {
             return $this->redirectToRoute( 'vs_payment_pricing_plans' );
         }
         
-        $cart           = $this->orderFactory->getShoppingCart();
-        $payment        = $this->preparePayment( $cart );
+        if ( $this->checkRecurringPaymentCreated( $request, $gtAttributes, false ) ) {
+            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+        }
         
-        $gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
-        $stripeRequest  = new \ArrayObject([
-            'customer'  => $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY],
-            'items'     => [
-                ['price' => $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]]
-            ],
-        ]);
-        $gateway->execute( new CreateSubscription( $stripeRequest ) );
+        $this->_createRecurringPayment( $gtAttributes );
         
         $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_create_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
@@ -90,20 +85,17 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     {
         // $paymentDetails['local']['customer']['subscriptions']['data'][0]['id']
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
-        $gtAttributes   = $subscription->getGatewayAttributes();
-        $gtAttributes   = $gtAttributes ?: [];
-        if ( ! isset( $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY] ) ) {
+        $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
+        
+        if ( ! \is_array( $gtAttributes ) ) {
             return $this->redirectToRoute( 'vs_payment_pricing_plans' );
         }
         
-        $cart           = $this->orderFactory->getShoppingCart();
-        $payment        = $this->preparePayment( $cart );
+        if ( ! $this->checkRecurringPaymentCreated( $request, $gtAttributes, true ) ) {
+            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+        }
         
-        $gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
-        $stripeRequest  = new \ArrayObject([
-            "id"    => $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY],
-        ]);
-        $gateway->execute( new CancelSubscription( $stripeRequest ) );
+        $this->_cancelRecurringPayment( $gtAttributes );
         
         $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_cancel_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
@@ -176,11 +168,13 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
      * @param Request $request
      * @param array $gtAttributes
      * 
-     * @return bool // true on valid attributes
-     *              // false on missing attributes 
+     * @return array|null
      */
-    private function checkSubscriptionAttributes( Request $request, array $gtAttributes ): bool
+    private function checkSubscriptionAttributes( Request $request, PricingPlanSubscriptionInterface $subscription ): ?array
     {
+        $gtAttributes   = $subscription->getGatewayAttributes();
+        $gtAttributes   = $gtAttributes ?: [];
+        
         if (
             ! isset( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] ) ||
             ! isset( $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] )
@@ -188,9 +182,82 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_subscription_missing_attributes', [], 'VSPaymentBundle' );
             $request->getSession()->getFlashBag()->add( 'error', $flashMessage );
             
-            return false;
+            return null;
+        }
+        $ppAttributes   = $subscription->getPricingPlan()->getGatewayAttributes();
+        if ( ! isset( $ppAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY] ) ) {
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_subscription_missing_attributes', [], 'VSPaymentBundle' );
+            $request->getSession()->getFlashBag()->add( 'error', $flashMessage );
+            
+            return null;
+        }
+        $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]   = $ppAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY];
+        $subscription->setGatewayAttributes( $gtAttributes );
+        $this->doctrine->getManager()->persist( $subscription );
+        $this->doctrine->getManager()->flush();
+        
+        return $gtAttributes;
+    }
+    
+    /**
+     * 
+     * @param Request $request
+     * @param array $gtAttributes
+     * @param bool $needCreated
+     * 
+     * @return bool
+     */
+    private function checkRecurringPaymentCreated( Request $request, array $gtAttributes, bool $needCreated ): bool
+    {
+        if ( $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] ) {
+            if ( ! $needCreated ) {
+                $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_subscription_already_created', [], 'VSPaymentBundle' );
+                $request->getSession()->getFlashBag()->add( 'error', $flashMessage );
+            }
+            
+            return true;
         }
         
-        return true;
+        if ( $needCreated ) {
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_subscription_not_created_yet', [], 'VSPaymentBundle' );
+            $request->getSession()->getFlashBag()->add( 'error', $flashMessage );
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 
+     * @param array $gtAttributes
+     */
+    private function _createRecurringPayment( array $gtAttributes ): void
+    {
+        $cart           = $this->orderFactory->getShoppingCart();
+        //$payment        = $this->preparePayment( $cart );
+        
+        $gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
+        $stripeRequest  = new \ArrayObject([
+            'customer'  => $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY],
+            'items'     => [
+                ['price' => $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]]
+            ],
+        ]);
+        $gateway->execute( new CreateSubscription( $stripeRequest ) );
+    }
+    
+    /**
+     * 
+     * @param array $gtAttributes
+     */
+    private function _cancelRecurringPayment( array $gtAttributes ): void
+    {
+        $cart           = $this->orderFactory->getShoppingCart();
+        //$payment        = $this->preparePayment( $cart );
+        
+        $gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
+        $stripeRequest  = new \ArrayObject([
+            "id"    => $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY],
+        ]);
+        $gateway->execute( new CancelSubscription( $stripeRequest ) );
     }
 }

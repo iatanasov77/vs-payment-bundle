@@ -148,7 +148,7 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
-    public function getGatewayAttributes()
+    public function getGatewayAttributes(): array
     {
         return $this->gatewayAttributes ?: [];
     }
