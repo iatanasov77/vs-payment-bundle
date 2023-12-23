@@ -69,7 +69,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             return $this->redirectToRoute( 'vs_payment_pricing_plans' );
         }
         
-        $this->_createRecurringPayment( $gtAttributes );
+        $this->_createRecurringPayment( $subscription, $gtAttributes );
         
         $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_create_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
@@ -95,7 +95,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             return $this->redirectToRoute( 'vs_payment_pricing_plans' );
         }
         
-        $this->_cancelRecurringPayment( $gtAttributes );
+        $this->_cancelRecurringPayment( $subscription, $gtAttributes );
         
         $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_cancel_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
@@ -192,9 +192,6 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             return null;
         }
         $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]   = $ppAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY];
-        $subscription->setGatewayAttributes( $gtAttributes );
-        $this->doctrine->getManager()->persist( $subscription );
-        $this->doctrine->getManager()->flush();
         
         return $gtAttributes;
     }
@@ -228,9 +225,10 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     
     /**
      * 
+     * @param PricingPlanSubscriptionInterface $subscription
      * @param array $gtAttributes
      */
-    private function _createRecurringPayment( array $gtAttributes ): void
+    private function _createRecurringPayment( PricingPlanSubscriptionInterface $subscription, array $gtAttributes ): void
     {
         $cart           = $this->orderFactory->getShoppingCart();
         //$payment        = $this->preparePayment( $cart );
@@ -243,13 +241,20 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             ],
         ]);
         $gateway->execute( new CreateSubscription( $stripeRequest ) );
+        
+        $subscription->setGatewayAttributes( $gtAttributes );
+        $subscription->setRecurringPayment( true );
+        
+        $this->doctrine->getManager()->persist( $subscription );
+        $this->doctrine->getManager()->flush();
     }
     
     /**
      * 
+     * @param PricingPlanSubscriptionInterface $subscription
      * @param array $gtAttributes
      */
-    private function _cancelRecurringPayment( array $gtAttributes ): void
+    private function _cancelRecurringPayment( PricingPlanSubscriptionInterface $subscription, array $gtAttributes ): void
     {
         $cart           = $this->orderFactory->getShoppingCart();
         //$payment        = $this->preparePayment( $cart );
@@ -259,5 +264,12 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             "id"    => $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY],
         ]);
         $gateway->execute( new CancelSubscription( $stripeRequest ) );
+        
+        $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]   = null;
+        $subscription->setGatewayAttributes( $gtAttributes );
+        $subscription->setRecurringPayment( false );
+        
+        $this->doctrine->getManager()->persist( $subscription );
+        $this->doctrine->getManager()->flush();
     }
 }
