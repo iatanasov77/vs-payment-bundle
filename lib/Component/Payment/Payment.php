@@ -41,9 +41,6 @@ final class Payment
             case 'paypal_express_checkout':
                 $route  = 'vs_payment_paypal_express_checkout_prepare';
                 break;
-            case 'paypal_rest':
-                $route  = 'vs_payment_paypal_rest_prepare';
-                break;
             case 'paypal_pro_checkout':
                 $route  = 'vs_payment_paypal_pro_checkout_prepare';
                 break;
@@ -83,9 +80,6 @@ final class Payment
             case 'paypal_express_checkout':
                 $route  = 'vs_payment_paypal_express_checkout_prepare';
                 break;
-            case 'paypal_rest':
-                $route  = '';
-                break;
             case 'paypal_pro_checkout':
                 $route  = '';
                 break;
@@ -121,9 +115,6 @@ final class Payment
             case 'paypal_express_checkout':
                 $route  = 'vs_payment_paypal_express_checkout_prepare';
                 break;
-            case 'paypal_rest':
-                $route  = '';
-                break;
             case 'paypal_pro_checkout':
                 $route  = '';
                 break;
@@ -158,9 +149,6 @@ final class Payment
                 break;
             case 'paypal_express_checkout':
                 return true;
-                break;
-            case 'paypal_rest':
-                return false;
                 break;
             case 'paypal_pro_checkout':
                 return false;

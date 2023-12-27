@@ -28,12 +28,9 @@
        	
         "payum/offline": "^1.7",
         "payum/paypal-express-checkout-nvp": "^1.7",
+        "payum/paypal-pro-checkout-nvp": "^1.7",
 		"payum/stripe": "^1.7",
 		"payum/authorize-net-aim": "^1.7",
-		
-		"payum/paypal-pro-checkout-nvp": "*",
-		"payum/paypal-rest": "*",
-        "paypal/rest-api-sdk-php" : "^1.14",
 		
 		"sylius/currency": "^1.12",
 		"plumtreesystems/payum-paysera-gateway": "^0.3",

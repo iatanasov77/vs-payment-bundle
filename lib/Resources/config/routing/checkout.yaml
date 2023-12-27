@@ -89,19 +89,6 @@ vs_payment_paypal_express_checkout_cancel_recurring_payment:
    options:
         expose: true
 
-
-# PayPal Rest
-#######################################################################################
-vs_payment_paypal_rest_prepare:
-    path:     /paypal-rest/prepare
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::prepareAction
-    options:
-        expose: true
-
-vs_payment_paypal_rest_done:
-    path:     /paypal-rest/done
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::doneAction
-    
 # PayPal Pro Checkout
 #######################################################################################
 vs_payment_paypal_pro_checkout_prepare:
