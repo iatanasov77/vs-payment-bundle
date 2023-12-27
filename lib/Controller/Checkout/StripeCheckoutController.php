@@ -2,10 +2,12 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Payum\Stripe\Request\Api\CreateSubscription;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
 
+use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
@@ -62,11 +64,19 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
         
         if ( ! \is_array( $gtAttributes ) ) {
-            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            if ( $request->isXmlHttpRequest() ) {
+                return $this->jsonResponse( Status::STATUS_ERROR, 'vs_payment_pricing_plans' );
+            } else {
+                return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            }
         }
         
         if ( $this->checkRecurringPaymentCreated( $request, $gtAttributes, false ) ) {
-            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            if ( $request->isXmlHttpRequest() ) {
+                return $this->jsonResponse( Status::STATUS_ERROR, 'vs_payment_pricing_plans' );
+            } else {
+                return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            }
         }
         
         $this->_createRecurringPayment( $subscription, $gtAttributes );
@@ -75,7 +85,11 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
         if ( $this->routeRedirectOnPricingPlanDone ) {
-            return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
+            if ( $request->isXmlHttpRequest() ) {
+                return $this->jsonResponse( Status::STATUS_OK, $this->routeRedirectOnPricingPlanDone );
+            } else {
+                return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
+            }
         } else {
             return $this->redirectToRoute( 'vs_payment_pricing_plans' );
         }
@@ -83,16 +97,23 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     
     public function cancelRecurringPaymentAction( $subscriptionId, Request $request ): Response
     {
-        // $paymentDetails['local']['customer']['subscriptions']['data'][0]['id']
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
         $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
         
         if ( ! \is_array( $gtAttributes ) ) {
-            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            if ( $request->isXmlHttpRequest() ) {
+                return $this->jsonResponse( Status::STATUS_ERROR, 'vs_payment_pricing_plans' );
+            } else {
+                return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            }
         }
         
         if ( ! $this->checkRecurringPaymentCreated( $request, $gtAttributes, true ) ) {
-            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            if ( $request->isXmlHttpRequest() ) {
+                return $this->jsonResponse( Status::STATUS_ERROR, 'vs_payment_pricing_plans' );
+            } else {
+                return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            }
         }
         
         $this->_cancelRecurringPayment( $subscription, $gtAttributes );
@@ -101,7 +122,11 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
         if ( $this->routeRedirectOnPricingPlanDone ) {
-            return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
+            if ( $request->isXmlHttpRequest() ) {
+                return $this->jsonResponse( Status::STATUS_OK, $this->routeRedirectOnPricingPlanDone );
+            } else {
+                return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
+            }
         } else {
             return $this->redirectToRoute( 'vs_payment_pricing_plans' );
         }
@@ -277,5 +302,15 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         
         $this->doctrine->getManager()->persist( $subscription );
         $this->doctrine->getManager()->flush();
+    }
+    
+    private function jsonResponse( string $status, string $redirectUrl ): JsonResponse
+    {
+        return new JsonResponse([
+            'status'    => $status,
+            'data'      => [
+                'redirecrUrl'   => $redirectUrl,
+            ]
+        ]);
     }
 }
