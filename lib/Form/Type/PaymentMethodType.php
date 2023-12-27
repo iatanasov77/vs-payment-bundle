@@ -8,8 +8,18 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
+use Vankosoft\PaymentBundle\Component\Payment\Payment;
+
 class PaymentMethodType extends AbstractType
 {
+    /** @var Payment */
+    private $vsPayment;
+    
+    public function __construct( Payment $vsPayment )
+    {
+        $this->vsPayment    = $vsPayment;
+    }
+    
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
@@ -27,7 +37,7 @@ class PaymentMethodType extends AbstractType
                 'choice_attr'           => function ( $choice, string $key, mixed $value ) {
                     return [
                         'data-paymentMethod'    => $choice->getSlug(),
-                        'data-supportRecurring' => (string)$choice->getGateway()->getSupportRecurring(),
+                        'data-supportRecurring' => (string)$this->vsPayment->isGatewaySupportRecurring( $choice->getGateway() ),
                     ];
                 },
                 'expanded'              => true,

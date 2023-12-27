@@ -3,6 +3,7 @@
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -13,6 +14,7 @@ use Sylius\Component\Resource\Factory\Factory;
 use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
 
+use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
@@ -35,6 +37,9 @@ abstract class AbstractCheckoutController extends AbstractController
     
     /** @var Payum */
     protected $payum;
+    
+    /** @var Payment */
+    protected $vsPayment;
     
     /** @vvar OrderFactory */
     protected $orderFactory;
@@ -71,6 +76,7 @@ abstract class AbstractCheckoutController extends AbstractController
         TranslatorInterface $translator,
         ManagerRegistry $doctrine,
         Payum $payum,
+        Payment $vsPayment,
         OrderFactory $orderFactory,
         RepositoryInterface $subscriptionsRepository,
         Factory $subscriptionsFactory,
@@ -84,6 +90,7 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->translator                           = $translator;
         $this->doctrine                             = $doctrine;
         $this->payum                                = $payum;
+        $this->vsPayment                            = $vsPayment;
         $this->orderFactory                         = $orderFactory;
         $this->subscriptionsRepository              = $subscriptionsRepository;
         $this->subscriptionsFactory                 = $subscriptionsFactory;
@@ -115,6 +122,16 @@ abstract class AbstractCheckoutController extends AbstractController
             // failure
             return $this->paymentFailed( $request, $paymentStatus );
         }
+    }
+    
+    protected function jsonResponse( string $status, string $redirectUrl ): JsonResponse
+    {
+        return new JsonResponse([
+            'status'    => $status,
+            'data'      => [
+                'redirecrUrl'   => $redirectUrl,
+            ]
+        ]);
     }
     
     protected function paymentSuccess( Request $request, $paymentStatus ): Response

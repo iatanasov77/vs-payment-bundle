@@ -37,7 +37,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% if item.gateway.supportRecurring %}
+                                {% if ( item.gateway | supportRecurring ) %}
                                     <i class="fas fa-check" style="color: #82c91e;">
                                 {% else %}
                                     <i class="fas fa-times" style="color: #ff1e1e;"></i>

@@ -3,6 +3,7 @@
 use Symfony\Component\Routing\RouterInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
+use Vankosoft\PaymentBundle\Component\Exception\GatewayException;
 
 final class Payment
 {
@@ -140,5 +141,41 @@ final class Payment
         }
         
         return $route;
+    }
+    
+    public function isGatewaySupportRecurring( GatewayConfigInterface $gatewayConfig ): bool
+    {
+        switch( $gatewayConfig->getFactoryName() ) {
+            case 'offline':
+                return false;
+                break;
+            case 'offline_bank_transfer':
+                return false;
+                break;
+            case 'stripe_checkout':
+            case 'stripe_js':
+                return true;
+                break;
+            case 'paypal_express_checkout':
+                return true;
+                break;
+            case 'paypal_rest':
+                return false;
+                break;
+            case 'paypal_pro_checkout':
+                return false;
+                break;
+            case 'paysera':
+                return false;
+                break;
+            case 'borica':
+                return false;
+                break;
+            case 'authorize_net_aim':
+                return false;
+                break;
+            default:
+                throw new GatewayException( 'Unknown Gateawy Factory !!!' );
+        }
     }
 }

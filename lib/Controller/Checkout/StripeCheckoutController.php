@@ -2,7 +2,6 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Payum\Stripe\Request\Api\CreateSubscription;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
@@ -62,21 +61,20 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     {
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
         $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
+        $redirectRoute  = null;
         
         if ( ! \is_array( $gtAttributes ) ) {
-            if ( $request->isXmlHttpRequest() ) {
-                return $this->jsonResponse( Status::STATUS_ERROR, 'vs_payment_pricing_plans' );
-            } else {
-                return $this->redirectToRoute( 'vs_payment_pricing_plans' );
-            }
+            $redirectRoute  = 'vs_payment_pricing_plans';
         }
         
         if ( $this->checkRecurringPaymentCreated( $request, $gtAttributes, false ) ) {
-            if ( $request->isXmlHttpRequest() ) {
-                return $this->jsonResponse( Status::STATUS_ERROR, 'vs_payment_pricing_plans' );
-            } else {
-                return $this->redirectToRoute( 'vs_payment_pricing_plans' );
-            }
+            $redirectRoute  = 'vs_payment_pricing_plans';
+        }
+        
+        if ( $redirectRoute && $request->isXmlHttpRequest() ) {
+            return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
+        } else {
+            return $this->redirectToRoute( $redirectRoute );
         }
         
         $this->_createRecurringPayment( $subscription, $gtAttributes );
@@ -85,13 +83,15 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
         if ( $this->routeRedirectOnPricingPlanDone ) {
-            if ( $request->isXmlHttpRequest() ) {
-                return $this->jsonResponse( Status::STATUS_OK, $this->routeRedirectOnPricingPlanDone );
-            } else {
-                return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
-            }
+            $redirectRoute  = $this->routeRedirectOnPricingPlanDone;
         } else {
-            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            $redirectRoute  = 'vs_payment_pricing_plans';
+        }
+        
+        if ( $redirectRoute && $request->isXmlHttpRequest() ) {
+            return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
+        } else {
+            return $this->redirectToRoute( $redirectRoute );
         }
     }
     
@@ -99,21 +99,20 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     {
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
         $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
+        $redirectRoute  = null;
         
         if ( ! \is_array( $gtAttributes ) ) {
-            if ( $request->isXmlHttpRequest() ) {
-                return $this->jsonResponse( Status::STATUS_ERROR, 'vs_payment_pricing_plans' );
-            } else {
-                return $this->redirectToRoute( 'vs_payment_pricing_plans' );
-            }
+            $redirectRoute  = 'vs_payment_pricing_plans';
         }
         
         if ( ! $this->checkRecurringPaymentCreated( $request, $gtAttributes, true ) ) {
-            if ( $request->isXmlHttpRequest() ) {
-                return $this->jsonResponse( Status::STATUS_ERROR, 'vs_payment_pricing_plans' );
-            } else {
-                return $this->redirectToRoute( 'vs_payment_pricing_plans' );
-            }
+            $redirectRoute  = 'vs_payment_pricing_plans';
+        }
+        
+        if ( $redirectRoute && $request->isXmlHttpRequest() ) {
+            return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
+        } else {
+            return $this->redirectToRoute( $redirectRoute );
         }
         
         $this->_cancelRecurringPayment( $subscription, $gtAttributes );
@@ -122,13 +121,15 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
         if ( $this->routeRedirectOnPricingPlanDone ) {
-            if ( $request->isXmlHttpRequest() ) {
-                return $this->jsonResponse( Status::STATUS_OK, $this->routeRedirectOnPricingPlanDone );
-            } else {
-                return $this->redirectToRoute( $this->routeRedirectOnPricingPlanDone );
-            }
+            $redirectRoute  = $this->routeRedirectOnPricingPlanDone;
         } else {
-            return $this->redirectToRoute( 'vs_payment_pricing_plans' );
+            $redirectRoute  = 'vs_payment_pricing_plans';
+        }
+        
+        if ( $redirectRoute && $request->isXmlHttpRequest() ) {
+            return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
+        } else {
+            return $this->redirectToRoute( $redirectRoute );
         }
     }
     
@@ -175,7 +176,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             $gtAttributes   = $pricingPlan->getGatewayAttributes();
             
             if (
-                $gateway->getSupportRecurring() &&
+                $this->vsPayment->isGatewaySupportRecurring( $gateway ) &&
                 $cart->hasRecurringPayment() &&
                 \array_key_exists( StripeApi::PRICING_PLAN_ATTRIBUTE_KEY, $gtAttributes )
             ) {
@@ -302,15 +303,5 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         
         $this->doctrine->getManager()->persist( $subscription );
         $this->doctrine->getManager()->flush();
-    }
-    
-    private function jsonResponse( string $status, string $redirectUrl ): JsonResponse
-    {
-        return new JsonResponse([
-            'status'    => $status,
-            'data'      => [
-                'redirecrUrl'   => $redirectUrl,
-            ]
-        ]);
     }
 }
