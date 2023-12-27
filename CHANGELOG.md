@@ -1,3 +1,28 @@
+2.9.16	|	Release date: **27.12.2023**
+============================================
+* New Features , Fixes and Improvements:
+  - On PricingPlan Checkout Create a New Subscription for Every Payment.
+  - Force Upgrade of Package 'paypal/rest-api-sdk-php'
+  - Fix PaypalRest Payment Amount.
+  - Fix PaypalExpressCheckout Payment Amount.
+  - Create a PaypalProCheckoutController .
+  - Fix GatewayConfig Model.
+  - Fix and Improve Checkout Routes.
+  - Add Developement Controller Actions.
+  - Add a Template for Payum ObtainCreditCard Action.
+  - Improve Checkout Done Action .
+  - Add a Help Method in PricingPlanSubscription Model.
+  - Improve Payment Service.
+  - Improve StripeCheckoutController::preparePaymentDetails .
+  - Improve Subscriptions Event Subscriber .
+  - Improve Recurring Payment Controllers.
+  - Create and Cancel Stripe Recurring Payments.
+  - Fix createSubscription in Event Subscriber.
+  - Create and Cancel Stripe Recurring Payments Ajax Redirects.
+  - Move Gateway Support Recurring Option to Payment Service Component.
+  - Add a Doctrine Migration.
+
+
 2.9.15	|	Release date: **16.12.2023**
 ============================================
 * Bug-Fixes:
