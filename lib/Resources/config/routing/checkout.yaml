@@ -10,85 +10,109 @@ payum_notify:
 # Offline
 #######################################################################################
 vs_payment_offline_info:
-    path: /vs_payment/offline/offline-info
+    path: /offline/offline-info
     controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController::getInfo
     options:
         expose: true
 
 vs_payment_offline_prepare:
-    path: /vs_payment/offline/offline-prepare
+    path: /offline/offline-prepare
     controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController::prepareAction
     options:
         expose: true
 
 vs_payment_offline_done:
-   path: /vs_payment/offline/offline-done
+   path: /offline/offline-done
    controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController::doneAction
 
 vs_payment_offline_bank_transfer_info:
-    path: /vs_payment/offline/bank-transfer-info
+    path: /offline/bank-transfer-info
     controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController::getInfo
     options:
         expose: true
 
 vs_payment_offline_bank_transfer_prepare:
-    path: /vs_payment/offline/bank-transfer-prepare
+    path: /offline/bank-transfer-prepare
     controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController::prepareAction
     options:
         expose: true
 
 vs_payment_offline_bank_transfer_done:
-    path: /vs_payment/offline/bank-transfer-done
+    path: /offline/bank-transfer-done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController::doneAction
 
 # Stripe Checkout
 #######################################################################################
 vs_payment_stripe_checkout_prepare:
-    path: /vs_payment/stripe-checkout/prepare
+    path: /stripe-checkout/prepare
     controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::prepareAction
     options:
         expose: true
 
 vs_payment_stripe_checkout_done:
-   path: /vs_payment/stripe-checkout/done
+   path: /stripe-checkout/done
    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::doneAction
    
 vs_payment_stripe_checkout_create_recurring_payment:
-   path: /vs_payment/stripe-checkout/create-recurring-payment/{subscriptionId}
+   path: /stripe-checkout/create-recurring-payment/{subscriptionId}
    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::createRecurringPaymentAction
    options:
         expose: true
    
 vs_payment_stripe_checkout_cancel_recurring_payment:
-   path: /vs_payment/stripe-checkout/cancel-recurring-payment/{subscriptionId}
-   controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::cancelAction
+   path: /stripe-checkout/cancel-recurring-payment/{subscriptionId}
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::cancelRecurringPaymentAction
    options:
         expose: true
 
 # PayPal Express Checkout
 #######################################################################################
 vs_payment_paypal_express_checkout_prepare:
-    path:     /paypal_express_checkout/prepare
+    path:     /paypal-express-checkout/prepare
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::prepareAction
     options:
         expose: true
 
 vs_payment_paypal_express_checkout_done:
-    path:     /paypal_express_checkout/done
+    path:     /paypal-express-checkout/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::doneAction
+    
+vs_payment_paypal_express_checkout_create_recurring_payment:
+   path: /stripe-checkout/create-recurring-payment/{subscriptionId}
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::createRecurringPaymentAction
+   options:
+        expose: true
+   
+vs_payment_paypal_express_checkout_cancel_recurring_payment:
+   path: /stripe-checkout/cancel-recurring-payment/{subscriptionId}
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::cancelRecurringPaymentAction
+   options:
+        expose: true
 
 
 # PayPal Rest
 #######################################################################################
 vs_payment_paypal_rest_prepare:
-    path:     /paypal_rest/prepare
+    path:     /paypal-rest/prepare
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::prepareAction
     options:
         expose: true
 
 vs_payment_paypal_rest_done:
-    path:     /paypal_rest/done
+    path:     /paypal-rest/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::doneAction
+    
+# PayPal Pro Checkout
+#######################################################################################
+vs_payment_paypal_pro_checkout_prepare:
+    path:     /paypal-pro-checkout/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController::prepareAction
+    options:
+        expose: true
+
+vs_payment_paypal_pro_checkout_done:
+    path:     /paypal-pro-checkout/done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController::doneAction
 
 # Paysera
 #######################################################################################
@@ -117,12 +141,12 @@ vs_payment_borica_done:
 # AuthorizeNet
 #######################################################################################
 vs_payment_authorize_net_prepare:
-    path:     /borica/prepare
+    path:     /authorize-net/prepare
     controller: Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController::prepareAction
     options:
         expose: true
 
 vs_payment_authorize_net_done:
-    path:     /borica/done
+    path:     /authorize-net/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController::doneAction
 

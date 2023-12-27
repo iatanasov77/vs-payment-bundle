@@ -58,14 +58,14 @@ class PricingPlansSubscriptionsRepository extends EntityRepository
         return $subscriptions;
     }
     
-    public function getSubscriptionByUserOnPricingPlan( ?UserPaymentAwareInterface $user, PricingPlanInterface $pricingPlan )
+    public function getSubscriptionsByUserOnPricingPlan( ?UserPaymentAwareInterface $user, PricingPlanInterface $pricingPlan )
     {
         if ( ! $user ) {
-            return null;
+            return [];
         }
         
-        $subscription   = $this->findOneBy( ['user' => $user, 'pricingPlan' => $pricingPlan] );
+        $subscriptions  = $this->findBy( ['user' => $user, 'pricingPlan' => $pricingPlan] );
         
-        return $subscription;
+        return $subscriptions;
     }
 }

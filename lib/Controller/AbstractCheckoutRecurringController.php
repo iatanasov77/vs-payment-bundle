@@ -7,5 +7,5 @@ abstract class AbstractCheckoutRecurringController extends AbstractCheckoutContr
 {
     abstract public function createRecurringPaymentAction( $subscriptionId, Request $request ): Response;
     
-    abstract public function cancelAction( $subscriptionId, Request $request ): Response;
+    abstract public function cancelRecurringPaymentAction( $subscriptionId, Request $request ): Response;
 }

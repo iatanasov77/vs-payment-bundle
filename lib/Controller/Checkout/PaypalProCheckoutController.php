@@ -3,17 +3,10 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
+use Vankosoft\PaymentBundle\Controller\AbstractCheckoutController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
-/*
- * 
- * DEPRECATED
- * ==========
- * PayPal Express Checkout is deprecated. Please, use new PayPal Commerce Platform integration.
- * PayPal Commerce Platform: https://github.com/Sylius/PayPalPlugin
- */
-class PaypalExpressCheckoutController extends AbstractCheckoutRecurringController
+class PaypalProCheckoutController extends AbstractCheckoutController
 {   
     public function prepareAction( Request $request ): Response
     {
@@ -23,26 +16,10 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
             $cart->getPaymentMethod()->getGateway()->getGatewayName(),
             $payment,
-            'vs_payment_paypal_express_checkout_done'
+            'vs_payment_paypal_pro_checkout_done'
         );
         
         return $this->redirect( $captureToken->getTargetUrl() );
-    }
-    
-    public function createRecurringPaymentAction( $packagePlanId, Request $request ): Response
-    {
-        $doneToken = $this->payum->getTokenFactory()->createToken(
-            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
-            $recurringPayment,
-            'vs_payment_paypal_express_checkout_done'
-        );
-        
-        return $this->redirect( $doneToken->getTargetUrl() );
-    }
-    
-    public function cancelRecurringPaymentAction( $paymentId, Request $request ): Response
-    {
-        
     }
     
     protected function preparePayment( OrderInterface $cart )

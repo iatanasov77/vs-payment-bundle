@@ -3,6 +3,7 @@
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -13,6 +14,7 @@ use Sylius\Component\Resource\Factory\Factory;
 use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
 
+use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
@@ -36,14 +38,23 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @var Payum */
     protected $payum;
     
+    /** @var Payment */
+    protected $vsPayment;
+    
     /** @vvar OrderFactory */
     protected $orderFactory;
     
     /** @var RepositoryInterface */
     protected $subscriptionsRepository;
     
+    /** @var Factory */
+    protected $subscriptionsFactory;
+    
     /** @var string */
     protected $paymentClass;
+    
+    /** @var bool */
+    protected $throwExceptionOnPaymentDone;
     
     /**
      * If is set, Done Action will redirect to this url
@@ -65,9 +76,12 @@ abstract class AbstractCheckoutController extends AbstractController
         TranslatorInterface $translator,
         ManagerRegistry $doctrine,
         Payum $payum,
+        Payment $vsPayment,
         OrderFactory $orderFactory,
         RepositoryInterface $subscriptionsRepository,
+        Factory $subscriptionsFactory,
         string $paymentClass,
+        bool $throwExceptionOnPaymentDone,
         ?string $routeRedirectOnShoppingCartDone,
         ?string $routeRedirectOnPricingPlanDone
     ) {
@@ -76,10 +90,13 @@ abstract class AbstractCheckoutController extends AbstractController
         $this->translator                           = $translator;
         $this->doctrine                             = $doctrine;
         $this->payum                                = $payum;
+        $this->vsPayment                            = $vsPayment;
         $this->orderFactory                         = $orderFactory;
         $this->subscriptionsRepository              = $subscriptionsRepository;
+        $this->subscriptionsFactory                 = $subscriptionsFactory;
         
         $this->paymentClass                         = $paymentClass;
+        $this->throwExceptionOnPaymentDone          = $throwExceptionOnPaymentDone;
         $this->routeRedirectOnShoppingCartDone      = $routeRedirectOnShoppingCartDone;
         $this->routeRedirectOnPricingPlanDone       = $routeRedirectOnPricingPlanDone;
     }
@@ -105,6 +122,16 @@ abstract class AbstractCheckoutController extends AbstractController
             // failure
             return $this->paymentFailed( $request, $paymentStatus );
         }
+    }
+    
+    protected function jsonResponse( string $status, string $redirectUrl ): JsonResponse
+    {
+        return new JsonResponse([
+            'status'    => $status,
+            'data'      => [
+                'redirecrUrl'   => $redirectUrl,
+            ]
+        ]);
     }
     
     protected function paymentSuccess( Request $request, $paymentStatus ): Response
@@ -145,10 +172,12 @@ abstract class AbstractCheckoutController extends AbstractController
         $storage->update( $payment );
         $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
         
-        throw new CheckoutException(
-            $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName(),
-            $paymentStatus->getModel()
-        );
+        if ( $this->throwExceptionOnPaymentDone ) {
+            throw new CheckoutException(
+                $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName(),
+                $paymentStatus->getModel()
+            );
+        }
         
         return $this->render( '@VSPayment/Pages/Checkout/done.html.twig', [
             'shoppingCart'                      => $this->orderFactory->getShoppingCart(),

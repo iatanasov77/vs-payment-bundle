@@ -27,11 +27,6 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
     /**
      * @var bool
      */
-    protected $supportRecurring;
-    
-    /**
-     * @var bool
-     */
     protected $useSandbox;
     
     /**
@@ -75,7 +70,10 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
         
         $config = $this->useSandbox || $forSandbox ? $this->sandboxConfig : $this->config;
         
-        if ( $this->factoryName == 'paypal_express_checkout' ) {
+        if (
+            $this->factoryName == 'paypal_express_checkout' ||
+            $this->factoryName == 'paypal_pro_checkout'
+        ) {
             /**
              * Must to be Boolean.
              * @see \Payum\Paypal\ExpressCheckout\Nvp\Api
@@ -133,18 +131,6 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
     public function setSandboxConfig( array $sandboxConfig ): self
     {
         $this->sandboxConfig = $sandboxConfig;
-        
-        return $this;
-    }
-    
-    public function getSupportRecurring()
-    {
-        return $this->supportRecurring;
-    }
-    
-    public function setSupportRecurring($supportRecurring): self
-    {
-        $this->supportRecurring = $supportRecurring;
         
         return $this;
     }

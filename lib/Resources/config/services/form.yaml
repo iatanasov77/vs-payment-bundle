@@ -127,5 +127,11 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_users_subscriptions.model.payed_service_subscription_period.class%'
+            
+    Vankosoft\PaymentBundle\Form\Type\PaymentMethodType:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@vs_payment_payment'
 
 

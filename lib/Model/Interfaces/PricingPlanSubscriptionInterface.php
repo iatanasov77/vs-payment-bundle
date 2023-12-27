@@ -9,4 +9,7 @@ interface PricingPlanSubscriptionInterface extends ResourceInterface, Subscripti
     public function getOrderItem(): OrderItemInterface;
     public function isPaid(): bool;
     public function isActive(): bool;
+    public function getGatewayAttributes(): array;
+    public function isRecurringPayment(): bool;
+    public function getRecurringPayment(): bool;
 }

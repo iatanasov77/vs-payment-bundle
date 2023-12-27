@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Vankosoft\UsersBundle\Model\UserInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
+use Vankosoft\PaymentBundle\Component\Payment\Payment;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
@@ -37,19 +38,24 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     /** @var StripeApi */
     private $stripeApi;
     
+    /** @var Payment */
+    private $vsPayment;
+    
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
         RepositoryInterface $pricingPlanSubscriptionRepository,
         Factory $pricingPlanSubscriptionFactory,
         OrderFactory $orderFactory,
-        StripeApi $stripeApi
+        StripeApi $stripeApi,
+        Payment $vsPayment
     ) {
         $this->doctrine                             = $doctrine;
         $this->pricingPlanSubscriptionRepository    = $pricingPlanSubscriptionRepository;
         $this->pricingPlanSubscriptionFactory       = $pricingPlanSubscriptionFactory;
         $this->orderFactory                         = $orderFactory;
         $this->stripeApi                            = $stripeApi;
+        $this->vsPayment                            = $vsPayment;
         
         $token          = $tokenStorage->getToken();
         if ( $token ) {
@@ -79,7 +85,7 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         $subscription->setPricingPlan( $pricingPlan );
         $subscription->setRecurringPayment( $event->getSetRecurringPayments() );
         
-        $startDate      = $previousSubscription ? $previousSubscription->getExpiresAt() : new \DateTime();
+        $startDate      = $previousSubscription->isPaid() ? $previousSubscription->getExpiresAt() : new \DateTime();
         $expiresDate    = $startDate->add( $pricingPlan->getSubscriptionPeriod() );
         $subscription->setExpiresAt( $expiresDate );
         
@@ -127,13 +133,14 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         }
         
         $subscription->setActive( true );
+        $gateway    = $payment->getOrder()->getPaymentMethod()->getGateway();
         
-        if ( $subscription->isRecurringPayment() ) {
+        if ( $this->vsPayment->isGatewaySupportRecurring( $gateway ) ) {
             $paymentData    = $payment->getDetails();
             $gtAttributes   = $subscription->getGatewayAttributes();
             $gtAttributes   = $gtAttributes ?: [];
             
-            $paymentFactory = $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName();
+            $paymentFactory = $gateway->getFactoryName();
             if ( $paymentFactory == 'stripe_checkout' || $paymentFactory == 'stripe_js' ) {
                 $this->setStripePaymentAttributes( $subscription, $paymentData );
             }
@@ -146,7 +153,8 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     {
         $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY]    = isset( $paymentData['local']['customer'] ) ?
                                                                 $paymentData['local']['customer']['id'] : null;
-        $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]       = isset( $paymentData['local']['customer'] ) ?
+        
+        $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]       = isset( $paymentData['local']['customer']['plan'] ) ?
                                                                 $paymentData['local']['customer']['plan'] : null;
         
         if ( $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY] && $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] ) {

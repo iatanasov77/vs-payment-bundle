@@ -24,15 +24,11 @@
                 <option name="default"></option>
             </options>
         </field>
+        
         <field name="description" type="string" length="255" nullable="true" >
             <gedmo:translatable />
         </field>
         
-        <field name="supportRecurring" column="support_recurring" type="boolean" nullable="false">
-            <options>
-                <option name="default">0</option>
-            </options>
-        </field>
         <field name="useSandbox" column="use_sandbox" type="boolean" nullable="false" default="0" />
         <field name="sandboxConfig" column="sandbox_config" type="json" nullable="true" />
         

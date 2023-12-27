@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface;
 use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod;
 
@@ -147,7 +148,7 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
         return $this;
     }
     
-    public function getGatewayAttributes()
+    public function getGatewayAttributes(): array
     {
         return $this->gatewayAttributes ?: [];
     }
@@ -222,5 +223,15 @@ class PricingPlanSubscription implements PricingPlanSubscriptionInterface
     public function getCurrencyCode()
     {
         return $this->pricingPlan ? $this->pricingPlan->getCurrencyCode() : 'EUR';
+    }
+    
+    public function getGateway(): GatewayConfigInterface
+    {
+        return $this->orderItem->getOrder()->getPaymentMethod()->getGateway();
+    }
+    
+    public function getGatewayFactory(): string
+    {
+        return $this->orderItem->getOrder()->getPaymentMethod()->getGateway()->getFactoryName();
     }
 }

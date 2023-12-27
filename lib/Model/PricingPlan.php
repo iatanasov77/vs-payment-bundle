@@ -227,7 +227,7 @@ class PricingPlan implements PricingPlanInterface, Comparable
         return $this;
     }
     
-    public function getGatewayAttributes()
+    public function getGatewayAttributes(): array
     {
         return $this->gatewayAttributes ?: [];
     }

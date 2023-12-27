@@ -8,27 +8,8 @@ class PaypalRestController extends AbstractCheckoutController
 {
     public function prepareAction( Request $request ): Response
     {
-        $cart   = $this->orderFactory->getShoppingCart();
-        
-        $storage = $this->payum->getStorage( $this->paymentClass );
-        $payment = $storage->create();
-        
-        $payment->setOrder( $cart );
-        $payment->setNumber( uniqid() );
-        $payment->setCurrencyCode( $cart->getCurrencyCode() );
-        $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
-        $payment->setTotalAmount( $cart->getTotalAmount() );
-        $payment->setDescription( $cart->getDescription() );
-        
-        $user   = $this->tokenStorage->getToken()->getUser();
-        $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
-        $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
-        
-        $payment->setDetails([
-            'PAYMENTREQUEST_0_AMT'          => $cart->getTotalAmount(),
-            'PAYMENTREQUEST_0_CURRENCYCODE' => $cart->getCurrencyCode(),
-        ]);
-        $storage->update( $payment );
+        $cart       = $this->orderFactory->getShoppingCart();
+        $payment    = $this->preparePayment( $cart );
         
         $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
             $cart->getPaymentMethod()->getGateway()->getGatewayName(),
@@ -37,5 +18,32 @@ class PaypalRestController extends AbstractCheckoutController
         );
         
         return $this->redirect( $captureToken->getTargetUrl() );
+    }
+    
+    protected function preparePayment( OrderInterface $cart )
+    {
+        $storage = $this->payum->getStorage( $this->paymentClass );
+        $payment = $storage->create();
+        
+        $payment->setNumber( uniqid() );
+        $payment->setTotalAmount( $cart->getTotalAmount() * 100  ); // Amount must convert to at least 100 stotinka.
+        $payment->setCurrencyCode( $cart->getCurrencyCode() );
+        
+        $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
+        $payment->setDescription( $cart->getDescription() );
+        $payment->setOrder( $cart );
+        
+        $user   = $this->tokenStorage->getToken()->getUser();
+        $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
+        $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
+        
+        $payment->setDetails([
+            'PAYMENTREQUEST_0_AMT'          => $cart->getTotalAmount() * 100,
+            'PAYMENTREQUEST_0_CURRENCYCODE' => $cart->getCurrencyCode(),
+        ]);
+        
+        $storage->update( $payment );
+        
+        return $payment;
     }
 }

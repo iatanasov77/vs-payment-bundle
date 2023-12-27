@@ -5,6 +5,17 @@ services:
         
     vs_payment_payment:
         class: Vankosoft\PaymentBundle\Component\Payment\Payment
+        arguments:
+            - '@router'
+            - '@vs_payment.order_factory'
+            
+    vs_payment.twig.extension.payment:
+        class: Vankosoft\PaymentBundle\Twig\PaymentExtension
+        public: false
+        arguments:
+            - '@vs_payment_payment'
+        tags:
+            - { name: twig.extension }
     
     Vankosoft\PaymentBundle\Form\PaymentForm:
         tags: ['form.type']
@@ -37,6 +48,7 @@ services:
             - '@vs_payment.factory.pricing_plan_subscription'
             - '@vs_payment.order_factory'
             - '@vs_payment.stripe_api'
+            - '@vs_payment_payment'
         tags: [kernel.event_subscriber]
     
     ########################################################################

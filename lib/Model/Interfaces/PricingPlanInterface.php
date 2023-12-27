@@ -18,4 +18,6 @@ interface PricingPlanInterface extends ResourceInterface
     
     public function getPaidService(): ?PayedServiceSubscriptionPeriodInterface;
     public function getSubscriptions(): Collection;
+    
+    public function getGatewayAttributes(): array;
 }
