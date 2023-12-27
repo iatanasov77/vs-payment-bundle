@@ -79,7 +79,7 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         $subscription->setPricingPlan( $pricingPlan );
         $subscription->setRecurringPayment( $event->getSetRecurringPayments() );
         
-        $startDate      = $previousSubscription ? $previousSubscription->getExpiresAt() : new \DateTime();
+        $startDate      = $previousSubscription->isPaid() ? $previousSubscription->getExpiresAt() : new \DateTime();
         $expiresDate    = $startDate->add( $pricingPlan->getSubscriptionPeriod() );
         $subscription->setExpiresAt( $expiresDate );
         
