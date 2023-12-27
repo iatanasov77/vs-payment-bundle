@@ -204,7 +204,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
      */
     private function checkRecurringPaymentCreated( Request $request, array $gtAttributes, bool $needCreated ): bool
     {
-        if ( $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] ) {
+        if ( $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY] && isset( $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY] ) ) {
             if ( ! $needCreated ) {
                 $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_subscription_already_created', [], 'VSPaymentBundle' );
                 $request->getSession()->getFlashBag()->add( 'error', $flashMessage );
@@ -231,14 +231,18 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $cart           = $this->orderFactory->getShoppingCart();
         //$payment        = $this->preparePayment( $cart );
         
-        $gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
+        //$gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
+        $gateway        = $this->payum->getGateway( $subscription->getGatewayFactory() );
+        
         $stripeRequest  = new \ArrayObject([
             'customer'  => $gtAttributes[StripeApi::CUSTOMER_ATTRIBUTE_KEY],
             'items'     => [
                 ['price' => $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]]
             ],
         ]);
-        $gateway->execute( new CreateSubscription( $stripeRequest ) );
+        $gateway->execute( $subscriptionData = new CreateSubscription( $stripeRequest ) );
+        $subscriptionModel                                      = $subscriptionData->getModel();
+        $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY]    = $subscriptionModel['id'];
         
         $subscription->setGatewayAttributes( $gtAttributes );
         $subscription->setRecurringPayment( true );
@@ -257,13 +261,17 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $cart           = $this->orderFactory->getShoppingCart();
         //$payment        = $this->preparePayment( $cart );
         
-        $gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
+        //$gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
+        $gateway        = $this->payum->getGateway( $subscription->getGatewayFactory() );
+        
         $stripeRequest  = new \ArrayObject([
             "id"    => $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY],
         ]);
         $gateway->execute( new CancelSubscription( $stripeRequest ) );
         
         $gtAttributes[StripeApi::PRICE_ATTRIBUTE_KEY]   = null;
+        unset( $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY] );
+        
         $subscription->setGatewayAttributes( $gtAttributes );
         $subscription->setRecurringPayment( false );
         
