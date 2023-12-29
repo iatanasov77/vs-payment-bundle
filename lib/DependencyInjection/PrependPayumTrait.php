@@ -35,14 +35,16 @@ trait PrependPayumTrait
                 $vsPaymentResources['payment']["classes"]["model"]      => ['doctrine' => 'orm'],
                 
                 // PayPal Recurring Payment Models
-                'Vankosoft\PaymentBundle\Model\PayPal\AgreementDetails' => new FilesystemStorage(
-                    $projectRootDir . '/var/payum/storage',
-                    'Vankosoft\PaymentBundle\Model\PayPal\AgreementDetails'
-                ),
-                'Vankosoft\PaymentBundle\Model\PayPal\RecurringPaymentDetails' => new FilesystemStorage(
-                    $projectRootDir . '/var/payum/storage',
-                    'Vankosoft\PaymentBundle\Model\PayPal\RecurringPaymentDetails'
-                ),
+                'Vankosoft\PaymentBundle\Model\PayPal\AgreementDetails' => ['filesystem' => [
+                        'storage_dir'   => $projectRootDir . '/var/payum/storage',
+                        'id_property'   => 'payum_id',
+                    ]
+                ],
+                'Vankosoft\PaymentBundle\Model\PayPal\RecurringPaymentDetails' => ['filesystem' => [
+                        'storage_dir'   => $projectRootDir . '/var/payum/storage',
+                        'id_property'   => 'payum_id',
+                    ]
+                ],
             ]),
             'security'  =>  $tokenStorageConfig,
             'dynamic_gateways' => \array_merge( \array_pop( $payumConfig )['dynamic_gateways'] ?? [], [
