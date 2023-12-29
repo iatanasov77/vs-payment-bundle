@@ -69,11 +69,13 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $agreement  = $this->prepareAgreement( $cart );
         $storage->update( $agreement );
         
-        $afterRoute = 'vs_payment_paypal_express_checkout_done';
+        $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        $afterRoute     = 'vs_payment_paypal_express_checkout_done';
         $captureToken   = $this->payum->getTokenFactory()->createCaptureToken(
             $cart->getPaymentMethod()->getGateway()->getGatewayName(),
             $agreement,
-            'vs_payment_paypal_express_checkout_create_recurring_payment'
+            'vs_payment_paypal_express_checkout_create_recurring_payment',
+            ['subscriptionId' => $subscription->getId(),]
         );
         $storage->update( $agreement );
         
@@ -98,6 +100,11 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         
         $agreement          = $agreementStatus->getModel();
         $recurringPayment   = $this->prepareRecurringPaymentDetails( $cart, $agreement );
+        
+        $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        $subscription->setRecurringPayment( true );
+        $this->doctrine->getManager()->persist( $subscription );
+        $this->doctrine->getManager()->flush();
         
         $afterRoute = 'vs_payment_paypal_express_checkout_done';
         $captureToken   = $this->payum->getTokenFactory()->createToken(
