@@ -25,17 +25,7 @@ vs_payment_exchange_rate:
         path: /payment/exchange_rate
         templates: "@VSPayment/Pages/ExchangeRate"
     type: sylius.resource
-    
-vs_payment_recieved_payments:
-    resource: |
-        alias: vs_payment.payment
-        except: ['create', 'update', 'show']
-        path: /payment/recieved-payments
-        templates: "@VSPayment/Pages/RecievedPayments"
-    type: sylius.resource
-    options:
-        expose: true
-    
+
 vs_payment_recieved_payments_index:
     path: /payment/recieved-payments/
     methods: [GET]
@@ -50,17 +40,17 @@ vs_payment_recieved_payments_index:
             template: "@VSPayment/Pages/RecievedPayments/index.html.twig"
     options:
         expose: true
-        
-vs_payment_orders:
+
+vs_payment_recieved_payments:
     resource: |
-        alias: vs_payment.order
+        alias: vs_payment.payment
         except: ['create', 'update', 'show']
-        path: /payment/orders
-        templates: "@VSPayment/Pages/Orders"
+        path: /payment/recieved-payments
+        templates: "@VSPayment/Pages/RecievedPayments"
     type: sylius.resource
     options:
         expose: true
-    
+
 vs_payment_orders_index:
     path: /payment/orders/
     methods: [GET]
@@ -75,17 +65,17 @@ vs_payment_orders_index:
             template: "@VSPayment/Pages/Orders/index.html.twig"
     options:
         expose: true
-        
-vs_payment_pricing_plan_subscriptions:
+
+vs_payment_orders:
     resource: |
-        alias: vs_payment.pricing_plan_subscription
-        except: ['create', 'update']
-        path: /payment/pricing-plan-subscriptions
-        templates: "@VSPayment/Pages/PricingPlanSubscriptions"
+        alias: vs_payment.order
+        except: ['create', 'update', 'show']
+        path: /payment/orders
+        templates: "@VSPayment/Pages/Orders"
     type: sylius.resource
     options:
         expose: true
-    
+        
 vs_payment_pricing_plan_subscriptions_index:
     path: /payment/pricing-plan-subscriptions/
     methods: [GET]
@@ -100,3 +90,15 @@ vs_payment_pricing_plan_subscriptions_index:
             template: "@VSPayment/Pages/PricingPlanSubscriptions/index.html.twig"
     options:
         expose: true
+
+vs_payment_pricing_plan_subscriptions:
+    resource: |
+        alias: vs_payment.pricing_plan_subscription
+        except: ['create', 'update']
+        path: /payment/pricing-plan-subscriptions
+        templates: "@VSPayment/Pages/PricingPlanSubscriptions"
+    type: sylius.resource
+    options:
+        expose: true
+
+
