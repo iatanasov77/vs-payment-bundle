@@ -77,6 +77,12 @@ vs_payment_paypal_express_checkout_done:
     path:     /paypal-express-checkout/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::doneAction
     
+vs_payment_paypal_express_checkout_create_recurring_agreement:
+   path: /stripe-checkout/create-recurring-agreement/{subscriptionId}
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::createRecurringAgreementAction
+   options:
+        expose: true
+        
 vs_payment_paypal_express_checkout_create_recurring_payment:
    path: /stripe-checkout/create-recurring-payment/{subscriptionId}
    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::createRecurringPaymentAction

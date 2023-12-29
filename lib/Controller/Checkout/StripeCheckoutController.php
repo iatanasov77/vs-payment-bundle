@@ -138,6 +138,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
+        $payment->setOrder( $cart );
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $cart->getCurrencyCode() );
         $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
@@ -147,8 +148,8 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $user   = $this->tokenStorage->getToken()->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
-        $payment->setOrder( $cart );
         
+        // Payment Details
         $paymentDetails   = $this->preparePaymentDetails( $cart );
         $payment->setDetails( $paymentDetails );
         
