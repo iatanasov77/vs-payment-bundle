@@ -139,6 +139,7 @@ vs_payment:
             paid: Paid
             recurring: Recurring
             expires_at: Expires At
+            payment_factory: Payment Factory
             actions: Actions
             create_payment: Create Payment
             start_recurring: Setup Recurring Payments

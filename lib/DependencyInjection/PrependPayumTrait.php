@@ -5,6 +5,11 @@ use Symfony\Component\Filesystem\Filesystem;
 use Payum\Core\Storage\FilesystemStorage;
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
+/*
+ * Payum Symfony Configuration
+ * ===========================
+ * https://github.com/Payum/Payum/blob/master/docs/symfony/configuration-reference.md
+ */
 trait PrependPayumTrait
 {
     private function prependPayum( ContainerBuilder $container ): void
