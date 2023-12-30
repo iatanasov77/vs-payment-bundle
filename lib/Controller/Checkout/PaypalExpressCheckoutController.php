@@ -63,27 +63,23 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
     
     public function createRecurringAgreementAction( $subscriptionId, Request $request ): Response
     {
-        $cart           = $this->orderFactory->getShoppingCart();
+        $cart               = $this->orderFactory->getShoppingCart();
         
-        $storage    = $this->payum->getStorage( self::AGREEMENT_CLASS );
-        $agreement  = $storage->create();
-        
-        $agreement['PAYMENTREQUEST_0_AMT']              = 0; // For an initial amount to be charged please add it here, eg $10 setup fee
-        $agreement['L_BILLINGTYPE0']                    = PaypalApi::BILLINGTYPE_RECURRING_PAYMENTS;
-        $agreement['L_BILLINGAGREEMENTDESCRIPTION0']    = \substr( $cart->getDescription(), 0, 120 );
-        $agreement['NOSHIPPING']                        = 1;
-        
-        $storage->update( $agreement );
+        $storagePayment     = $this->payum->getStorage( $this->paymentClass );
+        $storageAgreement   = $this->payum->getStorage( self::AGREEMENT_CLASS );
+        $agreement          = $this->prepareRecurringAgreement( $cart );
         
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
         $afterRoute     = 'vs_payment_paypal_express_checkout_done';
         $captureToken   = $this->payum->getTokenFactory()->createCaptureToken(
             $cart->getPaymentMethod()->getGateway()->getGatewayName(),
-            $agreement,
+            $agreement['payment'],
             'vs_payment_paypal_express_checkout_create_recurring_payment',
             ['subscriptionId' => $subscription->getId(),]
         );
-        $storage->update( $agreement );
+        
+        $storagePayment->update( $agreement['payment'] );
+        $storageAgreement->update( $agreement['agreement'] );
         
         return $this->redirect( $captureToken->getTargetUrl() );
     }
@@ -167,11 +163,46 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         return $paymentDetails;
     }
     
+    protected function prepareRecurringAgreement( OrderInterface $cart )
+    {
+        //return $this->prepareRecurringAgreementDetails( $cart );
+        
+        $storage        = $this->payum->getStorage( $this->paymentClass );
+        $payment        = $this->createPayment( $cart );
+        
+        // Payment Details
+        $agreementDetails = $this->prepareRecurringAgreementDetails( $cart );
+        $payment->setDetails( $agreementDetails->getArrayCopy() );
+        
+        $storage->update( $payment );
+        
+        return [
+            'payment'   => $payment,
+            'agreement' => $agreement,
+        ];
+    }
+    
+    protected function prepareRecurringAgreementDetails( OrderInterface $cart ): \ArrayObject
+    {
+        $storage    = $this->payum->getStorage( self::AGREEMENT_CLASS );
+        $agreement  = $storage->create();
+        
+        //$agreement['PAYMENTREQUEST_0_AMT']              = 0; // For an initial amount to be charged please add it here, eg $10 setup fee
+        $agreement['PAYMENTREQUEST_0_AMT']              = $cart->getTotalAmount();
+        $agreement['PAYMENTREQUEST_0_CURRENCYCODE']     = $cart->getCurrencyCode();
+        
+        $agreement['L_BILLINGTYPE0']                    = PaypalApi::BILLINGTYPE_RECURRING_PAYMENTS;
+        $agreement['L_BILLINGAGREEMENTDESCRIPTION0']    = \substr( $cart->getDescription(), 0, 120 );
+        $agreement['NOSHIPPING']                        = 1;
+        
+        $storage->update( $agreement );
+        
+        return $agreement;
+    }
+    
     protected function prepareRecurringPayment( OrderInterface $cart, $agreement )
     {
         //return $this->prepareRecurringPaymentDetails( $cart, $agreement );
-        
-        
         
         $storage        = $this->payum->getStorage( $this->paymentClass );
         $payment        = $this->createPayment( $cart );
