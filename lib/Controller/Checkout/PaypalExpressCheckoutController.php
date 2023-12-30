@@ -167,7 +167,27 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         return $paymentDetails;
     }
     
-    protected function prepareRecurringPayment( OrderInterface $cart, $agreement ): \ArrayObject
+    protected function prepareRecurringPayment( OrderInterface $cart, $agreement )
+    {
+        //return $this->prepareRecurringPaymentDetails( $cart, $agreement );
+        
+        
+        
+        $storage        = $this->payum->getStorage( $this->paymentClass );
+        $payment        = $this->createPayment( $cart );
+        
+        // Payment Details
+        $paymentDetails = $this->prepareRecurringPaymentDetails( $cart, $agreement );
+        $payment->setDetails( $paymentDetails->getArrayCopy() );
+        
+        $this->doctrine->getManager()->persist( $cart );
+        $this->doctrine->getManager()->flush();
+        $storage->update( $payment );
+        
+        return $payment;
+    }
+    
+    protected function prepareRecurringPaymentDetails( OrderInterface $cart, $agreement ): \ArrayObject
     {
         $storage            = $this->payum->getStorage( self::RECURRING_PAYMENT_CLASS );
         $recurringPayment   = $storage->create();
