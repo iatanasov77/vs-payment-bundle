@@ -24,6 +24,15 @@ use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
  * 
  * https://developer.paypal.com/api/nvp-soap/paypal-payments-standard/integration-guide/recurring-payments-dashboard/
  * 
+ * PAYPAL NVP/SOAP API
+ * ===================
+ * https://developer.paypal.com/api/nvp-soap/create-recurring-payments-profile-nvp/
+ * 
+ * PAYPAL REST API
+ * ===============
+ * https://developer.paypal.com/docs/api/catalog-products/v1/
+ * https://developer.paypal.com/docs/api/subscriptions/v1/
+ * 
  * DEPRECATED
  * ==========
  * PayPal Express Checkout is deprecated. Please, use new PayPal Commerce Platform integration.
@@ -100,13 +109,13 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
             return $this->paymentFailed( $request, $agreementStatus );
         }
         
-        $agreement          = $agreementStatus->getModel();
-        $recurringPayment   = $this->prepareRecurringPayment( $cart, $agreement );
-        
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
         $subscription->setRecurringPayment( true );
         $this->doctrine->getManager()->persist( $subscription );
         $this->doctrine->getManager()->flush();
+        
+        $agreement          = $agreementStatus->getModel();
+        $recurringPayment   = $this->prepareRecurringPayment( $cart, $agreement, $subscription );
         
         $afterRoute = 'vs_payment_paypal_express_checkout_done';
         $captureToken   = $this->payum->getTokenFactory()->createToken(
@@ -200,15 +209,15 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         return $agreement;
     }
     
-    protected function prepareRecurringPayment( OrderInterface $cart, $agreement )
+    protected function prepareRecurringPayment( OrderInterface $cart, $agreement, $subscription )
     {
-        //return $this->prepareRecurringPaymentDetails( $cart, $agreement );
+        //return $this->prepareRecurringPaymentDetails( $cart, $agreement, $subscription );
         
         $storage        = $this->payum->getStorage( $this->paymentClass );
         $payment        = $this->createPayment( $cart );
         
         // Payment Details
-        $paymentDetails = $this->prepareRecurringPaymentDetails( $cart, $agreement );
+        $paymentDetails = $this->prepareRecurringPaymentDetails( $cart, $agreement, $subscription );
         $payment->setDetails( $paymentDetails->getArrayCopy() );
         
         $this->doctrine->getManager()->persist( $cart );
@@ -218,8 +227,13 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         return $payment;
     }
     
-    protected function prepareRecurringPaymentDetails( OrderInterface $cart, $agreement ): \ArrayObject
+    protected function prepareRecurringPaymentDetails( OrderInterface $cart, $agreement, $subscription ): \ArrayObject
     {
+        $user                   = $this->tokenStorage->getToken()->getUser();
+        $previousSubscription   = $user->getActivePricingPlanSubscriptionByService(
+            $subscription->getPricingPlan()->getPaidService()->getPayedService()
+        );
+        
         $storage            = $this->payum->getStorage( self::RECURRING_PAYMENT_CLASS );
         $recurringPayment   = $storage->create();
         
@@ -231,9 +245,17 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         
         $recurringPayment['AMT']                = $cart->getTotalAmount();
         $recurringPayment['CURRENCYCODE']       = $cart->getCurrencyCode();
-        $recurringPayment['BILLINGFREQUENCY']   = 7;
-        $recurringPayment['PROFILESTARTDATE']   = date( DATE_ATOM );
-        $recurringPayment['BILLINGPERIOD']      = PaypalApi::BILLINGPERIOD_DAY;
+        
+        // MANUAL: https://developer.paypal.com/api/nvp-soap/create-recurring-payments-profile-nvp/
+        $startDate          = $previousSubscription && $previousSubscription->isPaid() ?
+                                $previousSubscription->getExpiresAt() :
+                                new \DateTime();                    
+        $recurringPayment['PROFILESTARTDATE']   = $startDate->format( \DateTime::ATOM );
+        
+        $paidServicePeriod  = $subscription->getPricingPlan()->getPaidService()->getSubscriptionPeriod();
+        $billingCycle       = $this->vsPayment->getPaypalNvpBillingCycle( $paidServicePeriod );
+        $recurringPayment['BILLINGPERIOD']      = $billingCycle['period'];
+        $recurringPayment['BILLINGFREQUENCY']   = $billingCycle['frequency'];
         
         $gateway            = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
         $gateway->execute( new CreateRecurringPaymentProfile( $recurringPayment ) );
