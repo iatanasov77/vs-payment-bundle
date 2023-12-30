@@ -40,7 +40,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $cart           = $this->orderFactory->getShoppingCart();
         
         $subscriptions  = $cart->getSubscriptions();
-        if ( $cart->hasRecurringPayment() && ! empty( $subscriptions ) ) {
+        if ( ! empty( $subscriptions ) ) {
             $agreementAction    = 'Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::createRecurringAgreementAction';
             
             $response           = $this->forward( $agreementAction, [
