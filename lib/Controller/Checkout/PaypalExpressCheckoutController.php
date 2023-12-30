@@ -128,6 +128,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $recurringPayment       = new $recurringPaymentClass;
         
         /** @var \Payum\Core\GatewayInterface $gateway */
+        $gateway                = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
         $gateway->execute( new Cancel( $recurringPayment ) );
         $gateway->execute( new Sync( $recurringPayment ) );
         
@@ -182,7 +183,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
             'BILLINGPERIOD'     => PaypalApi::BILLINGPERIOD_DAY
         ];
         
-        $gateway            = $cart->getPaymentMethod()->getGateway();
+        $gateway            = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
         $gateway->execute( new CreateRecurringPaymentProfile( $recurringPayment ) );
         $gateway->execute( new Sync( $recurringPayment ) );
         
