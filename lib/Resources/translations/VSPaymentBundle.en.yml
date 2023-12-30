@@ -243,6 +243,7 @@ vs_payment:
         pricing_plan_subscription_missing_attributes: 'Missing Pricing Plan Subscription Attributes Needed to Create Recurring Payment !!!'
         pricing_plan_create_subscription_recurring_success: 'Setting up Recurring Payments for the Subscription Successfull !!!'
         pricing_plan_cancel_subscription_recurring_success: 'Canceling Recurring Payments for the Subscription Successfull !!!'
+        pricing_plan_cancel_subscription_recurring_error: 'Canceling Recurring Payments for the Subscription Failed !!!'
         pricing_plan_subscription_already_created: "Recurring Payments Subscription is Already Created !!!"
         pricing_plan_subscription_not_created_yet: "Recurring Payments Subscription is Not Created Yet !!!"
         

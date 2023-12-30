@@ -8,6 +8,7 @@ use Payum\Core\Request\Cancel;
 use Payum\Paypal\ExpressCheckout\Nvp\Request\Api\CreateRecurringPaymentProfile;
 use Payum\Paypal\ExpressCheckout\Nvp\Api as PaypalApi;
 
+use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
@@ -143,8 +144,19 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         
         if ( $status->isCanceled() ) {
             // yes it is cancelled
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_cancel_subscription_recurring_success', [], 'VSPaymentBundle' );
+            $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         } else {
             // hm... not yet. check other status isFailed and so on
+            $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_cancel_subscription_recurring_error', [], 'VSPaymentBundle' );
+            $request->getSession()->getFlashBag()->add( 'error', $flashMessage );
+        }
+        
+        $redirectRoute  = $this->routeRedirectOnPricingPlanDone ? $this->routeRedirectOnPricingPlanDone : 'vs_payment_pricing_plans';
+        if ( $redirectRoute && $request->isXmlHttpRequest() ) {
+            return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
+        } else {
+            return $this->redirectToRoute( $redirectRoute );
         }
     }
     

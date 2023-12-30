@@ -120,12 +120,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_cancel_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
-        if ( $this->routeRedirectOnPricingPlanDone ) {
-            $redirectRoute  = $this->routeRedirectOnPricingPlanDone;
-        } else {
-            $redirectRoute  = 'vs_payment_pricing_plans';
-        }
-        
+        $redirectRoute  = $this->routeRedirectOnPricingPlanDone ? $this->routeRedirectOnPricingPlanDone : 'vs_payment_pricing_plans';
         if ( $redirectRoute && $request->isXmlHttpRequest() ) {
             return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
         } else {
