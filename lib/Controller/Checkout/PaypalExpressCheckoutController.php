@@ -127,10 +127,12 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         return $this->redirect( $captureToken->getTargetUrl() );
     }
     
-    public function cancelRecurringPaymentAction( $paymentId, Request $request ): Response
+    public function cancelRecurringPaymentAction( $subscriptionId, Request $request ): Response
     {
+        $subscription           = $this->subscriptionsRepository->find( $subscriptionId );
+        $payment                = $subscription->getOrderItem()->getOrder()->getPayment();
         $recurringPaymentClass  = self::RECURRING_PAYMENT_CLASS;
-        $recurringPayment       = new $recurringPaymentClass;
+        $recurringPayment       = new $recurringPaymentClass( $payment->getDetails() );
         
         /** @var \Payum\Core\GatewayInterface $gateway */
         $gateway                = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
