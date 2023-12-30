@@ -178,7 +178,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         
         return [
             'payment'   => $payment,
-            'agreement' => $agreement,
+            'agreement' => $agreementDetails,
         ];
     }
     
