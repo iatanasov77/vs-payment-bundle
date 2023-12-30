@@ -172,16 +172,17 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $storage            = $this->payum->getStorage( self::RECURRING_PAYMENT_CLASS );
         $recurringPayment   = $storage->create();
         
-        $recurringPayment   = [
-            'TOKEN'             => $agreement['TOKEN'],
-            'DESC'              => \substr( $cart->getDescription(), 0, 120 ),
-            'EMAIL'             => $agreement['EMAIL'],
-            'AMT'               => 0.05,
-            'CURRENCYCODE'      => $cart->getCurrencyCode(),
-            'BILLINGFREQUENCY'  => 7,
-            'PROFILESTARTDATE'  => \date( DATE_ATOM ),
-            'BILLINGPERIOD'     => PaypalApi::BILLINGPERIOD_DAY
-        ];
+        $recurringPayment['TOKEN']              = $agreement['TOKEN'];
+        $recurringPayment['EMAIL']              = $agreement['EMAIL'];
+        
+        // Desc must match agreement 'L_BILLINGAGREEMENTDESCRIPTION' in prepare.php
+        $recurringPayment['DESC']               = \substr( $cart->getDescription(), 0, 120 );
+        
+        $recurringPayment['AMT']                = $cart->getTotalAmount();
+        $recurringPayment['CURRENCYCODE']       = $cart->getCurrencyCode();
+        $recurringPayment['BILLINGFREQUENCY']   = 7;
+        $recurringPayment['PROFILESTARTDATE']   = date( DATE_ATOM );
+        $recurringPayment['BILLINGPERIOD']      = PaypalApi::BILLINGPERIOD_DAY;
         
         $gateway            = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
         $gateway->execute( new CreateRecurringPaymentProfile( $recurringPayment ) );
