@@ -66,7 +66,13 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $cart           = $this->orderFactory->getShoppingCart();
         
         $storage    = $this->payum->getStorage( self::AGREEMENT_CLASS );
-        $agreement  = $this->prepareAgreement( $cart );
+        $agreement  = $storage->create();
+        
+        $agreement['PAYMENTREQUEST_0_AMT']              = 0; // For an initial amount to be charged please add it here, eg $10 setup fee
+        $agreement['L_BILLINGTYPE0']                    = PaypalApi::BILLINGTYPE_RECURRING_PAYMENTS;
+        $agreement['L_BILLINGAGREEMENTDESCRIPTION0']    = \substr( $cart->getDescription(), 0, 120 );
+        $agreement['NOSHIPPING']                        = 1;
+        
         $storage->update( $agreement );
         
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
@@ -99,7 +105,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         }
         
         $agreement          = $agreementStatus->getModel();
-        $recurringPayment   = $this->prepareRecurringPaymentDetails( $cart, $agreement );
+        $recurringPayment   = $this->prepareRecurringPayment( $cart, $agreement );
         
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
         $subscription->setRecurringPayment( true );
@@ -134,20 +140,6 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         }
     }
     
-    protected function prepareAgreement( OrderInterface $cart )
-    {
-        //$agreement['PAYMENTREQUEST_0_AMT'] = 0; // For an initial amount to be charged please add it here, eg $10 setup fee
-        $agreement   = [
-            'PAYMENTREQUEST_0_AMT'              => $cart->getTotalAmount() * 100,
-            'PAYMENTREQUEST_0_CURRENCYCODE'     => $cart->getCurrencyCode(),
-            'L_BILLINGTYPE0'                    => PaypalApi::BILLINGTYPE_RECURRING_PAYMENTS,
-            'L_BILLINGAGREEMENTDESCRIPTION0'    => \substr( $cart->getDescription(), 0, 120 ),
-            'NOSHIPPING'                        => 1
-        ];
-        
-        return $agreement;
-    }
-    
     protected function preparePayment( OrderInterface $cart, $agreement = null )
     {
         $storage        = $this->payum->getStorage( $this->paymentClass );
@@ -174,7 +166,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         return $paymentDetails;
     }
     
-    protected function prepareRecurringPaymentDetails( OrderInterface $cart, $agreement ): array
+    protected function prepareRecurringPayment( OrderInterface $cart, $agreement ): \ArrayObject
     {
         $storage            = $this->payum->getStorage( self::RECURRING_PAYMENT_CLASS );
         $recurringPayment   = $storage->create();
