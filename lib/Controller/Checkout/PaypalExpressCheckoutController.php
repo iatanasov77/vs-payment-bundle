@@ -80,11 +80,11 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $agreement          = $this->prepareRecurringAgreement( $cart );
         
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
-        $afterRoute     = 'vs_payment_paypal_express_checkout_done';
+        $afterRoute     = 'vs_payment_paypal_express_checkout_create_recurring_payment';
         $captureToken   = $this->payum->getTokenFactory()->createCaptureToken(
             $cart->getPaymentMethod()->getGateway()->getGatewayName(),
             $agreement['payment'],
-            'vs_payment_paypal_express_checkout_create_recurring_payment',
+            $afterRoute,
             ['subscriptionId' => $subscription->getId(),]
         );
         
@@ -105,6 +105,8 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $gateway = $this->payum->getGateway( $token->getGatewayName() );
         $gateway->execute( $agreementStatus = new GetHumanStatus( $token ) );
         
+        // var_dump( $agreementStatus->getValue() ); die;
+        //if ( $agreementStatus->isFailed() ) {
         if ( ! $agreementStatus->isCaptured() ) {
             // failure
             return $this->paymentFailed( $request, $agreementStatus );
@@ -263,7 +265,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         // MANUAL: https://developer.paypal.com/api/nvp-soap/create-recurring-payments-profile-nvp/
         $startDate          = $previousSubscription && $previousSubscription->isPaid() ?
                                 $previousSubscription->getExpiresAt() :
-                                new \DateTime();                    
+                                new \DateTime();
         $recurringPayment['PROFILESTARTDATE']   = $startDate->format( \DateTime::ATOM );
         
         $paidServicePeriod  = $subscription->getPricingPlan()->getPaidService()->getSubscriptionPeriod();
