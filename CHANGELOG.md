@@ -1,3 +1,22 @@
+2.10.0	|	Release date: **01.01.2024**
+============================================
+* New Features and Improvements:
+  - Remove payum/paypal-pro-checkout-nvp .
+  - Create Recurring Payments with PayPal Express Checkout Gateway.
+  - Fix Payment Config Routes.
+  - Fix Subscriptions Cascade Operations.
+  - Fix Subscriptions Event Subscriber.
+  - Some Fixes on PaypalExpressCheckoutController .
+  - Remove 'php-http/message-factory' package, because is abandonened.
+  - Fix Some Deprecations.
+  - Add Some Improvement.
+  - Use 'php-http/guzzle7-adapter'
+  - Remove Guzzle Adapter.
+  - Improve PaypalRecurringPayment Create .
+  - Improve VS Payment Component .
+  - Fix PaypalExpressCheckoutController Create Recurring Payments.
+
+
 2.9.16	|	Release date: **27.12.2023**
 ============================================
 * New Features , Fixes and Improvements:
