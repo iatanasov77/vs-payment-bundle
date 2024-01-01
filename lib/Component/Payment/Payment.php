@@ -4,6 +4,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Payum\Paypal\ExpressCheckout\Nvp\Api as PaypalApi;
 use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod;
 use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\GatewayException;
 use Vankosoft\PaymentBundle\Component\Exception\PricingPlanException;
@@ -63,13 +64,9 @@ final class Payment
         return $route;
     }
     
-    public function getPaymentCreateRecurringRoute( GatewayConfigInterface $gatewayConfig, $isRecurring = false )
+    public function getPaymentCreateRecurringUrl( PricingPlanSubscriptionInterface $subscription )
     {
-        /*  
-        $this->router->generate( 'vs_payment_stripe_checkout_create_recurring_payment', [] );
-        */
-        
-        switch( $gatewayConfig->getFactoryName() ) {
+        switch( $subscription->getGateway()->getFactoryName() ) {
             case 'offline':
                 $route  = '';
                 break;
@@ -78,10 +75,14 @@ final class Payment
                 break;
             case 'stripe_checkout':
             case 'stripe_js':
-                $route  = 'vs_payment_stripe_checkout_prepare';
+                $route  = $this->router->generate( 'vs_payment_stripe_checkout_create_recurring_payment', [
+                    'subscriptionId' => $subscription->getId()
+                ]);
                 break;
             case 'paypal_express_checkout':
-                $route  = 'vs_payment_paypal_express_checkout_prepare';
+                $route  = $this->router->generate( 'vs_payment_paypal_express_checkout_create_recurring_agreement', [
+                    'subscriptionId' => $subscription->getId()
+                ]);
                 break;
             case 'paypal_pro_checkout':
                 $route  = '';
@@ -102,9 +103,9 @@ final class Payment
         return $route;
     }
     
-    public function getPaymentCancelRecurringRoute( GatewayConfigInterface $gatewayConfig, $isRecurring = false )
+    public function getPaymentCancelRecurringUrl( PricingPlanSubscriptionInterface $subscription )
     {
-        switch( $gatewayConfig->getFactoryName() ) {
+        switch( $subscription->getGateway()->getFactoryName() ) {
             case 'offline':
                 $route  = '';
                 break;
@@ -113,10 +114,14 @@ final class Payment
                 break;
             case 'stripe_checkout':
             case 'stripe_js':
-                $route  = 'vs_payment_stripe_checkout_prepare';
+                $route  = $this->router->generate( 'vs_payment_stripe_checkout_cancel_recurring_payment', [
+                    'subscriptionId' => $subscription->getId()
+                ]);
                 break;
             case 'paypal_express_checkout':
-                $route  = 'vs_payment_paypal_express_checkout_prepare';
+                $route  = $this->router->generate( 'vs_payment_paypal_express_checkout_cancel_recurring_payment', [
+                    'subscriptionId' => $subscription->getId()
+                ]);
                 break;
             case 'paypal_pro_checkout':
                 $route  = '';
