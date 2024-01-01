@@ -102,14 +102,12 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         // you can invalidate the token. The url could not be requested any more.
         $this->payum->getHttpRequestVerifier()->invalidate( $token );
         
-        $gateway = $this->payum->getGateway( $token->getGatewayName() );
+        $gateway    = $this->payum->getGateway( $token->getGatewayName() );
         $gateway->execute( $agreementStatus = new GetHumanStatus( $token ) );
         
-        // var_dump( $agreementStatus->getValue() ); die;
-        //if ( $agreementStatus->isFailed() ) {
-        if ( ! $agreementStatus->isCaptured() ) {
-            // failure
-            return $this->paymentFailed( $request, $agreementStatus );
+        $response   = $this->onRecurringAggreementStatus( $agreementStatus );
+        if ( $response ) {
+            return $response;
         }
         
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
@@ -299,5 +297,25 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
         return $payment;
+    }
+    
+    protected function onRecurringAggreementStatus( GetHumanStatus $agreementStatus ): ?Response
+    {
+        // var_dump( $agreementStatus->getValue() ); die;
+        
+        if ( $agreementStatus->isCaptured() ) {
+            // return $this->paymentFailed( $request, $agreementStatus );
+        }
+        
+        if ( $agreementStatus->isPending() ) {
+            // return $this->paymentFailed( $request, $agreementStatus );
+        }
+        
+        if ( $agreementStatus->isFailed() ) {
+            // failure
+            return $this->paymentFailed( $request, $agreementStatus );
+        }
+        
+        return null;
     }
 }
