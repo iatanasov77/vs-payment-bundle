@@ -136,7 +136,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $recurringPayment       = new $recurringPaymentClass( $payment->getDetails() );
         
         /** @var \Payum\Core\GatewayInterface $gateway */
-        $gateway                = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getGatewayName() );
+        $gateway                = $this->payum->getGateway( $subscription->getGateway()->getGatewayName() );
         $gateway->execute( new Cancel( $recurringPayment ) );
         $gateway->execute( new Sync( $recurringPayment ) );
         
