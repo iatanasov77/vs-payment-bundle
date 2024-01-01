@@ -77,31 +77,24 @@ vs_payment_paypal_express_checkout_done:
     path:     /paypal-express-checkout/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::doneAction
     
+vs_payment_paypal_express_checkout_create_recurring_agreement:
+   path: /paypal-express-checkout/create-recurring-agreement/{subscriptionId}
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::createRecurringAgreementAction
+   options:
+        expose: true
+        
 vs_payment_paypal_express_checkout_create_recurring_payment:
-   path: /stripe-checkout/create-recurring-payment/{subscriptionId}
+   path: /paypal-express-checkout/create-recurring-payment/{subscriptionId}
    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::createRecurringPaymentAction
    options:
         expose: true
    
 vs_payment_paypal_express_checkout_cancel_recurring_payment:
-   path: /stripe-checkout/cancel-recurring-payment/{subscriptionId}
+   path: /paypal-express-checkout/cancel-recurring-payment/{subscriptionId}
    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::cancelRecurringPaymentAction
    options:
         expose: true
 
-
-# PayPal Rest
-#######################################################################################
-vs_payment_paypal_rest_prepare:
-    path:     /paypal-rest/prepare
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::prepareAction
-    options:
-        expose: true
-
-vs_payment_paypal_rest_done:
-    path:     /paypal-rest/done
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalRestController::doneAction
-    
 # PayPal Pro Checkout
 #######################################################################################
 vs_payment_paypal_pro_checkout_prepare:

@@ -4,6 +4,7 @@ use Payum\Core\Payum;
 use Payum\Core\Gateway;
 use Payum\Stripe\Request\Api\CreatePlan;
 use Stripe\Event as StripeEvent;
+use Http\Discovery\NotFoundException;
 
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPlans;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetProducts;
@@ -41,7 +42,11 @@ final class Api
     public function __construct(
         Payum $payum
     ) {
-        $this->gateway  = $payum->getGateway( 'stripe_js' );
+        try {
+            $this->gateway  = $payum->getGateway( 'stripe_js' );
+        } catch ( NotFoundException $e ) {
+            
+        }
     }
     
     public function getPlans()

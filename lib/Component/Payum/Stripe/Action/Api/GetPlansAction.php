@@ -78,7 +78,7 @@ class GetPlansAction implements ActionInterface, GatewayAwareInterface, ApiAware
     /**
      * {@inheritDoc}
      */
-    public function supports( $request )
+    public function supports( $request ): bool
     {
         return
             $request instanceof GetPlans &&

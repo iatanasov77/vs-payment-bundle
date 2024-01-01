@@ -120,12 +120,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_cancel_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
-        if ( $this->routeRedirectOnPricingPlanDone ) {
-            $redirectRoute  = $this->routeRedirectOnPricingPlanDone;
-        } else {
-            $redirectRoute  = 'vs_payment_pricing_plans';
-        }
-        
+        $redirectRoute  = $this->routeRedirectOnPricingPlanDone ? $this->routeRedirectOnPricingPlanDone : 'vs_payment_pricing_plans';
         if ( $redirectRoute && $request->isXmlHttpRequest() ) {
             return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
         } else {
@@ -138,6 +133,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $storage = $this->payum->getStorage( $this->paymentClass );
         $payment = $storage->create();
         
+        $payment->setOrder( $cart );
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $cart->getCurrencyCode() );
         $payment->setRealAmount( $cart->getTotalAmount() ); // Need this for Real (Human Readable) Amount.
@@ -147,8 +143,8 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $user   = $this->tokenStorage->getToken()->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
-        $payment->setOrder( $cart );
         
+        // Payment Details
         $paymentDetails   = $this->preparePaymentDetails( $cart );
         $payment->setDetails( $paymentDetails );
         

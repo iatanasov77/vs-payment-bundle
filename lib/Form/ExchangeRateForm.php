@@ -61,7 +61,7 @@ final class ExchangeRateForm extends AbstractForm
         $resolver->setDefault( 'rounding_mode', \NumberFormatter::ROUND_HALFEVEN );
     }
     
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'vs_exchange_rate';
     }

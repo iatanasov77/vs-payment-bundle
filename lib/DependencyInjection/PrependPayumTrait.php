@@ -2,8 +2,14 @@
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
+use Payum\Core\Storage\FilesystemStorage;
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
+/*
+ * Payum Symfony Configuration
+ * ===========================
+ * https://github.com/Payum/Payum/blob/master/docs/symfony/configuration-reference.md
+ */
 trait PrependPayumTrait
 {
     private function prependPayum( ContainerBuilder $container ): void
@@ -27,10 +33,23 @@ trait PrependPayumTrait
                 throw new ConfigurationException( 'Unsupported Token Storage !!!' );
         }
         
+        $projectRootDir     = $container->getParameter( 'kernel.project_dir' );
         $payumConfig        = $container->getExtensionConfig( 'payum' );
         $container->prependExtensionConfig( 'payum', [
             'storages'  => \array_merge( \array_pop( $payumConfig )['storages'] ?? [], [
-                $vsPaymentResources['payment']["classes"]["model"] => ['doctrine' => 'orm'],
+                $vsPaymentResources['payment']["classes"]["model"]      => ['doctrine' => 'orm'],
+                
+                // PayPal Recurring Payment Models
+                'Vankosoft\PaymentBundle\Model\PayPal\AgreementDetails' => ['filesystem' => [
+                        'storage_dir'   => $projectRootDir . '/var/payum/storage',
+                        'id_property'   => 'payum_id',
+                    ]
+                ],
+                'Vankosoft\PaymentBundle\Model\PayPal\RecurringPaymentDetails' => ['filesystem' => [
+                        'storage_dir'   => $projectRootDir . '/var/payum/storage',
+                        'id_property'   => 'payum_id',
+                    ]
+                ],
             ]),
             'security'  =>  $tokenStorageConfig,
             'dynamic_gateways' => \array_merge( \array_pop( $payumConfig )['dynamic_gateways'] ?? [], [

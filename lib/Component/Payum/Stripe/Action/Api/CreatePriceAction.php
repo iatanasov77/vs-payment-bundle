@@ -78,7 +78,7 @@ class CreatePriceAction implements ActionInterface, GatewayAwareInterface, ApiAw
     /**
      * {@inheritDoc}
      */
-    public function supports( $request )
+    public function supports( $request ): bool
     {
         return
             $request instanceof CreatePrice &&

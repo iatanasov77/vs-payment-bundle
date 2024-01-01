@@ -106,7 +106,9 @@ abstract class AbstractCheckoutController extends AbstractController
     public function doneAction( Request $request ): Response
     {
         $token      = $this->payum->getHttpRequestVerifier()->verify( $request );
-        $this->payum->getHttpRequestVerifier()->invalidate( $token );  // you can invalidate the token. The url could not be requested any more.
+        
+        // you can invalidate the token. The url could not be requested any more.
+        $this->payum->getHttpRequestVerifier()->invalidate( $token );
         
         $gateway    = $this->payum->getGateway( $token->getGatewayName() );
         $gateway->execute( $paymentStatus = new GetHumanStatus( $token ) );

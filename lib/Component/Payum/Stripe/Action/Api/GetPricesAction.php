@@ -78,7 +78,7 @@ class GetPricesAction implements ActionInterface, GatewayAwareInterface, ApiAwar
     /**
      * {@inheritDoc}
      */
-    public function supports( $request )
+    public function supports( $request ): bool
     {
         return
             $request instanceof GetPrices &&

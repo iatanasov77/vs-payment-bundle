@@ -14,7 +14,7 @@
         
         <many-to-one field="user" target-entity="Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface" inversed-by="pricingPlanSubscriptions">
             <cascade>
-                <cascade-all/>
+                <cascade-persist/>
             </cascade>
         </many-to-one>
         

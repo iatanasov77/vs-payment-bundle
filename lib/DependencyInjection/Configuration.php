@@ -10,33 +10,25 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Resource\Factory\Factory;
 
 use Vankosoft\PaymentBundle\Model\GatewayConfig;
-use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
 use Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigController;
 use Vankosoft\PaymentBundle\Form\GatewayConfigForm;
 
 use Vankosoft\PaymentBundle\Model\PaymentMethod;
-use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
 use Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigController;
 use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
 
 use Vankosoft\PaymentBundle\Model\Payment;
-use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\RecievedPaymentsController;
 
 use Vankosoft\PaymentBundle\Model\PaymentToken;
 
 use Vankosoft\PaymentBundle\Model\Order;
-use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Repository\OrderRepository;
 use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\OrdersController;
 
 use Vankosoft\PaymentBundle\Model\OrderItem;
-use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
-//use Sylius\Component\Currency\Model\CurrencyInterface;
-use Sylius\Component\Currency\Model\ExchangeRateInterface;
 use Vankosoft\PaymentBundle\Model\Currency;
-use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Form\CurrencyForm;
 use Vankosoft\PaymentBundle\Controller\Configuration\CurrencyController;
 use Vankosoft\PaymentBundle\Model\ExchangeRate;
@@ -45,30 +37,24 @@ use Vankosoft\PaymentBundle\Form\ExchangeRateForm;
 use Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateController;
 
 use Vankosoft\PaymentBundle\Model\Product;
-use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 use Vankosoft\PaymentBundle\Form\ProductForm;
 use Vankosoft\PaymentBundle\Controller\Catalog\ProductController;
 use Vankosoft\PaymentBundle\Model\ProductCategory;
-use Vankosoft\PaymentBundle\Model\Interfaces\ProductCategoryInterface;
 use Vankosoft\PaymentBundle\Repository\ProductCategoryRepository;
 use Vankosoft\PaymentBundle\Form\ProductCategoryForm;
 use Vankosoft\PaymentBundle\Controller\Catalog\ProductCategoryController;
 use Vankosoft\PaymentBundle\Model\ProductPicture;
-use Vankosoft\PaymentBundle\Model\Interfaces\ProductPictureInterface;
 
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanCategoryInterface;
 use Vankosoft\PaymentBundle\Model\PricingPlanCategory;
 use Vankosoft\PaymentBundle\Repository\PricingPlanCategoryRepository;
 use Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCategoryController;
 use Vankosoft\PaymentBundle\Form\PricingPlanCategoryForm;
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Vankosoft\PaymentBundle\Model\PricingPlan;
 use Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanController;
 use Vankosoft\PaymentBundle\Form\PricingPlanForm;
 use Vankosoft\PaymentBundle\Repository\PricingPlansRepository;
 
 use Vankosoft\PaymentBundle\Model\PricingPlanSubscription;
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Repository\PricingPlansSubscriptionsRepository;
 use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\PricingPlanSubscriptionsController;
 
@@ -120,7 +106,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( GatewayConfig::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( GatewayConfigInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( GatewayConfigController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
@@ -137,7 +122,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( PaymentMethod::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( PaymentMethodInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( PaymentMethodConfigController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
@@ -159,7 +143,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( Payment::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( PaymentInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( RecievedPaymentsController::class )->cannotBeEmpty()->end()
@@ -191,7 +174,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( Order::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( OrderInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( OrderRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( OrdersController::class )->cannotBeEmpty()->end()
@@ -208,7 +190,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( OrderItem::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( OrderItemInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                     ->end()
@@ -224,7 +205,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( Currency::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( CurrencyInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( CurrencyController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
@@ -242,7 +222,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( ExchangeRate::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( ExchangeRateInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( ExchangeRateController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( ExchangeRateRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
@@ -260,7 +239,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( Product::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( ProductInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( ProductController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
@@ -278,7 +256,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( ProductPicture::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( ProductPictureInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                     ->end()
@@ -294,7 +271,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( ProductCategory::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( ProductCategoryInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( ProductCategoryController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( ProductCategoryRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
@@ -312,7 +288,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( PricingPlanCategory::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( PricingPlanCategoryInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( PricingPlanCategoryRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( PricingPlanCategoryController::class )->cannotBeEmpty()->end()
@@ -330,7 +305,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( PricingPlan::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( PricingPlanInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( PricingPlansRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( PricingPlanController::class )->cannotBeEmpty()->end()
@@ -348,7 +322,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( PricingPlanSubscription::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'interface' )->defaultValue( PricingPlanSubscriptionInterface::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( PricingPlansSubscriptionsRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( PricingPlanSubscriptionsController::class )->cannotBeEmpty()->end()
