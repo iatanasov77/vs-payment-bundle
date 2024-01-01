@@ -11,6 +11,7 @@ use Payum\Paypal\ExpressCheckout\Nvp\Api as PaypalApi;
 use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 
 /*
  * 
@@ -74,15 +75,18 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
     public function createRecurringAgreementAction( $subscriptionId, Request $request ): Response
     {
         $cart               = $this->orderFactory->getShoppingCart();
+        $paymentMethod      = $cart->getPaymentMethod();
         
         $storagePayment     = $this->payum->getStorage( $this->paymentClass );
         $storageAgreement   = $this->payum->getStorage( self::AGREEMENT_CLASS );
         $agreement          = $this->prepareRecurringAgreement( $cart );
         
         $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        $gatewayName    = $paymentMethod ? $paymentMethod->getGateway()->getGatewayName() : $subscription->getGatewayFactory();
+        
         $afterRoute     = 'vs_payment_paypal_express_checkout_create_recurring_payment';
         $captureToken   = $this->payum->getTokenFactory()->createCaptureToken(
-            $cart->getPaymentMethod()->getGateway()->getGatewayName(),
+            $gatewayName,
             $agreement['payment'],
             $afterRoute,
             ['subscriptionId' => $subscription->getId(),]
@@ -144,6 +148,10 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         
         if ( $status->isCanceled() ) {
             // yes it is cancelled
+            $subscription->setRecurringPayment( false );
+            $this->doctrine->getManager()->persist( $subscription );
+            $this->doctrine->getManager()->flush();
+            
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_cancel_subscription_recurring_success', [], 'VSPaymentBundle' );
             $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         } else {
@@ -299,7 +307,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         return $payment;
     }
     
-    protected function onRecurringAggreementStatus( GetHumanStatus $agreementStatus ): ?Response
+    private function onRecurringAggreementStatus( GetHumanStatus $agreementStatus ): ?Response
     {
         // var_dump( $agreementStatus->getValue() ); die;
         
