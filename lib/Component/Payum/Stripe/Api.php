@@ -198,12 +198,19 @@ final class Api
     
     public function createCoupon( array $formData )
     {
-        $coupon = new \ArrayObject([
-            'product'       => $formData['product'],
-            
-            'unit_amount'   => $formData['amount'] * 100,
-            'currency'      => \strtolower( $formData['currency'] ),
-        ]);
+        $couponData = [
+            'duration'  => $formData['duration'],
+        ];
+        
+        if ( $formData['duration_in_months'] ) {
+            $couponData['duration_in_months']    = $formData['duration_in_months'];
+        }
+        
+        if ( $formData['percent_off'] ) {
+            $couponData['percent_off']    = $formData['percent_off'];
+        }
+        
+        $coupon = new \ArrayObject( $couponData );
         $this->gateway->execute( $createCouponRequest = new CreateCoupon( $coupon ) );
         
         return $createCouponRequest->getFirstModel()->getArrayCopy();
