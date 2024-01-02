@@ -3,8 +3,8 @@
 {# Import Macros #}
 {% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
 
-{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payum_stripe_objects.stripe_subscription_objects' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
-{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payum_stripe_objects.stripe_subscription_objects' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payum_stripe_objects.stripe_coupons' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payum_stripe_objects.stripe_coupons' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="card">
@@ -22,10 +22,12 @@
                 <thead>
                     <tr>
                         <th width="50">N</th>
-                        <th>ID</th>
-                        <th>{{ 'vs_payment.template.payum_stripe_objects.amount' | trans( {},'VSPaymentBundle' ) }}</th>
-                        <th>{{ 'vs_payment.template.payum_stripe_objects.interval' | trans( {},'VSPaymentBundle' ) }}</th>
-                        <th>{{ 'vs_payment.template.payum_stripe_objects.product' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.coupon_id' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.coupon_duration_type' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.coupon_duration_months' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.coupon_percent_off' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.coupon_valid' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.coupon_created' | trans( {},'VSPaymentBundle' ) }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,9 +35,17 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ item.id }}</td>
-                        <td>{{ ( item.amount / 100 ) | number_format( 2 ) }} {{ item.currency }}</td>
-                        <td>{{ item.interval }}</td>
-                        <td>{{ item.product }}</td>
+                        <td>{{ item.duration }}</td>
+                        <td>{{ item.duration_in_months }}</td>
+                        <td>{{ item.percent_off }}</td>
+                        <td>
+                            {% if item.valid %}
+                                <i class="fas fa-check" style="color: #82c91e;"></i>
+                            {% else %}
+                                <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.created | date( "d.m.Y" ) }}</td>
                     </tr>
                 {% else %}
                     <tr>

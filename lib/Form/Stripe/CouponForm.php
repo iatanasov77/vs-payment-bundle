@@ -15,9 +15,9 @@ class CouponForm extends AbstractType
     {
         $builder
             ->add( 'duration', ChoiceType::class, [
-                'label' => 'vs_payment.template.payum_stripe_objects.name',
+                'label' => 'vs_payment.template.payum_stripe_objects.coupon_duration_type',
                 'translation_domain' => 'VSPaymentBundle',
-                'placeholder'           => 'vs_payment.template.payum_stripe_objects.interval_placeholder',
+                'placeholder'           => 'vs_payment.template.payum_stripe_objects.coupon_duration_type_placeholder',
                 'choices'               => \array_flip([
                     'forever'   => 'Forever',   // Applies to all charges from a subscription with this coupon applied.
                     'once'      => 'Once',      // Applies to the first charge from a subscription with this coupon applied.
@@ -26,18 +26,18 @@ class CouponForm extends AbstractType
             ])
             
             ->add( 'duration_in_months', NumberType::class, [
-                'label' => 'vs_payment.template.payum_stripe_objects.name',
+                'label' => 'vs_payment.template.payum_stripe_objects.coupon_duration_months',
                 'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
-                    'placeholder' => 'vs_payment.template.payum_stripe_objects.name'
+                    'placeholder' => 'vs_payment.template.payum_stripe_objects.coupon_duration_months'
                 ],
             ])
             
             ->add( 'percent_off', TextType::class, [
-                'label' => 'vs_payment.template.payum_stripe_objects.name',
+                'label' => 'vs_payment.template.payum_stripe_objects.coupon_percent_off',
                 'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
-                    'placeholder' => 'vs_payment.template.payum_stripe_objects.name'
+                    'placeholder' => 'vs_payment.template.payum_stripe_objects.coupon_percent_off'
                 ],
             ])
             

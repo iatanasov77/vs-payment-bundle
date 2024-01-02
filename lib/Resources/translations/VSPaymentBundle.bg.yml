@@ -178,6 +178,16 @@ vs_payment:
             enabled_events: Enabled Events
             url: Url
             
+            stripe_coupons: Stripe Coupons
+            create_stripe_coupon: Create a Stripe Coupon
+            coupon_id: Coupon ID
+            coupon_duration_type: Duration Type
+            coupon_duration_type_placeholder: '-- Select Duration Type --'
+            coupon_duration_months: Duration Months
+            coupon_percent_off: Percent Off
+            coupon_valid: Valid
+            coupon_created: Created
+            
         currency_index_title: Валути
         currency_index_code: Код
         currency_index_symbol: Символ
