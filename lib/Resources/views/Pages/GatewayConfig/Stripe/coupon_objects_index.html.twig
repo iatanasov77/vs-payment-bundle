@@ -1,0 +1,51 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{# Import Macros #}
+{% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
+
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payum_stripe_objects.stripe_subscription_objects' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payum_stripe_objects.stripe_subscription_objects' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="float-start">
+                {{ 'vs_payment.template.payum_stripe_objects.stripe_plans' | trans( {},'VSPaymentBundle' ) }}
+            </h5>
+            <a href="{{ path( 'gateway_config_stripe_coupon_objects_create_coupon' ) }}" class="btn btn-primary float-end">
+                {{ 'vs_payment.template.payum_stripe_objects.create_stripe_plan' | trans( {},'VSPaymentBundle' ) }}
+            </a>
+        </div>
+        
+        <div class="card-body">
+            <table class="table table-striped table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th width="50">N</th>
+                        <th>ID</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.amount' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.interval' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th>{{ 'vs_payment.template.payum_stripe_objects.product' | trans( {},'VSPaymentBundle' ) }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in availableCoupons %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.id }}</td>
+                        <td>{{ ( item.amount / 100 ) | number_format( 2 ) }} {{ item.currency }}</td>
+                        <td>{{ item.interval }}</td>
+                        <td>{{ item.product }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">
+                            {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

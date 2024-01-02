@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller\Checkout;
+<?php namespace Vankosoft\PaymentBundle\Controller\Checkout\Stripe;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

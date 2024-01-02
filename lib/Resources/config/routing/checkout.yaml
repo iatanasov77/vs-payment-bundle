@@ -45,25 +45,35 @@ vs_payment_offline_bank_transfer_done:
 #######################################################################################
 vs_payment_stripe_checkout_prepare:
     path: /stripe-checkout/prepare
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::prepareAction
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Stripe\StripeCheckoutController::prepareAction
     options:
         expose: true
 
 vs_payment_stripe_checkout_done:
    path: /stripe-checkout/done
-   controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::doneAction
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\Stripe\StripeCheckoutController::doneAction
    
 vs_payment_stripe_checkout_create_recurring_payment:
    path: /stripe-checkout/create-recurring-payment/{subscriptionId}
-   controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::createRecurringPaymentAction
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\Stripe\StripeCheckoutController::createRecurringPaymentAction
    options:
         expose: true
    
 vs_payment_stripe_checkout_cancel_recurring_payment:
    path: /stripe-checkout/cancel-recurring-payment/{subscriptionId}
-   controller: Vankosoft\PaymentBundle\Controller\Checkout\StripeCheckoutController::cancelRecurringPaymentAction
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\Stripe\StripeCheckoutController::cancelRecurringPaymentAction
    options:
         expose: true
+        
+vs_payment_stripe_checkout_coupon_prepare:
+    path: /stripe-checkout-coupon/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Stripe\StripeCouponController::prepareAction
+    options:
+        expose: true
+
+vs_payment_stripe_checkout_coupon_done:
+   path: /stripe-checkout-coupon/done
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\Stripe\StripeCouponController::doneAction
 
 # PayPal Express Checkout
 #######################################################################################

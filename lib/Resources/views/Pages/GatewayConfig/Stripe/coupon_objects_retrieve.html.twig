@@ -1,0 +1,11 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{# Import Macros #}
+{% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
+
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payum_stripe_objects.stripe_subscription_objects' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payum_stripe_objects.stripe_subscription_objects' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+
+{% block content %}
+
+{% endblock %}

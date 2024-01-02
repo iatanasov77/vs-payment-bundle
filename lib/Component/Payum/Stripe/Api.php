@@ -181,4 +181,35 @@ final class Api
         
         return $productPairs;
     }
+    
+    public function getCoupons( array $params = [] )
+    {
+        $stripeRequest      = new \ArrayObject( $params );
+        $this->gateway->execute( $getCouponsRequest = new GetCoupons( $stripeRequest ) );
+        
+        $availableCoupons = $getCouponsRequest->getFirstModel()->getArrayCopy();
+        
+        return $availableCoupons["data"];
+    }
+    
+    public function createCoupon( array $formData )
+    {
+        $coupon = new \ArrayObject([
+            'product'       => $formData['product'],
+            
+            'unit_amount'   => $formData['amount'] * 100,
+            'currency'      => \strtolower( $formData['currency'] ),
+        ]);
+        $this->gateway->execute( $createCouponRequest = new CreateCoupon( $coupon ) );
+        
+        return $createCouponRequest->getFirstModel()->getArrayCopy();
+    }
+    
+    public function retrieveCoupon( string $id )
+    {
+        $coupon = new \ArrayObject( ['id' => $id] );
+        $this->gateway->execute( $retrieveCouponRequest = new RetrieveCoupon( $coupon ) );
+        
+        return $retrieveCouponRequest->getFirstModel()->getArrayCopy();
+    }
 }
