@@ -16,6 +16,10 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscriptio
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetWebhookEndpoints;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateWebhookEndpoint;
 
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetCoupons;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateCoupon;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\RetrieveCoupon;
+
 final class Api
 {
     const PRICING_PLAN_ATTRIBUTE_KEY    = 'stripe_plan_id';
