@@ -36,6 +36,7 @@ vs_application:
         create_pricing_plan: Създай Ценови План
         edit_pricing_plan: Редакция Ценови План
         stripe_subscription_plans: Страйп Абонаментни Обекти
+        stripe_coupons: Страйп Ваучери
         developement: Разработка
         delete_all_orders: Изтриване Всички Ордери
 
