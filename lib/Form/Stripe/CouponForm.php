@@ -31,6 +31,7 @@ class CouponForm extends AbstractType
                 'attr'  => [
                     'placeholder' => 'vs_payment.template.payum_stripe_objects.coupon_duration_months'
                 ],
+                'required'  => false,
             ])
             
             ->add( 'percent_off', TextType::class, [
@@ -39,6 +40,7 @@ class CouponForm extends AbstractType
                 'attr'  => [
                     'placeholder' => 'vs_payment.template.payum_stripe_objects.coupon_percent_off'
                 ],
+                'required'  => false,
             ])
             
             ->add( 'btnSubmit', SubmitType::class, [
