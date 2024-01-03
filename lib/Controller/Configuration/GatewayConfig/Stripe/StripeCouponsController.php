@@ -58,4 +58,11 @@ class StripeCouponsController extends AbstractController
             'coupon'    => $couponData,
         ]);
     }
+    
+    public function deleteCouponAction( $id, Request $request ): Response
+    {
+        $this->stripeApi->deleteCoupon( $id );
+        
+        return $this->redirectToRoute( 'gateway_config_stripe_coupon_objects_index' );
+    }
 }

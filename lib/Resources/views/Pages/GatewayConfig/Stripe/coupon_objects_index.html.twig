@@ -28,6 +28,7 @@
                         <th>{{ 'vs_payment.template.payum_stripe_objects.coupon_percent_off' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_payment.template.payum_stripe_objects.coupon_valid' | trans( {},'VSPaymentBundle' ) }}</th>
                         <th>{{ 'vs_payment.template.payum_stripe_objects.coupon_created' | trans( {},'VSPaymentBundle' ) }}</th>
+                        <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,25 @@
                             {% endif %}
                         </td>
                         <td>{{ item.created | date( "d.m.Y" ) }}</td>
+                        
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-outline-primary btnRetrieveCoupon"
+                                    href="javascript:void(0);"
+                                    data-url="{{ path('gateway_config_stripe_coupon_objects_retrieve_coupon', {'id': item.id}) }}"
+                                    title="{{ 'vs_payment.template.payum_stripe_objects.retrieve_coupon' | trans( {},'VSPaymentBundle' ) }}"
+                                >
+                                    <i class="icon_close_alt2"></i>
+                                </a>
+                                
+                                <a class="btn btn-danger"
+                                    href="{{ path('gateway_config_stripe_coupon_objects_delete_coupon', {'id': item.id}) }}"
+                                    title="{{ 'vs_payment.template.payum_stripe_objects.delete_coupon' | trans( {},'VSPaymentBundle' ) }}"
+                                >
+                                    <i class="icon_close_alt2"></i>
+                                </a>
+                            </div>
+                        </td> 
                     </tr>
                 {% else %}
                     <tr>
@@ -58,4 +78,16 @@
             </table>
         </div>
     </div>
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+    
+    {% include '@VSPayment/Modal/retrieve-coupon.html.twig' %}
+{% endblock %}
+
+{% block body_scripts %}
+    {{ parent() }}
+    
+    {{ encore_entry_script_tags( 'js/coupon-objects' ) }}
 {% endblock %}

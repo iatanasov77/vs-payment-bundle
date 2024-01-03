@@ -36,8 +36,13 @@ gateway_config_stripe_coupon_objects_create_coupon:
     path: /vs_payment/gateway-config/stripe-coupons/create-coupon
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeCouponsController::createCouponAction
     
-gateway_config_stripe_coupon_objects_retrieve:
-    path: /vs_payment/gateway-config/stripe-coupons/retrieve/{id}
+gateway_config_stripe_coupon_objects_retrieve_coupon:
+    path: /vs_payment/gateway-config/stripe-coupons/retrieve-coupon/{id}
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeCouponsController::retrieveCouponAction
+    
+gateway_config_stripe_coupon_objects_delete_coupon:
+    path: /vs_payment/gateway-config/stripe-coupons/delete-coupon/{id}
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeCouponsController::deleteCouponAction
+
 
 

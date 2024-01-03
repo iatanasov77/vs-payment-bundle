@@ -223,4 +223,12 @@ final class Api
         
         return $retrieveCouponRequest->getFirstModel()->getArrayCopy();
     }
+    
+    public function deleteCoupon( $id )
+    {
+        $coupon   = new \ArrayObject([
+            "id"    => $id,
+        ]);
+        $this->gateway->execute( new DeleteCoupon( $coupon ) );
+    }
 }

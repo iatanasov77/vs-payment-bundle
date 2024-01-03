@@ -91,5 +91,10 @@ services:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\RetrieveCouponAction
         tags:
             - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_delete_coupon:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\DeleteCouponAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
 
 

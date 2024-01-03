@@ -187,6 +187,18 @@ vs_payment:
             coupon_percent_off: Percent Off
             coupon_valid: Valid
             coupon_created: Created
+            retrieve_coupon: Retrieve Coupon
+            delete_coupon: Delete Coupon
+            coupon_object: Coupon Object
+            
+        stripe_coupon_object:
+            amount_off: Amount Off
+            duration_type: Duration Type
+            duration_months: Duration Months
+            percent_off: Percent Off
+            livemode: Live Mode
+            valid: Valid
+            created: Created
 
         currency_index_title: Currencies
         currency_index_code: Code
