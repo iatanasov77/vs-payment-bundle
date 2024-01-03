@@ -17,6 +17,7 @@ vs_payment:
         description: Описание
         gatewayNameHelp: Това е ID на шлюза, използван в Payum
         factoryHelp: Това е ID на Фактори, използван в Payum
+        generate_code: Генерирай Код
         
         gateway_config:
             use_sandbox: Използвай Сенд-бокс
@@ -80,6 +81,13 @@ vs_payment:
             reciever: Получател
             reason: Основание
             set_recurring_payments: Периодични плащания
+            
+        coupon:
+            valid: Valid
+            coupon_code: Coupon Code
+            coupon_name: Coupon Name
+            amount_off: Amount Off
+            percent_off: Percent Off
     
     template:
         gateway: Гейтуей
@@ -268,6 +276,15 @@ vs_payment:
         pricing_plan_cancel_subscription_recurring_error: 'Canceling Recurring Payments for the Subscription Failed !!!'
         pricing_plan_subscription_already_created: "Recurring Payments Subscription is Already Created !!!"
         pricing_plan_subscription_not_created_yet: "Recurring Payments Subscription is Not Created Yet !!!"
+        
+        coupon_index_code: Coupon Code
+        coupon_index_name: Coupon Name
+        coupon_index_amount_off: Amount Off
+        coupon_index_percent_off: Percent Off
+        coupon_index_valid: Valid
+        coupon_update_title: Edit Coupon
+        coupon_create_title: Create Coupon
+        coupon_title: Coupon
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

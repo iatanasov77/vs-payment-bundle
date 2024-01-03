@@ -15,44 +15,28 @@ class Order implements Interfaces\OrderInterface
     const STATUS_PENDING_ORDER  = 'pending_order';  // When Order is Waiting for Payment (For Example: Used Offline BankTransfer)
     const STATUS_FAILED_ORDER   = 'failed_order';
     
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $id;
     
-    /**
-     * @var \Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface
-     */
+    /** @var \Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface */
     protected $user;
     
-    /**
-     * @var Interfaces\PaymentMethodInterface
-     */
+    /** @var Interfaces\PaymentMethodInterface */
     protected $paymentMethod;
     
-    /**
-     * @var Interfaces\PaymentInterface
-     */
+    /** @var Interfaces\PaymentInterface */
     protected $payment;
     
-    /**
-     * @var float
-     */
+    /** @var float */
     protected $totalAmount;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $currencyCode;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $description;
     
-    /**
-     * @var Collection|OrderItemInterface[]
-     */
+    /** @var Collection|OrderItemInterface[] */
     protected $items;
     
     /**
@@ -63,14 +47,10 @@ class Order implements Interfaces\OrderInterface
      */
     protected $status;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $sessionId;
     
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $recurringPayment = false;
     
     public function __construct()
