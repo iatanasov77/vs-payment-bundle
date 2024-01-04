@@ -6,9 +6,11 @@ use Sylius\Component\Resource\Model\ToggleableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 
-use Interfaces\OrderInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
-class PaymentMethod implements Interfaces\PaymentMethodInterface
+class PaymentMethod implements PaymentMethodInterface
 {
     use ToggleableTrait;
     use TranslatableTrait;
@@ -19,7 +21,7 @@ class PaymentMethod implements Interfaces\PaymentMethodInterface
     /** @var string */
     protected $locale;
     
-    /** @var Interfaces\GatewayConfigInterface */
+    /** @var GatewayConfigInterface */
     protected $gateway;
     
     /** @var string */

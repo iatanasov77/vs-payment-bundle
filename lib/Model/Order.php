@@ -4,9 +4,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
 
-class Order implements Interfaces\OrderInterface
+class Order implements OrderInterface
 {
     use TimestampableTrait;
     
@@ -18,13 +23,16 @@ class Order implements Interfaces\OrderInterface
     /** @var int */
     protected $id;
     
-    /** @var \Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface */
+    /** @var UserPaymentAwareInterface */
     protected $user;
     
-    /** @var Interfaces\PaymentMethodInterface */
+    /** @var PaymentMethodInterface */
     protected $paymentMethod;
     
-    /** @var Interfaces\PaymentInterface */
+    /** @var CouponInterface */
+    protected $coupon;
+    
+    /** @var PaymentInterface */
     protected $payment;
     
     /** @var float */
@@ -91,6 +99,18 @@ class Order implements Interfaces\OrderInterface
     public function setPaymentMethod($paymentMethod)
     {
         $this->paymentMethod = $paymentMethod;
+        
+        return $this;
+    }
+    
+    public function getCoupon()
+    {
+        return $this->coupon;
+    }
+    
+    public function setCoupon($coupon)
+    {
+        $this->coupon   = $coupon;
         
         return $this;
     }

@@ -25,6 +25,8 @@
         
         <field name="enabled" column="valid" type="boolean" />
         
+        <one-to-many field="orders" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" mapped-by="coupon" />
+        
         <!--
             Used locale to override Translation listener`s locale
             this is not a mapped field of entity metadata, just a simple property

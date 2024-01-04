@@ -1,11 +1,14 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
 class Coupon implements CouponInterface
 {
@@ -33,6 +36,16 @@ class Coupon implements CouponInterface
     
     /** @var float|null */
     protected $percentOff;
+    
+    /**
+     * @var Collection|OrderInterface[]
+     */
+    protected $orders;
+    
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
     
     public function getId()
     {
@@ -135,6 +148,31 @@ class Coupon implements CouponInterface
         $this->locale = $locale;
         
         return $this;
+    }
+    
+    /**
+     * @return Collection|OrderInterface[]
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+    
+    public function addOrder( $order )
+    {
+        if( ! $this->orders->contains( $order ) ) {
+            $this->orders->add( $order );
+            $order->setCoupon( $this );
+            
+        }
+    }
+    
+    public function removeOrder( $order )
+    {
+        if( $this->orders->contains( $order ) ) {
+            $this->orders->removeElement( $order );
+            $order->setCoupon( null );
+        }
     }
     
     /*
