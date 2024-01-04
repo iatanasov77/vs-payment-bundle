@@ -4,9 +4,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
 
-class Order implements Interfaces\OrderInterface
+class Order implements OrderInterface
 {
     use TimestampableTrait;
     
@@ -15,44 +20,31 @@ class Order implements Interfaces\OrderInterface
     const STATUS_PENDING_ORDER  = 'pending_order';  // When Order is Waiting for Payment (For Example: Used Offline BankTransfer)
     const STATUS_FAILED_ORDER   = 'failed_order';
     
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $id;
     
-    /**
-     * @var \Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface
-     */
+    /** @var UserPaymentAwareInterface */
     protected $user;
     
-    /**
-     * @var Interfaces\PaymentMethodInterface
-     */
+    /** @var PaymentMethodInterface */
     protected $paymentMethod;
     
-    /**
-     * @var Interfaces\PaymentInterface
-     */
+    /** @var CouponInterface */
+    protected $coupon;
+    
+    /** @var PaymentInterface */
     protected $payment;
     
-    /**
-     * @var float
-     */
+    /** @var float */
     protected $totalAmount;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $currencyCode;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $description;
     
-    /**
-     * @var Collection|OrderItemInterface[]
-     */
+    /** @var Collection|OrderItemInterface[] */
     protected $items;
     
     /**
@@ -63,14 +55,10 @@ class Order implements Interfaces\OrderInterface
      */
     protected $status;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $sessionId;
     
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $recurringPayment = false;
     
     public function __construct()
@@ -111,6 +99,18 @@ class Order implements Interfaces\OrderInterface
     public function setPaymentMethod($paymentMethod)
     {
         $this->paymentMethod = $paymentMethod;
+        
+        return $this;
+    }
+    
+    public function getCoupon()
+    {
+        return $this->coupon;
+    }
+    
+    public function setCoupon($coupon)
+    {
+        $this->coupon   = $coupon;
         
         return $this;
     }

@@ -7,6 +7,7 @@ interface OrderInterface extends ResourceInterface
     public function hasRecurringPayment(): bool;
     public function getUser();
     public function getPaymentMethod();
+    public function getCoupon();
     public function getPayment();
     public function getTotalAmount();
     public function getCurrencyCode();

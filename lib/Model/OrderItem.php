@@ -8,24 +8,16 @@ use Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface;
 
 class OrderItem implements OrderItemInterface
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $id;
     
-    /**
-     * @var Interfaces\OrderInterface
-     */
+    /** @var Interfaces\OrderInterface */
     protected $order;
     
-    /**
-     * @var Interfaces\PricingPlanSubscriptionInterface
-     */
+    /** @var Interfaces\PricingPlanSubscriptionInterface */
     protected $subscription;
     
-    /**
-     * @var Interfaces\ProductInterface
-     */
+    /** @var Interfaces\ProductInterface */
     protected $product;
     
     /**
@@ -35,19 +27,13 @@ class OrderItem implements OrderItemInterface
      */
     protected $payableObjectType;
     
-    /**
-     * @var float
-     */
+    /** @var float */
     protected $price;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $currencyCode;
     
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $qty;
     
     public function __construct()

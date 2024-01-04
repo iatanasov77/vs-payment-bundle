@@ -160,9 +160,8 @@
                         <td>{{ item.items.data[0].price.id }}</td>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-danger btnDeleteResource"
-                                    href="{{ path('gateway_config_stripe_subscription_objects_cancel_subscription', {'id': item.id}) }}" 
-                                    data-csrfToken="{{ csrf_token( item.id ) }}"
+                                <a class="btn btn-danger"
+                                    href="{{ path('gateway_config_stripe_subscription_objects_cancel_subscription', {'id': item.id}) }}"
                                     title="{{ 'vs_payment.template.payum_stripe_objects.cancel_subscription' | trans( {},'VSPaymentBundle' ) }}"
                                 >
                                     <i class="icon_close_alt2"></i>

@@ -58,6 +58,10 @@ use Vankosoft\PaymentBundle\Model\PricingPlanSubscription;
 use Vankosoft\PaymentBundle\Repository\PricingPlansSubscriptionsRepository;
 use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\PricingPlanSubscriptionsController;
 
+use Vankosoft\PaymentBundle\Model\Coupon;
+use Vankosoft\PaymentBundle\Controller\Coupons\CouponsController;
+use Vankosoft\PaymentBundle\Form\CouponForm;
+
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
 /**
@@ -325,6 +329,23 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'repository' )->defaultValue( PricingPlansSubscriptionsRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( PricingPlanSubscriptionsController::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
+                        ->arrayNode( 'coupon' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode( 'model' )->defaultValue( Coupon::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( CouponsController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'form' )->defaultValue( CouponForm::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

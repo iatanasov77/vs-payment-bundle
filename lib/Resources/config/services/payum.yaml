@@ -26,6 +26,9 @@ services:
         arguments:
             - '@payum'
             
+    #######################################################
+    # Stripe Subscriptions
+    #######################################################
     vs_payment.stripe_list_plans:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetPlansAction
         tags:
@@ -68,6 +71,29 @@ services:
             
     vs_payment.stripe_create_webhook_endpoint:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\CreateWebhookEndpointAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+            
+    #######################################################
+    # Stripe Coupons
+    #######################################################
+    vs_payment.stripe_list_coupons:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetCouponsAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_create_coupon:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\CreateCouponAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_retrieve_coupon:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\RetrieveCouponAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_delete_coupon:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\DeleteCouponAction
         tags:
             - { name: payum.action, factory: stripe_js }
 

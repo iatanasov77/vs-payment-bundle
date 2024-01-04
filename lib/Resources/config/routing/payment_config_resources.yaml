@@ -100,5 +100,29 @@ vs_payment_pricing_plan_subscriptions:
     type: sylius.resource
     options:
         expose: true
+        
+vs_payment_coupon_index:
+    path: /payment/coupons/
+    methods: [GET]
+    defaults:
+        _controller: vs_payment.controller.coupon::indexAction
+        _sylius:
+            paginate: 10
+            sortable: true
+            sorting:
+                createdAt: desc
+            filterable: true
+            template: "@VSPayment/Pages/Coupons/index.html.twig"
+    options:
+        expose: true
+
+vs_payment_coupon:
+    resource: |
+        alias: vs_payment.coupon
+        path: /payment/coupons
+        templates: "@VSPayment/Pages/Coupons"
+    type: sylius.resource
+    options:
+        expose: true
 
 

@@ -9,29 +9,19 @@ use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 
 class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfigInterface
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $id;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $title;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $description;
     
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $useSandbox;
     
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $sandboxConfig;
     
     /**
@@ -39,9 +29,7 @@ class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfi
      */
     protected $paymentMethods;
     
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $locale;
     
     /**

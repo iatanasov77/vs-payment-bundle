@@ -16,6 +16,10 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscriptio
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetWebhookEndpoints;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateWebhookEndpoint;
 
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetCoupons;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateCoupon;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\RetrieveCoupon;
+
 final class Api
 {
     const PRICING_PLAN_ATTRIBUTE_KEY    = 'stripe_plan_id';
@@ -180,5 +184,51 @@ final class Api
         }
         
         return $productPairs;
+    }
+    
+    public function getCoupons( array $params = [] )
+    {
+        $stripeRequest      = new \ArrayObject( $params );
+        $this->gateway->execute( $getCouponsRequest = new GetCoupons( $stripeRequest ) );
+        
+        $availableCoupons = $getCouponsRequest->getFirstModel()->getArrayCopy();
+        
+        return $availableCoupons["data"];
+    }
+    
+    public function createCoupon( array $formData )
+    {
+        $couponData = [
+            'duration'  => $formData['duration'],
+        ];
+        
+        if ( $formData['duration_in_months'] ) {
+            $couponData['duration_in_months']    = $formData['duration_in_months'];
+        }
+        
+        if ( $formData['percent_off'] ) {
+            $couponData['percent_off']    = $formData['percent_off'];
+        }
+        
+        $coupon = new \ArrayObject( $couponData );
+        $this->gateway->execute( $createCouponRequest = new CreateCoupon( $coupon ) );
+        
+        return $createCouponRequest->getFirstModel()->getArrayCopy();
+    }
+    
+    public function retrieveCoupon( string $id )
+    {
+        $coupon = new \ArrayObject( ['id' => $id] );
+        $this->gateway->execute( $retrieveCouponRequest = new RetrieveCoupon( $coupon ) );
+        
+        return $retrieveCouponRequest->getFirstModel()->getArrayCopy();
+    }
+    
+    public function deleteCoupon( $id )
+    {
+        $coupon   = new \ArrayObject([
+            "id"    => $id,
+        ]);
+        $this->gateway->execute( new DeleteCoupon( $coupon ) );
     }
 }

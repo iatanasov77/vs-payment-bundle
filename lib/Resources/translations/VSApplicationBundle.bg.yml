@@ -1,6 +1,7 @@
 vs_application:
     menu:
         payment: Платежна Система
+        payment_core_models: Основни модели
         gateway_config: Гейтуей Конфигурация
         gateways: Гейтуей Списък
         create_new_gateway: Създай Нов Гейтуей
@@ -36,6 +37,10 @@ vs_application:
         create_pricing_plan: Създай Ценови План
         edit_pricing_plan: Редакция Ценови План
         stripe_subscription_plans: Страйп Абонаментни Обекти
+        stripe_coupons: Страйп Ваучери
         developement: Разработка
         delete_all_orders: Изтриване Всички Ордери
+        discount_coupons_listing: Купони за отстъпка
+        create_discount_coupon: Създай Купон за отстъпка
+        edit_discount_coupon: Редакция Купон за отстъпка
 

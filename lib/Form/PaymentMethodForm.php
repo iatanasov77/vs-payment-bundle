@@ -6,8 +6,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class PaymentMethodForm extends AbstractForm
@@ -33,7 +31,7 @@ class PaymentMethodForm extends AbstractForm
                 'required'              => false,
                 'label'                 => 'vs_payment.form.active',
                 'translation_domain'    => 'VSPaymentBundle',
-            ] )
+            ])
             
             ->add( 'gateway', EntityType::class, [
                 'class'                 => $this->gatewayClass,
@@ -41,13 +39,13 @@ class PaymentMethodForm extends AbstractForm
                 'label'                 => 'vs_payment.form.payment_method.gateway',
                 'placeholder'           => 'vs_payment.form.payment_method.gateway_placeholder',
                 'translation_domain'    => 'VSPaymentBundle',
-            ] )
+            ])
             
             ->add( 'name', TextType::class, [
                 'label'                 => 'vs_payment.form.payment_method.name',
                 'attr'                  => ['placeholder' => 'vs_payment.form.payment_method.name'],
                 'translation_domain'    => 'VSPaymentBundle',
-            ] )
+            ])
         ;
     }
 

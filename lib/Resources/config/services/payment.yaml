@@ -128,3 +128,18 @@ services:
             - '@vs_payment.repository.gateway_config'
         calls:
             - [ setContainer, [ '@service_container' ] ]
+            
+    ########################################################################
+    # Coupons Controllers
+    ########################################################################
+    Vankosoft\PaymentBundle\Controller\Coupons\:
+        resource: '../../../Controller/Coupons'
+        tags: ['controller.service_arguments']
+        autowire: true
+        
+    Vankosoft\PaymentBundle\Controller\Coupons\CouponsExtController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+    

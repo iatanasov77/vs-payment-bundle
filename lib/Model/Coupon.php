@@ -2,33 +2,40 @@
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Resource\Model\TimestampableTrait;
 use Sylius\Component\Resource\Model\ToggleableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
-
-use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
-class PaymentMethod implements PaymentMethodInterface
+class Coupon implements CouponInterface
 {
+    use TimestampableTrait;
     use ToggleableTrait;
     use TranslatableTrait;
     
-    /** @var integer */
+    /** @var int */
     protected $id;
     
     /** @var string */
     protected $locale;
     
-    /** @var GatewayConfigInterface */
-    protected $gateway;
-    
     /** @var string */
-    protected $slug;
+    protected $code;
     
-    /** @var string */
+    /** @var string|null */
     protected $name;
+    
+    /** @var float|null */
+    protected $amountOff;
+    
+    /** @var CurrencyInterface|null */
+    protected $currency;
+    
+    /** @var float|null */
+    protected $percentOff;
     
     /**
      * @var Collection|OrderInterface[]
@@ -45,26 +52,15 @@ class PaymentMethod implements PaymentMethodInterface
         return $this->id;
     }
     
-    public function getGateway()
+    public function getCode()
     {
-        return $this->gateway;
+        return $this->code;
     }
     
-    public function setGateway( $gateway )
+    public function setCode($code): self
     {
-        $this->gateway  = $gateway;
+        $this->code = $code;
         
-        return $this;
-    }
-    
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-    
-    public function setSlug($slug=null): self
-    {
-        $this->slug = $slug;
         return $this;
     }
     
@@ -73,24 +69,71 @@ class PaymentMethod implements PaymentMethodInterface
         return $this->name;
     }
     
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
+        
         return $this;
     }
     
-    public function getActive(): ?bool
+    public function getAmountOff()
+    {
+        return $this->amountOff;
+    }
+    
+    public function setAmountOff($amountOff): self
+    {
+        $this->amountOff    = $amountOff;
+        
+        return $this;
+    }
+    
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+    
+    public function setCurrency( CurrencyInterface $currency ): self
+    {
+        $this->currency = $currency;
+        
+        return $this;
+    }
+    
+    public function getCurrencyCode()
+    {
+        if ( $this->currency ) {
+            return $this->currency->getCode();
+        }
+        
+        return null;
+    }
+    
+    public function getPercentOff()
+    {
+        return $this->percentOff;
+    }
+    
+    public function setPercentOff($percentOff): self
+    {
+        $this->percentOff   = $percentOff;
+        
+        return $this;
+    }
+    
+    public function getValid(): ?bool
     {
         return $this->enabled;
     }
     
-    public function setActive( ?bool $active ): self
+    public function setValid( ?bool $valid ): self
     {
-        $this->enabled = (bool) $active;
+        $this->enabled = (bool) $valid;
+        
         return $this;
     }
     
-    public function isActive()
+    public function isValid()
     {
         return $this->isEnabled();
     }
@@ -103,6 +146,7 @@ class PaymentMethod implements PaymentMethodInterface
     public function setTranslatableLocale($locale): self
     {
         $this->locale = $locale;
+        
         return $this;
     }
     
@@ -118,7 +162,7 @@ class PaymentMethod implements PaymentMethodInterface
     {
         if( ! $this->orders->contains( $order ) ) {
             $this->orders->add( $order );
-            $order->setPaymentMethod( $this );
+            $order->setCoupon( $this );
             
         }
     }
@@ -127,7 +171,7 @@ class PaymentMethod implements PaymentMethodInterface
     {
         if( $this->orders->contains( $order ) ) {
             $this->orders->removeElement( $order );
-            $order->setPaymentMethod( null );
+            $order->setCoupon( null );
         }
     }
     

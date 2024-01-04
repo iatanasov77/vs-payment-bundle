@@ -42,6 +42,9 @@ final class Payment
 //                             'vs_payment_stripe_checkout_recurring_prepare':
 //                             'vs_payment_stripe_checkout_prepare';
                 break;
+            case 'stripe_coupon':
+                $route  = 'vs_payment_stripe_checkout_coupon_prepare';
+                break;
             case 'paypal_express_checkout':
                 $route  = 'vs_payment_paypal_express_checkout_prepare';
                 break;

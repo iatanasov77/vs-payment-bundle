@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-xl-6">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ coupon.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.name' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <td>{{ coupon.name }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'vs_payment.template.stripe_coupon_object.duration_type' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <td>{{ coupon.duration }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'vs_payment.template.stripe_coupon_object.duration_months' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <td>{{ coupon.duration_in_months }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'vs_payment.template.stripe_coupon_object.amount_off' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <td>{{ coupon.amount_off }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'vs_payment.template.payment_currency' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <td>{{ coupon.currency }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'vs_payment.template.stripe_coupon_object.percent_off' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <td>{{ coupon.percent_off }} %</td>
+                </tr>
+                <tr>
+                    <th>{{ 'vs_payment.template.stripe_coupon_object.livemode' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <td>
+                        {% if coupon.livemode %}
+                            <i class="fas fa-check" style="color: #82c91e;"></i>
+                        {% else %}
+                            <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'vs_payment.template.stripe_coupon_object.valid' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <td>
+                        {% if coupon.valid %}
+                            <i class="fas fa-check" style="color: #82c91e;"></i>
+                        {% else %}
+                            <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'vs_payment.template.stripe_coupon_object.created' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <td>{{ coupon.created | date( "d.m.Y" ) }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

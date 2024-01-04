@@ -17,6 +17,7 @@ vs_payment:
         description: Description
         gatewayNameHelp: This is the Gateway ID Used in Payum
         factoryHelp: This is the Factory ID Used in Payum
+        generate_code: Generate Code
         
         gateway_config:
             use_sandbox: Use Sandbox
@@ -80,6 +81,13 @@ vs_payment:
             reciever: Reciever
             reason: Reason
             set_recurring_payments: Recurring Payments
+            
+        coupon:
+            valid: Valid
+            coupon_code: Coupon Code
+            coupon_name: Coupon Name
+            amount_off: Amount Off
+            percent_off: Percent Off
 
     template:
         gateway: Gateway
@@ -177,6 +185,28 @@ vs_payment:
             create_webhook_endpoint: Create Webhook Endpoint
             enabled_events: Enabled Events
             url: Url
+            
+            stripe_coupons: Stripe Coupons
+            create_stripe_coupon: Create a Stripe Coupon
+            coupon_id: Coupon ID
+            coupon_duration_type: Duration Type
+            coupon_duration_type_placeholder: '-- Select Duration Type --'
+            coupon_duration_months: Duration Months
+            coupon_percent_off: Percent Off
+            coupon_valid: Valid
+            coupon_created: Created
+            retrieve_coupon: Retrieve Coupon
+            delete_coupon: Delete Coupon
+            coupon_object: Coupon Object
+            
+        stripe_coupon_object:
+            amount_off: Amount Off
+            duration_type: Duration Type
+            duration_months: Duration Months
+            percent_off: Percent Off
+            livemode: Live Mode
+            valid: Valid
+            created: Created
 
         currency_index_title: Currencies
         currency_index_code: Code
@@ -246,6 +276,16 @@ vs_payment:
         pricing_plan_cancel_subscription_recurring_error: 'Canceling Recurring Payments for the Subscription Failed !!!'
         pricing_plan_subscription_already_created: "Recurring Payments Subscription is Already Created !!!"
         pricing_plan_subscription_not_created_yet: "Recurring Payments Subscription is Not Created Yet !!!"
+        
+        coupon_index_title: Discount Coupons
+        coupon_index_code: Coupon Code
+        coupon_index_name: Coupon Name
+        coupon_index_amount_off: Amount Off
+        coupon_index_percent_off: Percent Off
+        coupon_index_valid: Valid
+        coupon_update_title: Edit Discount Coupon
+        coupon_create_title: Create Discount Coupon
+        coupon_title: Discount Coupon
         
     validation:
         currency_code_unique: Currency code must be unique.
