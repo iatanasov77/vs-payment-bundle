@@ -1,3 +1,22 @@
+2.10.1	|	Release date: **04.01.2024**
+============================================
+* New Features, Fixes and Improvements:
+  - Fix PaypalExpressCheckoutController .
+  - Add Stripe Coupons Feature.
+  - Add Payum CreateCoupon Classes.
+  - Fix Stripe Api Component.
+  - Update Stripe Coupon Objects Templates.
+  - Fix Stripe API Create Coupon.
+  - Create a Modal to Preview Stripe Coupon Object.
+  - Add a Coupon Resource.
+  - Add a Dctrine Migration.
+  - Add Payment Menu Translations.
+  - Fix CouponForm .
+  - Add Coupons Controller Services.
+  - Fix a Route.
+  - Add Some Translations
+
+
 2.10.0	|	Release date: **01.01.2024**
 ============================================
 * New Features and Improvements:
