@@ -36,7 +36,7 @@ vs_payment_set_order_status_paid:
         
 vs_payment_generate_coupon_code:
     path: /vs_payment/generate-coupon-code
-    controller: Vankosoft\PaymentBundle\ControllerCoupons\CouponsExtController::generateCouponCodeJson
+    controller: Vankosoft\PaymentBundle\Controller\Coupons\CouponsExtController::generateCouponCodeJson
     options:
         expose: true
         
