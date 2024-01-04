@@ -29,7 +29,7 @@ class Coupon implements CouponInterface
     protected $name;
     
     /** @var float|null */
-    protected $amountОff;
+    protected $amountOff;
     
     /** @var CurrencyInterface|null */
     protected $currency;
@@ -76,14 +76,14 @@ class Coupon implements CouponInterface
         return $this;
     }
     
-    public function getAmountОff()
+    public function getAmountOff()
     {
-        return $this->amountОff;
+        return $this->amountOff;
     }
     
-    public function setAmountОff($amountОff): self
+    public function setAmountOff($amountOff): self
     {
-        $this->amountОff    = $amountОff;
+        $this->amountOff    = $amountOff;
         
         return $this;
     }
