@@ -277,14 +277,15 @@ vs_payment:
         pricing_plan_subscription_already_created: "Recurring Payments Subscription is Already Created !!!"
         pricing_plan_subscription_not_created_yet: "Recurring Payments Subscription is Not Created Yet !!!"
         
+        coupon_index_title: Discount Coupons
         coupon_index_code: Coupon Code
         coupon_index_name: Coupon Name
         coupon_index_amount_off: Amount Off
         coupon_index_percent_off: Percent Off
         coupon_index_valid: Valid
-        coupon_update_title: Edit Coupon
-        coupon_create_title: Create Coupon
-        coupon_title: Coupon
+        coupon_update_title: Edit Discount Coupon
+        coupon_create_title: Create Discount Coupon
+        coupon_title: Discount Coupon
         
     validation:
         currency_code_unique: Currency code must be unique.
