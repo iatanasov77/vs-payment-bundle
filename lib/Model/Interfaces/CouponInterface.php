@@ -6,6 +6,6 @@ interface CouponInterface extends ResourceInterface
 {
     public function getCode();
     public function getName();
-    public function getAmountОff();
+    public function getAmountOff();
     public function getPercentOff();
 }
