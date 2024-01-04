@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\OfflineGateways;
+<?php namespace Vankosoft\PaymentBundle\CustomGateways;
 
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
@@ -10,7 +10,7 @@ use Payum\Offline\Action\PayoutAction;
 use Payum\Offline\Action\RefundAction;
 use Payum\Offline\Action\StatusAction;
 
-use Vankosoft\PaymentBundle\OfflineGateways\Keys\BankTransferKeys;
+use Vankosoft\PaymentBundle\CustomGateways\Keys\BankTransferKeys;
 
 class BankTransferGatewayFactory extends GatewayFactory
 {

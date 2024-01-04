@@ -9,7 +9,7 @@ imports:
     - { resource: services/currency.yaml }
     - { resource: services/fixtures_factories.yaml }
     - { resource: services/fixtures.yaml }
-    - { resource: services/offline_gateways.yaml }
+    - { resource: services/custom_gateways.yaml }
     - { resource: services/gateway_config.yaml }
 
 parameters:
