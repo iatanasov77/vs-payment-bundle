@@ -140,4 +140,6 @@ services:
     Vankosoft\PaymentBundle\Controller\Coupons\CouponsExtController:
         tags: ['controller.service_arguments']
         autowire: false
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
     
