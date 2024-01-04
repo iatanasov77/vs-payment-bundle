@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+        
+    vankosoft.offline_bank_transfer_factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [Vankosoft\PaymentBundle\CustomGateways\BankTransferGatewayFactory]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: offline_bank_transfer }
