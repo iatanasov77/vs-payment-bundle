@@ -16,7 +16,7 @@
             <gedmo:translatable />
         </field>
         
-        <field name="amountОff" column="amount_off" type="decimal" scale="2" precision="8" nullable="true" />
+        <field name="amountOff" column="amount_off" type="decimal" scale="2" precision="8" nullable="true" />
         <many-to-one field="currency" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface">
             <join-column name="currency_id" referenced-column-name="id" nullable="true" />
         </many-to-one>
