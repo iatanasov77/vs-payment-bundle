@@ -109,9 +109,15 @@
                         </div>
                         
                         {{ vs_form.buttons( form ) }}
-                    {{ form_end(form) }}
+                    {{ form_end(form, {'render_rest': false}) }}
                 </div>
             </div>
         </div>
     </div>  
 {% endblock content %}
+
+{% block body_scripts %}
+    {{ parent() }}
+    
+    {{ encore_entry_script_tags( 'js/coupons-edit' ) }}
+{% endblock %}
