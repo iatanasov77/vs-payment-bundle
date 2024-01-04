@@ -67,7 +67,7 @@ class CouponForm extends AbstractForm
                 'required'              => false,
             ])
             
-            ->add( 'amountОff', NumberType::class, [
+            ->add( 'amountOff', NumberType::class, [
                 'label'                 => 'vs_payment.form.coupon.amount_off',
                 'translation_domain'    => 'VSPaymentBundle',
                 'scale'                 => 2,
