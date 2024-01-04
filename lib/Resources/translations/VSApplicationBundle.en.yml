@@ -1,6 +1,7 @@
 vs_application:
     menu:
         payment: Payment System
+        payment_core_models: Payment Core Models
         gateway_config: Gateway Config
         gateways: Gateways
         create_new_gateway: Create New Gateway
@@ -39,4 +40,7 @@ vs_application:
         stripe_coupons: Stripe Coupons
         developement: Developement
         delete_all_orders: Delete All Orders
+        discount_coupons_listing: Discount Coupons
+        create_discount_coupon: Create Discount Coupon
+        edit_discount_coupon: Edit Discount Coupon
 
