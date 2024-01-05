@@ -51,4 +51,18 @@ class Payment extends BasePayment implements Interfaces\PaymentInterface
         
         return $this;
     }
+    
+    public function getFactoryName()
+    {
+        return $this->order ?
+            $this->order->getPaymentMethod()->getGateway()->getFactoryName() :
+            '';
+    }
+    
+    public function getGatewayName()
+    {
+        return $this->order ?
+                $this->order->getPaymentMethod()->getGateway()->getGatewayName() :
+                '';
+    }
 }

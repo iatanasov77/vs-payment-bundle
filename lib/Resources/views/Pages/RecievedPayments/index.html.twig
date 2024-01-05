@@ -31,7 +31,7 @@
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ item.number }}</td>
-                            <td>{{ item.order.paymentMethod.gateway.factoryName }}</td>
+                            <td>{{ item.factoryName }}</td>
                             <td>{{ item.description | raw }}</td>
                             <td>{{ item.clientEmail }}</td>
                             <td>{{ item.realAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
