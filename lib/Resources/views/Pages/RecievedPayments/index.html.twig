@@ -36,7 +36,7 @@
                             <td>{{ item.clientEmail }}</td>
                             <td>{{ item.realAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
                             <td style="text-align: center;">
-                                {% if item.details.paid is defined and item.details.paid %}
+                                {% if ( item | paid ) %}
                                     <i class="fas fa-check" style="color: #82c91e;"></i>
                                 {% else %}
                                     <i class="fas fa-times" style="color: #ff1e1e;"></i>

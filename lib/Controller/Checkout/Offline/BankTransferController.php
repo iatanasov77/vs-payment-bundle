@@ -35,6 +35,9 @@ class BankTransferController extends AbstractCheckoutOfflineController
         $user   = $this->tokenStorage->getToken()->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
+        
+        // Set Payment Not Paid 
+        $payment->setDetails( [\Payum\Offline\Constants::FIELD_PAID => false] );
 
         $storage->update($payment);
 

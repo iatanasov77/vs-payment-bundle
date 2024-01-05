@@ -2,8 +2,10 @@
 
 use Symfony\Component\Routing\RouterInterface;
 use Payum\Paypal\ExpressCheckout\Nvp\Api as PaypalApi;
+use Payum\Paypal\ProCheckout\Nvp\Api as PaypalProApi;
 use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod;
 use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\GatewayException;
@@ -172,6 +174,46 @@ final class Payment
                 break;
             case 'authorize_net_aim':
                 return false;
+                break;
+            default:
+                throw new GatewayException( 'Unknown Gateawy Factory !!!' );
+        }
+    }
+    
+    public function isPaymentPaid( PaymentInterface $payment ): bool
+    {
+        if ( ! $payment->getOrder() ) {
+            return false;
+        }
+        
+        $paymentDetails = $payment->getDetails();
+        $paymentFactory = $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName();
+        
+        switch( $paymentFactory ) {
+            case 'offline':
+                return false;
+                break;
+            case 'offline_bank_transfer':
+                return isset( $paymentDetails['paid'] ) && \boolval( $paymentDetails['paid'] );
+                break;
+            case 'stripe_checkout':
+            case 'stripe_js':
+                return isset( $paymentDetails['paid'] ) && \boolval( $paymentDetails['paid'] );
+                break;
+            case 'paypal_express_checkout':
+                return isset( $paymentDetails['ACK'] ) && ( $paymentDetails['ACK'] == PaypalApi::ACK_SUCCESS );
+                break;
+            case 'paypal_pro_checkout':
+                return isset( $paymentDetails['RESULT'] ) && ( \intval( $paymentDetails['RESULT'] ) == PaypalProApi::RESULT_SUCCESS );
+                break;
+            case 'paysera':
+                return false;
+                break;
+            case 'borica':
+                return false;
+                break;
+            case 'authorize_net_aim':
+                return isset( $paymentDetails['approved'] ) && \boolval( $paymentDetails['approved'] );
                 break;
             default:
                 throw new GatewayException( 'Unknown Gateawy Factory !!!' );
