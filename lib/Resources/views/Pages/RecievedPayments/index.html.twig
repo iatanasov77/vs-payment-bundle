@@ -17,6 +17,7 @@
                         <tr>
                             <th width="50">N</th>
                             <th data-sortable="true" data-field="number">{{ 'vs_payment.template.payment_number' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.gateway' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.payment_description' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th data-sortable="true" data-field="clientEmail">{{ 'vs_payment.template.payment_client_email' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th data-sortable="true" data-field="realAmount">{{ 'vs_payment.template.payment_total_amount' | trans( {},'VSPaymentBundle' ) }}</th>
@@ -30,6 +31,7 @@
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ item.number }}</td>
+                            <td>{{ item.order.paymentMethod.gateway.factoryName }}</td>
                             <td>{{ item.description | raw }}</td>
                             <td>{{ item.clientEmail }}</td>
                             <td>{{ item.realAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
