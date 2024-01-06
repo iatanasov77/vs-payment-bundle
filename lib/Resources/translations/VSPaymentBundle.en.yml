@@ -215,6 +215,16 @@ vs_payment:
             valid: Valid
             created: Created
 
+        recieved_payments_show:
+            number: Number
+            gateway_factory: Gateway Factory
+            gateway_id: Gateway Id
+            description: Description
+            amount: Amount
+            created_at: Created
+            updated_at: Updated
+            details: Details
+
         currency_index_title: Currencies
         currency_index_code: Code
         currency_index_symbol: Symbol

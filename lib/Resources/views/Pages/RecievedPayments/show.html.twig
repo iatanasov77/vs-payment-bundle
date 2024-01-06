@@ -37,7 +37,40 @@
                     {{ resource.number }}
                 </h5>
                 <div class="card-body">
-                
+                    <table>
+                        <tr>
+                            <th>{{ 'vs_payment.template.recieved_payments_show.number' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <td>{{ resource.number }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'vs_payment.template.recieved_payments_show.gateway_factory' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <td>{{ resource.factoryName }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'vs_payment.template.recieved_payments_show.gateway_id' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <td>{{ resource.gatewayName }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'vs_payment.template.recieved_payments_show.description' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <td>{{ resource.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'vs_payment.template.recieved_payments_show.amount' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <td>{{ resource.totalAmount }}  {{ resource.currencyCode }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'vs_payment.template.recieved_payments_show.created_at' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <td>{{ resource.createdAt }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'vs_payment.template.recieved_payments_show.updated_at' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <td>{{ resource.updatedAt }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'vs_payment.template.recieved_payments_show.details' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <td>{{ resource.details | json_encode | raw }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
