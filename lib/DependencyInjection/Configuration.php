@@ -18,13 +18,14 @@ use Vankosoft\PaymentBundle\Controller\Configuration\PaymentMethodConfigControll
 use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
 
 use Vankosoft\PaymentBundle\Model\Payment;
-use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\RecievedPaymentsController;
+use Vankosoft\PaymentBundle\Controller\OrdersAndPayments\RecievedPaymentsController;
+use Vankosoft\PaymentBundle\Repository\PaymentRepository;
 
 use Vankosoft\PaymentBundle\Model\PaymentToken;
 
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Repository\OrderRepository;
-use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\OrdersController;
+use Vankosoft\PaymentBundle\Controller\OrdersAndPayments\OrdersController;
 
 use Vankosoft\PaymentBundle\Model\OrderItem;
 
@@ -56,7 +57,7 @@ use Vankosoft\PaymentBundle\Repository\PricingPlansRepository;
 
 use Vankosoft\PaymentBundle\Model\PricingPlanSubscription;
 use Vankosoft\PaymentBundle\Repository\PricingPlansSubscriptionsRepository;
-use Vankosoft\PaymentBundle\Controller\PaidSubscriptions\PricingPlanSubscriptionsController;
+use Vankosoft\PaymentBundle\Controller\OrdersAndPayments\PricingPlanSubscriptionsController;
 
 use Vankosoft\PaymentBundle\Model\Coupon;
 use Vankosoft\PaymentBundle\Controller\Coupons\CouponsController;
@@ -147,7 +148,7 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode( 'model' )->defaultValue( Payment::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( PaymentRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( RecievedPaymentsController::class )->cannotBeEmpty()->end()
                                     ->end()

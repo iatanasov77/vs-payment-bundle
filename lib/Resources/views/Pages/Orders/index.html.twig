@@ -30,7 +30,7 @@
                     {% for item in resources %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
+                            <td>{{ item.totalAmount }} {{ item.currencyCode | vs_currency_symbol }}</td>
                             <td>{% if item.paymentMethod %}{{ item.paymentMethod.name }}{% endif %}</td>
                             <td>{% if item.user %}{{ item.user.email }}{% endif %}</td>
                             <td>{{ item.sessionId }}</td>

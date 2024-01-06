@@ -27,8 +27,8 @@
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ item.code }}</td>
-                            <td>{{ intlCurrencies[item.code]['symbol'] }}</td>
-                            <td>{{ intlCurrencies[item.code]['name'] }}</td>
+                            <td>{{ item.code | vs_currency_symbol }}</td>
+                            <td>{{ item.code | vs_currency_name }}</td>
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-primary"

@@ -140,7 +140,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $payment->setTotalAmount( $cart->getTotalAmount() * 100 ); // Amount must convert to at least 100 stotinka.
         $payment->setDescription( $cart->getDescription() );
         
-        $user   = $this->tokenStorage->getToken()->getUser();
+        $user   = $this->securityBridge->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         

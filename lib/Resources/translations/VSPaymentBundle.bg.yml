@@ -2,7 +2,8 @@ vs_payment:
     form:
         active: Активен
         gateway: Гейтуей ID
-        factory: Фактори
+        factory: Гейтуей Фактори
+        factory_placeholder: '-- Избери Гейтуей Фактори --'
         title: Заглавие
         name: Име
         price: Цена
@@ -88,6 +89,11 @@ vs_payment:
             coupon_name: Coupon Name
             amount_off: Amount Off
             percent_off: Percent Off
+            
+        payment_filter:
+            payment_number: Payment Number
+            payment_description: Payment Description
+            gateway_factory: Gateway Factory
     
     template:
         gateway: Гейтуей
@@ -208,6 +214,16 @@ vs_payment:
             valid: Valid
             created: Created
             
+        recieved_payments_show:
+            number: Number
+            gateway_factory: Gateway Factory
+            gateway_id: Gateway Id
+            description: Description
+            amount: Amount
+            created_at: Created
+            updated_at: Updated
+            details: Details
+            
         currency_index_title: Валути
         currency_index_code: Код
         currency_index_symbol: Символ
@@ -286,6 +302,12 @@ vs_payment:
         coupon_update_title: Редакция Купон за отстъпка
         coupon_create_title: Създаване Купон за отстъпка
         coupon_title: Купон за отстъпка
+        
+        search_payments: Търсене Плащания
+        action_show_payment_details: Показване Детайли за Плащане
+        payment_show_title: Детайли за Плащане
+        payment_show_subtitle: Плащане
+        back_to_payments: Назад към плащанията
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

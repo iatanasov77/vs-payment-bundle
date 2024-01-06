@@ -5,7 +5,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Factory\Factory;
 use Doctrine\Persistence\ManagerRegistry;
-use Vankosoft\UsersBundle\Model\UserInterface;
+use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
@@ -23,8 +23,8 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     /** @var ManagerRegistry */
     private $doctrine;
     
-    /** @var UserInterface|null */
-    private $user;
+    /** @var SecurityBridge */
+    private $securityBridge;
     
     /** @var RepositoryInterface */
     private $pricingPlanSubscriptionRepository;
@@ -42,8 +42,8 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     private $vsPayment;
     
     public function __construct(
-        TokenStorageInterface $tokenStorage,
         ManagerRegistry $doctrine,
+        SecurityBridge $securityBridge,
         RepositoryInterface $pricingPlanSubscriptionRepository,
         Factory $pricingPlanSubscriptionFactory,
         OrderFactory $orderFactory,
@@ -51,16 +51,12 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
         Payment $vsPayment
     ) {
         $this->doctrine                             = $doctrine;
+        $this->securityBridge                       = $securityBridge;
         $this->pricingPlanSubscriptionRepository    = $pricingPlanSubscriptionRepository;
         $this->pricingPlanSubscriptionFactory       = $pricingPlanSubscriptionFactory;
         $this->orderFactory                         = $orderFactory;
         $this->stripeApi                            = $stripeApi;
         $this->vsPayment                            = $vsPayment;
-        
-        $token          = $tokenStorage->getToken();
-        if ( $token ) {
-            $this->user         = $token->getUser();
-        }
     }
     
     public static function getSubscribedEvents(): array
@@ -74,14 +70,15 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
 
     public function createSubscription( CreateSubscriptionEvent $event )
     {
-        $pricingPlan    = $event->getPricingPlan();
-        $previousSubscription   = $this->user->getActivePricingPlanSubscriptionByService(
+        $pricingPlan            = $event->getPricingPlan();
+        $user                   = $this->securityBridge->getUser();
+        $previousSubscription   = $user->getActivePricingPlanSubscriptionByService(
             $pricingPlan->getPaidService()->getPayedService()
         );
         
         $subscription   = $this->pricingPlanSubscriptionFactory->createNew();
         
-        $subscription->setUser( $this->user );
+        $subscription->setUser( $user );
         $subscription->setPricingPlan( $pricingPlan );
         $subscription->setRecurringPayment( $event->getSetRecurringPayments() );
         
@@ -126,7 +123,8 @@ final class PricingPlanSubscriptionsSubscriber implements EventSubscriberInterfa
     
     private function setSubscriptionPaid( PricingPlanSubscriptionInterface $subscription, $payment )
     {
-        $previousSubscription   = $this->user->getActivePricingPlanSubscriptionByService(
+        $user                   = $this->securityBridge->getUser();
+        $previousSubscription   = $user->getActivePricingPlanSubscriptionByService(
             $subscription->getPricingPlan()->getPaidService()->getPayedService()
         );
         if ( $previousSubscription ) {

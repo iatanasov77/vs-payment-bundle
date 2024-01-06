@@ -1,19 +1,4 @@
 parameters:
-
-    # GatewayConfig Form Options
-    ##########################################################
-    vs_payment.gateway_factories:
-        - 'offline'
-        - 'offline_bank_transfer'
-        - 'paypal_rest'
-        - 'paypal_express_checkout'
-        - 'paypal_pro_checkout'
-        - 'stripe_checkout'
-        - 'stripe_js'
-        - 'paysera'
-        - 'borica'
-        - 'authorize_net_aim'
-        
     vs_payment.form.type.currency.validation_groups:
         - 'VSPaymentBundle'
     vs_payment.form.type.exchange_rate.validation_groups:
@@ -26,8 +11,8 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.model.gateway_config.class%'
-            - '%vs_payment.gateway_factories%'
             - '%vs_payment.model.currency.class%'
+            - '@vs_payment_payment'
 
     vs_payment.resources.payment_method.form:
         class: Vankosoft\PaymentBundle\Form\PaymentMethodForm

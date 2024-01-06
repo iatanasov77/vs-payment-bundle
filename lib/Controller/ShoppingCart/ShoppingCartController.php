@@ -16,7 +16,7 @@ use Vankosoft\ApplicationBundle\Component\Status;
 class ShoppingCartController extends AbstractController
 {
     /** @var ManagerRegistry */
-    protected ManagerRegistry $doctrine;
+    protected $doctrine;
     
     /** @var SecurityBridge */
     protected $securityBridge;

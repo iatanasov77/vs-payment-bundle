@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Vankosoft\PaymentBundle\Form\Type\GatewayConfigType;
+use Vankosoft\PaymentBundle\Component\Payment\Payment;
 
 /**
  * Credit Card Form Type for PayPal Pro Direct Payments
@@ -26,12 +27,12 @@ class GatewayConfigForm extends AbstractForm
     
     public function __construct(
         string $dataClass,
-        array $factories,
-        string $currencyClass
+        string $currencyClass,
+        Payment $vsPayment
     ) {
         parent::__construct( $dataClass );
      
-        $this->factories        = $factories;
+        $this->factories        = $vsPayment->availableFactories();
         $this->currencyClass    = $currencyClass;
     }
     
@@ -73,7 +74,7 @@ class GatewayConfigForm extends AbstractForm
             ->add( 'factoryName', ChoiceType::class, [
                 'label'                 => 'vs_payment.form.factory',
                 'translation_domain'    => 'VSPaymentBundle',
-                'placeholder'           => '-- Select Factory --',
+                'placeholder'           => 'vs_payment.form.factory_placeholder',
                 'choices'               => \array_combine( $this->factories, $this->factories ),
             ] )
             

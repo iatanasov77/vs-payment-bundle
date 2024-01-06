@@ -41,10 +41,28 @@ vs_payment_generate_coupon_code:
         expose: true
         
 ###############################################################################################
+# Custom Payment Actions
+###############################################################################################
+vs_payment_custom_payment_actions_search_payments:
+    path:     /custom-payment-actions/search_payments
+    controller: Vankosoft\PaymentBundle\Controller\OrdersAndPayments\RecievedPaymentsExtController::handleSearchForm
+    options:
+        expose: true
+vs_payment_custom_payment_actions_set_payment_paid:
+    path:     /custom-payment-actions/set-payment-paid/{paymentId}
+    controller: Vankosoft\PaymentBundle\Controller\PaymentController::setPaymentPaidAction
+    options:
+        expose: true
+    
+###############################################################################################
 # Developement Routes
 ###############################################################################################
 vs_payment_developement_delete_all_orders:
     path:     /developement/delete-all-orders
     controller: Vankosoft\PaymentBundle\Controller\DevelopementController::deleteAllOrdersAction
+    
+vs_payment_developement_clear_session:
+    path:     /developement/clear-session
+    controller: Vankosoft\PaymentBundle\Controller\DevelopementController::clearSessionAction
 
 

@@ -43,4 +43,6 @@ vs_application:
         discount_coupons_listing: Discount Coupons
         create_discount_coupon: Create Discount Coupon
         edit_discount_coupon: Edit Discount Coupon
+        show_payment_details: Show Payment Details
+        clear_session: Clear Session
 

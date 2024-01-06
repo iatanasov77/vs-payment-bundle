@@ -35,7 +35,7 @@ vs_payment_recieved_payments_index:
             paginate: 10
             sortable: true
             sorting:
-                createdAt: desc
+                updatedAt: desc
             filterable: true
             template: "@VSPayment/Pages/RecievedPayments/index.html.twig"
     options:
@@ -44,7 +44,7 @@ vs_payment_recieved_payments_index:
 vs_payment_recieved_payments:
     resource: |
         alias: vs_payment.payment
-        except: ['create', 'update', 'show']
+        except: ['create', 'update']
         path: /payment/recieved-payments
         templates: "@VSPayment/Pages/RecievedPayments"
     type: sylius.resource

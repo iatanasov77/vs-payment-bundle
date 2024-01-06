@@ -1,3 +1,16 @@
+parameters:
+    vs_payment.gateway_factories:
+        - 'offline'
+        - 'offline_bank_transfer'
+        - 'paypal_rest'
+        - 'paypal_express_checkout'
+        - 'paypal_pro_checkout'
+        - 'stripe_checkout'
+        - 'stripe_js'
+        - 'paysera'
+        - 'borica'
+        - 'authorize_net_aim'
+
 services:
     _defaults:
         autowire: true
@@ -6,8 +19,10 @@ services:
     vs_payment_payment:
         class: Vankosoft\PaymentBundle\Component\Payment\Payment
         arguments:
+            - '@doctrine'
             - '@router'
             - '@vs_payment.order_factory'
+            - '%vs_payment.gateway_factories%'
             
     vs_payment.twig.extension.payment:
         class: Vankosoft\PaymentBundle\Twig\PaymentExtension
@@ -25,25 +40,17 @@ services:
     vs_payment.order_factory:
         class: Vankosoft\PaymentBundle\Component\OrderFactory
         arguments:
-            - '@security.token_storage'
             - '@request_stack'
             - '@doctrine'
+            - '@vs_users.security_bridge'
             - '@vs_payment.repository.order'
             - '@vs_payment.factory.order'
-            
-#     vs_payment.subscription_factory:
-#         class: Vankosoft\PaymentBundle\Component\Subscription\SubscriptionFactory
-#         arguments:
-#             - '@security.token_storage'
-#             - '@vs_payment_payment'
-#             - '@vs_payment.repository.pricing_plan_subscription'
-#             - '@vs_payment.factory.pricing_plan_subscription'
     
     vs_payment.pricing_plan_subscriptions_subscriber:
         class: Vankosoft\PaymentBundle\EventSubscriber\PricingPlanSubscriptionsSubscriber
         arguments:
-            - '@security.token_storage'
             - '@doctrine'
+            - '@vs_users.security_bridge'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '@vs_payment.factory.pricing_plan_subscription'
             - '@vs_payment.order_factory'
@@ -140,6 +147,34 @@ services:
     Vankosoft\PaymentBundle\Controller\Coupons\CouponsExtController:
         tags: ['controller.service_arguments']
         autowire: false
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+            
+    ########################################################################
+    # Custom Payment Actions Controller
+    ########################################################################
+    Vankosoft\PaymentBundle\Controller\PaymentController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@doctrine'
+            - '@vs_payment.repository.payment'
+            - '@vs_payment_payment'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+            
+    Vankosoft\PaymentBundle\Form\PaymentFilterForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@vs_payment_payment'
+    
+    Vankosoft\PaymentBundle\Controller\OrdersAndPayments\RecievedPaymentsExtController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@twig'
+            - '@vs_payment.repository.payment'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     

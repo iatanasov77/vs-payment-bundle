@@ -14,11 +14,11 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\Offline\OfflineController:
         arguments:
-            - '@security.token_storage'
             - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@payum'
+            - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
@@ -32,11 +32,11 @@ services:
             
     Vankosoft\PaymentBundle\Controller\Checkout\Offline\BankTransferController:
         arguments:
-            - '@security.token_storage'
             - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@payum'
+            - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
@@ -53,11 +53,11 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController:
         arguments:
-            - '@security.token_storage'
             - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@payum'
+            - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
@@ -74,11 +74,11 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController:
         arguments:
-            - '@security.token_storage'
             - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@payum'
+            - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
@@ -95,11 +95,11 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\Stripe\StripeCheckoutController:
         arguments:
-            - '@security.token_storage'
             - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@payum'
+            - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
@@ -113,11 +113,11 @@ services:
             
     Vankosoft\PaymentBundle\Controller\Checkout\Stripe\StripeCouponController:
         arguments:
-            - '@security.token_storage'
             - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@payum'
+            - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
@@ -134,11 +134,11 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\BoricaController:
         arguments:
-            - '@security.token_storage'
             - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@payum'
+            - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
@@ -155,11 +155,11 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\PayseraController:
         arguments:
-            - '@security.token_storage'
             - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@payum'
+            - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'
@@ -176,11 +176,11 @@ services:
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController:
         arguments:
-            - '@security.token_storage'
             - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@payum'
+            - '@vs_users.security_bridge'
             - '@vs_payment_payment'
             - '@vs_payment.order_factory'
             - '@vs_payment.repository.pricing_plan_subscription'

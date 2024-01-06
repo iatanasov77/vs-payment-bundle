@@ -33,7 +33,7 @@ class OfflineController extends AbstractCheckoutOfflineController
         $payment->setTotalAmount( $cart->getTotalAmount() );
         $payment->setDescription( $cart->getDescription() );
         
-        $user   = $this->tokenStorage->getToken()->getUser();
+        $user   = $this->securityBridge->getUser();
         $payment->setClientId( $user ? $user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
 

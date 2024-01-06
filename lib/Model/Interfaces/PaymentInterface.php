@@ -7,4 +7,7 @@ use Payum\Core\Model\DirectDebitPaymentInterface;
 interface PaymentInterface extends ResourceInterface, BasePaymentInterface, DirectDebitPaymentInterface
 {
     public function getOrder();
+    
+    public function getFactoryName(): string;
+    public function getGatewayName(): string;
 }

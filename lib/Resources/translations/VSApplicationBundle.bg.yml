@@ -43,4 +43,6 @@ vs_application:
         discount_coupons_listing: Купони за отстъпка
         create_discount_coupon: Създай Купон за отстъпка
         edit_discount_coupon: Редакция Купон за отстъпка
+        show_payment_details: Показване Детайли за Плащане
+        clear_session: Изчисти Сесията
 

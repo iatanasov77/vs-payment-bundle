@@ -2,7 +2,8 @@ vs_payment:
     form:
         active: Active
         gateway: Gateway ID
-        factory: Factory
+        factory: Gateway Factory
+        factory_placeholder: '-- Select Gateway Factory --'
         title: Title
         name: Name
         price: Price
@@ -88,6 +89,12 @@ vs_payment:
             coupon_name: Coupon Name
             amount_off: Amount Off
             percent_off: Percent Off
+            
+        payment_filter:
+            payment_number: Payment Number
+            payment_description: Payment Description
+            gateway_factory: Gateway Factory
+            
 
     template:
         gateway: Gateway
@@ -208,6 +215,16 @@ vs_payment:
             valid: Valid
             created: Created
 
+        recieved_payments_show:
+            number: Number
+            gateway_factory: Gateway Factory
+            gateway_id: Gateway Id
+            description: Description
+            amount: Amount
+            created_at: Created
+            updated_at: Updated
+            details: Details
+
         currency_index_title: Currencies
         currency_index_code: Code
         currency_index_symbol: Symbol
@@ -286,6 +303,12 @@ vs_payment:
         coupon_update_title: Edit Discount Coupon
         coupon_create_title: Create Discount Coupon
         coupon_title: Discount Coupon
+        
+        search_payments: Search Payments
+        action_show_payment_details: Show Payment Details
+        payment_show_title: Payment Details
+        payment_show_subtitle: Payment
+        back_to_payments: Back to payments
         
     validation:
         currency_code_unique: Currency code must be unique.

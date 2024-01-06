@@ -6,21 +6,21 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Factory\Factory;
+use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
-use Vankosoft\UsersBundle\Model\UserInterface;
 
 class OrderFactory
 {
     const SESSION_BASKET_KEY    = 'vs_payment_basket_id';
-    
-    /** @var UserInterface|null */
-    private $user;
     
     /** @var Request|null */
     private $request;
     
     /** @var ManagerRegistry */
     private $doctrine;
+    
+    /** @var SecurityBridge */
+    private $securityBridge;
     
     /** @var RepositoryInterface */
     private $ordersRepository;
@@ -29,22 +29,18 @@ class OrderFactory
     private $ordersFactory;
     
     public function __construct(
-        TokenStorageInterface $tokenStorage,
         RequestStack $requestStack,
         ManagerRegistry $doctrine,
+        SecurityBridge $securityBridge,
         RepositoryInterface $ordersRepository,
         Factory $ordersFactory
     ) {
         $this->doctrine         = $doctrine;
+        $this->securityBridge   = $securityBridge;
         $this->ordersRepository = $ordersRepository;
         $this->ordersFactory    = $ordersFactory;
         
         $this->request          = $requestStack->getCurrentRequest();
-        
-        $token                  = $tokenStorage->getToken();
-        if ( $token ) {
-            $this->user         = $token->getUser();
-        }
     }
     
     public function getShoppingCart(): OrderInterface
@@ -56,12 +52,12 @@ class OrderFactory
         $cartId         = $session->get( self::SESSION_BASKET_KEY );
         $shoppingCart   = $cartId ?
                             $this->ordersRepository->find( $cartId ) :
-                            $this->ordersRepository->getShoppingCartByUser( $this->user );
+                            $this->ordersRepository->getShoppingCartByUser( $this->securityBridge->getUser() );
         
         if ( ! $shoppingCart ) {
             $shoppingCart   = $this->ordersFactory->createNew();
             
-            $shoppingCart->setUser( $this->user );
+            $shoppingCart->setUser( $this->securityBridge->getUser() );
             $shoppingCart->setSessionId( $session->getId() );
             
             $em->persist( $shoppingCart );
@@ -81,7 +77,7 @@ class OrderFactory
         $cartId         = $session->get( self::SESSION_BASKET_KEY );
         $shoppingCart   = $cartId ?
                             $this->ordersRepository->find( $cartId ) :
-                            $this->ordersRepository->getShoppingCartByUser( $this->user );
+                            $this->ordersRepository->getShoppingCartByUser( $this->securityBridge->getUser() );
         
         if ( $shoppingCart ) {
             foreach ( $shoppingCart->getItems() as $item ) {

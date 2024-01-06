@@ -1,6 +1,6 @@
-<?php namespace Vankosoft\PaymentBundle\OfflineGateways\Keys;
+<?php namespace Vankosoft\PaymentBundle\CustomGateways\Keys;
 
-class BankTransferKeys
+class OfflineBankTransferKeys
 {
     /** @var string */
     protected $iban;

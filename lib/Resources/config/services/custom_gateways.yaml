@@ -6,6 +6,6 @@ services:
         
     vankosoft.offline_bank_transfer_factory:
         class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
-        arguments: [Vankosoft\PaymentBundle\OfflineGateways\BankTransferGatewayFactory]
+        arguments: [Vankosoft\PaymentBundle\CustomGateways\OfflineBankTransferGatewayFactory]
         tags:
             - { name: payum.gateway_factory_builder, factory: offline_bank_transfer }

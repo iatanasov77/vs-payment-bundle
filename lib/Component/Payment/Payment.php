@@ -1,9 +1,14 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Payment;
 
 use Symfony\Component\Routing\RouterInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Payum\Offline\Constants as PayumOfflineConstants;
 use Payum\Paypal\ExpressCheckout\Nvp\Api as PaypalApi;
+use Payum\Paypal\ProCheckout\Nvp\Api as PaypalProApi;
 use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod;
+use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\GatewayException;
@@ -14,16 +19,33 @@ final class Payment
     const TOKEN_STORAGE_FILESYSTEM      = 'filesystem';
     const TOKEN_STORAGE_DOCTRINE_ORM    = 'doctrine_orm';
     
+    /** @var ManagerRegistry */
+    private $doctrine;
+    
     /** @var RouterInterface */
     private $router;
     
     /** @var OrderFactory */
     private $orderFactory;
+
+    /** @var array */
+    private $factories;
     
-    public function __construct( RouterInterface $router, OrderFactory $orderFactory )
-    {
+    public function __construct(
+        ManagerRegistry $doctrine,
+        RouterInterface $router,
+        OrderFactory $orderFactory,
+        array $factories
+    ) {
+        $this->doctrine     = $doctrine;
         $this->router       = $router;
         $this->orderFactory = $orderFactory;
+        $this->factories    = $factories;
+    }
+    
+    public function availableFactories(): array
+    {
+        return $this->factories;
     }
     
     public function getPaymentPrepareRoute( GatewayConfigInterface $gatewayConfig, $isRecurring = false )
@@ -178,6 +200,46 @@ final class Payment
         }
     }
     
+    public function isPaymentPaid( PaymentInterface $payment ): bool
+    {
+        if ( ! $payment->getOrder() ) {
+            return false;
+        }
+        
+        $paymentDetails = $payment->getDetails();
+        $paymentFactory = $payment->getOrder()->getPaymentMethod()->getGateway()->getFactoryName();
+        
+        switch( $paymentFactory ) {
+            case 'offline':
+                return false;
+                break;
+            case 'offline_bank_transfer':
+                return isset( $paymentDetails['paid'] ) && \boolval( $paymentDetails['paid'] );
+                break;
+            case 'stripe_checkout':
+            case 'stripe_js':
+                return isset( $paymentDetails['paid'] ) && \boolval( $paymentDetails['paid'] );
+                break;
+            case 'paypal_express_checkout':
+                return isset( $paymentDetails['ACK'] ) && ( $paymentDetails['ACK'] == PaypalApi::ACK_SUCCESS );
+                break;
+            case 'paypal_pro_checkout':
+                return isset( $paymentDetails['RESULT'] ) && ( \intval( $paymentDetails['RESULT'] ) == PaypalProApi::RESULT_SUCCESS );
+                break;
+            case 'paysera':
+                return false;
+                break;
+            case 'borica':
+                return false;
+                break;
+            case 'authorize_net_aim':
+                return isset( $paymentDetails['approved'] ) && \boolval( $paymentDetails['approved'] );
+                break;
+            default:
+                throw new GatewayException( 'Unknown Gateawy Factory !!!' );
+        }
+    }
+    
     public function getPaypalNvpBillingCycle( string $period ): array
     {
         $billingCycle = null;
@@ -236,5 +298,49 @@ final class Payment
         }
         
         return $billingCycle;
+    }
+    
+    public function setBankTransferPaymentPaid( PaymentInterface $payment )
+    {
+        $em     = $this->doctrine->getManager();
+        $order  = $payment->getOrder();
+        if ( $order && $order->getUser() ) {
+            $order->setStatus( Order::STATUS_PENDING_ORDER );
+            $subscriptions  = $order->getSubscriptions();
+            if ( ! empty( $subscriptions ) ) {
+                foreach ( $subscriptions as $subscription ) {
+                    $previousSubscription   = $order->getUser()->getActivePricingPlanSubscriptionByService(
+                        $subscription->getPricingPlan()->getPaidService()->getPayedService()
+                    );
+                    
+                    if ( $previousSubscription ) {
+                        $previousSubscription->setActive( false );
+                        $em->persist( $previousSubscription );
+                    }
+                    
+                    $subscription->setActive( true );
+                    $em->persist( $subscription );
+                }
+            }
+            
+            $em->persist( $order );
+        }
+        
+        $paymentDetails = $payment->getDetails();
+        $paymentDetails[PayumOfflineConstants::FIELD_PAID]      = true;
+        //$paymentDetails[PayumOfflineConstants::FIELD_STATUS]    = PayumOfflineConstants::STATUS_CAPTURED;
+        
+        $payment->setDetails( $paymentDetails );
+        $em->persist( $payment );
+        $em->flush();
+    }
+    
+    public function triggerSubscriptionsPaymentDone( PaymentInterface $payment ): bool
+    {
+        if ( $payment->getFactoryName() === 'offline_bank_transfer' ) {
+            return false;
+        }
+        
+        return true;
     }
 }

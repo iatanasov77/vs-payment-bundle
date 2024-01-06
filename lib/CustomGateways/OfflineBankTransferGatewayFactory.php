@@ -1,7 +1,8 @@
-<?php namespace Vankosoft\PaymentBundle\OfflineGateways;
+<?php namespace Vankosoft\PaymentBundle\CustomGateways;
 
-use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
+use Payum\Core\Bridge\Spl\ArrayObject;
+
 use Payum\Offline\Action\AuthorizeAction;
 use Payum\Offline\Action\CaptureAction;
 use Payum\Offline\Action\ConvertPaymentAction;
@@ -10,9 +11,9 @@ use Payum\Offline\Action\PayoutAction;
 use Payum\Offline\Action\RefundAction;
 use Payum\Offline\Action\StatusAction;
 
-use Vankosoft\PaymentBundle\OfflineGateways\Keys\BankTransferKeys;
+use Vankosoft\PaymentBundle\CustomGateways\Keys\OfflineBankTransferKeys;
 
-class BankTransferGatewayFactory extends GatewayFactory
+class OfflineBankTransferGatewayFactory extends GatewayFactory
 {
     /**
      * {@inheritDoc}
@@ -46,7 +47,7 @@ class BankTransferGatewayFactory extends GatewayFactory
             $config['payum.api'] = function ( ArrayObject $config ) {
                 $config->validateNotEmpty( $config['payum.required_options'] );
                 
-                return new BankTransferKeys( $config['iban'], $config['bank_name'], $config['reciever_name'], $config['reason'] );
+                return new OfflineBankTransferKeys( $config['iban'], $config['bank_name'], $config['reciever_name'], $config['reason'] );
             };
         }
     }
