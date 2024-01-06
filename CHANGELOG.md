@@ -1,3 +1,16 @@
+2.10.2	|	Release date: **06.01.2024**
+============================================
+* New Features, Fixes and Improvements:
+  - Change Namespace of Offline Gateway Factories.
+  - Create Twig Filter for Checking Payment is Piad.
+  - Improve Recieved Payments Search.
+  - Improve Recieved Payments Preview Page.
+  - Improve Checkout Controller Done Action.
+  - Improve Displaying Currencies.
+  - Use VS Users Security Bridge insteed Symfony Token Storage Service.
+  - Add a Developement Action.
+
+
 2.10.1	|	Release date: **04.01.2024**
 ============================================
 * New Features, Fixes and Improvements:
