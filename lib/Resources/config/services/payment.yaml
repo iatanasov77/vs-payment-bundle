@@ -40,25 +40,17 @@ services:
     vs_payment.order_factory:
         class: Vankosoft\PaymentBundle\Component\OrderFactory
         arguments:
-            - '@security.token_storage'
             - '@request_stack'
             - '@doctrine'
+            - '@vs_users.security_bridge'
             - '@vs_payment.repository.order'
             - '@vs_payment.factory.order'
-            
-#     vs_payment.subscription_factory:
-#         class: Vankosoft\PaymentBundle\Component\Subscription\SubscriptionFactory
-#         arguments:
-#             - '@security.token_storage'
-#             - '@vs_payment_payment'
-#             - '@vs_payment.repository.pricing_plan_subscription'
-#             - '@vs_payment.factory.pricing_plan_subscription'
     
     vs_payment.pricing_plan_subscriptions_subscriber:
         class: Vankosoft\PaymentBundle\EventSubscriber\PricingPlanSubscriptionsSubscriber
         arguments:
-            - '@security.token_storage'
             - '@doctrine'
+            - '@vs_users.security_bridge'
             - '@vs_payment.repository.pricing_plan_subscription'
             - '@vs_payment.factory.pricing_plan_subscription'
             - '@vs_payment.order_factory'

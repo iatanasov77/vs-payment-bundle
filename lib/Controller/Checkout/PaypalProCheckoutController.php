@@ -36,7 +36,7 @@ class PaypalProCheckoutController extends AbstractCheckoutController
         // Maximum length is 127 alphanumeric characters.
         $payment->setDescription( \substr( $cart->getDescription(), 0, 120 ) );
         
-        $user   = $this->tokenStorage->getToken()->getUser();
+        $user   = $this->securityBridge->getUser();
         $payment->setClientId( $user ?$user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         

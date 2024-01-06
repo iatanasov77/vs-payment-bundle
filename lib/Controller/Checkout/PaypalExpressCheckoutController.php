@@ -251,10 +251,10 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
     
     protected function prepareRecurringPaymentDetails( OrderInterface $cart, $agreement, $subscription ): \ArrayObject
     {
-        $user                   = $this->tokenStorage->getToken()->getUser();
-        $previousSubscription   = $user->getActivePricingPlanSubscriptionByService(
+        $user                   = $this->securityBridge->getUser();
+        $previousSubscription   = $user ? $user->getActivePricingPlanSubscriptionByService(
             $subscription->getPricingPlan()->getPaidService()->getPayedService()
-        );
+        ) : null;
         
         $storage            = $this->payum->getStorage( self::RECURRING_PAYMENT_CLASS );
         $recurringPayment   = $storage->create();
@@ -300,7 +300,7 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         // Maximum length is 127 alphanumeric characters.
         $payment->setDescription( \substr( $cart->getDescription(), 0, 120 ) );
         
-        $user   = $this->tokenStorage->getToken()->getUser();
+        $user   = $this->securityBridge->getUser();
         $payment->setClientId( $user ?$user->getId() : 'UNREGISTERED_USER' );
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         

@@ -4,7 +4,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -14,6 +13,7 @@ use Sylius\Component\Resource\Factory\Factory;
 use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
 
+use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Order;
@@ -23,9 +23,6 @@ use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
-    /** @var TokenStorageInterface */
-    protected $tokenStorage;
-    
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
     
@@ -37,6 +34,9 @@ abstract class AbstractCheckoutController extends AbstractController
     
     /** @var Payum */
     protected $payum;
+    
+    /** @var SecurityBridge */
+    protected $securityBridge;
     
     /** @var Payment */
     protected $vsPayment;
@@ -71,11 +71,11 @@ abstract class AbstractCheckoutController extends AbstractController
     protected $routeRedirectOnPricingPlanDone;
     
     public function __construct(
-        TokenStorageInterface $tokenStorage,
         EventDispatcherInterface $eventDispatcher,
         TranslatorInterface $translator,
         ManagerRegistry $doctrine,
         Payum $payum,
+        SecurityBridge $securityBridge,
         Payment $vsPayment,
         OrderFactory $orderFactory,
         RepositoryInterface $subscriptionsRepository,
@@ -85,11 +85,11 @@ abstract class AbstractCheckoutController extends AbstractController
         ?string $routeRedirectOnShoppingCartDone,
         ?string $routeRedirectOnPricingPlanDone
     ) {
-        $this->tokenStorage                         = $tokenStorage;
         $this->eventDispatcher                      = $eventDispatcher;
         $this->translator                           = $translator;
         $this->doctrine                             = $doctrine;
         $this->payum                                = $payum;
+        $this->securityBridge                       = $securityBridge;
         $this->vsPayment                            = $vsPayment;
         $this->orderFactory                         = $orderFactory;
         $this->subscriptionsRepository              = $subscriptionsRepository;
