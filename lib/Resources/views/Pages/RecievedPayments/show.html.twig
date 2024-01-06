@@ -67,7 +67,7 @@
                             <td>{{ resource.updatedAt | date( "d.m.Y H:i" ) }}</td>
                         </tr>
                         <tr>
-                            <th>{{ 'vs_payment.template.recieved_payments_show.details' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th style="vertical-align: top;">{{ 'vs_payment.template.recieved_payments_show.details' | trans( {},'VSPaymentBundle' ) }}</th>
                             <td><pre>{{ resource.details | json_encode( constant( 'JSON_PRETTY_PRINT' ) ) | raw }}</pre></td>
                         </tr>
                     </table>
