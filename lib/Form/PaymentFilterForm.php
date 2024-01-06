@@ -28,7 +28,7 @@ class PaymentFilterForm extends AbstractType
                 'choices'               => \array_combine( $this->factories, $this->factories ),
             ])
             
-            >add( 'btnSubmit', SubmitType::class, [
+            ->add( 'btnSubmit', SubmitType::class, [
                 'label'                 => 'vs_payment.form.select_pricing_plan.submit',
                 'translation_domain'    => 'VSPaymentBundle',
             ])
