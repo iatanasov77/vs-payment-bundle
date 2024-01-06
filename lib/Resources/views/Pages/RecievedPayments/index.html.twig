@@ -9,6 +9,18 @@
 {% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payment_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+            {{ form_label( filterForm.filterByGatewayFactory, null, {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget( filterForm.filterByGatewayFactory, {
+                'attr': {
+                    'class': 'form-control',
+                    'data-value': filterFactory
+                }
+            }) }}
+        </div>
+    </div>
+    
     <div class="row">   
         <div class="col-lg-12">
             <section class="panel">
@@ -23,6 +35,7 @@
                             <th data-sortable="true" data-field="realAmount">{{ 'vs_payment.template.payment_total_amount' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_payment.template.order_is_paid' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th data-sortable="true" data-field="createdAt">{{ 'vs_application.template.items_index_row_created' | trans( {},'VSApplicationBundle' ) }}</th>
+                            <th data-sortable="true" data-field="updatedAt">{{ 'vs_application.template.items_index_row_updated' | trans( {},'VSApplicationBundle' ) }}
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
                     </thead>
@@ -34,7 +47,7 @@
                             <td>{{ item.factoryName }}</td>
                             <td>{{ item.description | raw }}</td>
                             <td>{{ item.clientEmail }}</td>
-                            <td>{{ item.realAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
+                            <td>{{ item.realAmount }} {{ item.currencyCode | vs_currency_symbol }}</td>
                             <td style="text-align: center;">
                                 {% if ( item | paid ) %}
                                     <i class="fas fa-check" style="color: #82c91e;"></i>
@@ -43,8 +56,20 @@
                                 {% endif %}
                             </td>
                             <td>{{ item.createdAt | date( "d.m.Y H:i" ) }}</td>
+                            <td>{{ item.updatedAt | date( "d.m.Y H:i" ) }}</td>
                             <td>
                                 <div class="btn-group">
+                                
+                                {% id item.factoryName == 'offline_bank_transfer' %}
+                                    <a class="btn btn-primary"
+                                        href="{{ path('vs_payment_custom_payment_actions_set_payment_paid', {'id': item.id}) }}" 
+                                        data-csrfToken="{{ csrf_token( item.id ) }}" 
+                                        title="{{ 'vs_payment.template.action_set_order_status_paid' | trans( {},'VSPaymentBundle' ) }}"
+                                    >
+                                        <i class="fas fa-solid fa-dollar-sign"></i>
+                                    </a>
+                                {% endif %}
+                                    
                                     <a class="btn btn-danger btnDeleteResource"
                                         href="{{ path('vs_payment_payment_delete', {'id': item.id}) }}" 
                                         data-csrfToken="{{ csrf_token( item.id ) }}" 
@@ -52,6 +77,7 @@
                                     >
                                         <i class="icon_close_alt2"></i>
                                     </a>
+                                    
                                 </div>
                             </td>
                         </tr>

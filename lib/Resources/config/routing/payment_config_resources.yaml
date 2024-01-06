@@ -35,7 +35,7 @@ vs_payment_recieved_payments_index:
             paginate: 10
             sortable: true
             sorting:
-                createdAt: desc
+                updatedAt: desc
             filterable: true
             template: "@VSPayment/Pages/RecievedPayments/index.html.twig"
     options:

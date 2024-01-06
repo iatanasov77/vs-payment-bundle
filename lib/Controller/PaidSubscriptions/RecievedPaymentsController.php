@@ -2,24 +2,18 @@
 
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Intl\Currencies;
+use Vankosoft\PaymentBundle\Form\PaymentFilterForm;
 
 class RecievedPaymentsController extends AbstractCrudController
 {
     protected function customData( Request $request, $entity = null ): array
     {
-        $currencies = [];
-        if ( $this->resources ) {
-            foreach ( $this->resources as $payment ) {
-                $currencies[$payment->getCurrencyCode()]   = [
-                    'symbol'    => Currencies::getSymbol( $payment->getCurrencyCode() ),
-                    'name'      => Currencies::getName( $payment->getCurrencyCode() ),
-                ];
-            }
-        }
+        $filterFactory  = $request->attributes->get( 'filterFactory' );
+        $filterForm     = $this->createForm( PaymentFilterForm::class );
         
         return [
-            'intlCurrencies'    => $currencies,
+            'filterForm'    => $filterForm->createView(),
+            'filterFactory' => $filterFactory,
         ];
     }
 }

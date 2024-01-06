@@ -4,6 +4,7 @@ use Vankosoft\PaymentBundle\Controller\AbstractCheckoutOfflineController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Payum\Offline\Constants as PayumOfflineConstants;
 
 class BankTransferController extends AbstractCheckoutOfflineController
 {
@@ -37,7 +38,7 @@ class BankTransferController extends AbstractCheckoutOfflineController
         $payment->setClientEmail( $user ? $user->getEmail() : 'UNREGISTERED_USER' );
         
         // Set Payment Not Paid 
-        $payment->setDetails( [\Payum\Offline\Constants::FIELD_PAID => false] );
+        $payment->setDetails( [PayumOfflineConstants::FIELD_PAID => false] );
 
         $storage->update($payment);
 

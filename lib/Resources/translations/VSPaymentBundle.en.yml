@@ -88,6 +88,10 @@ vs_payment:
             coupon_name: Coupon Name
             amount_off: Amount Off
             percent_off: Percent Off
+            
+        payment_filter:
+            filter_by_gateway_factory: Filter by Gateway Factory
+            
 
     template:
         gateway: Gateway

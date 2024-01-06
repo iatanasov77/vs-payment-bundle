@@ -41,6 +41,13 @@ vs_payment_generate_coupon_code:
         expose: true
         
 ###############################################################################################
+# Custom Payment Actions
+###############################################################################################
+vs_payment_custom_payment_actions_set_payment_paid:
+    path:     /custom-payment-actions/set-payment-paid/{paymentId}
+    controller: Vankosoft\PaymentBundle\Controller\PaymentController::setPaymentPaidAction
+    
+###############################################################################################
 # Developement Routes
 ###############################################################################################
 vs_payment_developement_delete_all_orders:

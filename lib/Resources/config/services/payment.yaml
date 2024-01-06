@@ -6,6 +6,7 @@ services:
     vs_payment_payment:
         class: Vankosoft\PaymentBundle\Component\Payment\Payment
         arguments:
+            - '@doctrine'
             - '@router'
             - '@vs_payment.order_factory'
             
@@ -140,6 +141,19 @@ services:
     Vankosoft\PaymentBundle\Controller\Coupons\CouponsExtController:
         tags: ['controller.service_arguments']
         autowire: false
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+            
+    ########################################################################
+    # Custom Payment Actions Controller
+    ########################################################################
+    Vankosoft\PaymentBundle\Controller\PaymentController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@doctrine'
+            - '@vs_payment.repository.payment'
+            - '@vs_payment_payment'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     

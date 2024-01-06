@@ -1,9 +1,12 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Payment;
 
 use Symfony\Component\Routing\RouterInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Payum\Offline\Constants as PayumOfflineConstants;
 use Payum\Paypal\ExpressCheckout\Nvp\Api as PaypalApi;
 use Payum\Paypal\ProCheckout\Nvp\Api as PaypalProApi;
 use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod;
+use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
@@ -16,14 +19,21 @@ final class Payment
     const TOKEN_STORAGE_FILESYSTEM      = 'filesystem';
     const TOKEN_STORAGE_DOCTRINE_ORM    = 'doctrine_orm';
     
+    /** @var ManagerRegistry */
+    private $doctrine;
+    
     /** @var RouterInterface */
     private $router;
     
     /** @var OrderFactory */
     private $orderFactory;
     
-    public function __construct( RouterInterface $router, OrderFactory $orderFactory )
-    {
+    public function __construct(
+        ManagerRegistry $doctrine,
+        RouterInterface $router,
+        OrderFactory $orderFactory
+    ) {
+        $this->doctrine     = $doctrine;
         $this->router       = $router;
         $this->orderFactory = $orderFactory;
     }
@@ -278,5 +288,38 @@ final class Payment
         }
         
         return $billingCycle;
+    }
+    
+    public function setBankTransferPaymentPaid( PaymentInterface $payment )
+    {
+        $em     = $this->doctrine->getManager();
+        $order  = $payment->getOrder();
+        if ( $order ) {
+            $order->setStatus( Order::STATUS_PENDING_ORDER );
+            $subscriptions  = $order->getSubscriptions();
+            if ( ! empty( $subscriptions ) ) {
+                foreach ( $subscriptions as $subscription ) {
+                    $previousSubscription   = $order->getUser()->getActivePricingPlanSubscriptionByService(
+                        $subscription->getPricingPlan()->getPaidService()->getPayedService()
+                        );
+                    if ( $previousSubscription ) {
+                        $previousSubscription->setActive( false );
+                        $em->persist( $previousSubscription );
+                    }
+                    
+                    $subscription->setActive( true );
+                    $em->persist( $subscription );
+                }
+            }
+            
+            $em->persist( $order );
+        }
+        
+        $paymentDetails = $payment->getDetails();
+        $paymentDetails[PayumOfflineConstants::FIELD_PAID]  = true;
+        
+        $payment->setDetails( $paymentDetails );
+        $em->persist( $payment );
+        $em->flush();
     }
 }
