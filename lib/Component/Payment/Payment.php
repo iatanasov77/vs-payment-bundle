@@ -328,10 +328,19 @@ final class Payment
         
         $paymentDetails = $payment->getDetails();
         $paymentDetails[PayumOfflineConstants::FIELD_PAID]      = true;
-        $paymentDetails[PayumOfflineConstants::FIELD_STATUS]    = PayumOfflineConstants::STATUS_CAPTURED;
+        //$paymentDetails[PayumOfflineConstants::FIELD_STATUS]    = PayumOfflineConstants::STATUS_CAPTURED;
         
         $payment->setDetails( $paymentDetails );
         $em->persist( $payment );
         $em->flush();
+    }
+    
+    public function triggerSubscriptionsPaymentDone( PaymentInterface $payment ): bool
+    {
+        if ( $payment->getFactoryName() === 'offline_bank_transfer' ) {
+            return false;
+        }
+        
+        return true;
     }
 }

@@ -209,7 +209,8 @@ abstract class AbstractCheckoutController extends AbstractController
     
     protected function _setSubscriptionsPaymentDone( Request $request, $subscriptions, $payment ): ?Response
     {
-        if ( $this instanceof AbstractCheckoutOfflineController ) {
+        //if ( $this instanceof AbstractCheckoutOfflineController ) {
+        if ( ! $this->vsPayment->triggerSubscriptionsPaymentDone( $payment ) ) {
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_waiting', [], 'VSPaymentBundle' );
         } else {
             $this->eventDispatcher->dispatch(
