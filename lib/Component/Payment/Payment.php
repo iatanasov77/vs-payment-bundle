@@ -304,14 +304,15 @@ final class Payment
     {
         $em     = $this->doctrine->getManager();
         $order  = $payment->getOrder();
-        if ( $order ) {
+        if ( $order && $order->getUser() ) {
             $order->setStatus( Order::STATUS_PENDING_ORDER );
             $subscriptions  = $order->getSubscriptions();
             if ( ! empty( $subscriptions ) ) {
                 foreach ( $subscriptions as $subscription ) {
                     $previousSubscription   = $order->getUser()->getActivePricingPlanSubscriptionByService(
                         $subscription->getPricingPlan()->getPaidService()->getPayedService()
-                        );
+                    );
+                    
                     if ( $previousSubscription ) {
                         $previousSubscription->setActive( false );
                         $em->persist( $previousSubscription );

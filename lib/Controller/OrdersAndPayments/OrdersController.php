@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller\PaidSubscriptions;
+<?php namespace Vankosoft\PaymentBundle\Controller\OrdersAndPayments;
 
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
 use Symfony\Component\HttpFoundation\Request;

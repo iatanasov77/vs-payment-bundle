@@ -1,0 +1,37 @@
+{{ form_start(form, { 'attr': {'class': 'form-horizontal ', 'id': 'FormFilterPayments'} }) }}
+
+    <div class="row">
+        
+        <div class="form-group col-2">
+            {{ form_label( form.number, null, {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget( form.number, {
+                'attr': {
+                    'class': 'form-control',
+                }
+            }) }}
+        </div>
+        
+        <div class="form-group col-2">
+            {{ form_label( form.filterByGatewayFactory, null, {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget( form.filterByGatewayFactory, {
+                'attr': {
+                    'class': 'form-control',
+                }
+            }) }}
+        </div>
+        
+        <div class="form-group col-1">
+            <div style="height: 38px;">&nbsp;</div>
+            {{ form_widget(form.btnSubmit, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+        
+        <div class="form-group col-2">
+            <div style="height: 38px;">&nbsp;</div>
+            <a href="{{ path( 'vs_payment_payment_index' ) }}" class="btn btn-primary" >
+                {{ 'vs_application.form.clear_filter' | trans( {},'VSApplicationBundle' ) }}
+            </a>
+        </div>
+        
+    </div>
+
+{{ form_end(form, {'render_rest': false}) }}

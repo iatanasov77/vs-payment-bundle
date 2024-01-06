@@ -1,0 +1,21 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payment_show_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payment_show_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">
+                    {{ 'vs_payment.template.payment_show_subtitle' | trans( {},'VSPaymentBundle' ) }}: 
+                    {{ resource.number }}
+                </h5>
+                <div class="card-body">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

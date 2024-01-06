@@ -292,6 +292,11 @@ vs_payment:
         coupon_create_title: Create Discount Coupon
         coupon_title: Discount Coupon
         
+        search_payments: Search Payments
+        action_show_payment_details: Show Payment Details
+        payment_show_title: Payment Details
+        payment_show_subtitle: Payment
+        
     validation:
         currency_code_unique: Currency code must be unique.
         currency_code_not_blank: Please choose currency code.

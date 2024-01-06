@@ -3,6 +3,7 @@
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -21,6 +22,13 @@ class PaymentFilterForm extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
+            ->add( 'number', TextType::class, [
+                'label'                 => 'vs_payment.form.payment_filter.filter_by_gateway_factory',
+                'translation_domain'    => 'VSPaymentBundle',
+                'placeholder'           => 'vs_payment.form.factory_placeholder',
+                'choices'               => \array_combine( $this->factories, $this->factories ),
+            ])
+            
             ->add( 'filterByGatewayFactory', ChoiceType::class, [
                 'label'                 => 'vs_payment.form.payment_filter.filter_by_gateway_factory',
                 'translation_domain'    => 'VSPaymentBundle',
@@ -29,8 +37,8 @@ class PaymentFilterForm extends AbstractType
             ])
             
             ->add( 'btnSubmit', SubmitType::class, [
-                'label'                 => 'vs_payment.form.select_pricing_plan.submit',
-                'translation_domain'    => 'VSPaymentBundle',
+                'label'                 => 'vs_application.form.search',
+                'translation_domain'    => 'VSApplicationBundle',
             ])
         ;
     }

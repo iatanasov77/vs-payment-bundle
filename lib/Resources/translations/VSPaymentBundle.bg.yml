@@ -290,6 +290,11 @@ vs_payment:
         coupon_update_title: Редакция Купон за отстъпка
         coupon_create_title: Създаване Купон за отстъпка
         coupon_title: Купон за отстъпка
+        
+        search_payments: Търсене Плащания
+        action_show_payment_details: Показване Детайли за Плащане
+        payment_show_title: Детайли за Плащане
+        payment_show_subtitle: Плащане
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
