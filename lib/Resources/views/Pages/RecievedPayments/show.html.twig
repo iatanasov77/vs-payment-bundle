@@ -7,6 +7,30 @@
 {% block content %}
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div>
+                <div style="float: left;"></div>
+                <div style="float: right; margin-right: 30px; margin-bottom: 20px;">
+                    <a class="btn btn-info btn-circle btn-sm"  
+                        href="{{ path('vs_payment_payment_index') }}" 
+                        title="{{ 'vs_payment.template.back_to_payments' | trans( {},'VSPaymentBundle' ) }}"
+                    >
+                        {{ 'vs_payment.template.back_to_payments' | trans( {},'VSPaymentBundle' ) }}
+                    </a>
+                    
+                    <a class="btn btn-info btn-circle btn-sm"  
+                        href="{{ path('vs_payment_custom_payment_actions_set_payment_paid', {'paymentId': resource.id}) }}" 
+                        title="{{ 'vs_payment.template.action_set_order_status_paid' | trans( {},'VSPaymentBundle' ) }}"
+                    >
+                        {{ 'vs_payment.template.action_set_order_status_paid' | trans( {},'VSPaymentBundle' ) }}
+                    </a>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
                 <h5 class="card-header">
                     {{ 'vs_payment.template.payment_show_subtitle' | trans( {},'VSPaymentBundle' ) }}: 

@@ -298,6 +298,7 @@ vs_payment:
         action_show_payment_details: Show Payment Details
         payment_show_title: Payment Details
         payment_show_subtitle: Payment
+        back_to_payments: Back to payments
         
     validation:
         currency_code_unique: Currency code must be unique.
