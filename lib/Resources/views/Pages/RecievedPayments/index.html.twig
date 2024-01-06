@@ -62,7 +62,7 @@
                                 
                                 {% if item.factoryName == 'offline_bank_transfer' %}
                                     <a class="btn btn-primary"
-                                        href="{{ path('vs_payment_custom_payment_actions_set_payment_paid', {'id': item.id}) }}" 
+                                        href="{{ path('vs_payment_custom_payment_actions_set_payment_paid', {'paymentId': item.id}) }}" 
                                         data-csrfToken="{{ csrf_token( item.id ) }}" 
                                         title="{{ 'vs_payment.template.action_set_order_status_paid' | trans( {},'VSPaymentBundle' ) }}"
                                     >
