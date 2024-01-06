@@ -12,6 +12,15 @@
         </div>
         
         <div class="form-group col-2">
+            {{ form_label( form.description, null, {'label_attr': {'class': 'col-form-label'}}) }}
+            {{ form_widget( form.description, {
+                'attr': {
+                    'class': 'form-control',
+                }
+            }) }}
+        </div>
+        
+        <div class="form-group col-2">
             {{ form_label( form.filterByGatewayFactory, null, {'label_attr': {'class': 'col-form-label'}}) }}
             {{ form_widget( form.filterByGatewayFactory, {
                 'attr': {

@@ -91,7 +91,9 @@ vs_payment:
             percent_off: Percent Off
             
         payment_filter:
-            filter_by_gateway_factory: Filter by Gateway Factory
+            payment_number: Payment Number
+            payment_description: Payment Description
+            gateway_factory: Gateway Factory
     
     template:
         gateway: Гейтуей

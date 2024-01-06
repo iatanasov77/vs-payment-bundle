@@ -43,9 +43,16 @@ vs_payment_generate_coupon_code:
 ###############################################################################################
 # Custom Payment Actions
 ###############################################################################################
+vs_payment_custom_payment_actions_search_payments:
+    path:     /custom-payment-actions/search_payments
+    controller: Vankosoft\PaymentBundle\Controller\OrdersAndPayments\RecievedPaymentsExtController::handleSearchForm
+    options:
+        expose: true
 vs_payment_custom_payment_actions_set_payment_paid:
     path:     /custom-payment-actions/set-payment-paid/{paymentId}
     controller: Vankosoft\PaymentBundle\Controller\PaymentController::setPaymentPaidAction
+    options:
+        expose: true
     
 ###############################################################################################
 # Developement Routes

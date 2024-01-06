@@ -23,13 +23,19 @@ class PaymentFilterForm extends AbstractType
     {
         $builder
             ->add( 'number', TextType::class, [
-                'label'                 => 'vs_payment.form.payment_filter.filter_by_gateway_factory',
+                'label'                 => 'vs_payment.form.payment_filter.payment_number',
+                'translation_domain'    => 'VSPaymentBundle',
+                'required'              => false,
+            ])
+            
+            ->add( 'description', TextType::class, [
+                'label'                 => 'vs_payment.form.payment_filter.payment_description',
                 'translation_domain'    => 'VSPaymentBundle',
                 'required'              => false,
             ])
             
             ->add( 'filterByGatewayFactory', ChoiceType::class, [
-                'label'                 => 'vs_payment.form.payment_filter.filter_by_gateway_factory',
+                'label'                 => 'vs_payment.form.payment_filter.gateway_factory',
                 'translation_domain'    => 'VSPaymentBundle',
                 'placeholder'           => 'vs_payment.form.factory_placeholder',
                 'choices'               => \array_combine( $this->factories, $this->factories ),

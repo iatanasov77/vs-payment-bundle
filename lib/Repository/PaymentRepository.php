@@ -23,8 +23,10 @@ class PaymentRepository extends EntityRepository
                 case 'number':
                     $qb->andWhere( 'p.number LIKE :number' )->setParameter( 'number', "%{$value}%" );
                     break;
+                case 'description':
+                    $qb->andWhere( 'p.description LIKE :description' )->setParameter( 'description', "%{$value}%" );
+                    break;
             }
-            
         }
             
         return $qb;
