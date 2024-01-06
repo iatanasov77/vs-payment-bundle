@@ -327,7 +327,8 @@ final class Payment
         }
         
         $paymentDetails = $payment->getDetails();
-        $paymentDetails[PayumOfflineConstants::FIELD_PAID]  = true;
+        $paymentDetails[PayumOfflineConstants::FIELD_PAID]      = true;
+        $paymentDetails[PayumOfflineConstants::FIELD_STATUS]    = PayumOfflineConstants::STATUS_CAPTURED;
         
         $payment->setDetails( $paymentDetails );
         $em->persist( $payment );
