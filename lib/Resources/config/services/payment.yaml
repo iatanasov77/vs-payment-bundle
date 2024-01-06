@@ -170,4 +170,19 @@ services:
             - '@vs_payment_payment'
         calls:
             - [ setContainer, [ '@service_container' ] ]
+            
+    Vankosoft\PaymentBundle\Form\PaymentFilterForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@vs_payment_payment'
+    
+    Vankosoft\PaymentBundle\Controller\OrdersAndPayments\RecievedPaymentsExtController:
+        tags: ['controller.service_arguments']
+        autowire: false
+        arguments:
+            - '@twig'
+            - '@vs_payment.repository.payment'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
     

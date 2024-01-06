@@ -128,11 +128,5 @@ services:
             - '@request_stack'
             - '@vs_application.repository.locale'
             - '%vs_payment.model.currency.class%'
-            
-    Vankosoft\PaymentBundle\Form\PaymentFilterForm:
-        tags:
-            - { name: form.type }
-        arguments:
-            - '@vs_payment_payment'
 
 
