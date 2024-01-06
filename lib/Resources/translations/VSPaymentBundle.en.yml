@@ -2,7 +2,8 @@ vs_payment:
     form:
         active: Active
         gateway: Gateway ID
-        factory: Factory
+        factory: Gateway Factory
+        factory_placeholder: '-- Select Gateway Factory --'
         title: Title
         name: Name
         price: Price

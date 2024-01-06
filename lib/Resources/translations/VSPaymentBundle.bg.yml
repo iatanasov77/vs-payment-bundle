@@ -2,7 +2,8 @@ vs_payment:
     form:
         active: Активен
         gateway: Гейтуей ID
-        factory: Фактори
+        factory: Гейтуей Фактори
+        factory_placeholder: '-- Избери Гейтуей Фактори --'
         title: Заглавие
         name: Име
         price: Цена

@@ -27,15 +27,25 @@ final class Payment
     
     /** @var OrderFactory */
     private $orderFactory;
+
+    /** @var array */
+    private $factories;
     
     public function __construct(
         ManagerRegistry $doctrine,
         RouterInterface $router,
-        OrderFactory $orderFactory
+        OrderFactory $orderFactory,
+        array $factories
     ) {
         $this->doctrine     = $doctrine;
         $this->router       = $router;
         $this->orderFactory = $orderFactory;
+        $this->factories    = $factories;
+    }
+    
+    public function availableFactories(): array
+    {
+        return $this->factories;
     }
     
     public function getPaymentPrepareRoute( GatewayConfigInterface $gatewayConfig, $isRecurring = false )

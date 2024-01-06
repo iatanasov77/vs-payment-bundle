@@ -1,3 +1,16 @@
+parameters:
+    vs_payment.gateway_factories:
+        - 'offline'
+        - 'offline_bank_transfer'
+        - 'paypal_rest'
+        - 'paypal_express_checkout'
+        - 'paypal_pro_checkout'
+        - 'stripe_checkout'
+        - 'stripe_js'
+        - 'paysera'
+        - 'borica'
+        - 'authorize_net_aim'
+
 services:
     _defaults:
         autowire: true
@@ -9,6 +22,7 @@ services:
             - '@doctrine'
             - '@router'
             - '@vs_payment.order_factory'
+            - '%vs_payment.gateway_factories%'
             
     vs_payment.twig.extension.payment:
         class: Vankosoft\PaymentBundle\Twig\PaymentExtension
