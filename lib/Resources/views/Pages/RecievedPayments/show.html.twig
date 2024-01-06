@@ -17,12 +17,15 @@
                         {{ 'vs_payment.template.back_to_payments' | trans( {},'VSPaymentBundle' ) }}
                     </a>
                     
+                {% if not ( resource | paid ) %}
                     <a class="btn btn-info btn-circle btn-sm"  
                         href="{{ path('vs_payment_custom_payment_actions_set_payment_paid', {'paymentId': resource.id}) }}" 
                         title="{{ 'vs_payment.template.action_set_order_status_paid' | trans( {},'VSPaymentBundle' ) }}"
                     >
                         {{ 'vs_payment.template.action_set_order_status_paid' | trans( {},'VSPaymentBundle' ) }}
                     </a>
+                {% endif %}
+                
                 </div>
                 <div style="clear: both;"></div>
             </div>
