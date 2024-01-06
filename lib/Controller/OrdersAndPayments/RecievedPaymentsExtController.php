@@ -82,7 +82,7 @@ class RecievedPaymentsExtController extends AbstractController
             if ( \array_key_exists( 'filterByGatewayFactory', $filter ) && $filter['filterByGatewayFactory'] ) {
                 $inResults  = false;
                 
-                if ( $payment->getFactoryName() == $filter['ilterByGatewayFactory'] ) {
+                if ( $payment->getFactoryName() == $filter['filterByGatewayFactory'] ) {
                     $inResults  = true;
                 }
             }
