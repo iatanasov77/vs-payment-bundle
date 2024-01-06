@@ -18,14 +18,8 @@
     </div>
     
     <div class="row">   
-        <div class="col-lg-12">
-            <section class="panel" id="PaymentsTableContainer">
-                {% include '@VSPayment/Pages/RecievedPayments/payments_table.html.twig' %}
-            </section>
-            
-            {% if resources.haveToPaginate() %}
-                {{ pagerfanta( resources, null, { 'proximity': 10 } ) }}
-            {% endif %}
+        <div class="col-lg-12" id="PaymentsTableContainer">
+            {% include '@VSPayment/Pages/RecievedPayments/payments_table.html.twig' %}
         </div>
     </div>
     
