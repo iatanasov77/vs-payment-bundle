@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Vankosoft\PaymentBundle\Component\OrderFactory;
 
 /**
  * Some Actions For Clearing Developement/Testing Data
@@ -53,5 +54,12 @@ class DevelopementController extends AbstractController
                                 ->delete()->getQuery()->getSingleScalarResult() ?? 0;
         
         return $this->redirectToRoute( 'app_home' );
+    }
+    
+    public function clearSessionAction( Request $request ): Response
+    {
+        $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
+        
+        return $this->redirect( $request->headers->get( 'referer' ) );
     }
 }

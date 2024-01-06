@@ -60,5 +60,9 @@ vs_payment_custom_payment_actions_set_payment_paid:
 vs_payment_developement_delete_all_orders:
     path:     /developement/delete-all-orders
     controller: Vankosoft\PaymentBundle\Controller\DevelopementController::deleteAllOrdersAction
+    
+vs_payment_developement_clear_session:
+    path:     /developement/clear-session
+    controller: Vankosoft\PaymentBundle\Controller\DevelopementController::clearSessionAction
 
 
