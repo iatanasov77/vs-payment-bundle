@@ -60,11 +60,11 @@
                         </tr>
                         <tr>
                             <th>{{ 'vs_payment.template.recieved_payments_show.created_at' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <td>{{ resource.createdAt }}</td>
+                            <td>{{ resource.createdAt | date( "d.m.Y H:i" ) }}</td>
                         </tr>
                         <tr>
                             <th>{{ 'vs_payment.template.recieved_payments_show.updated_at' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <td>{{ resource.updatedAt }}</td>
+                            <td>{{ resource.updatedAt | date( "d.m.Y H:i" ) }}</td>
                         </tr>
                         <tr>
                             <th>{{ 'vs_payment.template.recieved_payments_show.details' | trans( {},'VSPaymentBundle' ) }}</th>
