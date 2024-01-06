@@ -18,6 +18,7 @@ final class CurrencyExtension extends AbstractExtension
     {
         return [
             new TwigFilter( 'vs_currency_symbol', [$this->helper, 'convertCurrencyCodeToSymbol'] ),
+            new TwigFilter( 'vs_currency_name', [$this->helper, 'convertCurrencyCodeToName'] ),
         ];
     }
 }

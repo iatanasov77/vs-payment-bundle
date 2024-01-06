@@ -27,7 +27,7 @@
                             <td>{{ loop.index }}</td>
                             <td>{{ resource.serviceCode }}</td>
                             <td>{{ resource.periodCode }}</td>
-                            <td>{{ orderItem.order.totalAmount }} {{ intlCurrencies[orderItem.order.currencyCode]['symbol'] }}</td>
+                            <td>{{ orderItem.order.totalAmount }} {{ orderItem.order.currencyCode | vs_currency_symbol }}</td>
                             <td>{{ orderItem.order.paymentMethod.name }}</td>
                             <td>{{ orderItem.order.payment.updatedAt | date( "d.m.Y H:i" ) }}</td>
                             <td style="text-align: center;">

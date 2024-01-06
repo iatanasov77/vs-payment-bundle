@@ -10,6 +10,11 @@ class CurrencyHelper extends Helper implements CurrencyHelperInterface
         return Currencies::getSymbol( $code );
     }
     
+    public function convertCurrencyCodeToName( string $code ): string
+    {
+        return Currencies::getName( $code );
+    }
+    
     public function getName(): string
     {
         return 'vs_payment_currency';

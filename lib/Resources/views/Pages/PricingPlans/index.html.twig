@@ -41,7 +41,7 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ item.title }}</td>
-                        <td>{{ item.totalAmount }} {{ intlCurrencies[item.currencyCode]['symbol'] }}</td>
+                        <td>{{ item.totalAmount }} {{ item.currencyCode | vs_currency_symbol }}</td>
                         <td>{{ item.subscriptions | length }}</td>
                         
                         <td style="text-align: center;">
