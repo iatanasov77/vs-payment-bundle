@@ -10,7 +10,7 @@
             <generator strategy="AUTO" />
         </id>
         
-        <field name="code" type="string" length="16" nullable="false" />
+        <field name="code" type="string" length="16" unique="true" />
         
         <field name="name" type="string" nullable="true" >
             <gedmo:translatable />
@@ -42,7 +42,7 @@
             <gedmo:timestampable on="update"/>
         </field>
         
-        <many-to-one field="pricingPlan" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface">
+        <many-to-one field="pricingPlan" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface" inversed-by="coupons">
             <join-column name="pricing_plan_id" referenced-column-name="id" nullable="true" />
         </many-to-one>
         
