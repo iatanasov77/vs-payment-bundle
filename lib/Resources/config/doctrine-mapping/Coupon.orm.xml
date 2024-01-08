@@ -25,6 +25,20 @@
         
         <field name="enabled" column="valid" type="boolean" />
         
+        <field name="type" type="string" length="32" nullable="false" column-definition="ENUM('discount_coupon', 'payment_coupon')" >
+            <options>
+                <option name="default">discount_coupon</option>
+                <option name="comment">
+                    'discount_coupon' are used to apply discount on Shopping Cart Total Amount. 
+                    'payment_coupon' requires a Pricing Plan relation and used to pay these Pricing Plans.
+                </option>
+            </options>
+        </field>
+        
+        <many-to-one field="pricingPlan" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface">
+            <join-column name="pricing_plan_id" referenced-column-name="id" nullable="true" />
+        </many-to-one>
+        
         <one-to-many field="orders" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" mapped-by="coupon" />
         
         <!--

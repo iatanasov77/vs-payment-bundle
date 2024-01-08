@@ -19,6 +19,8 @@ vs_payment:
         gatewayNameHelp: Това е ID на шлюза, използван в Payum
         factoryHelp: Това е ID на Фактори, използван в Payum
         generate_code: Генерирай Код
+        pricing_plan_label: Pricing Plan
+        pricing_plan_placeholder: '-- Select Pricing Plan --'
         
         gateway_config:
             use_sandbox: Използвай Сенд-бокс
@@ -89,6 +91,9 @@ vs_payment:
             coupon_name: Coupon Name
             amount_off: Amount Off
             percent_off: Percent Off
+            coupon_type: Coupon Type
+            discount_coupon: Discount Coupon
+            payment_coupon: Payment Coupon
             
         payment_filter:
             payment_number: Payment Number

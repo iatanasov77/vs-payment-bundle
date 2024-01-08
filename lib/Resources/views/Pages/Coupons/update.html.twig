@@ -108,6 +108,22 @@
                             {{ form_widget(form.percentOff, {'attr': {'class': 'form-control' }}) }}
                         </div>
                         
+                        <div class="form-group">
+                            {{ form_label(form.type, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.type, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.pricingPlan, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.pricingPlan, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
                         {{ vs_form.buttons( form ) }}
                     {{ form_end(form, {'render_rest': false}) }}
                 </div>

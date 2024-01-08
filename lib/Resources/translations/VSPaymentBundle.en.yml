@@ -19,6 +19,8 @@ vs_payment:
         gatewayNameHelp: This is the Gateway ID Used in Payum
         factoryHelp: This is the Factory ID Used in Payum
         generate_code: Generate Code
+        pricing_plan_label: Pricing Plan
+        pricing_plan_placeholder: '-- Select Pricing Plan --'
         
         gateway_config:
             use_sandbox: Use Sandbox
@@ -89,6 +91,9 @@ vs_payment:
             coupon_name: Coupon Name
             amount_off: Amount Off
             percent_off: Percent Off
+            coupon_type: Coupon Type
+            discount_coupon: Discount Coupon
+            payment_coupon: Payment Coupon
             
         payment_filter:
             payment_number: Payment Number

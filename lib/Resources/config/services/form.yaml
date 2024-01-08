@@ -127,6 +127,8 @@ services:
             - '%vs_payment.model.coupon.class%'
             - '@request_stack'
             - '@vs_application.repository.locale'
+            - '@vs_payment_coupon'
             - '%vs_payment.model.currency.class%'
+            - '%vs_payment.model.pricing_plan.class%'
 
 
