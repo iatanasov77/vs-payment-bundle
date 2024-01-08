@@ -127,7 +127,7 @@ class CouponForm extends AbstractForm
                 $form       = $event->getForm();
                 $couponType = $form->get( 'type' )->getData();
                 
-                $form->getConfig()->setRequired( $couponType == VsCoupon::PAYMENT_COUPON_TYPE );
+                //$form->getConfig()->setRequired( $couponType == VsCoupon::PAYMENT_COUPON_TYPE );
             }
          );
     }
