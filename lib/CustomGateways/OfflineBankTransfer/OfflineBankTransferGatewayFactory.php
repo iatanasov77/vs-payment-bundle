@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\CustomGateways;
+<?php namespace Vankosoft\PaymentBundle\CustomGateways\OfflineBankTransfer;
 
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -11,24 +11,9 @@ use Payum\Offline\Action\PayoutAction;
 use Payum\Offline\Action\RefundAction;
 use Payum\Offline\Action\StatusAction;
 
-use Vankosoft\PaymentBundle\CustomGateways\Keys\OfflineTelephoneCallKeys;
+use Vankosoft\PaymentBundle\CustomGateways\OfflineBankTransfer\OfflineBankTransferKeys;
 
-/**
- * Title:       24 hours with Phone Call
- * 
- * Description: By calling from a landline €6.51/call, for 1 day
- *              INSTRUCTIONS: Call now, ONLY from a landline at 901 901 4830 and note the code number you will hear.
- *              Enter the code in the Coupon Code field of the site and get access to all movies for 24 hours.
- *              The service is available for calls ONLY from Greece and ONLY from a landline.
- *              Lexitel, charge €6.51 per call (with VAT and 5% landline tax), Help Line 2111885511
- *              
- *              
- *              
- *              
- * Payment by phone/call: https://www.micropayment.ch/products/call2pay/
- *
- */
-class OfflineTelephoneCallGatewayFactory extends GatewayFactory
+class OfflineBankTransferGatewayFactory extends GatewayFactory
 {
     /**
      * {@inheritDoc}
@@ -36,8 +21,8 @@ class OfflineTelephoneCallGatewayFactory extends GatewayFactory
     protected function populateConfig( ArrayObject $config )
     {
         $config->defaults([
-            'payum.factory_name'            => 'offline_telephone_call',
-            'payum.factory_title'           => 'Offline Telephone Call',
+            'payum.factory_name'            => 'offline_bank_transfer',
+            'payum.factory_title'           => 'Offline Bank Transfer',
             
             'payum.action.capture'          => new CaptureAction(),
             'payum.action.authorize'        => new AuthorizeAction(),
@@ -62,7 +47,7 @@ class OfflineTelephoneCallGatewayFactory extends GatewayFactory
             $config['payum.api'] = function ( ArrayObject $config ) {
                 $config->validateNotEmpty( $config['payum.required_options'] );
                 
-                return new OfflineTelephoneCallKeys( $config['iban'], $config['bank_name'], $config['reciever_name'], $config['reason'] );
+                return new OfflineBankTransferKeys( $config['iban'], $config['bank_name'], $config['reciever_name'], $config['reason'] );
             };
         }
     }

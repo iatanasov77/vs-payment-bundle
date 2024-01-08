@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\CustomGateways\Keys;
+<?php namespace Vankosoft\PaymentBundle\CustomGateways\OfflineBankTransfer;
 
 class OfflineBankTransferKeys
 {
