@@ -13,8 +13,10 @@ class TelephoneCallResponse extends \ArrayObject
         parent::__construct( $data, \ArrayObject::STD_PROP_LIST );
     }
     
+    /*
     public function offsetSet( $key, $value ): void
     {
         
     }
+    */
 }
