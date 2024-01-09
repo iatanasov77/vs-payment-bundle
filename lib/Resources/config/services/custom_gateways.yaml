@@ -6,6 +6,12 @@ services:
         
     vankosoft.offline_bank_transfer_factory:
         class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
-        arguments: [Vankosoft\PaymentBundle\CustomGateways\OfflineBankTransfer/OfflineBankTransferGatewayFactory]
+        arguments: [Vankosoft\PaymentBundle\CustomGateways\OfflineBankTransfer\OfflineBankTransferGatewayFactory]
         tags:
             - { name: payum.gateway_factory_builder, factory: offline_bank_transfer }
+            
+    vankosoft.telephone_call_factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: telephone_call }
