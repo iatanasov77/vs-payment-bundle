@@ -55,15 +55,40 @@ class Api
     /**
      * @return array
      */
-    protected function doLogin()
+    public function doLogin()
     {
-        $response   = $this->doRequest(
-            $this->options['api_login_endpoint'],
-            [
-                'username' => $this->options['username'],
-                'password' => $this->options['password'],
+        $requestFields  = $this->createLoginRequestFields();
+        $response       = $this->doRequest( $requestFields );
+        
+        return [
+            'auth' => [
+                'url'       => $requestFields['endpoint'],
+                'response'  => $response,
             ]
+        ];
+    }
+    
+    /**
+     * @param array $fields
+     *
+     * @return array
+     */
+    public function doTelephoneCallPayment( array $fields )
+    {
+        if ( false == isset( $fields['pricing_plan_id'] ) ) {
+            throw new RuntimeException( 'The pricing_plan_id must be set either to FormRequest.' );
+        }
+        
+        if ( false == isset( $fields['coupon_code'] ) ) {
+            throw new RuntimeException( 'The coupon_code must be set either to FormRequest.' );
+        }
+        
+        $requestFields  = $this->createVerifyCouponRequestFields(
+            $fields['pricing_plan_id'],
+            $fields['coupon_code'],
+            $fields['auth']
         );
+        $response       = $this->doRequest( $requestFields );
         
         return $response;
     }
@@ -73,17 +98,18 @@ class Api
      *
      * @return array
      */
-    protected function doRequest( string $endpoint, array $fields, $requestMethod = 'POST' )
+    protected function doRequest( array $fields )
     {
         $headers    = [
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
+            'Authorization' => isset( $fields['authToken'] ) ? 'Bearer ' . $fields['authToken'] : null,
         ];
         
         $request = $this->messageFactory->createRequest(
-            $requestMethod,
-            $endpoint,
+            $fields['method'],
+            $fields['endpoint'],
             $headers,
-            http_build_query( $fields )
+            $fields['body']
         );
         
         $response = $this->client->send( $request );
@@ -99,5 +125,46 @@ class Api
         }
         
         return $result;
+    }
+    
+    /**
+     * @param array $fields
+     */
+    protected function createLoginRequestFields()
+    {
+        if ( false == $this->options['api_login_endpoint'] ) {
+            throw new RuntimeException( 'The api_login_endpoint must be set either to FormRequest or to options.' );
+        }
+        if ( false == $this->options['username'] ) {
+            throw new RuntimeException( 'The username must be set either to FormRequest or to options.' );
+        }
+        if ( false == $this->options['password'] ) {
+            throw new RuntimeException( 'The password must be set either to FormRequest or to options.' );
+        }
+        
+        return [
+            'endpoint'  => $this->options['password'],
+            'method'    => 'POST',
+            'body'      => [
+                'username' => $this->options['username'],
+                'password' => $this->options['password'],
+            ],
+        ];
+    }
+    
+    protected function createVerifyCouponRequestFields( string $pricingPlanId, string $couponCode, array $authResponse )
+    {
+        if ( false == $this->options['api_verify_coupon_endpoint'] ) {
+            throw new RuntimeException( 'The api_login_endpoint must be set either to FormRequest or to options.' );
+            
+            $endpoint   = $this->options['api_verify_coupon_endpoint'];
+        }
+        
+        return [
+            'endpoint'  => \sprintf( '%s/%s/%s', $endpoint, $pricingPlanId, $couponCode ),
+            'method'    => 'GET',
+            'authToken' => $authResponse['payload']['token'],
+            'body'      => [],
+        ];
     }
 }

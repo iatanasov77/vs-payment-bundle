@@ -57,6 +57,9 @@ final class Payment
             case 'offline_bank_transfer':
                 $route  = 'vs_payment_offline_bank_transfer_prepare';
                 break;
+            case 'telephone_call':
+                $route  = 'vs_payment_telephone_call_checkout_prepare';
+                break;
             case 'stripe_checkout':
             case 'stripe_js':
                 $route  = 'vs_payment_stripe_checkout_prepare';
@@ -176,6 +179,9 @@ final class Payment
             case 'offline_bank_transfer':
                 return false;
                 break;
+            case 'telephone_call':
+                return false;
+                break;
             case 'stripe_checkout':
             case 'stripe_js':
                 return true;
@@ -214,6 +220,9 @@ final class Payment
                 return false;
                 break;
             case 'offline_bank_transfer':
+                return isset( $paymentDetails['paid'] ) && \boolval( $paymentDetails['paid'] );
+                break;
+            case 'telephone_call':
                 return isset( $paymentDetails['paid'] ) && \boolval( $paymentDetails['paid'] );
                 break;
             case 'stripe_checkout':

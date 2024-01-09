@@ -79,29 +79,29 @@ vs_payment_stripe_checkout_coupon_done:
 #######################################################################################
 vs_payment_paypal_express_checkout_prepare:
     path:     /paypal-express-checkout/prepare
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::prepareAction
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalExpressCheckoutController::prepareAction
     options:
         expose: true
 
 vs_payment_paypal_express_checkout_done:
     path:     /paypal-express-checkout/done
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::doneAction
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalExpressCheckoutController::doneAction
     
 vs_payment_paypal_express_checkout_create_recurring_agreement:
    path: /paypal-express-checkout/create-recurring-agreement/{subscriptionId}
-   controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::createRecurringAgreementAction
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalExpressCheckoutController::createRecurringAgreementAction
    options:
         expose: true
         
 vs_payment_paypal_express_checkout_create_recurring_payment:
    path: /paypal-express-checkout/create-recurring-payment/{subscriptionId}
-   controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::createRecurringPaymentAction
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalExpressCheckoutController::createRecurringPaymentAction
    options:
         expose: true
    
 vs_payment_paypal_express_checkout_cancel_recurring_payment:
    path: /paypal-express-checkout/cancel-recurring-payment/{subscriptionId}
-   controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController::cancelRecurringPaymentAction
+   controller: Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalExpressCheckoutController::cancelRecurringPaymentAction
    options:
         expose: true
 
@@ -109,13 +109,13 @@ vs_payment_paypal_express_checkout_cancel_recurring_payment:
 #######################################################################################
 vs_payment_paypal_pro_checkout_prepare:
     path:     /paypal-pro-checkout/prepare
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController::prepareAction
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalProCheckoutController::prepareAction
     options:
         expose: true
 
 vs_payment_paypal_pro_checkout_done:
     path:     /paypal-pro-checkout/done
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController::doneAction
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalProCheckoutController::doneAction
 
 # Paysera
 #######################################################################################
@@ -152,4 +152,16 @@ vs_payment_authorize_net_prepare:
 vs_payment_authorize_net_done:
     path:     /authorize-net/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController::doneAction
+    
+# Telephone Call
+#######################################################################################
+vs_payment_telephone_call_checkout_prepare:
+    path:     /telephone-call/prepare
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\TelephoneCallController::prepareAction
+    options:
+        expose: true
+
+vs_payment_telephone_call_checkout_done:
+    path:     /telephone-call/done
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\TelephoneCallController::doneAction
 

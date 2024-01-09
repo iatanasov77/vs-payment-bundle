@@ -3,13 +3,13 @@
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
-use Payum\Offline\Action\AuthorizeAction;
-use Payum\Offline\Action\CaptureAction;
-use Payum\Offline\Action\ConvertPaymentAction;
-use Payum\Offline\Action\ConvertPayoutAction;
-use Payum\Offline\Action\PayoutAction;
-use Payum\Offline\Action\RefundAction;
-use Payum\Offline\Action\StatusAction;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\AuthorizeAction;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\CaptureAction;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\ConvertPaymentAction;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\StatusAction;
+
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoLoginAction;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoCaptureAction;
 
 /**
  * Title:       24 hours with Phone Call
@@ -37,13 +37,13 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             'payum.factory_name'            => 'telephone_call',
             'payum.factory_title'           => 'Telephone Call',
             
-            'payum.action.capture'          => new CaptureAction(),
             'payum.action.authorize'        => new AuthorizeAction(),
-            'payum.action.payout'           => new PayoutAction(),
-            'payum.action.refund'           => new RefundAction(),
-            'payum.action.status'           => new StatusAction(),
+            'payum.action.capture'          => new CaptureAction(),
             'payum.action.convert_payment'  => new ConvertPaymentAction(),
-            'payum.action.convert_payout'   => new ConvertPayoutAction(),
+            'payum.action.status'           => new StatusAction(),
+            
+            'payum.action.api.do_login'     => new DoLoginAction(),
+            'payum.action.api.do_capture'   => new DoCaptureAction(),
         ]);
         
         if ( ! $config['payum.api'] ) {
