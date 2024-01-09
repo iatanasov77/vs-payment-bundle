@@ -35,7 +35,7 @@ class AuthorizeAction implements ActionInterface, GatewayAwareInterface
     /**
      * {@inheritDoc}
      */
-    public function supports( $request )
+    public function supports( $request ): bool
     {
         return
             $request instanceof Authorize &&

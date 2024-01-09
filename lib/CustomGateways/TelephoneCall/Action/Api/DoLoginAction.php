@@ -37,7 +37,7 @@ class DoLoginAction implements ActionInterface, ApiAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function supports($request)
+    public function supports( $request ): bool
     {
         return
             $request instanceof DoLogin &&

@@ -45,7 +45,7 @@ class DoCaptureAction implements ActionInterface, ApiAwareInterface, GatewayAwar
     /**
      * {@inheritdoc}
      */
-    public function supports($request)
+    public function supports( $request ): bool
     {
         return
             $request instanceof DoCapture &&
