@@ -7,9 +7,6 @@ use Payum\Core\Exception\InvalidArgumentException;
 use Payum\Core\Exception\RuntimeException;
 use Payum\Core\HttpClientInterface;
 
-use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
-use Nyholm\Psr7\ServerRequest;
-
 class Api
 {
     /** @var HttpClientInterface */
@@ -127,15 +124,6 @@ class Api
             \http_build_query( $fields['body'] )
         );
         
-        /*
-        $request = new ServerRequest(
-            $fields['method'],
-            $fields['endpoint'],
-            $headers,
-            \http_build_query( $fields['body'] )
-        );
-        */
-        
         return $request;
     }
     
@@ -155,7 +143,7 @@ class Api
         }
         
         return [
-            'endpoint'  => $this->options['password'],
+            'endpoint'  => $this->options['api_login_endpoint'],
             'method'    => 'POST',
             'body'      => [
                 'username' => $this->options['username'],
