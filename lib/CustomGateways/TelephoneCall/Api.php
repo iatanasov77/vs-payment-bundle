@@ -7,16 +7,15 @@ use Payum\Core\Exception\InvalidArgumentException;
 use Payum\Core\Exception\RuntimeException;
 use Payum\Core\HttpClientInterface;
 
+use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
+use Nyholm\Psr7\ServerRequest;
+
 class Api
 {
-    /**
-     * @var HttpClientInterface
-     */
+    /** @var HttpClientInterface */
     protected $client;
     
-    /**
-     * @var MessageFactory
-     */
+    /** @var MessageFactory */
     protected $messageFactory;
     
     protected $options = [
@@ -53,6 +52,7 @@ class Api
     public function doLogin()
     {
         $requestFields  = $this->createLoginRequestFields();
+        $psr7Request     = new ServerRequest(  );
         $response       = $this->doRequest( $requestFields );
         
         return [
@@ -95,19 +95,8 @@ class Api
      */
     protected function doRequest( array $fields )
     {
-        $headers    = [
-            'Content-Type'  => 'application/json',
-            'Authorization' => isset( $fields['authToken'] ) ? 'Bearer ' . $fields['authToken'] : null,
-        ];
-        
-        $request = $this->messageFactory->createRequest(
-            $fields['method'],
-            $fields['endpoint'],
-            $headers,
-            \http_build_query( $fields['body'] )
-        );
-        
-        $response = $this->client->send( $request );
+        $request    = $this->createPsr7Request( $fields );
+        $response   = $this->client->send( $request );
         
         if ( ! ( $response->getStatusCode() >= 200 && $response->getStatusCode() < 300 ) ) {
             throw HttpException::factory( $request, $response );
@@ -120,6 +109,32 @@ class Api
         }
         
         return $result;
+    }
+    
+    protected function createPsr7Request( array $fields )
+    {
+        $headers    = [
+            'Content-Type'  => 'application/json',
+            'Authorization' => isset( $fields['authToken'] ) ? 'Bearer ' . $fields['authToken'] : null,
+        ];
+        
+        /*
+        // ERROR: Header values must be RFC 7230 compatible strings
+        $request = $this->messageFactory->createRequest(
+            $fields['method'],
+            $fields['endpoint'],
+            $headers,
+            \http_build_query( $fields['body'] )
+        );
+        */
+        $request = new ServerRequest(
+            $fields['method'],
+            $fields['endpoint'],
+            $headers,
+            \http_build_query( $fields['body'] )
+        );
+        
+        return $request;
     }
     
     /**

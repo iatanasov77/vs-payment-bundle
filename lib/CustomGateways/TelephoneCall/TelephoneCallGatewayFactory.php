@@ -67,8 +67,8 @@ class TelephoneCallGatewayFactory extends GatewayFactory
                     'password'                      => $config['password'],
                 ];
                 
-                //return new Api( $telephoneCallConfig, $config['payum.http_client'], $config['httplug.message_factory'] );
-                return new Api( $telephoneCallConfig, $config['payum.http_client'], new HttpFoundationFactory() );
+                return new Api( $telephoneCallConfig, $config['payum.http_client'], $config['httplug.message_factory'] );
+                //return new Api( $telephoneCallConfig, $config['payum.http_client'], new HttpFoundationFactory() );
             };
         }
         
