@@ -126,12 +126,17 @@ class Api
             \http_build_query( $fields['body'] )
         );
         */
-        $request = new ServerRequest(
-            $fields['method'],
-            $fields['endpoint'],
-            $headers,
-            \http_build_query( $fields['body'] )
-        );
+        
+        try {
+            $request = new ServerRequest(
+                $fields['method'],
+                $fields['endpoint'],
+                $headers,
+                \http_build_query( $fields['body'] )
+            );
+        } catch ( \InvalidArgumentException $e ) {
+            // ignore invalid header
+        }
         
         return $request;
     }
