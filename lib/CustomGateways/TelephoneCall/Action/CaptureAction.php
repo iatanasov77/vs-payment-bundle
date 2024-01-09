@@ -5,6 +5,7 @@ use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
+use Payum\Core\Request\Authorize;
 use Payum\Core\Exception\RequestNotSupportedException;
 
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Request\Api\DoCapture;
@@ -26,6 +27,10 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface
 
         if ( $model['status'] ) {
             return;
+        }
+        
+        if ( false == $model['auth'] ) {
+            $this->gateway->execute( new Authorize( $model ) );
         }
         
         $this->gateway->execute( new DoCapture( $model ) );
