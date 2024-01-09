@@ -104,7 +104,7 @@ class Api
             $fields['method'],
             $fields['endpoint'],
             $headers,
-            $fields['body']
+            \http_build_query( $fields['body'] )
         );
         
         $response = $this->client->send( $request );
