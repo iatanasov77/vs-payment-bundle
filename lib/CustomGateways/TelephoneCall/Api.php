@@ -114,7 +114,7 @@ class Api
     {
         $headers    = [
             'Content-Type'  => 'application/json',
-            'Authorization' => isset( $fields['authToken'] ) ? 'Bearer ' . $fields['authToken'] : null,
+            'Authorization' => 'Bearer ' . isset( $fields['authToken'] ) ? $fields['authToken'] : '',
         ];
         
         /*
