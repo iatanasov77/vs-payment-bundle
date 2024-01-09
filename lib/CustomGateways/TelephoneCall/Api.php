@@ -24,7 +24,6 @@ class Api
         'api_verify_coupon_endpoint'    => null,
         'username'                      => null,
         'password'                      => null,
-        'sandbox'                       => null,
         'useraction'                    => null,
     ];
     
@@ -42,10 +41,6 @@ class Api
             'username',
             'password',
         ]);
-        
-        if ( ! is_bool( $options['sandbox'] ) ) {
-            throw new InvalidArgumentException( 'The boolean sandbox option must be set.' );
-        }
         
         $this->options          = $options;
         $this->client           = $client;

@@ -52,7 +52,6 @@ class TelephoneCallGatewayFactory extends GatewayFactory
                 'api_verify_coupon_endpoint'    => '',
                 'username'                      => '',
                 'password'                      => '',
-                'sandbox'                       => true,
             ];
             $config->defaults( $config['payum.default_options'] );
             $config['payum.required_options'] = ['api_login_endpoint', 'api_verify_coupon_endpoint', 'username', 'password'];
@@ -65,7 +64,6 @@ class TelephoneCallGatewayFactory extends GatewayFactory
                     'api_verify_coupon_endpoint'    => $config['api_verify_coupon_endpoint'],
                     'username'                      => $config['username'],
                     'password'                      => $config['password'],
-                    'sandbox'                       => $config['sandbox'],
                 ];
                 
                 return new Api( $telephoneCallConfig, $config['payum.http_client'], $config['httplug.message_factory'] );
