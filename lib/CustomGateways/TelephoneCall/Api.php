@@ -52,7 +52,6 @@ class Api
     public function doLogin()
     {
         $requestFields  = $this->createLoginRequestFields();
-        $psr7Request     = new ServerRequest(  );
         $response       = $this->doRequest( $requestFields );
         
         return [
