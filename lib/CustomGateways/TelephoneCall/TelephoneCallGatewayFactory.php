@@ -1,5 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
+use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
@@ -66,7 +67,8 @@ class TelephoneCallGatewayFactory extends GatewayFactory
                     'password'                      => $config['password'],
                 ];
                 
-                return new Api( $telephoneCallConfig, $config['payum.http_client'], $config['httplug.message_factory'] );
+                //return new Api( $telephoneCallConfig, $config['payum.http_client'], $config['httplug.message_factory'] );
+                return new Api( $telephoneCallConfig, $config['payum.http_client'], new HttpFoundationFactory() );
             };
         }
         
