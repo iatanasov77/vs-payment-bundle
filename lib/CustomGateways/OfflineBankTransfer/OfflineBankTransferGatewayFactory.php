@@ -35,7 +35,6 @@ class OfflineBankTransferGatewayFactory extends GatewayFactory
         
         if ( false == $config['payum.api'] ) {
             $config['payum.default_options'] = [
-                'sandbox'       => true,
                 'iban'          => '',
                 'bank_name'     => '',
                 'reciever_name' => '',
