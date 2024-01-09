@@ -120,26 +120,21 @@ class Api
             $headers['Authorization']   = 'Bearer ' . $fields['authToken'];
         }
         
-        /*
-        // ERROR: Header values must be RFC 7230 compatible strings
         $request = $this->messageFactory->createRequest(
             $fields['method'],
             $fields['endpoint'],
             $headers,
             \http_build_query( $fields['body'] )
         );
-        */
         
-        try {
-            $request = new ServerRequest(
-                $fields['method'],
-                $fields['endpoint'],
-                $headers,
-                \http_build_query( $fields['body'] )
-            );
-        } catch ( \InvalidArgumentException $e ) {
-            // ignore invalid header
-        }
+        /*
+        $request = new ServerRequest(
+            $fields['method'],
+            $fields['endpoint'],
+            $headers,
+            \http_build_query( $fields['body'] )
+        );
+        */
         
         return $request;
     }
