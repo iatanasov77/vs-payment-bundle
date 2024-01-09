@@ -114,8 +114,11 @@ class Api
     {
         $headers    = [
             'Content-Type'  => 'application/json',
-            'Authorization' => 'Bearer ' . isset( $fields['authToken'] ) ? $fields['authToken'] : '',
         ];
+        
+        if ( \array_key_exists( 'authToken', $fields ) ){
+            $headers['Authorization']   = 'Bearer ' . $fields['authToken'];
+        }
         
         /*
         // ERROR: Header values must be RFC 7230 compatible strings
