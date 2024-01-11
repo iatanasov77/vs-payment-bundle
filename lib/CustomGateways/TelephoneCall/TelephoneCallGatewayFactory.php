@@ -5,6 +5,7 @@ use Symfony\Component\HttpClient\HttpClient as SymfonyHttpClient;
 
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
+use Vankosoft\PaymentBundle\Component\Payum\Core\HttplugClient;
 
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\AuthorizeAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\CaptureAction;
@@ -38,7 +39,8 @@ class TelephoneCallGatewayFactory extends GatewayFactory
     {
         // Dont Verify SSL certificate
         // These should moved in bundle config and disable host verification for DEV Environement Only.
-        $httpClient = new SymfonyHttplugClient( SymfonyHttpClient::create( [
+        //$httpClient = new SymfonyHttplugClient( SymfonyHttpClient::create( [
+        $httpClient = new HttplugClient( SymfonyHttpClient::create( [
             "verify_peer"   =>false,
             "verify_host"   =>false
         ] ) );

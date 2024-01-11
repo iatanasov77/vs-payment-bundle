@@ -29,10 +29,11 @@ class Api
      * @param MessageFactory|null      $messageFactory
      */
     
-    //HttpClientInterface $client,
+    // HttpClientInterface $client,
+    // ClientInterface $client,
     public function __construct(
         array $options,
-        ClientInterface $client,
+        HttpClientInterface $client,
         MessageFactory $messageFactory
     ) {
         $options    = ArrayObject::ensureArrayObject( $options );
