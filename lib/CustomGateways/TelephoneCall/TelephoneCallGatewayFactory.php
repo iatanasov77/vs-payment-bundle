@@ -35,19 +35,26 @@ class TelephoneCallGatewayFactory extends GatewayFactory
      */
     protected function populateConfig( ArrayObject $config )
     {
-        if ( \boolval( $config->get( 'sandbox' ) ) ) {
-            // Dont Verify SSL certificate
-            $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
-        } else {
-            $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => true, "verify_host" => true] );
+        $httpClient = $this->httpClient( $config );
+        $this->configDefaults( $config );
+        
+        if ( ! $config['payum.api'] ) {
+            $this->configPayumApi( $config );
         }
         
+        $config['payum.paths'] = array_replace([
+            'PayumTelephoneCall'    => __DIR__ . '/Resources/views',
+        ], $config['payum.paths'] ?: []);
+    }
+    
+    private function configDefaults( ArrayObject &$config )
+    {
         $config->defaults([
             'payum.factory_name'                => 'telephone_call',
             'payum.factory_title'               => 'Telephone Call',
             
             'payum.template.obtain_coupon_code' => '@PayumTelephoneCall/obtain_coupon_code.html.twig',
-            'payum.action.obtain_token' => function (ArrayObject $config) {
+            'payum.action.obtain_token' => function ( ArrayObject $config ) {
                 return new ObtainTokenAction( $config['payum.template.obtain_coupon_code'] );
             },
             
@@ -59,39 +66,40 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             'payum.action.api.do_login'         => new DoLoginAction(),
             'payum.action.api.do_capture'       => new DoCaptureAction(),
         ]);
+    }
+    
+    private function configPayumApi( ArrayObject &$config )
+    {
+        $config['payum.default_options'] = [
+            'api_login_endpoint'            => '',
+            'api_verify_coupon_endpoint'    => '',
+            'username'                      => '',
+            'password'                      => '',
+        ];
+        $config->defaults( $config['payum.default_options'] );
+        $config['payum.required_options']   = ['api_login_endpoint', 'api_verify_coupon_endpoint', 'username', 'password'];
         
-        if ( ! $config['payum.api'] ) {
-            $config['payum.default_options'] = [
-                'api_login_endpoint'            => '',
-                'api_verify_coupon_endpoint'    => '',
-                'username'                      => '',
-                'password'                      => '',
-            ];
-            $config->defaults( $config['payum.default_options'] );
-            $config['payum.required_options']   = ['api_login_endpoint', 'api_verify_coupon_endpoint', 'username', 'password'];
+        $config['payum.api'] = function ( ArrayObject $config ) use ( $httpClient )  {
+            $config->validateNotEmpty( $config['payum.required_options'] );
             
-            $config['payum.api'] = function ( ArrayObject $config ) use ( $httpClient )  {
-                $config->validateNotEmpty( $config['payum.required_options'] );
-                
-                $telephoneCallConfig = [
-                    'api_login_endpoint'            => $config['api_login_endpoint'],
-                    'api_verify_coupon_endpoint'    => $config['api_verify_coupon_endpoint'],
-                    'username'                      => $config['username'],
-                    'password'                      => $config['password'],
-                ];
-                
-                /*
-                 * https://github.com/Payum/PayumBundle/blob/master/UPGRADE.md#20-to-21
-                 * payum.http_client service was removed. Use gateway's config to overwrite it.
-                 */
-                //return new Api( $telephoneCallConfig, $config['payum.http_client'], $config['httplug.message_factory'] );
-                
-                return new Api( $telephoneCallConfig, $httpClient, $config['httplug.message_factory'] );
-            };
+            $telephoneCallConfig = [
+                'api_login_endpoint'            => $config['api_login_endpoint'],
+                'api_verify_coupon_endpoint'    => $config['api_verify_coupon_endpoint'],
+                'username'                      => $config['username'],
+                'password'                      => $config['password'],
+            ];
+            
+            return new Api( $telephoneCallConfig, $httpClient, $config['httplug.message_factory'] );
+        };
+    }
+    
+    private function httpClient( ArrayObject $config )
+    {
+        if ( \boolval( $config->get( 'sandbox' ) ) ) {
+            // Dont Verify SSL certificate
+            return new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
         }
         
-        $config['payum.paths'] = array_replace([
-            'PayumTelephoneCall'    => __DIR__ . '/Resources/views',
-        ], $config['payum.paths'] ?: []);
+        return new TelephoneCallHttplugClient( ["verify_peer" => true, "verify_host" => true] );
     }
 }
