@@ -11,6 +11,7 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\StatusAction;
 
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoLoginAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoCaptureAction;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\ObtainTokenAction;
 
 /**
  * Title:       24 hours with Phone Call
@@ -43,16 +44,21 @@ class TelephoneCallGatewayFactory extends GatewayFactory
         $httpClient = new MyHttplugClient( $httpClientOptions );
         
         $config->defaults([
-            'payum.factory_name'            => 'telephone_call',
-            'payum.factory_title'           => 'Telephone Call',
+            'payum.factory_name'                => 'telephone_call',
+            'payum.factory_title'               => 'Telephone Call',
             
-            'payum.action.authorize'        => new AuthorizeAction(),
-            'payum.action.capture'          => new CaptureAction(),
-            'payum.action.convert_payment'  => new ConvertPaymentAction(),
-            'payum.action.status'           => new StatusAction(),
+            'payum.template.obtain_coupon_code' => '@PayumTelephoneCall/obtain_coupon_code.html.twig',
+            'payum.action.obtain_token' => function (ArrayObject $config) {
+                return new ObtainTokenAction( $config['payum.template.obtain_coupon_code'] );
+            },
             
-            'payum.action.api.do_login'     => new DoLoginAction(),
-            'payum.action.api.do_capture'   => new DoCaptureAction(),
+            'payum.action.authorize'            => new AuthorizeAction(),
+            'payum.action.capture'              => new CaptureAction(),
+            'payum.action.convert_payment'      => new ConvertPaymentAction(),
+            'payum.action.status'               => new StatusAction(),
+            
+            'payum.action.api.do_login'         => new DoLoginAction(),
+            'payum.action.api.do_capture'       => new DoCaptureAction(),
         ]);
         
         if ( ! $config['payum.api'] ) {
@@ -80,6 +86,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
                  * payum.http_client service was removed. Use gateway's config to overwrite it.
                  */
                 //return new Api( $telephoneCallConfig, $config['payum.http_client'], $config['httplug.message_factory'] );
+                
                 return new Api( $telephoneCallConfig, $httpClient, $config['httplug.message_factory'] );
             };
         }

@@ -8,6 +8,7 @@ use Payum\Core\Request\Capture;
 use Payum\Core\Request\Authorize;
 use Payum\Core\Exception\RequestNotSupportedException;
 
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Request\Api\ObtainToken;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Request\Api\DoCapture;
 
 class CaptureAction implements ActionInterface, GatewayAwareInterface
@@ -31,6 +32,13 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface
         
         if ( false == $model['auth'] ) {
             $this->gateway->execute( new Authorize( $model ) );
+        }
+        
+        if ( false == $model['card'] ) {
+            $obtainToken    = new ObtainToken( $request->getToken() );
+            $obtainToken->setModel( $model );
+            
+            $this->gateway->execute( $obtainToken );
         }
         
         $this->gateway->execute( new DoCapture( $model ) );
