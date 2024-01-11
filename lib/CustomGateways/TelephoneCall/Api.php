@@ -125,7 +125,7 @@ class Api
             $fields['method'],
             $fields['endpoint'],
             $headers,
-            $fields['body']
+            \json_encode( $fields['body'] )
         );
         
         return $request;
