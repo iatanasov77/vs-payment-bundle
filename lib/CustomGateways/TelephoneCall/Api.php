@@ -49,7 +49,7 @@ class Api
     /**
      * @return array
      */
-    public function doLogin()
+    public function doLogin(): array
     {
         $requestFields  = $this->createLoginRequestFields();
         $response       = $this->doRequest( $requestFields );
@@ -57,7 +57,7 @@ class Api
         return [
             'auth' => [
                 'url'       => $requestFields['endpoint'],
-                'response'  => $response,
+                'response'  => \json_decode( $response, true )
             ]
         ];
     }
@@ -67,7 +67,7 @@ class Api
      *
      * @return array
      */
-    public function doTelephoneCallPayment( ArrayObject $model )
+    public function doTelephoneCallPayment( ArrayObject $model ): array
     {
         $model  = ArrayObject::ensureArrayObject( $model );
         $local  = $model->getArray( 'local' );
@@ -88,7 +88,7 @@ class Api
         );
         $response       = $this->doRequest( $requestFields );
         
-        return $response;
+        return \json_decode( $response, true );
     }
     
     /**
