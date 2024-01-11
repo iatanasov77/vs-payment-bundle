@@ -44,7 +44,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
 //             "verify_host"   =>false
 //         ] ) );
 //         $httpClient = new HttplugClient( $ymfonyHttpClient );
-        $ymfonyHttpClient = new HttplugClient( SymfonyHttpClient::create( [
+        $ymfonyHttpClient = new MyHttplugClient( SymfonyHttpClient::create( [
             "verify_peer"   =>false,
             "verify_host"   =>false
         ] ) );
