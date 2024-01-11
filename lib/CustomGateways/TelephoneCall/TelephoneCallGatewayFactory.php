@@ -41,6 +41,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
 //             $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => true, "verify_host" => true] );
 //         }
         
+        var_dump( $config->get( 'sandbaox' ) ); die;
         $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
         
         $config->defaults([
