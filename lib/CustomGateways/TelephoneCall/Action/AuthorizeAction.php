@@ -27,7 +27,7 @@ class AuthorizeAction implements ActionInterface, GatewayAwareInterface
 
         if ( false == isset( $details['auth'] ) ) {
             $this->gateway->execute( new DoLogin( $details ) );
-            $this->gateway->execute( new Sync( $details ) );
+            //$this->gateway->execute( new Sync( $details ) );
         }
     }
 
