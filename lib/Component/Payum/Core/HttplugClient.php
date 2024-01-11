@@ -3,6 +3,7 @@
 use Payum\Core\HttpClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Client\ClientInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * This is a HttpClient that support Httplug. This is an adapter class that make sure we can use Httplug without breaking
@@ -20,7 +21,7 @@ class HttplugClient implements HttpClientInterface
     /**
      * @param HttpClient $client
      */
-    public function __construct( ClientInterface $client )
+    public function __construct( HttpClientInterface $client )
     {
         $this->client = $client;
     }
