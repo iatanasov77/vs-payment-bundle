@@ -18,14 +18,10 @@ class MyHttplugClient implements HttpClientInterface
      */
     private $client;
 
-    public function __construct()
+    public function __construct( array $httpClientOptions = [] )
     {
-        // Dont Verify SSL certificate
-        // These should moved in bundle config and disable host verification for DEV Environement Only.
-        $this->client   = new HttplugClient( HttpClient::create([
-            "verify_peer"   =>false,
-            "verify_host"   =>false
-        ]));
+        
+        $this->client   = new HttplugClient( HttpClient::create( $httpClientOptions ) );
     }
 
     /**

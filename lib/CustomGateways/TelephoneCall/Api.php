@@ -27,7 +27,6 @@ class Api
      * @param HttpClientInterface|null $client
      * @param MessageFactory|null      $messageFactory
      */
-    
     public function __construct(
         array $options,
         HttpClientInterface $client,
@@ -121,11 +120,12 @@ class Api
             $headers['Authorization']   = 'Bearer ' . $fields['authToken'];
         }
         
+        // \http_build_query( $fields['body'] )
         $request = $this->messageFactory->createRequest(
             $fields['method'],
             $fields['endpoint'],
             $headers,
-            \http_build_query( $fields['body'] )
+            $fields['body']
         );
         
         return $request;
