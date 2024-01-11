@@ -35,13 +35,11 @@ class TelephoneCallGatewayFactory extends GatewayFactory
      */
     protected function populateConfig( ArrayObject $config )
     {
-        // Dont Verify SSL certificate
-        // These should moved in bundle config and disable host verification for DEV Environement Only.
-        $httpClientOptions  = [
-            "verify_peer"   => false,
-            "verify_host"   => false
-        ];
-        $httpClient = new TelephoneCallHttplugClient( $httpClientOptions );
+        if ( $config['sandbaox'] ) {
+            $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
+        } else {
+            $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => true, "verify_host" => true] );
+        }
         
         $config->defaults([
             'payum.factory_name'                => 'telephone_call',
