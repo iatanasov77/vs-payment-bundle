@@ -3,7 +3,7 @@
 use Payum\Core\HttpClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Client\ClientInterface;
-use Symfony\Component\HttpClient\HttplugClient;
+use Symfony\Component\HttpClient\MyHttplugClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface as SymfonyHttpClientInterface;
 
 /**
@@ -12,7 +12,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface as SymfonyHttpClientInterfa
  *
  * @deprecated This will be removed in 2.0. Consider using Http\Client\HttpClient.
  */
-class MyHttplugClient extends HttplugClient implements HttpClientInterface
+class MyHttplugClient extends MyHttplugClient implements HttpClientInterface
 {
     /**
      * @var SymfonyHttpClientInterface

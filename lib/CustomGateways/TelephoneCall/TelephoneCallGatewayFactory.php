@@ -5,7 +5,7 @@ use Symfony\Component\HttpClient\HttpClient as SymfonyHttpClient;
 
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
-use Vankosoft\PaymentBundle\Component\Payum\Core\HttplugClient;
+use Vankosoft\PaymentBundle\Component\Payum\Core\MyHttplugClient;
 
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\AuthorizeAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\CaptureAction;
