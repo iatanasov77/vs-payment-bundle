@@ -67,20 +67,24 @@ class Api
      *
      * @return array
      */
-    public function doTelephoneCallPayment( array $fields )
+    public function doTelephoneCallPayment( ArrayObject $model )
     {
-        if ( false == isset( $fields['pricing_plan_id'] ) ) {
+        $model  = ArrayObject::ensureArrayObject( $options );
+        $local  = $model->getArray( 'local' );
+        
+        if ( false == isset( $local['pricing_plan_id'] ) ) {
             throw new RuntimeException( 'The pricing_plan_id must be set either to FormRequest.' );
         }
         
-        if ( false == isset( $fields['coupon_code'] ) ) {
+        if ( false == isset( $local['coupon_code'] ) ) {
             throw new RuntimeException( 'The coupon_code must be set either to FormRequest.' );
         }
         
+        
         $requestFields  = $this->createVerifyCouponRequestFields(
-            $fields['pricing_plan_id'],
-            $fields['coupon_code'],
-            $fields['auth']
+            $local['pricing_plan_id'],
+            $local['coupon_code'],
+            $model['auth']
         );
         $response       = $this->doRequest( $requestFields );
         
