@@ -21,7 +21,7 @@ class HttplugClient implements HttpClientInterface
     /**
      * @param HttpClient $client
      */
-    public function __construct( SymfonyHttpClientInterface $client )
+    public function __construct( ClientInterface $client )
     {
         $this->client = $client;
     }
