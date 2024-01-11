@@ -35,7 +35,6 @@ class TelephoneCallGatewayFactory extends GatewayFactory
      */
     protected function populateConfig( ArrayObject $config )
     {
-        $httpClient = $this->httpClient( $config );
         $this->configDefaults( $config );
         
         if ( ! $config['payum.api'] ) {
@@ -79,7 +78,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
         $config->defaults( $config['payum.default_options'] );
         $config['payum.required_options']   = ['api_login_endpoint', 'api_verify_coupon_endpoint', 'username', 'password'];
         
-        $config['payum.api'] = function ( ArrayObject $config ) use ( $httpClient )  {
+        $config['payum.api'] = function ( ArrayObject $config )  {
             $config->validateNotEmpty( $config['payum.required_options'] );
             
             $telephoneCallConfig = [
@@ -89,7 +88,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
                 'password'                      => $config['password'],
             ];
             
-            return new Api( $telephoneCallConfig, $httpClient, $config['httplug.message_factory'] );
+            return new Api( $telephoneCallConfig, $this->httpClient( $config ), $config['httplug.message_factory'] );
         };
     }
     
