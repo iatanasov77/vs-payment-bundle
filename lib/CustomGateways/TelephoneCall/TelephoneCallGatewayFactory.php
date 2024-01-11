@@ -2,8 +2,8 @@
 
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
-use Vankosoft\PaymentBundle\Component\Payum\Core\MyHttplugClient;
 
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallHttplugClient;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\AuthorizeAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\CaptureAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\ConvertPaymentAction;
@@ -41,7 +41,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             "verify_peer"   => false,
             "verify_host"   => false
         ];
-        $httpClient = new MyHttplugClient( $httpClientOptions );
+        $httpClient = new TelephoneCallHttplugClient( $httpClientOptions );
         
         $config->defaults([
             'payum.factory_name'                => 'telephone_call',
