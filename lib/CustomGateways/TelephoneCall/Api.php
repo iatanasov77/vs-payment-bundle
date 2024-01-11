@@ -1,5 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
+use Symfony\Contracts\HttpClient\HttpClientInterface as SymfonyHttpClientInterface;
 use Http\Message\MessageFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\Http\HttpException;
@@ -27,8 +28,13 @@ class Api
      * @param HttpClientInterface|null $client
      * @param MessageFactory|null      $messageFactory
      */
-    public function __construct( array $options, HttpClientInterface $client, MessageFactory $messageFactory )
-    {
+    
+    //HttpClientInterface $client,
+    public function __construct(
+        array $options,
+        SymfonyHttpClientInterface $client,
+        MessageFactory $messageFactory
+    ) {
         $options    = ArrayObject::ensureArrayObject( $options );
         $options->defaults( $this->options );
         $options->validateNotEmpty([
