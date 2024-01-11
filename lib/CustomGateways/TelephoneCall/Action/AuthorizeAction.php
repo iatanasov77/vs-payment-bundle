@@ -5,7 +5,6 @@ use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Authorize;
-use Payum\Core\Request\Sync;
 use Payum\Core\Exception\RequestNotSupportedException;
 
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Request\Api\DoLogin;
@@ -27,7 +26,6 @@ class AuthorizeAction implements ActionInterface, GatewayAwareInterface
 
         if ( false == isset( $details['auth'] ) ) {
             $this->gateway->execute( new DoLogin( $details ) );
-            //$this->gateway->execute( new Sync( $details ) );
         }
     }
 

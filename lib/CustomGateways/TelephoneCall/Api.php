@@ -101,13 +101,7 @@ class Api
             throw HttpException::factory( $request, $response );
         }
         
-        $result = [];
-        parse_str( $response->getBody()->getContents(), $result );
-        foreach ( $result as &$value ) {
-            $value = urldecode( $value );
-        }
-        
-        return $result;
+        return $response->getBody()->getContents();
     }
     
     protected function createPsr7Request( array $fields )
