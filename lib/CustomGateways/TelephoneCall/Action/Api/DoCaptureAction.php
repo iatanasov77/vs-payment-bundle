@@ -39,7 +39,7 @@ class DoCaptureAction implements ActionInterface, ApiAwareInterface, GatewayAwar
         
         $local = $model->getArray( 'local' );
         $model->replace(
-            $this->api->doTelephoneCallPayment( $local )
+            $this->api->doTelephoneCallPayment( ( array ) $local )
         );
     }
 
