@@ -36,6 +36,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
     protected function populateConfig( ArrayObject $config )
     {
         if ( \boolval( $config->get( 'sandbox' ) ) ) {
+            // Dont Verify SSL certificate
             $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
         } else {
             $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => true, "verify_host" => true] );
