@@ -84,7 +84,7 @@ class Api
         $requestFields  = $this->createVerifyCouponRequestFields(
             $local['pricing_plan_id'],
             $local['coupon_code'],
-            $model['auth']
+            $model['auth']['response']['payload']['token']
         );
         $response       = $this->doRequest( $requestFields );
         
@@ -154,18 +154,18 @@ class Api
         ];
     }
     
-    protected function createVerifyCouponRequestFields( string $pricingPlanId, string $couponCode, array $authResponse )
+    protected function createVerifyCouponRequestFields( string $pricingPlanId, string $couponCode, string $authToken )
     {
         if ( false == $this->options['api_verify_coupon_endpoint'] ) {
             throw new RuntimeException( 'The api_login_endpoint must be set either to FormRequest or to options.' );
-            
-            $endpoint   = $this->options['api_verify_coupon_endpoint'];
         }
+        
+        $endpoint   = $this->options['api_verify_coupon_endpoint'];
         
         return [
             'endpoint'  => \sprintf( '%s/%s/%s', $endpoint, $pricingPlanId, $couponCode ),
             'method'    => 'GET',
-            'authToken' => $authResponse['payload']['token'],
+            'authToken' => $authToken,
             'body'      => [],
         ];
     }
