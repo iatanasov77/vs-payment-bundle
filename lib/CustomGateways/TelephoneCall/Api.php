@@ -1,6 +1,5 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
-use Psr\Http\Client\ClientInterface;
 use Http\Message\MessageFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\Http\HttpException;
@@ -29,8 +28,6 @@ class Api
      * @param MessageFactory|null      $messageFactory
      */
     
-    // HttpClientInterface $client,
-    // ClientInterface $client,
     public function __construct(
         array $options,
         HttpClientInterface $client,

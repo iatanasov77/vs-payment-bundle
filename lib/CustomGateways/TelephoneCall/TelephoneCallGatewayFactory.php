@@ -39,11 +39,15 @@ class TelephoneCallGatewayFactory extends GatewayFactory
     {
         // Dont Verify SSL certificate
         // These should moved in bundle config and disable host verification for DEV Environement Only.
-        $ymfonyHttpClient = new SymfonyHttplugClient( SymfonyHttpClient::create( [
+//         $ymfonyHttpClient = new SymfonyHttplugClient( SymfonyHttpClient::create( [
+//             "verify_peer"   =>false,
+//             "verify_host"   =>false
+//         ] ) );
+//         $httpClient = new HttplugClient( $ymfonyHttpClient );
+        $ymfonyHttpClient = new HttplugClient( SymfonyHttpClient::create( [
             "verify_peer"   =>false,
             "verify_host"   =>false
         ] ) );
-        $httpClient = new HttplugClient( $ymfonyHttpClient );
         
         $config->defaults([
             'payum.factory_name'            => 'telephone_call',
