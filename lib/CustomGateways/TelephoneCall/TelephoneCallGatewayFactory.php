@@ -35,14 +35,11 @@ class TelephoneCallGatewayFactory extends GatewayFactory
      */
     protected function populateConfig( ArrayObject $config )
     {
-//         if ( $config['sandbaox'] ) {
-//             $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
-//         } else {
-//             $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => true, "verify_host" => true] );
-//         }
-        
-        var_dump( $config->get( 'sandbox' ) ); die;
-        $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
+        if ( \boolval( $config->get( 'sandbox' ) ) ) {
+            $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
+        } else {
+            $httpClient = new TelephoneCallHttplugClient( ["verify_peer" => true, "verify_host" => true] );
+        }
         
         $config->defaults([
             'payum.factory_name'                => 'telephone_call',
