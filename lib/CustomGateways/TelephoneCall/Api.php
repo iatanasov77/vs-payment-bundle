@@ -69,7 +69,7 @@ class Api
      */
     public function doTelephoneCallPayment( ArrayObject $model )
     {
-        $model  = ArrayObject::ensureArrayObject( $options );
+        $model  = ArrayObject::ensureArrayObject( $model );
         $local  = $model->getArray( 'local' );
         
         if ( false == isset( $local['pricing_plan_id'] ) ) {
