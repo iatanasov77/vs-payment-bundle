@@ -66,7 +66,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             $config->defaults( $config['payum.default_options'] );
             $config['payum.required_options']   = ['api_login_endpoint', 'api_verify_coupon_endpoint', 'username', 'password'];
             
-            $config['payum.api'] = function ( ArrayObject $config ) {
+            $config['payum.api'] = function ( ArrayObject $config ) use ( $httpClient )  {
                 $config->validateNotEmpty( $config['payum.required_options'] );
                 
                 $telephoneCallConfig = [
@@ -76,6 +76,10 @@ class TelephoneCallGatewayFactory extends GatewayFactory
                     'password'                      => $config['password'],
                 ];
                 
+                /*
+                 * https://github.com/Payum/PayumBundle/blob/master/UPGRADE.md#20-to-21
+                 * payum.http_client service was removed. Use gateway's config to overwrite it.
+                 */
                 //return new Api( $telephoneCallConfig, $config['payum.http_client'], $config['httplug.message_factory'] );
                 return new Api( $telephoneCallConfig, $httpClient, $config['httplug.message_factory'] );
             };
