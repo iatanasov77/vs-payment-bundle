@@ -1,5 +1,8 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
+use Symfony\Component\HttpClient\HttplugClient as SymfonyHttplugClient;
+use Symfony\Component\HttpClient\HttpClient as SymfonyHttpClient;
+
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
@@ -33,9 +36,20 @@ class TelephoneCallGatewayFactory extends GatewayFactory
      */
     protected function populateConfig( ArrayObject $config )
     {
+        // Dont Verify SSL certificate
+        // These should moved in bundle config and disable host verification for DEV Environement Only.
+        $httpClient = new SymfonyHttplugClient( SymfonyHttpClient::create( [
+            "verify_peer"   =>false,
+            "verify_host"   =>false
+        ] ) );
+        
         $config->defaults([
             'payum.factory_name'            => 'telephone_call',
             'payum.factory_title'           => 'Telephone Call',
+            
+            // https://github.com/Payum/PayumBundle/blob/master/UPGRADE.md#20-to-21
+            // payum.http_client service was removed. Use gateway's config to overwrite it.
+            'payum.http_client'             => $httpClient,
             
             'payum.action.authorize'        => new AuthorizeAction(),
             'payum.action.capture'          => new CaptureAction(),
@@ -65,6 +79,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
                     'username'                      => $config['username'],
                     'password'                      => $config['password'],
                 ];
+                
                 
                 return new Api( $telephoneCallConfig, $config['payum.http_client'], $config['httplug.message_factory'] );
             };
