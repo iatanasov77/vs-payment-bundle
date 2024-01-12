@@ -49,7 +49,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
     
     private function configDefaults( ArrayObject &$config )
     {
-        $config->defaults([
+        $defaultConfig = [
             'payum.factory_name'                => 'telephone_call',
             'payum.factory_title'               => 'Telephone Call',
             
@@ -66,7 +66,10 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             
             'payum.action.api.do_login'         => new DoLoginAction(),
             'payum.action.api.do_capture'       => new DoCaptureAction(),
-        ]);
+        ];
+        $config = \array_replace_recursive( $defaultConfig, $config );
+        
+        $config->defaults( $config );
     }
     
     private function configPayumApi( ArrayObject &$config )
