@@ -2,21 +2,15 @@
 
 class TelephoneCallResponse extends \ArrayObject
 {
-    const STATUS_FIELD  = 'status';
+    const FIELD_STATUS          = 'status';
+    const FIELD_COUPON          = 'coupon';
+    const FIELD_ERROR_REASON    = 'error_reason';
     
-    public function __construct()
+    const STATUS_OK             = 'ok';
+    const STATUS_ERROR          = 'error';
+    
+    public function __construct( array $data )
     {
-        $data = [
-            self::STATUS_FIELD  => 'TEST',
-        ];
-        
         parent::__construct( $data, \ArrayObject::STD_PROP_LIST );
     }
-    
-    /*
-    public function offsetSet( $key, $value ): void
-    {
-        
-    }
-    */
 }

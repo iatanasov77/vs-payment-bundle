@@ -160,13 +160,14 @@ class Api
             throw new RuntimeException( 'The api_login_endpoint must be set either to FormRequest or to options.' );
         }
         
-        $endpoint   = $this->options['api_verify_coupon_endpoint'];
-        
         return [
-            'endpoint'  => \sprintf( '%s/%s/%s', $endpoint, $pricingPlanId, $couponCode ),
-            'method'    => 'GET',
+            'endpoint'  => $this->options['api_verify_coupon_endpoint'],
+            'method'    => 'POST',
             'authToken' => $authToken,
-            'body'      => [],
+            'body'      => [
+                'pricingPlanId' => $pricingPlanId,
+                'couponCode'    => $couponCode,
+            ],
         ];
     }
 }
