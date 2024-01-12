@@ -1,6 +1,9 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
@@ -9,6 +12,7 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\AuthorizeAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\CaptureAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\ConvertPaymentAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\StatusAction;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\ObtainCouponCodeAction;
 
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoLoginAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoCaptureAction;
@@ -31,6 +35,18 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\ObtainTokenA
  */
 class TelephoneCallGatewayFactory extends GatewayFactory
 {
+    /** @var FormFactoryInterface */
+    private $formFactory;
+    
+    /** @var RequestStack */
+    private $requestStack;
+    
+    public function setDependencies( FormFactoryInterface $formFactory, RequestStack $requestStack )
+    {
+        $this->formFactory  = $formFactory;
+        $this->requestStack = $requestStack;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -47,14 +63,18 @@ class TelephoneCallGatewayFactory extends GatewayFactory
         ], $config['payum.paths'] ?: []);
     }
     
-    private function configDefaults( ArrayObject &$oConfig )
+    private function configDefaults( ArrayObject &$config )
     {
-        $defaultConfig = [
+        $obtainCouponCodeTemplate   = '@PayumTelephoneCall/obtain_coupon_code.html.twig';
+        $obtainCouponCodeAction     = new ObtainCouponCodeAction( $this->formFactory, $obtainCouponCodeTemplate );
+        $obtainCouponCodeAction->setRequestStack( $this->requestStack );
+        
+        $config->defaults([
             'payum.factory_name'                => 'telephone_call',
             'payum.factory_title'               => 'Telephone Call',
             
-            'payum.template.obtain_coupon_code' => '@PayumTelephoneCall/obtain_coupon_code.html.twig',
-            'payum.action.obtain_coupon_code'   => new Reference( 'payum.action.obtain_coupon_code_builder' ),
+            'payum.template.obtain_coupon_code' => $obtainCouponCodeTemplate,
+            'payum.action.obtain_coupon_code'   => $obtainCouponCodeAction,
             'payum.action.obtain_token'         => function ( ArrayObject $config ) {
                 return new ObtainTokenAction( $config['payum.template.obtain_coupon_code'] );
             },
@@ -66,10 +86,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             
             'payum.action.api.do_login'         => new DoLoginAction(),
             'payum.action.api.do_capture'       => new DoCaptureAction(),
-        ];
-        $config = \array_replace_recursive( $defaultConfig, $oConfig->toUnsafeArray() );
-        
-        $oConfig->defaults( $config );
+        ]);
     }
     
     private function configPayumApi( ArrayObject &$config )
