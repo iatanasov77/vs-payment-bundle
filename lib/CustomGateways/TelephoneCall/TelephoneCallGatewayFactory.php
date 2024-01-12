@@ -47,7 +47,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
         ], $config['payum.paths'] ?: []);
     }
     
-    private function configDefaults( ArrayObject &$config )
+    private function configDefaults( ArrayObject &$oConfig )
     {
         $defaultConfig = [
             'payum.factory_name'                => 'telephone_call',
@@ -67,9 +67,9 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             'payum.action.api.do_login'         => new DoLoginAction(),
             'payum.action.api.do_capture'       => new DoCaptureAction(),
         ];
-        $config = \array_replace_recursive( $defaultConfig, $config->toUnsafeArray() );
+        $config = \array_replace_recursive( $defaultConfig, $oConfig->toUnsafeArray() );
         
-        $config->defaults( $config );
+        $oConfig->defaults( $config );
     }
     
     private function configPayumApi( ArrayObject &$config )
