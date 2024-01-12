@@ -18,8 +18,8 @@ services:
         calls:
             - [ setDependencies, [ '@form.factory', '@request_stack' ] ]
             
-#     vankosoft.telephone_call_factory_builder:
-#         class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
-#         arguments: [Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory]
-#         tags:
-#             - { name: payum.gateway_factory_builder, factory: telephone_call }
+    vankosoft.telephone_call_factory_builder:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: vankosoft.telephone_call_factory }
