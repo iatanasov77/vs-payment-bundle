@@ -114,7 +114,7 @@ class ObtainCouponCodeAction implements ActionInterface, GatewayAwareInterface
             'form'          => $form->createView(),
             'actionUrl'     => $request->getToken() ? $request->getToken()->getTargetUrl() : null,
         ]);
-        $this->gateway->execute($renderTemplate);
+        $this->gateway->execute( $renderTemplate );
         
         throw new HttpResponse( new Response( $renderTemplate->getResult(), 200, [
             'Cache-Control' => 'no-store, no-cache, max-age=0, post-check=0, pre-check=0',

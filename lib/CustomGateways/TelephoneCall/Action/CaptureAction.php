@@ -37,12 +37,12 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface
             $this->gateway->execute( new Authorize( $model ) );
         }
         
-        if ( false == $model['coupon'] ) {
-            $obtainToken    = new ObtainToken( $request->getToken() );
-            $obtainToken->setModel( $model );
+//         if ( false == $model['coupon'] ) {
+//             $obtainToken    = new ObtainToken( $request->getToken() );
+//             $obtainToken->setModel( $model );
             
-            $this->gateway->execute( $obtainToken );
-        }
+//             $this->gateway->execute( $obtainToken );
+//         }
         
         if ( false == $model['coupon'] ) {
             try {
