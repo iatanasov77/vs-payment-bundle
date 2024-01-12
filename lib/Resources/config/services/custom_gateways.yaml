@@ -10,16 +10,26 @@ services:
         tags:
             - { name: payum.gateway_factory_builder, factory: offline_bank_transfer }
             
-    telephone_call:
-        class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory
-        public: true
-        tags:
-            - { name: payum.gateway_factory, factory: telephone_call }
-        calls:
-            - [ setDependencies, [ '@form.factory', '@request_stack' ] ]
+#     telephone_call:
+#         class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory
+#         public: true
+#         tags:
+#             - { name: payum.gateway_factory, factory: telephone_call }
+#         calls:
+#             - [ setDependencies, [ '@form.factory', '@request_stack' ] ]
+#             
+#     vankosoft.telephone_call_factory_builder:
+#         class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+#         arguments: [Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory]
+#         tags:
+#             - { name: payum.gateway_factory_builder, factory: telephone_call }
+            
             
     vankosoft.telephone_call_factory_builder:
-        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
-        arguments: [Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory]
+        class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactoryBuilder
+        arguments:
+            - Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory
+            - '@form.factory'
+            - '@request_stack'
         tags:
             - { name: payum.gateway_factory_builder, factory: telephone_call }
