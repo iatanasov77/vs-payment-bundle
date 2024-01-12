@@ -1,6 +1,16 @@
-{# https://gist.github.com/briancollins/6365455 #}
-
 {% extends layout ?: "@PayumCore/layout.html.twig" %}
+
+{% block payum_body %}
+    <form method="POST" action="{{ actionUrl }}">
+        {{ form_row(form) }}
+
+        {{ form_rest(form) }}
+
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock %}
+
+{#  
 
 {% block payum_body %}
     {{ parent() }}
@@ -85,3 +95,5 @@
     </script>
 
 {% endblock %}
+
+#}

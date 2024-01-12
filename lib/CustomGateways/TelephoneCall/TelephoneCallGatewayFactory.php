@@ -1,5 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
+use Symfony\Component\DependencyInjection\Reference;
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
@@ -53,7 +54,8 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             'payum.factory_title'               => 'Telephone Call',
             
             'payum.template.obtain_coupon_code' => '@PayumTelephoneCall/obtain_coupon_code.html.twig',
-            'payum.action.obtain_token' => function ( ArrayObject $config ) {
+            'payum.action.obtain_coupon_code'   => new Reference( 'payum.action.obtain_coupon_code_builder' ),
+            'payum.action.obtain_token'         => function ( ArrayObject $config ) {
                 return new ObtainTokenAction( $config['payum.template.obtain_coupon_code'] );
             },
             
