@@ -67,7 +67,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             'payum.action.api.do_login'         => new DoLoginAction(),
             'payum.action.api.do_capture'       => new DoCaptureAction(),
         ];
-        $config = \array_replace_recursive( $defaultConfig, $config );
+        $config = \array_replace_recursive( $defaultConfig, $config->toUnsafeArray() );
         
         $config->defaults( $config );
     }
