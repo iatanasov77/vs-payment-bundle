@@ -51,6 +51,12 @@
             </cascade>
         </one-to-many>
         
+        <one-to-many field="coupons" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface" mapped-by="pricingPlan" index-by="code">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+        
         <field name="gatewayAttributes" column="gateway_attributes" type="json" nullable="true" />
         
         <!--

@@ -2,6 +2,8 @@
 
 use Vankosoft\ApplicationBundle\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -12,25 +14,36 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
+use Vankosoft\PaymentBundle\Component\Payment\Coupon as VsCoupon;
 use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
 
 class CouponForm extends AbstractForm
 {
+    /** @var VsCoupon */
+    protected $vsCoupon;
+    
     /** @var string */
     protected $currencyClass;
+    
+    /** @var string */
+    protected $pricingPlanClass;
     
     public function __construct(
         string $dataClass,
         RequestStack $requestStack,
         RepositoryInterface $localesRepository,
-        string $currencyClass
+        VsCoupon $vsCoupon,
+        string $currencyClass,
+        string $pricingPlanClass
     ) {
         parent::__construct( $dataClass );
         
         $this->requestStack         = $requestStack;
         $this->localesRepository    = $localesRepository;
         
+        $this->vsCoupon             = $vsCoupon;
         $this->currencyClass        = $currencyClass;
+        $this->pricingPlanClass     = $pricingPlanClass;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options ): void
@@ -91,7 +104,32 @@ class CouponForm extends AbstractForm
                 'rounding_mode'         => $options['rounding_mode'],
                 'required'              => false,
             ])
+            
+            ->add( 'type', ChoiceType::class, [
+                'label'                 => 'vs_payment.form.coupon.coupon_type',
+                'translation_domain'    => 'VSPaymentBundle',
+                'choices'               => \array_flip( $this->vsCoupon->getCouponTypeChoices() ),
+            ])
+            
+            ->add( 'pricingPlan', EntityType::class, [
+                'label'                 => 'vs_payment.form.pricing_plan_label',
+                'required'              => false,
+                'class'                 => $this->pricingPlanClass,
+                'choice_label'          => 'title',
+                'placeholder'           => 'vs_payment.form.pricing_plan_placeholder',
+                'translation_domain'    => 'VSPaymentBundle',
+            ])
         ;
+            
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function ( FormEvent $event ): void {
+                $form       = $event->getForm();
+                $couponType = $form->get( 'type' )->getData();
+                
+                //$form->getConfig()->setRequired( $couponType == VsCoupon::PAYMENT_COUPON_TYPE );
+            }
+         );
     }
     
     public function configureOptions( OptionsResolver $resolver ): void

@@ -96,5 +96,13 @@ services:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\DeleteCouponAction
         tags:
             - { name: payum.action, factory: stripe_js }
+            
+    #######################################################
+    # TelephoneCall Services
+    #######################################################
+    payum.form.type.coupon_code:
+        class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\ActionBuilder\CouponCodeForm
+        tags:
+            - { name: form.type }
 
 

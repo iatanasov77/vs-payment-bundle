@@ -10,6 +10,7 @@ parameters:
         - 'paysera'
         - 'borica'
         - 'authorize_net_aim'
+        - 'telephone_call'
 
 services:
     _defaults:
@@ -23,6 +24,9 @@ services:
             - '@router'
             - '@vs_payment.order_factory'
             - '%vs_payment.gateway_factories%'
+            
+    vs_payment_coupon:
+        class: Vankosoft\PaymentBundle\Component\Payment\Coupon
             
     vs_payment.twig.extension.payment:
         class: Vankosoft\PaymentBundle\Twig\PaymentExtension

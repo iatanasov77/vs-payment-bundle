@@ -13,6 +13,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\GatewayException;
 use Vankosoft\PaymentBundle\Component\Exception\PricingPlanException;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallResponse;
 
 final class Payment
 {
@@ -56,6 +57,9 @@ final class Payment
                 break;
             case 'offline_bank_transfer':
                 $route  = 'vs_payment_offline_bank_transfer_prepare';
+                break;
+            case 'telephone_call':
+                $route  = 'vs_payment_telephone_call_checkout_prepare';
                 break;
             case 'stripe_checkout':
             case 'stripe_js':
@@ -176,6 +180,9 @@ final class Payment
             case 'offline_bank_transfer':
                 return false;
                 break;
+            case 'telephone_call':
+                return false;
+                break;
             case 'stripe_checkout':
             case 'stripe_js':
                 return true;
@@ -215,6 +222,12 @@ final class Payment
                 break;
             case 'offline_bank_transfer':
                 return isset( $paymentDetails['paid'] ) && \boolval( $paymentDetails['paid'] );
+                break;
+            case 'telephone_call':
+                return (
+                    isset( $paymentDetails[TelephoneCallResponse::FIELD_STATUS] ) &&
+                    $paymentDetails[TelephoneCallResponse::FIELD_STATUS] === TelephoneCallResponse::STATUS_OK
+                );
                 break;
             case 'stripe_checkout':
             case 'stripe_js':

@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\CustomGateways;
+<?php namespace Vankosoft\PaymentBundle\CustomGateways\OfflineBankTransfer;
 
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -10,8 +10,6 @@ use Payum\Offline\Action\ConvertPayoutAction;
 use Payum\Offline\Action\PayoutAction;
 use Payum\Offline\Action\RefundAction;
 use Payum\Offline\Action\StatusAction;
-
-use Vankosoft\PaymentBundle\CustomGateways\Keys\OfflineBankTransferKeys;
 
 class OfflineBankTransferGatewayFactory extends GatewayFactory
 {
@@ -35,7 +33,6 @@ class OfflineBankTransferGatewayFactory extends GatewayFactory
         
         if ( false == $config['payum.api'] ) {
             $config['payum.default_options'] = [
-                'sandbox'       => true,
                 'iban'          => '',
                 'bank_name'     => '',
                 'reciever_name' => '',

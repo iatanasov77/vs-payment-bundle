@@ -8,6 +8,7 @@ use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
 class Coupon implements CouponInterface
@@ -36,6 +37,19 @@ class Coupon implements CouponInterface
     
     /** @var float|null */
     protected $percentOff;
+    
+    /**
+     * ENUM Type
+     * ---------
+     * 'discount_coupon' are used to apply discount on Shopping Cart Total Amount. 
+     * 'payment_coupon' requires a Pricing Plan relation and used to pay these Pricing Plans.
+     * 
+     * @var string
+     */
+    protected $type = 'discount_coupon';
+    
+    /** @var PricingPlanInterface|null */
+    protected $pricingPlan;
     
     /**
      * @var Collection|OrderInterface[]
@@ -136,6 +150,30 @@ class Coupon implements CouponInterface
     public function isValid()
     {
         return $this->isEnabled();
+    }
+    
+    public function getType()
+    {
+        return $this->type;
+    }
+    
+    public function setType($type): self
+    {
+        $this->type = $type;
+        
+        return $this;
+    }
+    
+    public function getPricingPlan()
+    {
+        return $this->pricingPlan;
+    }
+    
+    public function setPricingPlan($pricingPlan): self
+    {
+        $this->pricingPlan = $pricingPlan;
+        
+        return $this;
     }
     
     public function getTranslatableLocale(): ?string

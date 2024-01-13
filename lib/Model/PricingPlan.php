@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\PayedServiceSubscriptionPeriodInterface;
 use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod;
 use Vankosoft\PaymentBundle\Component\Exception\PricingPlanException;
@@ -57,6 +58,9 @@ class PricingPlan implements PricingPlanInterface, Comparable
     /** @var Collection|PricingPlanSubscriptionInterface[] */
     protected $subscriptions;
     
+    /** @var Collection|CouponInterface[] */
+    protected $coupons;
+    
     /**
      * This field will store: Subscription Plan Ids, etc.
      * 
@@ -67,6 +71,7 @@ class PricingPlan implements PricingPlanInterface, Comparable
     public function __construct()
     {
         $this->subscriptions        = new ArrayCollection();
+        $this->coupons              = new ArrayCollection();
         $this->gatewayAttributes    = [];
     }
     
@@ -222,6 +227,31 @@ class PricingPlan implements PricingPlanInterface, Comparable
         if ( $this->subscriptions->contains( $subscription ) ) {
             $this->subscriptions->removeElement( $subscription );
             $subscription->setPricingPlan( null );
+        }
+        
+        return $this;
+    }
+    
+    public function getCoupons(): Collection
+    {
+        return $this->coupons;
+    }
+    
+    public function addCoupon( CouponInterface $coupon ): self
+    {
+        if ( ! $this->coupons->contains( $coupon ) ) {
+            $this->coupons[] = $coupon;
+            $coupon->setPricingPlan( $this );
+        }
+        
+        return $this;
+    }
+    
+    public function removeCoupon( CouponInterface $coupon ): self
+    {
+        if ( $this->coupons->contains( $coupon ) ) {
+            $this->coupons->removeElement( $coupon );
+            $coupon->setPricingPlan( null );
         }
         
         return $this;

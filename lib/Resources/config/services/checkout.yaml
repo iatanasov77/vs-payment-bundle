@@ -51,7 +51,7 @@ services:
     ##############################
     # PAYPAL EXPRESS CHECKOUT
     ##############################
-    Vankosoft\PaymentBundle\Controller\Checkout\PaypalExpressCheckoutController:
+    Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalExpressCheckoutController:
         arguments:
             - '@event_dispatcher'
             - '@translator'
@@ -72,7 +72,7 @@ services:
     ##############################
     # PAYPAL PRO CHECKOUT
     ##############################
-    Vankosoft\PaymentBundle\Controller\Checkout\PaypalProCheckoutController:
+    Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalProCheckoutController:
         arguments:
             - '@event_dispatcher'
             - '@translator'
@@ -175,6 +175,27 @@ services:
     # AuthorizeNet
     ##############################
     Vankosoft\PaymentBundle\Controller\Checkout\AuthorizeNetController:
+        arguments:
+            - '@event_dispatcher'
+            - '@translator'
+            - '@doctrine'
+            - '@payum'
+            - '@vs_users.security_bridge'
+            - '@vs_payment_payment'
+            - '@vs_payment.order_factory'
+            - '@vs_payment.repository.pricing_plan_subscription'
+            - '@vs_payment.factory.pricing_plan_subscription'
+            - '%vs_payment.model.payment.class%'
+            - '%vs_payment.checkout.throw_exception_on_payment_done%'
+            - '%vs_payment.shopping_cart_redirect_on_payment_done%'
+            - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+            
+    ##############################
+    # Telephone Call
+    ##############################
+    Vankosoft\PaymentBundle\Controller\Checkout\TelephoneCallController:
         arguments:
             - '@event_dispatcher'
             - '@translator'
