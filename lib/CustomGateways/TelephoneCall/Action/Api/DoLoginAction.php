@@ -6,6 +6,7 @@ use Payum\Core\ApiAwareTrait;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
 
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallResponse;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Api;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Request\Api\DoLogin;
 
@@ -27,7 +28,7 @@ class DoLoginAction implements ActionInterface, ApiAwareInterface
         RequestNotSupportedException::assertSupports( $this, $request );
 
         $model = ArrayObject::ensureArrayObject( $request->getModel() );
-        if ( isset( $model['auth'] ) ) {
+        if ( isset( $model[TelephoneCallResponse::FIELD_AUTH] ) ) {
             return;
         }
         

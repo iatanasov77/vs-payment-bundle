@@ -3,9 +3,9 @@
 use Http\Message\MessageFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\Http\HttpException;
-use Payum\Core\Exception\InvalidArgumentException;
 use Payum\Core\Exception\RuntimeException;
 use Payum\Core\HttpClientInterface;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallResponse;
 
 class Api
 {
@@ -55,7 +55,7 @@ class Api
         $response       = $this->doRequest( $requestFields );
         
         return [
-            'auth' => [
+            TelephoneCallResponse::FIELD_AUTH => [
                 'url'       => $requestFields['endpoint'],
                 'response'  => \json_decode( $response, true )
             ]
@@ -84,7 +84,7 @@ class Api
         $requestFields  = $this->createVerifyCouponRequestFields(
             $local['pricing_plan_id'],
             $model['coupon_code'],
-            $model['auth']['response']['payload']['token']
+            $this->getAuthToken( $model )
         );
         $response       = $this->doRequest( $requestFields );
         
@@ -169,5 +169,12 @@ class Api
                 'couponCode'    => $couponCode,
             ],
         ];
+    }
+    
+    protected function getAuthToken( ArrayObject $model ): string
+    {
+        $modelAuth  = $model[TelephoneCallResponse::FIELD_AUTH];
+        
+        return $modelAuth['response']['payload']['token'];
     }
 }

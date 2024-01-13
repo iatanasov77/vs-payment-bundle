@@ -3,6 +3,7 @@
 class TelephoneCallResponse extends \ArrayObject
 {
     const FIELD_STATUS          = 'status';
+    const FIELD_AUTH            = 'auth';
     const FIELD_COUPON          = 'coupon';
     const FIELD_ERROR_REASON    = 'error_reason';
     

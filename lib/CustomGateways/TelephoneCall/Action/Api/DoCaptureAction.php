@@ -9,6 +9,7 @@ use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Exception\LogicException;
 
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallResponse;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Api;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Request\Api\DoCapture;
 
@@ -31,7 +32,7 @@ class DoCaptureAction implements ActionInterface, ApiAwareInterface, GatewayAwar
         RequestNotSupportedException::assertSupports( $this, $request );
 
         $model = ArrayObject::ensureArrayObject( $request->getModel() );
-        if ( false == $model['auth'] ) {
+        if ( false == $model[TelephoneCallResponse::FIELD_AUTH] ) {
             throw new LogicException(
                 'The auth must be set by DoLogin request but it was not executed or failed. Review payment details model for more information'
             );

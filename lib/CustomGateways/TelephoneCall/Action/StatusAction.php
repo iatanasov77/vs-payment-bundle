@@ -4,7 +4,7 @@ use Payum\Core\Action\ActionInterface;
 use Payum\Core\Request\GetStatusInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
-use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Constants;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallResponse;
 
 class StatusAction implements ActionInterface
 {
@@ -19,49 +19,36 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject( $request->getModel() );
 
-        if ( $model['error'] ) {
+        if ( $model[TelephoneCallResponse::FIELD_STATUS] === TelephoneCallResponse::STATUS_ERROR ) {
             $request->markFailed();
             
             return;
         }
         
-        if ( false == $model['status'] && false == $model['card'] ) {
+        if ( false == $model[TelephoneCallResponse::FIELD_STATUS] && false == $model[TelephoneCallResponse::FIELD_COUPON] ) {
             $request->markNew();
             
             return;
         }
         
-        if ( false == $model['status'] && $model['card'] ) {
+        if ( false == $model[TelephoneCallResponse::FIELD_STATUS] && $model[TelephoneCallResponse::FIELD_COUPON] ) {
             $request->markPending();
             
             return;
         }
         
-        if ( Constants::STATUS_FAILED == $model['status'] ) {
-            $request->markFailed();
-            
-            return;
-        }
-        
-        if ( Constants::STATUS_SUCCEEDED == $model['status'] && $model['captured'] && $model['paid'] ) {
+        if ( $model[TelephoneCallResponse::FIELD_STATUS] === TelephoneCallResponse::STATUS_OK && $model[TelephoneCallResponse::FIELD_COUPON] ) {
             $request->markCaptured();
             
             return;
         }
         
-        if ( Constants::STATUS_PAID == $model['status'] && $model['captured'] && $model['paid'] ) {
-            $request->markCaptured();
-            
-            return;
-        }
-        
-        
-        if ( Constants::STATUS_SUCCEEDED == $model['status'] && false == $model['captured'] ) {
+        if ( $model[TelephoneCallResponse::FIELD_STATUS] === TelephoneCallResponse::STATUS_OK ) {
             $request->markAuthorized();
             
             return;
         }
-        if ( Constants::STATUS_PAID == $model['status'] && false == $model['captured'] ) {
+        if ( $model[TelephoneCallResponse::FIELD_AUTH]['response'][TelephoneCallResponse::FIELD_STATUS] === TelephoneCallResponse::STATUS_OK ) {
             $request->markAuthorized();
             
             return;

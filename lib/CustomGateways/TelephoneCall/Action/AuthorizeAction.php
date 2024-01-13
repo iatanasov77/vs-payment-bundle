@@ -7,6 +7,7 @@ use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Authorize;
 use Payum\Core\Exception\RequestNotSupportedException;
 
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallResponse;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Request\Api\DoLogin;
 
 class AuthorizeAction implements ActionInterface, GatewayAwareInterface
@@ -24,7 +25,7 @@ class AuthorizeAction implements ActionInterface, GatewayAwareInterface
 
         $details    = ArrayObject::ensureArrayObject( $request->getModel() );
 
-        if ( false == isset( $details['auth'] ) ) {
+        if ( false == isset( $details[TelephoneCallResponse::FIELD_AUTH] ) ) {
             $this->gateway->execute( new DoLogin( $details ) );
         }
     }

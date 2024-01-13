@@ -13,6 +13,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\GatewayException;
 use Vankosoft\PaymentBundle\Component\Exception\PricingPlanException;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallResponse;
 
 final class Payment
 {
@@ -223,7 +224,10 @@ final class Payment
                 return isset( $paymentDetails['paid'] ) && \boolval( $paymentDetails['paid'] );
                 break;
             case 'telephone_call':
-                return isset( $paymentDetails['paid'] ) && \boolval( $paymentDetails['paid'] );
+                return (
+                    isset( $paymentDetails[TelephoneCallResponse::FIELD_STATUS] ) &&
+                    $paymentDetails[TelephoneCallResponse::FIELD_STATUS] === $paymentDetails[TelephoneCallResponse::STATUS_OK]
+                );
                 break;
             case 'stripe_checkout':
             case 'stripe_js':
