@@ -33,6 +33,7 @@ class CouponCodeForm extends AbstractType
         $resolver
             ->setDefaults([
                 'data_class'            => CouponCodeModel::class,
+                'csrf_protection'       => false,
                 'validation_groups'     => ['VSPayment'],
                 'label'                 => false,
                 'translation_domain'    => 'VSPaymentBundle',
