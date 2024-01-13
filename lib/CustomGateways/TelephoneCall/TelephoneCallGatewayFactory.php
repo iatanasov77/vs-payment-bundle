@@ -14,7 +14,6 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\ObtainCouponCode
 
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoLoginAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoCaptureAction;
-use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\ObtainTokenAction;
 
 /**
  * Title:       24 hours with Phone Call
@@ -73,9 +72,6 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             
             'payum.template.obtain_coupon_code' => $obtainCouponCodeTemplate,
             'payum.action.obtain_coupon_code'   => $obtainCouponCodeAction,
-//             'payum.action.obtain_token'         => function ( ArrayObject $config ) {
-//                 return new ObtainTokenAction( $config['payum.template.obtain_coupon_code'] );
-//             },
             
             'payum.action.authorize'            => new AuthorizeAction(),
             'payum.action.capture'              => new CaptureAction(),

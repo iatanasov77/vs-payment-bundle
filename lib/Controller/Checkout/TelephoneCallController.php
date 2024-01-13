@@ -55,7 +55,6 @@ class TelephoneCallController extends AbstractCheckoutController
             $paymentDetails   = [
                 'local' => [
                     'pricing_plan_id'   => $pricingPlan->getId(),
-                    'coupon_code'       => 'DDSFDSFDSF',
                 ]
             ];
         }

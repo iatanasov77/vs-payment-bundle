@@ -83,7 +83,7 @@ class Api
         
         $requestFields  = $this->createVerifyCouponRequestFields(
             $local['pricing_plan_id'],
-            $local['coupon_code'],
+            $model['coupon_code'],
             $model['auth']['response']['payload']['token']
         );
         $response       = $this->doRequest( $requestFields );

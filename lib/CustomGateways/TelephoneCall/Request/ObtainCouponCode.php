@@ -7,7 +7,7 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\ActionBuilder\CouponCod
 class ObtainCouponCode extends Generic
 {
     /**
-     * @var CreditCardInterface
+     * @var CouponCodeInterface
      */
     protected $couponCode;
     
