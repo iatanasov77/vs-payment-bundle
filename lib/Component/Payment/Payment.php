@@ -226,7 +226,7 @@ final class Payment
             case 'telephone_call':
                 return (
                     isset( $paymentDetails[TelephoneCallResponse::FIELD_STATUS] ) &&
-                    $paymentDetails[TelephoneCallResponse::FIELD_STATUS] === $paymentDetails[TelephoneCallResponse::STATUS_OK]
+                    $paymentDetails[TelephoneCallResponse::FIELD_STATUS] === TelephoneCallResponse::STATUS_OK
                 );
                 break;
             case 'stripe_checkout':
