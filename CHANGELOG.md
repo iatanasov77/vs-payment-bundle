@@ -1,3 +1,22 @@
+2.10.3	|	Release date: **13.01.2024**
+============================================
+* New Features, Fixes and Improvements:
+  - Improve Coupon Model.
+  - Add a Doctrine Migrations.
+  - Improve Coupon Form.
+  - Improve Coupon Entity Mapping
+  - Add a Doctrine Migration.
+  - Test TelephoneCallResponse.
+  - Create TelephoneCall Checkout Feature.
+  - Remove sandbox config option from Telephone Call Gateway
+  - Fix TelephoneCall Gateway.
+  - Set Custom Http Client Configuration in TelephoneCallGatewayFactory.
+  - Fix Telephone Gateway Factory.
+  - Improve Telephone Gateway Factory.
+  - Add ObtainCouponCode Request into TelephoneCall Gateway.
+  - Fix TelephoneCall StatusAction .
+
+
 2.10.2	|	Release date: **06.01.2024**
 ============================================
 * New Features, Fixes and Improvements:
