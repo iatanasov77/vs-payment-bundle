@@ -18,7 +18,9 @@
                         <tr>
                             <th width="50">N</th>
                             <th data-sortable="true" data-field="code">{{ 'vs_payment.template.coupon_index_code' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.coupon_index_name' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th data-sortable="true" data-field="name">{{ 'vs_payment.template.coupon_index_name' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th data-sortable="true" data-field="type">{{ 'vs_payment.template.coupon_index_type' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.coupon_index_pricing_plan' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th data-sortable="true" data-field="amountОff">{{ 'vs_payment.template.coupon_index_amount_off' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th data-sortable="true" data-field="percentOff">{{ 'vs_payment.template.coupon_index_percent_off' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th data-sortable="true" data-field="enabled">{{ 'vs_payment.template.coupon_index_valid' | trans( {},'VSPaymentBundle' ) }}</th>
@@ -32,6 +34,8 @@
                             <td>{{ loop.index }}</td>
                             <td>{{ item.code }}</td>
                             <td>{{ item.name }}</td>
+                            <td>{{ item.type }}</td>
+                            <td>{% if item.pricingPlan %}{{ item.pricingPlan.title }}{% endif %}</td>
                             <td>{% if item.amountOff %}{{ item.amountOff }} {{ item.currency | vs_currency_symbol }}{% endif %}</td>
                             <td>{% if item.percentOff %}{{ item.percentOff }} %{% endif %}</td>
                             <td style="text-align: center;">
