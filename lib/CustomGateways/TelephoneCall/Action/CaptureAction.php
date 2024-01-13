@@ -47,7 +47,8 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface
                 /** @var CouponCodeInterface */
                 $coupon = $obtainCouponCode->obtain();
                 
-                $model['coupon_code'] = SensitiveValue::ensureSensitive( $coupon->getCouponCode() );
+                //$model['coupon_code'] = SensitiveValue::ensureSensitive( $coupon->getCouponCode() );
+                $model['coupon_code'] = $coupon->getCouponCode();
             } catch ( RequestNotSupportedException $e ) {
                 throw new LogicException( 'Coupon code details has to be set explicitly or there has to be an action that supports ObtainCouponCode request.' );
             }

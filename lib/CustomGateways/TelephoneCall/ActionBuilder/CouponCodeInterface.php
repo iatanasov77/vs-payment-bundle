@@ -1,7 +1,5 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\ActionBuilder;
 
-use Payum\Core\Security\SensitiveValue;
-
 interface CouponCodeInterface
 {
     /**
