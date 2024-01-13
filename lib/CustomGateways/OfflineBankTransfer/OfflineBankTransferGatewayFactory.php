@@ -11,8 +11,6 @@ use Payum\Offline\Action\PayoutAction;
 use Payum\Offline\Action\RefundAction;
 use Payum\Offline\Action\StatusAction;
 
-use Vankosoft\PaymentBundle\CustomGateways\OfflineBankTransfer\OfflineBankTransferKeys;
-
 class OfflineBankTransferGatewayFactory extends GatewayFactory
 {
     /**

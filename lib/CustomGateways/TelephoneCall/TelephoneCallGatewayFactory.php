@@ -5,10 +5,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
-use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallHttplugClient;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\AuthorizeAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\CaptureAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\ObtainCouponCodeAction;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\ConvertPaymentAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\StatusAction;
 
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoLoginAction;
@@ -74,6 +74,7 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             
             'payum.action.authorize'            => new AuthorizeAction(),
             'payum.action.capture'              => new CaptureAction(),
+            'payum.action.convert_payment'      => new ConvertPaymentAction(),
             'payum.action.status'               => new StatusAction(),
             
             'payum.action.api.do_login'         => new DoLoginAction(),
