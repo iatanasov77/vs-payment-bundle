@@ -73,10 +73,10 @@ class Api
         $local  = $model->getArray( 'local' );
         
         if ( false == isset( $local['pricing_plan_id'] ) ) {
-            throw new RuntimeException( 'The pricing_plan_id must be set either to FormRequest.' );
+            throw new RuntimeException( 'The pricing_plan_id must be set.' );
         }
         
-        if ( false == isset( $local['coupon_code'] ) ) {
+        if ( false == isset( $model['coupon_code'] ) ) {
             throw new RuntimeException( 'The coupon_code must be set either to FormRequest.' );
         }
         
