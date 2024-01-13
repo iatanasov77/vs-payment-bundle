@@ -315,6 +315,8 @@ vs_payment:
         payment_show_title: Детайли за Плащане
         payment_show_subtitle: Плащане
         back_to_payments: Назад към плащанията
+        
+        obtain_coupon_code_title: Въведи Купон Код
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

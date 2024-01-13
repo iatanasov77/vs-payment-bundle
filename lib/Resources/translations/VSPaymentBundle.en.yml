@@ -317,6 +317,8 @@ vs_payment:
         payment_show_subtitle: Payment
         back_to_payments: Back to payments
         
+        obtain_coupon_code_title: Enter a Coupon Code
+        
     validation:
         currency_code_unique: Currency code must be unique.
         currency_code_not_blank: Please choose currency code.
