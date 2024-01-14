@@ -61,16 +61,16 @@ class TelephoneCallGatewayFactory extends GatewayFactory
     
     private function configDefaults( ArrayObject &$config )
     {
-        $obtainCouponCodeTemplate   = '@PayumTelephoneCall/obtain_coupon_code.html.twig';
-        $obtainCouponCodeAction     = new ObtainCouponCodeAction( $this->formFactory, $obtainCouponCodeTemplate );
-        $obtainCouponCodeAction->setRequestStack( $this->requestStack );
+//         $obtainCouponCodeTemplate   = '@PayumTelephoneCall/obtain_coupon_code.html.twig';
+//         $obtainCouponCodeAction     = new ObtainCouponCodeAction( $this->formFactory, $obtainCouponCodeTemplate );
+//         $obtainCouponCodeAction->setRequestStack( $this->requestStack );
         
         $config->defaults([
             'payum.factory_name'                => 'telephone_call',
             'payum.factory_title'               => 'Telephone Call',
             
-            //'payum.template.obtain_coupon_code' => $obtainCouponCodeTemplate,
-            'payum.action.obtain_coupon_code'   => $obtainCouponCodeAction,
+//             'payum.template.obtain_coupon_code' => $obtainCouponCodeTemplate,
+//             'payum.action.obtain_coupon_code'   => $obtainCouponCodeAction,
             
             'payum.action.authorize'            => new AuthorizeAction(),
             'payum.action.capture'              => new CaptureAction(),

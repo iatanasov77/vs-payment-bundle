@@ -2,6 +2,7 @@
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\DependencyInjection\Reference;
 use Payum\Core\Storage\FilesystemStorage;
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory;
@@ -127,6 +128,8 @@ trait PrependPayumTrait
         return \array_merge( \array_pop( $payumConfig )['gateways'] ?? [], [
             'core'    => [
                 'payum.template.obtain_coupon_code' => '@PayumTelephoneCall/obtain_coupon_code.html.twig',
+                'payum.action.obtain_coupon_code'   => new Reference( 'payum.action.obtain_coupon_code_builder' ),
+                
 //                 'payum.paths' => \array_merge( $payumConfig['gateways']['core']['payum.paths'], [
 //                     'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
 //                 ]),
