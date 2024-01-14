@@ -106,6 +106,8 @@ services:
         arguments:
             - '@form.factory'
             - 'payum.template.obtain_coupon_code'
+        calls:
+            - [ setRequestStack, [ '@request_stack' ] ]
         tags:
             - { name: payum.action, factory: telephone_call, gateway: telephone_call, all: true, alias: telephone_call, prepend: false }
             
