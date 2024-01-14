@@ -1,7 +1,5 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
@@ -31,18 +29,6 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoCaptureAct
  */
 class TelephoneCallGatewayFactory extends GatewayFactory
 {
-    /** @var FormFactoryInterface */
-    private $formFactory;
-    
-    /** @var RequestStack */
-    private $requestStack;
-    
-    public function setDependencies( FormFactoryInterface $formFactory, RequestStack $requestStack )
-    {
-        $this->formFactory  = $formFactory;
-        $this->requestStack = $requestStack;
-    }
-    
     /**
      * {@inheritDoc}
      */

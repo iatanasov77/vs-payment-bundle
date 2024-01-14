@@ -110,12 +110,6 @@ services:
             - [ setCoreGatewayConfig, [ '%payum.core_gateway_config%' ] ]
         tags:
             - { name: payum.action, factory: telephone_call, gateway: telephone_call, all: true, alias: telephone_call, prepend: false }
-            
-#     payum.action.obtain_coupon_code_builder:
-#         class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\ActionBuilder\ObtainCouponCodeActionBuilder
-#         arguments:
-#             - '@form.factory'
-#             - '@request_stack'
     
     payum.form.type.coupon_code:
         class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\ActionBuilder\CouponCodeForm
