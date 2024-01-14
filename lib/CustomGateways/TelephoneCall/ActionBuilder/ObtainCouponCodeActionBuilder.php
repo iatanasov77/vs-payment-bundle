@@ -30,7 +30,7 @@ class ObtainCouponCodeActionBuilder
     /**
      * @param ArrayObject $config
      *
-     * @return ObtainCreditCardAction
+     * @return ObtainCouponCodeAction
      */
     public function build( ArrayObject $config )
     {

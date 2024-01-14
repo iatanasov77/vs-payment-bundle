@@ -48,6 +48,8 @@ class TelephoneCallGatewayFactory extends GatewayFactory
      */
     protected function populateConfig( ArrayObject $config )
     {
+        //echo '<pre>'; var_dump( $config->toUnsafeArray() ); die;
+        
         $this->configDefaults( $config );
         
         if ( ! $config['payum.api'] ) {
