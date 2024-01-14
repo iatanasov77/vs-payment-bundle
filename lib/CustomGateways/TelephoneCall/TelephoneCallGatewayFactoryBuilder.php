@@ -3,6 +3,7 @@
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder;
+use Payum\Core\GatewayFactoryInterface;
 
 class TelephoneCallGatewayFactoryBuilder extends GatewayFactoryBuilder implements ContainerAwareInterface
 {
