@@ -28,6 +28,7 @@ trait PrependPayumTrait
         $tokenStorageConfig = $this->_createTokenStorageConfig( $container, $vsPaymentConfig, $vsPaymentResources );
         $payumConfig        = $container->getExtensionConfig( 'payum' );
         $coreGatewayConfig  = $this->_createCoreGatewayConfig( $payumConfig );
+        $mergedCoreGatewayConfig    = array_replace_recursive( $coreGatewayConfig, $payumConfig[0]['gateways']['core'] );
         $container->prependExtensionConfig( 'payum', [
             'storages'          => $this->_createStoragesConfig( $payumConfig, $vsPaymentResources, $projectRootDir ),
             'security'          => $tokenStorageConfig,
@@ -35,7 +36,8 @@ trait PrependPayumTrait
             'dynamic_gateways'  => $this->_createDynamicGatewaysConfig( $payumConfig, $vsPaymentResources ),
         ]);
         
-        $mergedCoreGatewayConfig    = array_replace_recursive( $coreGatewayConfig, $payumConfig[0]['gateways'] );
+        //echo "<pre>"; var_dump($mergedCoreGatewayConfig); die;
+        //echo "<pre>"; var_dump($payumConfig); die;
         $container->setParameter( 'payum.core_gateway_config', $mergedCoreGatewayConfig );
 
         //$this->debug( $container );
