@@ -10,14 +10,15 @@ class TelephoneCallGatewayFactoryBuilder extends GatewayFactoryBuilder implement
     use ContainerAwareTrait;
 
     /**
-     * @return GatewayFactoryInterface
+     * 
+     * {@inheritDoc}
+     * @see \Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder::__invoke()
      */
-    public function build( array $defaultConfig, GatewayFactoryInterface $coreGatewayFactory )
+    public function __invoke()
     {
-        $gatewayFactoryClass    = $this->gatewayFactoryClass;
-        $gatewayFactory         = new $gatewayFactoryClass( $defaultConfig, $coreGatewayFactory );
+        $gatewayFactory = call_user_func_array([$this, 'build'], func_get_args());
         $gatewayFactory->setContainer( $this->container );
-
+        
         return $gatewayFactory;
     }
 }
