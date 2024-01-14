@@ -38,6 +38,7 @@ trait PrependPayumTrait
         
         $mergedCoreGatewayConfig    = array_replace_recursive( $coreGatewayConfig, $payumConfig[0]['gateways']['core'] );
         $container->setParameter( 'payum.core_gateway_config', $mergedCoreGatewayConfig );
+        $container->setParameter( 'vs_payment.http_client', $vsPaymentConfig[0]['http_client'] );
 
         //$this->debug( $container );
     }

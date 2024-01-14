@@ -1,5 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
@@ -27,8 +29,10 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoCaptureAct
  * Payment by phone/call: https://www.micropayment.ch/products/call2pay/
  *
  */
-class TelephoneCallGatewayFactory extends GatewayFactory
+class TelephoneCallGatewayFactory extends GatewayFactory implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+    
     /**
      * {@inheritDoc}
      */
@@ -90,11 +94,8 @@ class TelephoneCallGatewayFactory extends GatewayFactory
     
     private function httpClient( ArrayObject $config )
     {
-        if ( \boolval( $config->get( 'sandbox' ) ) ) {
-            // Dont Verify SSL certificate
-            return new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
-        }
+        $httpClientConfig   = $this->container->getParameter( 'vs_payment.http_client' );
         
-        return new TelephoneCallHttplugClient( ["verify_peer" => true, "verify_host" => true] );
+        return new TelephoneCallHttplugClient( $httpClientConfig );
     }
 }

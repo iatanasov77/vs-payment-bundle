@@ -88,6 +88,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode( 'token_storage' )
                     ->defaultValue( ComponentPayment::TOKEN_STORAGE_DOCTRINE_ORM )->cannotBeEmpty()
                 ->end()
+                ->arrayNode( 'http_client' )
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode( 'verify_peer' )->defaultTrue()->end()
+                        ->booleanNode( 'verify_host' )->defaultTrue()->end()
+                ->end()
             ->end()
         ;
         

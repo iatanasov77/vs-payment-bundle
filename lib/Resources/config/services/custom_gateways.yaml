@@ -11,7 +11,10 @@ services:
             - { name: payum.gateway_factory_builder, factory: offline_bank_transfer }
     
     vankosoft.telephone_call_factory_builder:
-        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactoryBuilder
         arguments: [Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory]
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
         tags:
             - { name: payum.gateway_factory_builder, factory: telephone_call }
+
