@@ -36,7 +36,7 @@ trait PrependPayumTrait
         ]);
         
         $mergedCoreGatewayConfig    = array_replace_recursive( $coreGatewayConfig, $payumConfig[0]['gateways'] );
-        $container->setParameter( 'payum.core_gateway_config', $mergedCoreGatewayConfig['core'] );
+        $container->setParameter( 'payum.core_gateway_config', $mergedCoreGatewayConfig );
 
         //$this->debug( $container );
     }
