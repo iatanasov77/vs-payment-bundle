@@ -34,7 +34,7 @@ class ObtainCouponCodeActionBuilder
      */
     public function build( ArrayObject $config )
     {
-        $action = new ObtainCouponCodeAction( $this->formFactory, $config['payum.template.obtain_credit_card'] );
+        $action = new ObtainCouponCodeAction( $this->formFactory, $config['payum.template.obtain_coupon_code'] );
         $action->setRequestStack( $this->requestStack );
         
         return $action;
