@@ -33,7 +33,7 @@ trait PrependPayumTrait
             'dynamic_gateways'  => $this->_createDynamicGatewaysConfig( $payumConfig, $vsPaymentResources ),
         ]);
 
-        //$this->debug( $container );
+        $this->debug( $container );
     }
     
     private function debug( ContainerBuilder $container )
@@ -127,9 +127,9 @@ trait PrependPayumTrait
         return \array_merge( \array_pop( $payumConfig )['gateways'] ?? [], [
             'core'    => [
                 'payum.template.obtain_coupon_code' => '@PayumTelephoneCall/obtain_coupon_code.html.twig',
-                'payum.paths' => \array_merge( $payumConfig['gateways']['core']['payum.paths'], [
-                    'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
-                ]),
+//                 'payum.paths' => \array_merge( $payumConfig['gateways']['core']['payum.paths'], [
+//                     'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
+//                 ]),
             ],
         ]);
     }
