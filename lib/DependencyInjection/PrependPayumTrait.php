@@ -129,17 +129,15 @@ trait PrependPayumTrait
     
     private function _createCoreGatewayConfig( array $payumConfig ): array
     {
-        return \array_merge( \array_pop( $payumConfig )['gateways'] ?? [], [
-            'core'    => [
-                'payum.template.obtain_coupon_code' => '@PayumTelephoneCall/obtain_coupon_code.html.twig',
-//                 'payum.action.obtain_coupon_code'   => new Reference( 'payum.action.obtain_coupon_code_builder' ),
-                
-//                 'payum.paths' => \array_merge( $payumConfig['gateways']['core']['payum.paths'], [
-//                     'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
-//                 ]),
-                'payum.paths' => [
-                    'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
-                ],
+        return \array_merge( \array_pop( $payumConfig )['gateways']['core'] ?? [], [
+            'payum.template.obtain_coupon_code' => '@PayumTelephoneCall/obtain_coupon_code.html.twig',
+//             'payum.action.obtain_coupon_code'   => new Reference( 'payum.action.obtain_coupon_code_builder' ),
+            
+//             'payum.paths' => \array_merge( $payumConfig['gateways']['core']['payum.paths'], [
+//                 'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
+//             ]),
+            'payum.paths' => [
+                'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
             ],
         ]);
     }
