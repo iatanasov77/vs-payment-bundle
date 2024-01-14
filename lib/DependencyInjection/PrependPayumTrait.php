@@ -4,6 +4,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
 use Payum\Core\Storage\FilesystemStorage;
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
+use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFactory;
 
 /*
  * Payum Symfony Configuration
@@ -22,42 +23,14 @@ trait PrependPayumTrait
         //echo "<pre>"; var_dump($vsPaymentConfig); die;
         $vsPaymentResources = $vsPaymentConfig[0]['resources'];
         
-        switch ( $vsPaymentConfig[0]['token_storage'] ) {
-            case ComponentPayment::TOKEN_STORAGE_FILESYSTEM:
-                $tokenStorageConfig = $this->originalPayumSecurity( $container );
-                break;
-            case ComponentPayment::TOKEN_STORAGE_DOCTRINE_ORM:
-                $tokenStorageConfig = $this->vankosoftPayumSecurity( $vsPaymentResources );
-                break;
-            default:
-                throw new ConfigurationException( 'Unsupported Token Storage !!!' );
-        }
-        
         $projectRootDir     = $container->getParameter( 'kernel.project_dir' );
+        $tokenStorageConfig = $this->_createTokenStorageConfig( $container, $vsPaymentConfig, $vsPaymentResources );
         $payumConfig        = $container->getExtensionConfig( 'payum' );
         $container->prependExtensionConfig( 'payum', [
-            'storages'  => \array_merge( \array_pop( $payumConfig )['storages'] ?? [], [
-                $vsPaymentResources['payment']["classes"]["model"]      => ['doctrine' => 'orm'],
-                
-                // PayPal Recurring Payment Models
-                'Vankosoft\PaymentBundle\Model\PayPal\AgreementDetails' => ['filesystem' => [
-                        'storage_dir'   => $projectRootDir . '/var/payum/storage',
-                        'id_property'   => 'payum_id',
-                    ]
-                ],
-                'Vankosoft\PaymentBundle\Model\PayPal\RecurringPaymentDetails' => ['filesystem' => [
-                        'storage_dir'   => $projectRootDir . '/var/payum/storage',
-                        'id_property'   => 'payum_id',
-                    ]
-                ],
-            ]),
-            'security'  =>  $tokenStorageConfig,
-            'dynamic_gateways' => \array_merge( \array_pop( $payumConfig )['dynamic_gateways'] ?? [], [
-                'sonata_admin'      => false,
-                'config_storage'    => [
-                    $vsPaymentResources['gateway_config']["classes"]["model"]   => ['doctrine' => 'orm'],
-                ],
-            ]),
+            'storages'          => $this->_createStoragesConfig( $payumConfig, $vsPaymentResources, $projectRootDir ),
+            'security'          => $tokenStorageConfig,
+            'gateways'          => $this->_createCoreGatewayConfig( $payumConfig ),
+            'dynamic_gateways'  => $this->_createDynamicGatewaysConfig( $payumConfig, $vsPaymentResources ),
         ]);
 
         //$this->debug( $container );
@@ -102,5 +75,62 @@ trait PrependPayumTrait
                 $vsPaymentResources['payment_token']["classes"]["model"] => ['doctrine' => 'orm'],
             ]
         ];
+    }
+    
+    private function _createStoragesConfig( array $payumConfig, array $vsPaymentResources, string $projectRootDir ): array
+    {
+        return \array_merge( \array_pop( $payumConfig )['storages'] ?? [], [
+            $vsPaymentResources['payment']["classes"]["model"]      => ['doctrine' => 'orm'],
+            
+            // PayPal Recurring Payment Models
+            'Vankosoft\PaymentBundle\Model\PayPal\AgreementDetails' => ['filesystem' => [
+                'storage_dir'   => $projectRootDir . '/var/payum/storage',
+                'id_property'   => 'payum_id',
+            ]
+            ],
+            'Vankosoft\PaymentBundle\Model\PayPal\RecurringPaymentDetails' => ['filesystem' => [
+                'storage_dir'   => $projectRootDir . '/var/payum/storage',
+                'id_property'   => 'payum_id',
+            ]
+            ],
+        ]);
+    }
+    
+    private function _createDynamicGatewaysConfig( array $payumConfig, array $vsPaymentResources ): array
+    {
+        return \array_merge( \array_pop( $payumConfig )['dynamic_gateways'] ?? [], [
+            'sonata_admin'      => false,
+            'config_storage'    => [
+                $vsPaymentResources['gateway_config']["classes"]["model"]   => ['doctrine' => 'orm'],
+            ],
+        ]);
+    }
+    
+    private function _createTokenStorageConfig( ContainerBuilder $container, array $vsPaymentConfig, array $vsPaymentResources ): array
+    {
+        switch ( $vsPaymentConfig[0]['token_storage'] ) {
+            case ComponentPayment::TOKEN_STORAGE_FILESYSTEM:
+                $tokenStorageConfig = $this->originalPayumSecurity( $container );
+                break;
+            case ComponentPayment::TOKEN_STORAGE_DOCTRINE_ORM:
+                $tokenStorageConfig = $this->vankosoftPayumSecurity( $vsPaymentResources );
+                break;
+            default:
+                throw new ConfigurationException( 'Unsupported Token Storage !!!' );
+        }
+        
+        return $tokenStorageConfig;
+    }
+    
+    private function _createCoreGatewayConfig( array $payumConfig ): array
+    {
+        return \array_merge( \array_pop( $payumConfig )['gateways'] ?? [], [
+            'core'    => [
+                'payum.template.obtain_coupon_code' => '@PayumTelephoneCall/obtain_coupon_code.html.twig',
+                'payum.paths' => \array_merge( $payumConfig['gateways']['core']['payum.paths'], [
+                    'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
+                ]),
+            ],
+        ]);
     }
 }
