@@ -31,7 +31,7 @@ trait PrependPayumTrait
         $container->prependExtensionConfig( 'payum', [
             'storages'          => $this->_createStoragesConfig( $payumConfig, $vsPaymentResources, $projectRootDir ),
             'security'          => $tokenStorageConfig,
-            'gateways'          => $coreGatewayConfig,
+            'gateways'          => ['core' => $coreGatewayConfig],
             'dynamic_gateways'  => $this->_createDynamicGatewaysConfig( $payumConfig, $vsPaymentResources ),
         ]);
         
