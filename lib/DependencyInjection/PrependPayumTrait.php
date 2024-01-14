@@ -27,16 +27,14 @@ trait PrependPayumTrait
         $projectRootDir     = $container->getParameter( 'kernel.project_dir' );
         $tokenStorageConfig = $this->_createTokenStorageConfig( $container, $vsPaymentConfig, $vsPaymentResources );
         $payumConfig        = $container->getExtensionConfig( 'payum' );
-        
-        $container->prependExtensionConfig( 'payum', [
-            'gateways'          => $this->_createCoreGatewayConfig( $payumConfig ),
-        ]);
-        
         $container->prependExtensionConfig( 'payum', [
             'storages'          => $this->_createStoragesConfig( $payumConfig, $vsPaymentResources, $projectRootDir ),
             'security'          => $tokenStorageConfig,
+            'gateways'          => $this->_createCoreGatewayConfig( $payumConfig ),
             'dynamic_gateways'  => $this->_createDynamicGatewaysConfig( $payumConfig, $vsPaymentResources ),
         ]);
+        
+        $container->setParameter( 'payum.core_gateway_config', \array_pop( $payumConfig )['gateways']['core'] );
 
         //$this->debug( $container );
     }
