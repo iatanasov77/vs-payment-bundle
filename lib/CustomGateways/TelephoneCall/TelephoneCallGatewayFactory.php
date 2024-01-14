@@ -56,9 +56,9 @@ class TelephoneCallGatewayFactory extends GatewayFactory
             $this->configPayumApi( $config );
         }
         
-//         $config['payum.paths'] = array_replace([
-//             'PayumTelephoneCall'    => __DIR__ . '/Resources/views',
-//         ], $config['payum.paths'] ?: []);
+        $config['payum.paths'] = array_replace([
+            'PayumTelephoneCall'    => __DIR__ . '/Resources/views',
+        ], $config['payum.paths'] ?: []);
     }
     
     private function configDefaults( ArrayObject &$config )

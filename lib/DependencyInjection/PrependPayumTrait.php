@@ -138,9 +138,9 @@ trait PrependPayumTrait
 //             'payum.paths' => \array_merge( $payumConfig['gateways']['core']['payum.paths'], [
 //                 'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
 //             ]),
-            'payum.paths' => [
-                'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
-            ],
+//             'payum.paths' => [
+//                 'PayumTelephoneCall' => dirname( ( new \ReflectionClass( TelephoneCallGatewayFactory::class ) )->getFileName() ) . '/Resources/views',
+//             ],
         ]);
     }
 }
