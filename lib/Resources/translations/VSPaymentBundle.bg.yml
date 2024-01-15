@@ -99,6 +99,11 @@ vs_payment:
             payment_number: Payment Number
             payment_description: Payment Description
             gateway_factory: Gateway Factory
+            
+        obtain_coupon_code:
+            coupon_code: Coupon Code
+            coupon_code_placeholder: Enter Coupon Code
+            submit: Proceed
     
     template:
         gateway: Гейтуей
