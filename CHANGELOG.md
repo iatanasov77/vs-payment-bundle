@@ -1,3 +1,13 @@
+2.10.4	|	Release date: **15.01.2024**
+============================================
+* New Features:
+  - Improve Coupon Model Index Page.
+  - Add Some Payum Templates.
+  - Add To DependencyInjection PrependPayumTrait .
+* Bug-Fixes:
+  - Fix Bundle Config Extension.
+
+
 2.10.3	|	Release date: **13.01.2024**
 ============================================
 * New Features, Fixes and Improvements:

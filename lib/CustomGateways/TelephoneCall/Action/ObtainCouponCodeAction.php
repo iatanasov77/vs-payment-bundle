@@ -37,6 +37,11 @@ class ObtainCouponCodeAction implements ActionInterface, GatewayAwareInterface
     protected $httpRequestStack;
     
     /**
+     * @var array
+     */
+    protected $coreGatewayConfig;
+    
+    /**
      * @var string
      */
     protected $templateName;
@@ -45,7 +50,7 @@ class ObtainCouponCodeAction implements ActionInterface, GatewayAwareInterface
      * @param FormFactoryInterface $formFactory
      * @param string               $templateName
      */
-    public function __construct( FormFactoryInterface $formFactory, $templateName )
+    public function __construct( FormFactoryInterface $formFactory, $templateName = null )
     {
         $this->formFactory  = $formFactory;
         $this->templateName = $templateName;
@@ -66,6 +71,13 @@ class ObtainCouponCodeAction implements ActionInterface, GatewayAwareInterface
     public function setRequestStack( RequestStack $requestStack = null )
     {
         $this->httpRequestStack = $requestStack;
+    }
+    
+    public function setCoreGatewayConfig( array $config = [] )
+    {
+        if ( ! $this->templateName ) {
+            $this->templateName = $config['payum.template.obtain_coupon_code'];
+        }
     }
     
     /**

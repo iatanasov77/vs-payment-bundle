@@ -100,6 +100,17 @@ services:
     #######################################################
     # TelephoneCall Services
     #######################################################
+    payum.action.obtain_coupon_code:
+        class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\ObtainCouponCodeAction
+        public: true
+        arguments:
+            - '@form.factory'
+        calls:
+            - [ setRequestStack, [ '@request_stack' ] ]
+            - [ setCoreGatewayConfig, [ '%payum.core_gateway_config%' ] ]
+        tags:
+            - { name: payum.action, factory: telephone_call, gateway: telephone_call, all: true, alias: telephone_call, prepend: false }
+    
     payum.form.type.coupon_code:
         class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\ActionBuilder\CouponCodeForm
         tags:

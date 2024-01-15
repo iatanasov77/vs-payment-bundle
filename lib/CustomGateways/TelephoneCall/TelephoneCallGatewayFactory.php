@@ -1,7 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
@@ -29,25 +29,17 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoCaptureAct
  * Payment by phone/call: https://www.micropayment.ch/products/call2pay/
  *
  */
-class TelephoneCallGatewayFactory extends GatewayFactory
+class TelephoneCallGatewayFactory extends GatewayFactory implements ContainerAwareInterface
 {
-    /** @var FormFactoryInterface */
-    private $formFactory;
-    
-    /** @var RequestStack */
-    private $requestStack;
-    
-    public function setDependencies( FormFactoryInterface $formFactory, RequestStack $requestStack )
-    {
-        $this->formFactory  = $formFactory;
-        $this->requestStack = $requestStack;
-    }
+    use ContainerAwareTrait;
     
     /**
      * {@inheritDoc}
      */
     protected function populateConfig( ArrayObject $config )
     {
+        //echo '<pre>'; var_dump( $config->toUnsafeArray() ); die;
+        
         $this->configDefaults( $config );
         
         if ( ! $config['payum.api'] ) {
@@ -61,16 +53,9 @@ class TelephoneCallGatewayFactory extends GatewayFactory
     
     private function configDefaults( ArrayObject &$config )
     {
-        $obtainCouponCodeTemplate   = '@PayumTelephoneCall/obtain_coupon_code.html.twig';
-        $obtainCouponCodeAction     = new ObtainCouponCodeAction( $this->formFactory, $obtainCouponCodeTemplate );
-        $obtainCouponCodeAction->setRequestStack( $this->requestStack );
-        
         $config->defaults([
             'payum.factory_name'                => 'telephone_call',
             'payum.factory_title'               => 'Telephone Call',
-            
-            'payum.template.obtain_coupon_code' => $obtainCouponCodeTemplate,
-            'payum.action.obtain_coupon_code'   => $obtainCouponCodeAction,
             
             'payum.action.authorize'            => new AuthorizeAction(),
             'payum.action.capture'              => new CaptureAction(),
@@ -109,11 +94,8 @@ class TelephoneCallGatewayFactory extends GatewayFactory
     
     private function httpClient( ArrayObject $config )
     {
-        if ( \boolval( $config->get( 'sandbox' ) ) ) {
-            // Dont Verify SSL certificate
-            return new TelephoneCallHttplugClient( ["verify_peer" => false, "verify_host" => false] );
-        }
+        $httpClientConfig   = $this->container->getParameter( 'vs_payment.http_client' );
         
-        return new TelephoneCallHttplugClient( ["verify_peer" => true, "verify_host" => true] );
+        return new TelephoneCallHttplugClient( $httpClientConfig );
     }
 }

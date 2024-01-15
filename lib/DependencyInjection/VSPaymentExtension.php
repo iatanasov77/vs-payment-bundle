@@ -19,9 +19,9 @@ class VSPaymentExtension extends AbstractResourceExtension implements PrependExt
     /**
      * {@inheritDoc}
      */
-    public function load( array $config, ContainerBuilder $container )
+    public function load( array $configs, ContainerBuilder $container )
     {
-        $config = $this->processConfiguration( $this->getConfiguration([], $container), $config );
+        $config = $this->processConfiguration( $this->getConfiguration( [], $container ), $configs );
         
         $loader = new Loader\YamlFileLoader( $container, new FileLocator( __DIR__.'/../Resources/config' ) );
         $loader->load( 'services.yml' );
@@ -37,7 +37,7 @@ class VSPaymentExtension extends AbstractResourceExtension implements PrependExt
         $config = $container->getExtensionConfig( $this->getAlias() );
         $config = $this->processConfiguration( $this->getConfiguration( [], $container ), $config );
         
-        $this->prependPayum( $container );
+        $this->prependPayum( $container, $config );
         $this->prependDoctrineMigrations( $container );
     }
     

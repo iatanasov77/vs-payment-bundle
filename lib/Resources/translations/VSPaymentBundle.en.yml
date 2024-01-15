@@ -302,6 +302,8 @@ vs_payment:
         coupon_index_title: Discount Coupons
         coupon_index_code: Coupon Code
         coupon_index_name: Coupon Name
+        coupon_index_type: Coupon Type
+        coupon_index_pricing_plan: Coupon Pricing Plan
         coupon_index_amount_off: Amount Off
         coupon_index_percent_off: Percent Off
         coupon_index_valid: Valid
@@ -314,6 +316,8 @@ vs_payment:
         payment_show_title: Payment Details
         payment_show_subtitle: Payment
         back_to_payments: Back to payments
+        
+        obtain_coupon_code_title: Enter a Coupon Code
         
     validation:
         currency_code_unique: Currency code must be unique.

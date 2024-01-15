@@ -1,0 +1,45 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.credit_card_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="fa fa-user-md"></i> {{ 'vs_payment.template.credit_card_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+
+{% block content %}
+    <div class="padding">
+    	<div class="row">
+    		<div class="col-sm-6">
+    		
+                {#
+                 # Trying StripeJs V3 With NPM
+                 #}
+                {#
+                {% include '@VSPayment/Pages/CreditCard/Partial/StripeJsV3Form.html.twig' with {
+                     'formAction': '',
+                     'formMethod': 'POST'
+                } %}
+                #}
+                
+                {#
+                 # Trying StripeJs V2 Used in Payum/Stripe Action
+                 # With My CreditCardForm
+                 #}
+                {% include '@VSPayment/Pages/CreditCard/Partial/CreditCardForm.html.twig' with {
+                     'formAction': '',
+                     'formMethod': 'POST'
+                } %}
+                <div id="RealPaymentFormContainer" style="display: none;">
+                    {% include '@VSPayment/Pages/CreditCard/Partial/StripeJsV2Form.html.twig' with {
+                         'formAction': '',
+                         'formMethod': 'POST'
+                    } %}
+                </div>
+                
+    		</div>
+    	</div>
+    </div>
+{% endblock content %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    
+    {% include '@VSPayment/Pages/CreditCard/Partial/credit_card_css.html.twig' %}
+{% endblock %}

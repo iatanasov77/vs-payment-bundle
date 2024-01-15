@@ -301,6 +301,8 @@ vs_payment:
         coupon_index_title: Купони за отстъпка
         coupon_index_code: Купон Код
         coupon_index_name: Купон Име
+        coupon_index_type: Купон Тип
+        coupon_index_pricing_plan: Купон за План
         coupon_index_amount_off: Amount Off
         coupon_index_percent_off: Percent Off
         coupon_index_valid: Валиден
@@ -313,6 +315,8 @@ vs_payment:
         payment_show_title: Детайли за Плащане
         payment_show_subtitle: Плащане
         back_to_payments: Назад към плащанията
+        
+        obtain_coupon_code_title: Въведи Купон Код
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
