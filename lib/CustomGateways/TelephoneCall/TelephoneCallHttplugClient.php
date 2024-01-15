@@ -19,7 +19,6 @@ class TelephoneCallHttplugClient implements HttpClientInterface
 
     public function __construct( array $httpClientOptions = [] )
     {
-        
         $this->client   = new HttplugClient( HttpClient::create( $httpClientOptions ) );
     }
 

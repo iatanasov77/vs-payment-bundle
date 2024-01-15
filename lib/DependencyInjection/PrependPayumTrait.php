@@ -14,15 +14,13 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallGatewayFac
  */
 trait PrependPayumTrait
 {
-    private function prependPayum( ContainerBuilder $container ): void
+    private function prependPayum( ContainerBuilder $container, array $vsPaymentConfig ): void
     {
         if ( ! $container->hasExtension( 'payum' ) ) {
             return;
         }
         
-        $vsPaymentConfig    = $container->getExtensionConfig( 'vs_payment' );
-        //echo "<pre>"; var_dump($vsPaymentConfig); die;
-        $vsPaymentResources = $vsPaymentConfig[0]['resources'];
+        $vsPaymentResources = $vsPaymentConfig['resources'];
         
         $projectRootDir     = $container->getParameter( 'kernel.project_dir' );
         $tokenStorageConfig = $this->_createTokenStorageConfig( $container, $vsPaymentConfig, $vsPaymentResources );
@@ -38,7 +36,7 @@ trait PrependPayumTrait
         
         $mergedCoreGatewayConfig    = array_replace_recursive( $coreGatewayConfig, $payumConfig[0]['gateways']['core'] );
         $container->setParameter( 'payum.core_gateway_config', $mergedCoreGatewayConfig );
-        $container->setParameter( 'vs_payment.http_client', $vsPaymentConfig[0]['http_client'] );
+        $container->setParameter( 'vs_payment.http_client', $vsPaymentConfig['http_client'] );
 
         //$this->debug( $container );
     }
@@ -115,7 +113,7 @@ trait PrependPayumTrait
     
     private function _createTokenStorageConfig( ContainerBuilder $container, array $vsPaymentConfig, array $vsPaymentResources ): array
     {
-        switch ( $vsPaymentConfig[0]['token_storage'] ) {
+        switch ( $vsPaymentConfig['token_storage'] ) {
             case ComponentPayment::TOKEN_STORAGE_FILESYSTEM:
                 $tokenStorageConfig = $this->originalPayumSecurity( $container );
                 break;
