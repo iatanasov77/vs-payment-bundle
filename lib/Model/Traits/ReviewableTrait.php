@@ -16,7 +16,7 @@ trait ReviewableTrait
     /**
      * @var float
      *
-     * @ORM\Column(name="averageRating", column="average_rating", type="float", options={"default":"0"})
+     * @ORM\Column(name="average_rating", type="float", options={"default":"0"})
      */
     protected $averageRating = 0.0;
     
