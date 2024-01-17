@@ -15,7 +15,7 @@ abstract class AbstractReviewForm extends AbstractResourceType
             ->add('rating', ChoiceType::class, [
                 'choices' => $this->createRatingList( $options['rating_steps'] ),
                 'label' => 'sylius.form.review.rating',
-                'expanded' => true,
+                'expanded' => $options['rating_expanded'] ,
                 'multiple' => false,
             ])
             
@@ -34,7 +34,8 @@ abstract class AbstractReviewForm extends AbstractResourceType
         parent::configureOptions( $resolver );
         
         $resolver->setDefaults([
-            'rating_steps' => 5,
+            'rating_steps'      => 5,
+            'rating_expanded'   => true,
         ]);
     }
     
