@@ -32,7 +32,7 @@ class ReviewFactory
     public function createReview( ReviewableInterface $reviewSubject ): ReviewInterface
     {
         $user   = $this->securityBridge->getUser();
-        if ( $user instanceof ReviewerAwareInterface ) {
+        if ( ! ( $user instanceof ReviewerAwareInterface ) ) {
             throw new ReviewException( 'The User Entity Should Implement \'ReviewerAwareInterface\'' );
         }
         
