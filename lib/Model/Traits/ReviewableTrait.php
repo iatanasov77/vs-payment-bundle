@@ -2,6 +2,7 @@
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Vankosoft\PaymentBundle\Model\Interfaces\ReviewInterface;
 
 trait ReviewableTrait
 {
