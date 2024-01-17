@@ -22,7 +22,7 @@ trait ReviewableTrait
     /**
      * @return string
      */
-    public function getName(): ?string;
+    abstract public function getName(): ?string;
     
     /**
      * @return Collection|ReviewInterface[]
