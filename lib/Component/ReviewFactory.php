@@ -37,7 +37,6 @@ class ReviewFactory
         }
         
         $review = $this->reviewsFactory->createNew();
-        $review->setAuthor( $user->_toReviewer() );
         $review->setReviewSubject( $reviewSubject );
         
         return $review;
