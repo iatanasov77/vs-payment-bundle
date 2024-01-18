@@ -4,6 +4,9 @@ use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Vankosoft\PaymentBundle\Model\Interfaces\ReviewInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -53,6 +56,12 @@ abstract class AbstractReviewForm extends AbstractResourceType
                 'label' => 'vs_payment.form.review.submit',
             ])
         ;
+            
+//         $builder->addEventListener( FormEvents::PRE_SET_DATA, function ( FormEvent $event ): void {
+//             $review = $event->getData();
+            
+//             Assert::isInstanceOf( $review, ReviewInterface::class );
+//         });
     }
     
     public function configureOptions( OptionsResolver $resolver ): void
