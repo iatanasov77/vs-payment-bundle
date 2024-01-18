@@ -16,4 +16,9 @@ class Reviewer extends BaseReviewer implements ReviewerInterface
         
         return $reviewer;
     }
+    
+    public function getFullName()
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
 }

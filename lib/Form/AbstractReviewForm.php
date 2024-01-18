@@ -3,6 +3,7 @@
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -11,11 +12,23 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 abstract class AbstractReviewForm extends AbstractResourceType
 {
+    /** @var TranslatorInterface */
+    protected $translator;
+    
+    public function __construct(
+        string $dataClass,
+        TranslatorInterface $translator
+    ) {
+        parent::__construct( $dataClass );
+        
+        $this->translator   = $translator;
+    }
+    
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
             ->add('rating', ChoiceType::class, [
-                'choices'       => $this->createRatingList( $options['rating_steps'] ),
+                'choices'       => \array_flip( $this->createRatingList( $options['rating_steps'] ) ),
                 'label'         => 'vs_payment.form.review.rating',
                 'placeholder'   => 'vs_payment.form.review.rating_placeholder',
                 'expanded'      => $options['rating_expanded'] ,
@@ -58,7 +71,11 @@ abstract class AbstractReviewForm extends AbstractResourceType
     {
         $ratings = [];
         for ( $i = 1; $i <= $maxRate; ++$i ) {
-            $ratings[$i] = $i;
+            $label  = ( $i > 1 ) ?
+                        $this->translator->trans( 'vs_payment.form.review.rating_stars', [], 'VSPaymentBundle' ) :
+                        $this->translator->trans( 'vs_payment.form.review.rating_star', [], 'VSPaymentBundle' );
+            
+            $ratings[$i] = \sprintf( "%d %s", $i, $label );
         }
         
         return $ratings;

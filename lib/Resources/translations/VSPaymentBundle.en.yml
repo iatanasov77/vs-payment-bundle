@@ -112,6 +112,8 @@ vs_payment:
             comment_placeholder: Write a review
             rating: Rating
             rating_placeholder: Rating
+            rating_star: Star
+            rating_stars: Stars
             submit: Send
 
     template:
