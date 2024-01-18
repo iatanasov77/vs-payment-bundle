@@ -104,6 +104,14 @@ vs_payment:
             coupon_code: Coupon Code
             coupon_code_placeholder: Enter Coupon Code
             submit: Proceed
+            
+        review:
+            title: Title
+            title_placeholder: Title
+            comment: Review
+            comment_placeholder: Write a review
+            rating: Rating
+            rating_placeholder: Rating
 
     template:
         gateway: Gateway

@@ -13,18 +13,25 @@ abstract class AbstractReviewForm extends AbstractResourceType
     {
         $builder
             ->add('rating', ChoiceType::class, [
-                'choices' => $this->createRatingList( $options['rating_steps'] ),
-                'label' => 'sylius.form.review.rating',
-                'expanded' => $options['rating_expanded'] ,
-                'multiple' => false,
+                'choices'       => $this->createRatingList( $options['rating_steps'] ),
+                'label'         => 'vs_payment.form.review.rating',
+                'placeholder'   => 'vs_payment.form.review.rating_placeholder',
+                'expanded'      => $options['rating_expanded'] ,
+                'multiple'      => false,
             ])
             
             ->add('title', TextType::class, [
-                'label' => 'sylius.form.review.title',
+                'label' => 'vs_payment.form.review.title',
+                'attr'  => [
+                    'placeholder' => 'vs_payment.form.review.title_placeholder'
+                ],
             ])
             
             ->add('comment', TextareaType::class, [
-                'label' => 'sylius.form.review.comment',
+                'label' => 'vs_payment.form.review.comment',
+                'attr'  => [
+                    'placeholder' => 'vs_payment.form.review.comment_placeholder'
+                ],
             ])
         ;
     }
@@ -34,8 +41,10 @@ abstract class AbstractReviewForm extends AbstractResourceType
         parent::configureOptions( $resolver );
         
         $resolver->setDefaults([
-            'rating_steps'      => 5,
-            'rating_expanded'   => true,
+            'translation_domain'    => 'VSPaymentBundle',
+            
+            'rating_steps'          => 5,
+            'rating_expanded'       => true,
         ]);
     }
     
