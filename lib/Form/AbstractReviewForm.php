@@ -1,11 +1,13 @@
 <?php namespace Vankosoft\PaymentBundle\Form;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 abstract class AbstractReviewForm extends AbstractResourceType
 {
@@ -32,6 +34,10 @@ abstract class AbstractReviewForm extends AbstractResourceType
                 'attr'  => [
                     'placeholder' => 'vs_payment.form.review.comment_placeholder'
                 ],
+            ])
+            
+            ->add( 'btnSubmit', SubmitType::class, [
+                'label' => 'vs_payment.form.review.submit',
             ])
         ;
     }

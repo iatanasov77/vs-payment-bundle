@@ -112,6 +112,7 @@ vs_payment:
             comment_placeholder: Write a review
             rating: Rating
             rating_placeholder: Rating
+            submit: Send
     
     template:
         gateway: Гейтуей
