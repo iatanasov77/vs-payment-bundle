@@ -51,9 +51,7 @@ class Coupon implements CouponInterface
     /** @var PricingPlanInterface|null */
     protected $pricingPlan;
     
-    /**
-     * @var Collection|OrderInterface[]
-     */
+    /** @var Collection|OrderInterface[] */
     protected $orders;
     
     public function __construct()
