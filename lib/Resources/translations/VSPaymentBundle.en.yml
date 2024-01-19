@@ -100,7 +100,27 @@ vs_payment:
             payment_description: Payment Description
             gateway_factory: Gateway Factory
             
-
+        obtain_coupon_code:
+            coupon_code: Coupon Code
+            coupon_code_placeholder: Enter Coupon Code
+            submit: Proceed
+            
+        review:
+            title: Title
+            title_placeholder: Title
+            comment: Review
+            comment_placeholder: Write a review
+            rating: Rating
+            rating_placeholder: Rating
+            rating_star: Star
+            rating_stars: Stars
+            submit: Send
+            
+        comment:
+            comment: Comment
+            comment_placeholder: Write a comment
+            submit: Send
+        
     template:
         gateway: Gateway
         payment_method: Payment Method

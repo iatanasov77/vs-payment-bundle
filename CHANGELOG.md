@@ -1,3 +1,17 @@
+2.10.5	|	Release date: **19.01.2024**
+============================================
+* New Features and Improvements:
+  - Improve ObtainCouponCode Form.
+  - Create Models for Review .
+  - Create a Review Factory Component.
+  - Add Translations for Review Form.]
+  - Create ContentService Model to use as Base Model for all Catalog Services.
+  - Improve Reviewer Model.
+  - Create a Comment Model to use in Catalog Objects.
+  - Create a NestedTreeTrait to use in Gedmo Tree Models.
+  - Add CommentForm For Catalog Comments.
+
+
 2.10.4	|	Release date: **15.01.2024**
 ============================================
 * New Features:

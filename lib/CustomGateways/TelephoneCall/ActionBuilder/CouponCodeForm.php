@@ -16,11 +16,14 @@ class CouponCodeForm extends AbstractType
     {
         $builder
             ->add( 'couponCode', TextType::class, [
-                'label' => 'vs_payment.form.coupon.coupon_code'
+                'label' => 'vs_payment.form.obtain_coupon_code.coupon_code',
+                'attr'  => [
+                    'placeholder' => 'vs_payment.form.obtain_coupon_code.coupon_code_placeholder'
+                ],
             ])
             
             ->add( 'btnSubmit', SubmitType::class, [
-                'label' => 'vs_payment.form.select_pricing_plan.submit',
+                'label' => 'vs_payment.form.obtain_coupon_code.submit',
             ])
         ;
     }

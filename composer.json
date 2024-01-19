@@ -28,11 +28,13 @@
 		"payum/stripe": "^1.7",
 		"payum/authorize-net-aim": "^1.7",
 		
-		"sylius/currency": "^1.12",
 		"plumtreesystems/payum-paysera-gateway": "^0.3",
         "vankosoft/borica-bundle": "^0.2",
         
-        "iwouldrathercode/php-simple-coupons": "^2.0"
+		"sylius/currency": "^1.12",
+		"sylius/review": "^1.12",
+		
+		"iwouldrathercode/php-simple-coupons": "^2.0"
     },
     "conflict": {
         "doctrine/doctrine-bundle": "<1.3",
