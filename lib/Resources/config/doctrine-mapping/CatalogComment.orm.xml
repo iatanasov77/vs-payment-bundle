@@ -10,8 +10,6 @@
             <generator strategy="AUTO" />
         </id>
         
-        <gedmo:tree type="nested" />
-        
         <field name="level" column="tree_level" type="integer">
             <gedmo:tree-level />
         </field>
@@ -23,8 +21,6 @@
         <field name="right" column="tree_right" type="integer">
             <gedmo:tree-right />
         </field>
-        
-        
         
         <many-to-one field="root" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface">
             <join-column name="tree_root" referenced-column-name="id" nullable="true" on-delete="CASCADE" />
@@ -42,8 +38,6 @@
             </cascade>
         </many-to-one>
         
-        <!-- 
-        
         <one-to-many field="children" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface" mapped-by="parent">
             <cascade>
                 <cascade-persist />
@@ -51,9 +45,7 @@
             <order-by>
                 <order-by-field name="left" direction="ASC" />
             </order-by>
-        </one-to-many> 
-        
-        -->
+        </one-to-many>
         
         <field name="comment" type="text" />
         
@@ -76,5 +68,7 @@
         <field name="updatedAt" column="updated_at" type="datetime" nullable="true">
             <gedmo:timestampable on="update"/>
         </field>
+        
+        <gedmo:tree type="nested" />
     </mapped-superclass>
 </doctrine-mapping>
