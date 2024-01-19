@@ -9,6 +9,8 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
+        
+        <gedmo:tree type="nested" />
 
         <many-to-one field="root" target-entity="Vankosoft\ApplicationBundle\Model\Interfaces\TaxonInterface">
             <join-column name="tree_root" referenced-column-name="id" nullable="true" on-delete="CASCADE" />
