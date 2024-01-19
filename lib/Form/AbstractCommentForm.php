@@ -13,7 +13,7 @@ abstract class AbstractCommentForm extends AbstractResourceType
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
-            ->add( 'video', HiddenType::class, ['data' => $options['video']] )
+            ->add( 'commentSubject', HiddenType::class, ['data' => $options['video']] )
             ->add( 'parent', HiddenType::class, ['data' => $options['parent_comment']] )
         
             ->add( 'comment', TextareaType::class, [
