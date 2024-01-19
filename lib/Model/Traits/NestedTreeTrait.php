@@ -4,6 +4,9 @@ use Gedmo\Tree\Traits\NestedSet;
 use Vankosoft\PaymentBundle\Model\Comment;
 use Vankosoft\PaymentBundle\Model\Interfaces\CommentInterface;
 
+/**
+ * @TODO Remove Depends on Comment Model
+ */
 trait NestedTreeTrait
 {
     use NestedSet;
@@ -34,9 +37,9 @@ trait NestedTreeTrait
         return $this->children;
     }
     
-    public function hasChild(CommentInterface $taxon): bool
+    public function hasChild(CommentInterface $entity): bool
     {
-        return $this->children->contains($taxon);
+        return $this->children->contains($entity);
     }
     
     public function hasChildren(): bool
@@ -44,23 +47,23 @@ trait NestedTreeTrait
         return !$this->children->isEmpty();
     }
     
-    public function addChild(CommentInterface $taxon): void
+    public function addChild(CommentInterface $entity): void
     {
-        if (!$this->hasChild($taxon)) {
-            $this->children->add($taxon);
+        if (!$this->hasChild($entity)) {
+            $this->children->add($entity);
         }
         
-        if ($this !== $taxon->getParent()) {
-            $taxon->setParent($this);
+        if ($this !== $entity->getParent()) {
+            $entity->setParent($this);
         }
     }
     
-    public function removeChild(CommentInterface $taxon): void
+    public function removeChild(CommentInterface $entity): void
     {
-        if ($this->hasChild($taxon)) {
-            $taxon->setParent(null);
+        if ($this->hasChild($entity)) {
+            $entity->setParent(null);
             
-            $this->children->removeElement($taxon);
+            $this->children->removeElement($entity);
         }
     }
 }
