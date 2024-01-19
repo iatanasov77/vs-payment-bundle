@@ -2,19 +2,19 @@
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
-use Vankosoft\PaymentBundle\Model\Interfaces\CommentInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface;
 
 trait CommenterTrait
 {
     /**
      * @var Collection
      * 
-     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\CommentInterface", mappedBy="author", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface", mappedBy="author", cascade={"persist", "remove"})
      */
     protected $comments;
     
     /**
-     * @return Collection|SubscriptionInterface[]
+     * @return Collection|CatalogCommentInterface[]
      */
     public function getComments(): Collection
     {
@@ -28,7 +28,7 @@ trait CommenterTrait
         return $this;
     }
     
-    public function addComment( CommentInterface $comment ): self
+    public function addComment( CatalogCommentInterface $comment ): self
     {
         if ( ! $this->comments->contains( $comment ) ) {
             $this->comments[]    = $comment;
@@ -38,7 +38,7 @@ trait CommenterTrait
         return $this;
     }
     
-    public function removeComment( CommentInterface $comment ): self
+    public function removeComment( CatalogCommentInterface $comment ): self
     {
         if ( $this->comments->contains( $comment ) ) {
             $this->comments->removeElement( $comment );

@@ -7,10 +7,10 @@ interface CommentableInterface
     /** @return string */
     public function getName(): ?string;
     
-    /** @return Collection|CommentInterface[] */
+    /** @return Collection|CatalogCommentInterface[] */
     public function getComments(): Collection;
     
-    public function addComment(CommentInterface $comment): void;
+    public function addComment(CatalogCommentInterface $comment): void;
     
-    public function removeComment(CommentInterface $comment): void;
+    public function removeComment(CatalogCommentInterface $comment): void;
 }

@@ -2,7 +2,7 @@
 
 use Gedmo\Tree\Traits\NestedSet;
 use Vankosoft\PaymentBundle\Model\Comment;
-use Vankosoft\PaymentBundle\Model\Interfaces\CommentInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface;
 
 /**
  * @TODO Remove Depends on Comment Model
@@ -37,7 +37,7 @@ trait NestedTreeTrait
         return $this->children;
     }
     
-    public function hasChild(CommentInterface $entity): bool
+    public function hasChild(CatalogCommentInterface $entity): bool
     {
         return $this->children->contains($entity);
     }
@@ -47,7 +47,7 @@ trait NestedTreeTrait
         return !$this->children->isEmpty();
     }
     
-    public function addChild(CommentInterface $entity): void
+    public function addChild(CatalogCommentInterface $entity): void
     {
         if (!$this->hasChild($entity)) {
             $this->children->add($entity);
@@ -58,7 +58,7 @@ trait NestedTreeTrait
         }
     }
     
-    public function removeChild(CommentInterface $entity): void
+    public function removeChild(CatalogCommentInterface $entity): void
     {
         if ($this->hasChild($entity)) {
             $entity->setParent(null);

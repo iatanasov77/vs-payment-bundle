@@ -2,33 +2,33 @@
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
-use Vankosoft\PaymentBundle\Model\Interfaces\CommentInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface;
 
 trait CommentableTrait
 {
     /**
      * Add Orm Mapping for this field where is used this trait
      * 
-     * @var Collection|CommentInterface[]
+     * @var Collection|CatalogCommentInterface[]
      */
     protected $comments;
     
     /**
-     * @return Collection|CommentInterface[]
+     * @return Collection|CatalogCommentInterface[]
      */
     public function getComments(): Collection
     {
         return $this->reviews;
     }
     
-    public function addComment( CommentInterface $comment ): void
+    public function addComment( CatalogCommentInterface $comment ): void
     {
         if ( ! $this->comments->contains( $comment ) ) {
             $this->comments[] = $comment;
         }
     }
     
-    public function removeComment( CommentInterface $comment ): void
+    public function removeComment( CatalogCommentInterface $comment ): void
     {
         if ( $this->comments->contains( $comment ) ) {
             $this->comments->removeElement( $comment );
