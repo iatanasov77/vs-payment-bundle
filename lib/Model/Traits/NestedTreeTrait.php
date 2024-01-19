@@ -1,6 +1,5 @@
 <?php namespace Vankosoft\PaymentBundle\Model\Traits;
 
-use Gedmo\Tree\Traits\NestedSet;
 use Vankosoft\PaymentBundle\Model\Comment;
 use Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface;
 
@@ -9,7 +8,19 @@ use Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface;
  */
 trait NestedTreeTrait
 {
-    use NestedSet;
+    /** @var int */
+    protected $root;
+    
+    /**
+     * @var int
+     */
+    protected $level;
+    
+    /** @var int */
+    protected $left;
+    
+    /** @var int */
+    protected $right;
     
     /** @var Comment|null */
     protected $parent;
