@@ -8,7 +8,7 @@ use Sylius\Component\Resource\Model\ToggleableTrait;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Vankosoft\PaymentBundle\Model\Traits\ReviewableTrait;
-use Vankosoft\PaymentBundle\Model\Interfaces\ReviewInterface;
+use Vankosoft\PaymentBundle\Model\Traits\CommentableTrait;
 
 /**
  * Base Model for Catalog Services
@@ -19,6 +19,7 @@ class ContentService implements ContentServiceInterface
     use ToggleableTrait;    // About enabled field - $enabled (published)
     use TranslatableTrait;
     use ReviewableTrait;
+    use CommentableTrait;
     
     /** @var int */
     protected $id;
@@ -38,12 +39,10 @@ class ContentService implements ContentServiceInterface
     /** @var bool */
     protected $enabled = true;
     
-    /** @var Collection|ReviewInterface[] */
-    protected $reviews;
-    
     public function __construct()
     {
         $this->reviews  = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
     
     public function getId()

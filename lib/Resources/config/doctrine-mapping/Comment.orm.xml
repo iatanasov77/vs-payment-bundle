@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+>
+    <mapped-superclass name="Vankosoft\PaymentBundle\Model\Comment">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <many-to-one field="root" target-entity="Vankosoft\ApplicationBundle\Model\Interfaces\TaxonInterface">
+            <join-column name="tree_root" referenced-column-name="id" nullable="true" on-delete="CASCADE" />
+            <gedmo:tree-root />
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+        
+        <field name="level" column="tree_level" type="integer">
+            <gedmo:tree-level />
+        </field>
+        
+        <field name="left" column="tree_left" type="integer">
+            <gedmo:tree-left />
+        </field>
+        
+        <field name="right" column="tree_right" type="integer">
+            <gedmo:tree-right />
+        </field>
+        
+        <field name="comment" type="text" />
+        
+        <field name="likes" type="integer">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        
+        <field name="dislikes" type="integer">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        
+        <field name="createdAt" column="created_at" type="datetime">
+            <gedmo:timestampable on="create"/>
+        </field>
+        
+        <field name="updatedAt" column="updated_at" type="datetime" nullable="true">
+            <gedmo:timestampable on="update"/>
+        </field>
+    </mapped-superclass>
+</doctrine-mapping>
