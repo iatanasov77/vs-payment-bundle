@@ -18,7 +18,7 @@ trait CommentableTrait
      */
     public function getComments(): Collection
     {
-        return $this->reviews;
+        return $this->comments;
     }
     
     public function addComment( CatalogCommentInterface $comment ): void

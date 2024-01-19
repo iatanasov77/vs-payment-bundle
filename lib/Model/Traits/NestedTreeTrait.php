@@ -11,9 +11,7 @@ trait NestedTreeTrait
     /** @var int */
     protected $root;
     
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $level;
     
     /** @var int */
