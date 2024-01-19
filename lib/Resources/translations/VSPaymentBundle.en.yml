@@ -115,7 +115,12 @@ vs_payment:
             rating_star: Star
             rating_stars: Stars
             submit: Send
-
+            
+        comment:
+            comment: Comment
+            comment_placeholder: Write a comment
+            submit: Send
+        
     template:
         gateway: Gateway
         payment_method: Payment Method
