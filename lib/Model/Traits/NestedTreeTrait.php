@@ -1,5 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\Model\Traits;
 
+use Doctrine\Common\Collections\Collection;
 use Vankosoft\PaymentBundle\Model\Comment;
 use Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface;
 
