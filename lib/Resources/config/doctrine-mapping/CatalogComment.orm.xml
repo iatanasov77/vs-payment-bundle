@@ -24,7 +24,7 @@
             <gedmo:tree-right />
         </field>
         
-        <!-- 
+        
         
         <many-to-one field="root" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface">
             <join-column name="tree_root" referenced-column-name="id" nullable="true" on-delete="CASCADE" />
@@ -41,6 +41,8 @@
                 <cascade-persist/>
             </cascade>
         </many-to-one>
+        
+        <!-- 
         
         <one-to-many field="children" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CatalogCommentInterface" mapped-by="parent">
             <cascade>
