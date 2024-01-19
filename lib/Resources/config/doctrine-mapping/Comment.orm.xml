@@ -11,14 +11,6 @@
         </id>
         
         <gedmo:tree type="nested" />
-
-        <many-to-one field="root" target-entity="Vankosoft\ApplicationBundle\Model\Interfaces\TaxonInterface">
-            <join-column name="tree_root" referenced-column-name="id" nullable="true" on-delete="CASCADE" />
-            <gedmo:tree-root />
-            <cascade>
-                <cascade-persist/>
-            </cascade>
-        </many-to-one>
         
         <field name="level" column="tree_level" type="integer">
             <gedmo:tree-level />
@@ -31,6 +23,31 @@
         <field name="right" column="tree_right" type="integer">
             <gedmo:tree-right />
         </field>
+        
+        <many-to-one field="root" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CommentInterface">
+            <join-column name="tree_root" referenced-column-name="id" nullable="true" on-delete="CASCADE" />
+            <gedmo:tree-root />
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+        
+        <many-to-one field="parent" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CommentInterface" inversed-by="children">
+            <join-column name="parent_id" referenced-column-name="id" nullable="true" on-delete="CASCADE" />
+            <gedmo:tree-parent />
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+        
+        <one-to-many field="children" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CommentInterface" mapped-by="parent">
+            <cascade>
+                <cascade-persist />
+            </cascade>
+            <order-by>
+                <order-by-field name="left" direction="ASC" />
+            </order-by>
+        </one-to-many>
         
         <field name="comment" type="text" />
         

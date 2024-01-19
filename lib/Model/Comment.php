@@ -1,14 +1,16 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\CommentInterface;
-use Gedmo\Tree\Traits\NestedSet;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TimestampableTrait;
+use Vankosoft\PaymentBundle\Model\Traits\NestedTreeTrait;
 use Vankosoft\PaymentBundle\Model\Interfaces\CommenterInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CommentableInterface;
 
 class Comment implements CommentInterface
 {
-    use NestedSet;
+    use NestedTreeTrait;
     use TimestampableTrait;
     
     /** @var int */
@@ -28,6 +30,12 @@ class Comment implements CommentInterface
     
     /** @var int */
     protected $dislikes = 0;
+    
+    public function __construct()
+    {
+        /** @var ArrayCollection<array-key, CommentInterface> */
+        $this->children = new ArrayCollection();
+    }
     
     public function getId()
     {
