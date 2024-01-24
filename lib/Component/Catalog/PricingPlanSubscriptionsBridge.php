@@ -5,7 +5,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Vankosoft\ApplicationBundle\Component\Application\Project;
 use Vankosoft\CatalogBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 
-final class PricingPlanSubscriptionsBridge implements CatalogBridgeInterface
+final class PricingPlanSubscriptionsBridge implements CatalogBridgeInterface, CatalogEventThrowerInterface
 {
     /** @var ContainerInterface $container */
     private $container;

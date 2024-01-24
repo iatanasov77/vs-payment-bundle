@@ -55,6 +55,11 @@ services:
         arguments:
             - '@service_container'
             - '@event_dispatcher'
+            
+    vs_payment.products_bridge:
+        class: Vankosoft\PaymentBundle\Component\Catalog\ProductsBridge
+        arguments:
+            - '@service_container'
     
     ########################################################################
     # Checkout Controllers
@@ -91,8 +96,8 @@ services:
             - '@vs_payment.repository.order'
             - '@vs_payment.factory.order_item'
             - '@vs_payment.repository.order_item'
-            - '@vs_payment.repository.product'
             - '@vs_payment.order_factory'
+            - '@vs_payment.products_bridge'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             

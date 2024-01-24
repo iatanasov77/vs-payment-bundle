@@ -12,6 +12,7 @@ use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\ApplicationBundle\Component\Status;
+use Vankosoft\PaymentBundle\Component\Catalog\CatalogBridgeInterface;
 
 class ShoppingCartController extends AbstractController
 {
@@ -33,11 +34,11 @@ class ShoppingCartController extends AbstractController
     /** @var RepositoryInterface */
     protected $orderItemsRepository;
     
-    /** @var RepositoryInterface */
-    protected $productsRepository;
-    
     /** @var OrderFactory */
     protected $orderFactory;
+    
+    /** @var CatalogBridgeInterface */
+    protected $productsBridge;
     
     public function __construct(
         ManagerRegistry $doctrine,
@@ -46,8 +47,8 @@ class ShoppingCartController extends AbstractController
         RepositoryInterface $ordersRepository,
         Factory $orderItemsFactory,
         RepositoryInterface $orderItemsRepository,
-        RepositoryInterface $productsRepository,
-        OrderFactory $orderFactory
+        OrderFactory $orderFactory,
+        CatalogBridgeInterface $productsBridge
     ) {
         $this->doctrine             = $doctrine;
         $this->securityBridge       = $securityBridge;
@@ -55,8 +56,8 @@ class ShoppingCartController extends AbstractController
         $this->ordersRepository     = $ordersRepository;
         $this->orderItemsFactory    = $orderItemsFactory;
         $this->orderItemsRepository = $orderItemsRepository;
-        $this->productsRepository   = $productsRepository;
         $this->orderFactory         = $orderFactory;
+        $this->productsBridge       = $productsBridge;
     }
     
     public function index( Request $request ): Response
@@ -149,8 +150,10 @@ class ShoppingCartController extends AbstractController
         if ( $orderItem ) {
             $orderItem->setQty( $orderItem->getQty() + $qty );
         } else {
-            $orderItem      = $this->orderItemsFactory->createNew();
-            $payableObject  = $this->productsRepository->find( $payableObjectId );
+            $orderItem          = $this->orderItemsFactory->createNew();
+            
+            $productsRepository = $this->productsBridge->getRepository();
+            $payableObject  = $productsRepository->find( $payableObjectId );
             
             $orderItem->setProduct( $payableObject );
             $orderItem->setPrice( $payableObject->getPrice() );

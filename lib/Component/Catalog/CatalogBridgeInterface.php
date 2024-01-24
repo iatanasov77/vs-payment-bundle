@@ -4,5 +4,4 @@ interface CatalogBridgeInterface
 {
     public function getFactory();
     public function getRepository();
-    public function triggerSubscriptionsPaymentDone( $subscriptions, $payment ): void;
 }
