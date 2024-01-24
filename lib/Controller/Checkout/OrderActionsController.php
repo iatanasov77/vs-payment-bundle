@@ -9,7 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Model\Order;
-use Vankosoft\PaymentBundle\Component\Catalog\CatalogBridgeInterface;
+use Vankosoft\PaymentBundle\Component\Catalog\PricingPlanSubscriptionsBridge;
 
 class OrderActionsController extends AbstractController
 {
@@ -22,14 +22,14 @@ class OrderActionsController extends AbstractController
     /** @var RepositoryInterface */
     protected $ordersRepository;
     
-    /** @var CatalogBridgeInterface */
+    /** @var PricingPlanSubscriptionsBridge */
     protected $subscriptionsBridge;
     
     public function __construct(
         TranslatorInterface $translator,
         ManagerRegistry $doctrine,
         RepositoryInterface $orderRepository,
-        CatalogBridgeInterface $subscriptionsBridge
+        PricingPlanSubscriptionsBridge $subscriptionsBridge
     ) {
         $this->translator           = $translator;
         $this->doctrine             = $doctrine;

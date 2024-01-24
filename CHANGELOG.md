@@ -1,3 +1,9 @@
+2.11.6	|	Release date: **24.01.2024**
+============================================
+* Bug-Fixes:
+  - Fix Autowiring on Catalog Bridge Services.
+
+
 2.11.5	|	Release date: **24.01.2024**
 ============================================
 * New Features:
