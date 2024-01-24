@@ -1,3 +1,9 @@
+2.11.5	|	Release date: **24.01.2024**
+============================================
+* New Features:
+  - Create a Catalog Products Bridge.
+
+
 2.11.4	|	Release date: **24.01.2024**
 ============================================
 * New Features:
