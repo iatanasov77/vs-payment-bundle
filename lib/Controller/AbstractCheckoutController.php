@@ -18,7 +18,7 @@ use Vankosoft\PaymentBundle\Component\Payment\Payment;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
-use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
+use Vankosoft\CatalogBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 
 abstract class AbstractCheckoutController extends AbstractController
@@ -209,7 +209,6 @@ abstract class AbstractCheckoutController extends AbstractController
     
     protected function _setSubscriptionsPaymentDone( Request $request, $subscriptions, $payment ): ?Response
     {
-        //if ( $this instanceof AbstractCheckoutOfflineController ) {
         if ( ! $this->vsPayment->triggerSubscriptionsPaymentDone( $payment ) ) {
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_waiting', [], 'VSPaymentBundle' );
         } else {
