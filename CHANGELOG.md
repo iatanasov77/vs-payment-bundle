@@ -1,3 +1,9 @@
+2.11.3	|	Release date: **24.01.2024**
+============================================
+* New Features:
+  - Move Subscriptions Event Subscriber into CatalogBundle.
+
+
 2.11.2	|	Release date: **24.01.2024**
 ============================================
 * Bug-Fixes:

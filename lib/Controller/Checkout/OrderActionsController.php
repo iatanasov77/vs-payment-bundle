@@ -9,8 +9,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Vankosoft\ApplicationBundle\Component\Status;
-use Vankosoft\PaymentBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 use Vankosoft\PaymentBundle\Model\Order;
+use Vankosoft\CatalogBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 
 class OrderActionsController extends AbstractController
 {
