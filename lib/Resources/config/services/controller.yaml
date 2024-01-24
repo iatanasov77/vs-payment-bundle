@@ -27,10 +27,10 @@ services:
         tags: ['controller.service_arguments']
         autowire: false
         arguments:
-            - '@event_dispatcher'
             - '@translator'
             - '@doctrine'
             - '@vs_payment.repository.order'
+            - '@vs_payment.pricing_plan_subscriptions_bridge'
             
 #     Vankosoft\PaymentBundle\Controller\DevelopementController:
 #         tags: ['controller.service_arguments']

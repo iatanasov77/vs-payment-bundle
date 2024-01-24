@@ -81,7 +81,8 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
         $storageAgreement   = $this->payum->getStorage( self::AGREEMENT_CLASS );
         $agreement          = $this->prepareRecurringAgreement( $cart );
         
-        $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        $subscriptionsRepository    = $this->subscriptionsBridge->getRepository();
+        $subscription   = $subscriptionsRepository->find( $subscriptionId );
         $gatewayName    = $paymentMethod ? $paymentMethod->getGateway()->getGatewayName() : $subscription->getGatewayFactory();
         
         $afterRoute     = 'vs_payment_paypal_express_checkout_create_recurring_payment';
@@ -114,7 +115,8 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
             return $response;
         }
         
-        $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        $subscriptionsRepository    = $this->subscriptionsBridge->getRepository();
+        $subscription   = $subscriptionsRepository->find( $subscriptionId );
         $subscription->setRecurringPayment( true );
         $this->doctrine->getManager()->persist( $subscription );
         $this->doctrine->getManager()->flush();
@@ -134,7 +136,9 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
     
     public function cancelRecurringPaymentAction( $subscriptionId, Request $request ): Response
     {
-        $subscription           = $this->subscriptionsRepository->find( $subscriptionId );
+        $subscriptionsRepository    = $this->subscriptionsBridge->getRepository();
+        
+        $subscription           = $subscriptionsRepository->find( $subscriptionId );
         $payment                = $subscription->getOrderItem()->getOrder()->getPayment();
         $recurringPaymentClass  = self::RECURRING_PAYMENT_CLASS;
         $recurringPayment       = new $recurringPaymentClass( $payment->getDetails() );

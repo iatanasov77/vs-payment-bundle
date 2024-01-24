@@ -59,7 +59,9 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     
     public function createRecurringPaymentAction( $subscriptionId, Request $request ): Response
     {
-        $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        $subscriptionsRepository    = $this->subscriptionsBridge->getRepository();
+        
+        $subscription   = $subscriptionsRepository->find( $subscriptionId );
         $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
         $redirectRoute  = null;
         
@@ -97,7 +99,9 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     
     public function cancelRecurringPaymentAction( $subscriptionId, Request $request ): Response
     {
-        $subscription   = $this->subscriptionsRepository->find( $subscriptionId );
+        $subscriptionsRepository    = $this->subscriptionsBridge->getRepository();
+        
+        $subscription   = $subscriptionsRepository->find( $subscriptionId );
         $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
         $redirectRoute  = null;
         
