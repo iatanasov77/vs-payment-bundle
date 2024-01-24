@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Sylius\Component\Resource\Factory\Factory;
 
 use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
@@ -20,6 +18,7 @@ use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\CatalogBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
+use Vankosoft\PaymentBundle\Component\Catalog\CatalogBridgeInterface;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
@@ -44,11 +43,8 @@ abstract class AbstractCheckoutController extends AbstractController
     /** @vvar OrderFactory */
     protected $orderFactory;
     
-    /** @var RepositoryInterface */
-    protected $subscriptionsRepository;
-    
-    /** @var Factory */
-    protected $subscriptionsFactory;
+    /** @var CatalogBridgeInterface */
+    protected $subscriptionsBridge;
     
     /** @var string */
     protected $paymentClass;
@@ -78,27 +74,25 @@ abstract class AbstractCheckoutController extends AbstractController
         SecurityBridge $securityBridge,
         Payment $vsPayment,
         OrderFactory $orderFactory,
-        RepositoryInterface $subscriptionsRepository,
-        Factory $subscriptionsFactory,
+        CatalogBridgeInterface $subscriptionsBridge,
         string $paymentClass,
         bool $throwExceptionOnPaymentDone,
         ?string $routeRedirectOnShoppingCartDone,
         ?string $routeRedirectOnPricingPlanDone
     ) {
-        $this->eventDispatcher                      = $eventDispatcher;
-        $this->translator                           = $translator;
-        $this->doctrine                             = $doctrine;
-        $this->payum                                = $payum;
-        $this->securityBridge                       = $securityBridge;
-        $this->vsPayment                            = $vsPayment;
-        $this->orderFactory                         = $orderFactory;
-        $this->subscriptionsRepository              = $subscriptionsRepository;
-        $this->subscriptionsFactory                 = $subscriptionsFactory;
+        $this->eventDispatcher                  = $eventDispatcher;
+        $this->translator                       = $translator;
+        $this->doctrine                         = $doctrine;
+        $this->payum                            = $payum;
+        $this->securityBridge                   = $securityBridge;
+        $this->vsPayment                        = $vsPayment;
+        $this->orderFactory                     = $orderFactory;
+        $this->subscriptionsBridge              = $subscriptionsBridge;
         
-        $this->paymentClass                         = $paymentClass;
-        $this->throwExceptionOnPaymentDone          = $throwExceptionOnPaymentDone;
-        $this->routeRedirectOnShoppingCartDone      = $routeRedirectOnShoppingCartDone;
-        $this->routeRedirectOnPricingPlanDone       = $routeRedirectOnPricingPlanDone;
+        $this->paymentClass                     = $paymentClass;
+        $this->throwExceptionOnPaymentDone      = $throwExceptionOnPaymentDone;
+        $this->routeRedirectOnShoppingCartDone  = $routeRedirectOnShoppingCartDone;
+        $this->routeRedirectOnPricingPlanDone   = $routeRedirectOnPricingPlanDone;
     }
     
     abstract public function prepareAction( Request $request ): Response;
@@ -212,10 +206,7 @@ abstract class AbstractCheckoutController extends AbstractController
         if ( ! $this->vsPayment->triggerSubscriptionsPaymentDone( $payment ) ) {
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_waiting', [], 'VSPaymentBundle' );
         } else {
-            $this->eventDispatcher->dispatch(
-                new SubscriptionsPaymentDoneEvent( $subscriptions, $payment ),
-                SubscriptionsPaymentDoneEvent::NAME
-            );
+            $this->subscriptionsBridge->triggerSubscriptionsPaymentDone( $subscriptions, $payment );
             
             $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_payment_success', [], 'VSPaymentBundle' );
         }

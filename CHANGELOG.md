@@ -1,3 +1,9 @@
+2.11.4	|	Release date: **24.01.2024**
+============================================
+* New Features:
+  - Create a Catalog Subscriptions Bridge.
+
+
 2.11.3	|	Release date: **24.01.2024**
 ============================================
 * New Features:
