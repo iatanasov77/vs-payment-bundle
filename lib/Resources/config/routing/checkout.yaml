@@ -6,7 +6,18 @@ payum_capture:
     resource: "@PayumBundle/Resources/config/routing/capture.xml"
 payum_notify:
     resource: "@PayumBundle/Resources/config/routing/notify.xml"
-    
+
+###############################################################################################
+# Credit Card Routes
+###############################################################################################
+vs_payment_show_credit_card_form:
+    path: /vs_payment/credit-card/{formAction}
+    controller: Vankosoft\PaymentBundle\Controller\Checkout\CreditCardController::showCreditCardFormAction
+    defaults:
+        formAction: ''
+    options:
+        expose: true
+
 # Offline
 #######################################################################################
 vs_payment_offline_info:

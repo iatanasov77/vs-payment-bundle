@@ -13,8 +13,6 @@ vs_application:
         orders: Orders
         orders_and_payments: Orders and Payments
         recieved_payments: Recieved Payments
-        paid_service_subscriptions: Paid Service Subscriptions
-        pricing_plan_subscriptions: Pricing Plan Subscriptions
         currency: Currency
         currencies: Currencies
         create_new_currency: Create New Currency
@@ -22,20 +20,6 @@ vs_application:
         exchange_rates: Exchange Rates
         create_new_exchange_rate: Create Exchange Rate
         edit_exchange_rate: Edit Exchange Rate
-        catalog: Catalog
-        catalog_categories: Catalog Categories
-        create_catalog_category: Create Catalog Category
-        edit_catalog_category: Edit Catalog Category
-        catalog_products: Products
-        create_catalog_product: Create Product
-        edit_catalog_product: Edit Product
-        pricing_plans: Pricing Plans
-        pricing_plan_categories: Pricing Plan Categories
-        create_pricing_plan_category: Create a Pricing Plan Category
-        edit_pricing_plan_category: Edit Pricing Plan Category
-        pricing_plans_listing: Pricing Plans
-        create_pricing_plan: Create a Pricing Plan
-        edit_pricing_plan: Edit Pricing Plan
         stripe_subscription_plans: Stripe Subscription Objects
         stripe_coupons: Stripe Coupons
         developement: Developement
