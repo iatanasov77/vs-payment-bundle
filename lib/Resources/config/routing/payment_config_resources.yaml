@@ -76,31 +76,6 @@ vs_payment_orders:
     options:
         expose: true
         
-vs_payment_pricing_plan_subscriptions_index:
-    path: /payment/pricing-plan-subscriptions/
-    methods: [GET]
-    defaults:
-        _controller: vs_payment.controller.pricing_plan_subscription::indexAction
-        _sylius:
-            paginate: 10
-            sortable: true
-            sorting:
-                createdAt: desc
-            filterable: true
-            template: "@VSPayment/Pages/PricingPlanSubscriptions/index.html.twig"
-    options:
-        expose: true
-
-vs_payment_pricing_plan_subscriptions:
-    resource: |
-        alias: vs_payment.pricing_plan_subscription
-        except: ['create', 'update']
-        path: /payment/pricing-plan-subscriptions
-        templates: "@VSPayment/Pages/PricingPlanSubscriptions"
-    type: sylius.resource
-    options:
-        expose: true
-        
 vs_payment_coupon_index:
     path: /payment/coupons/
     methods: [GET]

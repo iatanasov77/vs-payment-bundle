@@ -1,7 +1,7 @@
 {
 	"name": "vankosoft/payment-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony VSPaymentBundle",
+    "description": "Vankosoft Application PaymentBundle",
     "keywords": [
         "symfony",
         "vankosoft",
@@ -32,8 +32,6 @@
         "vankosoft/borica-bundle": "^0.2",
         
 		"sylius/currency": "^1.12",
-		"sylius/review": "^1.12",
-		
 		"iwouldrathercode/php-simple-coupons": "^2.0"
     },
     "conflict": {

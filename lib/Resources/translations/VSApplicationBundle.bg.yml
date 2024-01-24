@@ -13,8 +13,6 @@ vs_application:
         orders: Ордери
         orders_and_payments: Ордери и Плащания
         recieved_payments: Получени Плащания
-        paid_service_subscriptions: Платенa Услуга Абонаменти
-        pricing_plan_subscriptions: Ценови План Абонаменти
         currency: Валута
         currencies: Валути
         create_new_currency: Създаване Нова Валута
@@ -22,20 +20,6 @@ vs_application:
         exchange_rates: Валутни Курсове
         create_new_exchange_rate: Създаване Валутен Курс
         edit_exchange_rate: Редакция Валутен Курс
-        catalog: Каталог
-        catalog_categories: Каталог Категории
-        create_catalog_category: Създай Каталог Категория
-        edit_catalog_category: Редакция Каталог Категория
-        catalog_products: Продукти
-        create_catalog_product: Създай Продукт
-        edit_catalog_product: Редакция Продукт
-        pricing_plans: Ценови Планове
-        pricing_plan_categories: Ценови План Категории
-        create_pricing_plan_category: Създай Ценови План Категория
-        edit_pricing_plan_category: Редакция Ценови План Категория
-        pricing_plans_listing: Ценови Планове
-        create_pricing_plan: Създай Ценови План
-        edit_pricing_plan: Редакция Ценови План
         stripe_subscription_plans: Страйп Абонаментни Обекти
         stripe_coupons: Страйп Ваучери
         developement: Разработка

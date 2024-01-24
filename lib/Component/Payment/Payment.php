@@ -307,7 +307,7 @@ final class Payment
                 ];
                 break;
             default:
-                throw new PricingPlanException( 'Unknown Pricing Plan Subscription Period' );
+                throw new GatewayException( 'Unknown Pricing Plan Subscription Period' );
         }
         
         return $billingCycle;
