@@ -111,34 +111,6 @@ services:
             - '@vs_payment_payment'
         calls:
             - [ setContainer, [ '@service_container' ] ]
-
-    ########################################################################
-    # Pricing Plans Controllers
-    ########################################################################
-    Vankosoft\PaymentBundle\Controller\PricingPlans\:
-        resource: '../../../Controller/PricingPlans'
-        tags: ['controller.service_arguments']
-        autowire: true
-    
-    Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanCheckoutController:
-        tags: ['controller.service_arguments']
-        autowire: false
-        arguments:
-            - '@doctrine'
-            - '@event_dispatcher'
-            - '@vs_users.security_bridge'
-            - '@vs_payment.factory.order'
-            - '@vs_payment.repository.order'
-            - '@vs_payment.factory.order_item'
-            - '@vs_payment.repository.pricing_plan_category'
-            - '@vs_payment.repository.pricing_plan'
-            - '@vs_payment.repository.payment_method'
-            - '@vs_payment.repository.pricing_plan_subscription'
-            - '@vs_payment_payment'
-            - '@vs_payment.order_factory'
-            - '@vs_payment.repository.gateway_config'
-        calls:
-            - [ setContainer, [ '@service_container' ] ]
             
     ########################################################################
     # Coupons Controllers

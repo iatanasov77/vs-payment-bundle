@@ -23,13 +23,6 @@ services:
             - '@vs_payment.repository.payment_method'
             - '@vs_payment.factory.payment_method'
             
-    Vankosoft\PaymentBundle\Controller\PricingPlans\PricingPlanExtController:
-        tags: ['controller.service_arguments']
-        autowire: false
-        arguments:
-            - '@vs_payment.repository.pricing_plan'
-            - '@vs_users_subscriptions.repository.payed_service'
-            
     Vankosoft\PaymentBundle\Controller\Checkout\OrderActionsController:
         tags: ['controller.service_arguments']
         autowire: false
@@ -39,15 +32,15 @@ services:
             - '@doctrine'
             - '@vs_payment.repository.order'
             
-    Vankosoft\PaymentBundle\Controller\DevelopementController:
-        tags: ['controller.service_arguments']
-        autowire: false
-        arguments:
-            - '@vs_payment.repository.order'
-            - '@vs_payment.repository.order_item'
-            - '@vs_payment.repository.payment'
-            - '@vs_payment.repository.payment_token'
-            - '@vs_payment.repository.pricing_plan_subscription'
-        calls:
-            - [ setContainer, [ '@service_container' ] ]
+#     Vankosoft\PaymentBundle\Controller\DevelopementController:
+#         tags: ['controller.service_arguments']
+#         autowire: false
+#         arguments:
+#             - '@vs_payment.repository.order'
+#             - '@vs_payment.repository.order_item'
+#             - '@vs_payment.repository.payment'
+#             - '@vs_payment.repository.payment_token'
+#             - '@vs_payment.repository.pricing_plan_subscription'
+#         calls:
+#             - [ setContainer, [ '@service_container' ] ]
 
