@@ -12,7 +12,7 @@ use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface;
 use Vankosoft\ApplicationBundle\Component\Status;
-use Vankosoft\PaymentBundle\Component\Catalog\CatalogBridgeInterface;
+use Vankosoft\PaymentBundle\Component\Catalog\ProductsBridge;
 
 class ShoppingCartController extends AbstractController
 {
@@ -37,7 +37,7 @@ class ShoppingCartController extends AbstractController
     /** @var OrderFactory */
     protected $orderFactory;
     
-    /** @var CatalogBridgeInterface */
+    /** @var ProductsBridge */
     protected $productsBridge;
     
     public function __construct(
@@ -48,7 +48,7 @@ class ShoppingCartController extends AbstractController
         Factory $orderItemsFactory,
         RepositoryInterface $orderItemsRepository,
         OrderFactory $orderFactory,
-        CatalogBridgeInterface $productsBridge
+        ProductsBridge $productsBridge
     ) {
         $this->doctrine             = $doctrine;
         $this->securityBridge       = $securityBridge;
