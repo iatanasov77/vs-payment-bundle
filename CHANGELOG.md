@@ -1,3 +1,9 @@
+2.11.10	|	Release date: **25.01.2024**
+============================================
+* New Features:
+  - Remove Hard Relations to the Catalog Models.
+
+
 2.11.9	|	Release date: **25.01.2024**
 ============================================
 * Bug-Fixes:
