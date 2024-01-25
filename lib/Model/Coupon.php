@@ -8,7 +8,6 @@ use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
 class Coupon implements CouponInterface
@@ -47,9 +46,6 @@ class Coupon implements CouponInterface
      * @var string
      */
     protected $type = 'discount_coupon';
-    
-    /** @var PricingPlanInterface|null */
-    protected $pricingPlan;
     
     /** @var Collection|OrderInterface[] */
     protected $orders;
@@ -158,18 +154,6 @@ class Coupon implements CouponInterface
     public function setType($type): self
     {
         $this->type = $type;
-        
-        return $this;
-    }
-    
-    public function getPricingPlan()
-    {
-        return $this->pricingPlan;
-    }
-    
-    public function setPricingPlan($pricingPlan): self
-    {
-        $this->pricingPlan = $pricingPlan;
         
         return $this;
     }
