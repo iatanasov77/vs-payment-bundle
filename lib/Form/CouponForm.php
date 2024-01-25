@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 use Vankosoft\PaymentBundle\Component\Payment\Coupon as VsCoupon;
 use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
+use Vankosoft\PaymentBundle\Component\Catalog\PricingPlansBridge;
 
 class CouponForm extends AbstractForm
 {
@@ -25,8 +26,8 @@ class CouponForm extends AbstractForm
     /** @var string */
     protected $currencyClass;
     
-    /** @var string */
-    protected $pricingPlanClass;
+    /** @var PricingPlansBridge */
+    protected $pricingPlansBridge;
     
     public function __construct(
         string $dataClass,
@@ -34,7 +35,7 @@ class CouponForm extends AbstractForm
         RepositoryInterface $localesRepository,
         VsCoupon $vsCoupon,
         string $currencyClass,
-        string $pricingPlanClass
+        PricingPlansBridge $pricingPlansBridge
     ) {
         parent::__construct( $dataClass );
         
@@ -43,7 +44,8 @@ class CouponForm extends AbstractForm
         
         $this->vsCoupon             = $vsCoupon;
         $this->currencyClass        = $currencyClass;
-        $this->pricingPlanClass     = $pricingPlanClass;
+        
+        $this->pricingPlansBridge   = $pricingPlansBridge;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options ): void
@@ -110,16 +112,19 @@ class CouponForm extends AbstractForm
                 'translation_domain'    => 'VSPaymentBundle',
                 'choices'               => \array_flip( $this->vsCoupon->getCouponTypeChoices() ),
             ])
+        ;
             
-            ->add( 'pricingPlan', EntityType::class, [
+        $pricingPlanClass   = $this->pricingPlansBridge->getModelClass();
+        if ( $pricingPlanClass ) {
+            $builder->add( 'pricingPlan', EntityType::class, [
                 'label'                 => 'vs_payment.form.pricing_plan_label',
                 'required'              => false,
-                'class'                 => $this->pricingPlanClass,
+                'class'                 => $pricingPlanClass,
                 'choice_label'          => 'title',
                 'placeholder'           => 'vs_payment.form.pricing_plan_placeholder',
                 'translation_domain'    => 'VSPaymentBundle',
-            ])
-        ;
+            ]);
+        }
             
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,

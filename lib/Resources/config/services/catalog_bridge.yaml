@@ -10,9 +10,20 @@ services:
             - '@service_container'
             - '@event_dispatcher'
             
+    Vankosoft\PaymentBundle\Component\Catalog\PricingPlanSubscriptionsBridge: '@vs_payment.pricing_plan_subscriptions_bridge'
+            
     vs_payment.products_bridge:
         class: Vankosoft\PaymentBundle\Component\Catalog\ProductsBridge
         arguments:
             - '@service_container'
+    
+    Vankosoft\PaymentBundle\Component\Catalog\ProductsBridge: '@vs_payment.products_bridge'
+    
+    vs_payment.pricing_plans_bridge:
+        class: Vankosoft\PaymentBundle\Component\Catalog\PricingPlansBridge
+        arguments:
+            - '@service_container'
+            
+    Vankosoft\PaymentBundle\Component\Catalog\PricingPlansBridge: '@vs_payment.pricing_plans_bridge'
 
 

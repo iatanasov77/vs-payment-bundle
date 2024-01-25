@@ -12,7 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface;
+
+use Vankosoft\PaymentBundle\Component\Catalog\PricingPlansBridge;
+use Vankosoft\CatalogBundle\Model\Interfaces\PricingPlanInterface;
 
 class PriceForm extends AbstractType
 {
@@ -22,17 +24,17 @@ class PriceForm extends AbstractType
     /** @var string */
     private $currencyClass;
     
-    /** @var string */
-    private $pricingPlanClass;
+    /** @var PricingPlansBridge */
+    protected $pricingPlansBridge;
     
     public function __construct(
         StripeApi $stripeApi,
         string $currencyClass,
-        string $pricingPlanClass
+        PricingPlansBridge $pricingPlansBridge
     ) {
-        $this->stripeApi        = $stripeApi;
-        $this->currencyClass    = $currencyClass;
-        $this->pricingPlanClass = $pricingPlanClass;
+        $this->stripeApi            = $stripeApi;
+        $this->currencyClass        = $currencyClass;
+        $this->pricingPlansBridge   = $pricingPlansBridge;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options )
@@ -96,22 +98,25 @@ class PriceForm extends AbstractType
                 'choices'               => \array_flip( $this->stripeApi->getProductPairs() ),
             ])
             
-            ->add( 'pricingPlan', EntityType::class, [
-                'label'                 => 'vs_payment.template.payum_stripe_objects.pricing_plan',
-                'translation_domain'    => 'VSPaymentBundle',
-                'placeholder'           => 'vs_payment.template.payum_stripe_objects.pricing_plan_placeholder',
-                'class'                 => $this->pricingPlanClass,
-                'choice_label'          => 'title',
-                'group_by'              => function ( PricingPlanInterface $pricingPlan ): string {
-                    return $pricingPlan ? $pricingPlan->getCategory()->getName() : 'Undefined Category';
-                },
-            ])
-            
             ->add( 'btnSubmit', SubmitType::class, [
                 'label' => 'vs_application.form.save',
                 'translation_domain' => 'VSApplicationBundle'
             ])
         ;
+            
+        $pricingPlanClass   = $this->pricingPlansBridge->getModelClass();
+        if ( $pricingPlanClass ) {
+            $builder->add( 'pricingPlan', EntityType::class, [
+                'label'                 => 'vs_payment.template.payum_stripe_objects.pricing_plan',
+                'translation_domain'    => 'VSPaymentBundle',
+                'placeholder'           => 'vs_payment.template.payum_stripe_objects.pricing_plan_placeholder',
+                'class'                 => $pricingPlanClass,
+                'choice_label'          => 'title',
+                'group_by'              => function ( PricingPlanInterface $pricingPlan ): string {
+                    return $pricingPlan ? $pricingPlan->getCategory()->getName() : 'Undefined Category';
+                },
+            ]);
+        }
     }
     
     public function configureOptions( OptionsResolver $resolver ) : void

@@ -37,6 +37,15 @@ final class PricingPlanSubscriptionsBridge implements CatalogBridgeInterface, Ca
         return null;
     }
     
+    public function getModelClass()
+    {
+        if ( $this->container->hasParameter( 'vs_catalog.model.pricing_plan_subscription.class' ) ) {
+            return $this->container->getParameter( 'vs_catalog.model.pricing_plan_subscription.class' );
+        }
+        
+        return null;
+    }
+    
     public function triggerSubscriptionsPaymentDone( $subscriptions, $payment ): void
     {
         $projectType    = $this->container->getParameter( 'vs_application.project_type' );
