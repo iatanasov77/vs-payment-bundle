@@ -19,7 +19,7 @@ services:
         arguments:
             - '@vs_payment.stripe_api'
             - '%vs_payment.model.currency.class%'
-            - '%vs_payment.model.pricing_plan.class%'
+            - '@vs_payment.pricing_plans_bridge'
     
     vs_payment.stripe_api:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Api

@@ -30,4 +30,13 @@ final class ProductsBridge implements CatalogBridgeInterface
         
         return null;
     }
+    
+    public function getModelClass()
+    {
+        if ( $this->container->hasParameter( 'vs_catalog.model.product.class' ) ) {
+            return $this->container->getParameter( 'vs_catalog.model.product.class' );
+        }
+        
+        return null;
+    }
 }

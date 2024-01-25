@@ -4,4 +4,5 @@ interface CatalogBridgeInterface
 {
     public function getFactory();
     public function getRepository();
+    public function getModelClass();
 }

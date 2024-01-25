@@ -3,7 +3,7 @@ services:
         autowire: true
         autoconfigure: true
         public: true
-        
+    
     Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfigExtController:
         tags: ['controller.service_arguments']
         autowire: true

@@ -61,6 +61,6 @@ services:
             - '@vs_application.repository.locale'
             - '@vs_payment_coupon'
             - '%vs_payment.model.currency.class%'
-            - '%vs_payment.model.pricing_plan.class%'
+            - '@vs_payment.pricing_plans_bridge'
 
 
