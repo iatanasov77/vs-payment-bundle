@@ -12,7 +12,7 @@
         <many-to-one field="order" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" inversed-by="items" />
         
         <!-- 'object' is for paid services -->
-        <one-to-one field="subscription" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface" inversed-by="orderItem" >
+        <one-to-one field="subscription" target-entity="Vankosoft\CatalogBundle\Model\Interfaces\PricingPlanSubscriptionInterface" inversed-by="orderItem" >
             <join-column name="subscription_id" referencedColumnName="id" nullable="true" />
             <cascade>
                 <cascade-all/>
@@ -20,7 +20,7 @@
         </one-to-one>
         
         <!-- 'product' is for products -->
-        <many-to-one field="product" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\ProductInterface" inversed-by="orderItems" />
+        <many-to-one field="product" target-entity="Vankosoft\CatalogBundle\Model\Interfaces\ProductInterface" inversed-by="orderItems" />
         
         <field name="payableObjectType" column="payable_object_type" type="string" nullable="false" />
         

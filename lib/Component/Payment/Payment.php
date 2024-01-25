@@ -9,11 +9,10 @@ use Vankosoft\UsersSubscriptionsBundle\Component\PayedService\SubscriptionPeriod
 use Vankosoft\PaymentBundle\Model\Order;
 use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\GatewayException;
-use Vankosoft\PaymentBundle\Component\Exception\PricingPlanException;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\TelephoneCallResponse;
+use Vankosoft\CatalogBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 
 final class Payment
 {

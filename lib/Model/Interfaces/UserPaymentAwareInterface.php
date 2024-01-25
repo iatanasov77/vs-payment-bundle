@@ -7,5 +7,4 @@ interface UserPaymentAwareInterface extends UserInterface
 {
     public function getPaymentDetails(): array;
     public function getOrders(): Collection;
-    public function getPricingPlanSubscriptions(): Collection;
 }

@@ -1,3 +1,9 @@
+2.11.9	|	Release date: **25.01.2024**
+============================================
+* Bug-Fixes:
+  - Some More Fixes About Moving Models into Catalog Bundle.
+
+
 2.11.8	|	Release date: **25.01.2024**
 ============================================
 * New Features:
