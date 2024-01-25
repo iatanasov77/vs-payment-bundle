@@ -42,10 +42,6 @@
             <gedmo:timestampable on="update"/>
         </field>
         
-        <many-to-one field="pricingPlan" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanInterface" inversed-by="coupons">
-            <join-column name="pricing_plan_id" referenced-column-name="id" nullable="true" />
-        </many-to-one>
-        
         <one-to-many field="orders" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface" mapped-by="coupon" />
         
         <!--
