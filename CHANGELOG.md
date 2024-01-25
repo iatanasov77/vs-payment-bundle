@@ -1,3 +1,9 @@
+2.11.11	|	Release date: **25.01.2024**
+============================================
+* New Features and Improvements:
+  - Remove Doctrine Migrations becase its not ran from here already.
+
+
 2.11.10	|	Release date: **25.01.2024**
 ============================================
 * New Features:
