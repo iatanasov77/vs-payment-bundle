@@ -11,7 +11,7 @@ use Payum\Paypal\ExpressCheckout\Nvp\Api as PaypalApi;
 use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
+use Vankosoft\CatalogBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 
 /*
  * 

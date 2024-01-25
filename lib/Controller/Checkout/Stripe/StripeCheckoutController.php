@@ -9,8 +9,8 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscriptio
 use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Controller\AbstractCheckoutRecurringController;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
+use Vankosoft\CatalogBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 
 /**
  * USED MANUALS:
