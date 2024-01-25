@@ -49,17 +49,6 @@ services:
             - '@vs_users.security_bridge'
             - '@vs_payment.repository.order'
             - '@vs_payment.factory.order'
-            
-    vs_payment.pricing_plan_subscriptions_bridge:
-        class: Vankosoft\PaymentBundle\Component\Catalog\PricingPlanSubscriptionsBridge
-        arguments:
-            - '@service_container'
-            - '@event_dispatcher'
-            
-    vs_payment.products_bridge:
-        class: Vankosoft\PaymentBundle\Component\Catalog\ProductsBridge
-        arguments:
-            - '@service_container'
     
     ########################################################################
     # Checkout Controllers
