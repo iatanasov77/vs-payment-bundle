@@ -1,3 +1,9 @@
+3.0.0	|	Release date: **31.01.2024**
+============================================
+* New Features:
+  - Move AdminPanel Default Theme User Payment Pages Assets From Application Bundle.
+
+
 2.11.11	|	Release date: **25.01.2024**
 ============================================
 * New Features and Improvements:
