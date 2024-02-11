@@ -1,10 +1,11 @@
 <?php namespace Vankosoft\PaymentBundle\Model\Interfaces;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Doctrine\Common\Collections\Collection;
 
-interface PayableObjectInterface extends ResourceInterface
+interface PayableObjectInterface
 {
     public function getPrice();
-    public function getCurrencyCode();
-    public function getOrderItems();
+    public function getCurrency(): CurrencyInterface
+    public function getCurrencyCode(): string;
+    public function getOrderItems(): Collection
 }
