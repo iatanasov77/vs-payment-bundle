@@ -4,6 +4,7 @@ vs_application:
         payment_core_models: Payment Core Models
         gateway_config: Gateway Config
         gateways: Gateways
+        gateways_payment_methods: Gateways / Payment Methods
         create_new_gateway: Create New Gateway
         edit_a_gateway: Edit a Gateway
         payment_methods: Payment Methods
@@ -29,4 +30,5 @@ vs_application:
         edit_discount_coupon: Edit Discount Coupon
         show_payment_details: Show Payment Details
         clear_session: Clear Session
+        discounts_coupouns: Discounts / Coupons
 
