@@ -32,6 +32,7 @@
         "vankosoft/borica-bundle": "^0.2",
         
 		"sylius/currency": "^1.12",
+		"sylius/promotion": "^1.12",
 		"iwouldrathercode/php-simple-coupons": "^2.0"
     },
     "conflict": {

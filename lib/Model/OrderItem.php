@@ -24,7 +24,7 @@ class OrderItem implements OrderItemInterface
     protected $currencyCode;
     
     /** @var int */
-    protected $qty;
+    protected $qty = 1;
     
     public function __construct()
     {
