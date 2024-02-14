@@ -41,18 +41,6 @@
                     {{ form_start(form, { 'attr': {'class': 'form-horizontal '}, 'method': method }) }}
                         
                         <div class="form-group">
-                            <label class="custom-control custom-checkbox">  
-                                <input type="checkbox" id="coupon_form_enabled"
-                                    class="custom-control-input form-check-input"
-                                    name="coupon_form[enabled]"
-                                    value="{{ item.enabled }}"
-                                    {% if item.enabled %}checked="checked"{% endif %}
-                                />
-                                <span class="custom-control-label">{{ 'vs_payment.form.coupon.valid' | trans( {},'VSPaymentBundle' ) }}</span>
-                            </label>
-                        </div>
-                        
-                        <div class="form-group">
                             {{ form_label(form.locale, null, {
                                 'label_attr': {'class': 'col-form-label'}
                                 }) 
@@ -61,6 +49,7 @@
                             {{ form_widget(form.locale, {'attr': {'class': 'form-control'}}) }}
                         </div>
                     
+                        {# 
                         <div class="form-group">
                             {{ form_label(form.code, null, {
                                 'label_attr': {'class': 'col-form-label'}
@@ -75,6 +64,7 @@
                                 </div>
                             </div>
                         </div>
+                        #}
                         
                         <div class="form-group">
                             {{ form_label(form.name, null, {
@@ -85,44 +75,14 @@
                         </div>
                         
                         <div class="form-group">
-                            {{ form_label(form.amountOff, null, {
+                            {{ form_label(form.description, null, {
                                 'label_attr': {'class': 'col-form-label'}
                                 }) 
                             }}
-                            {{ form_widget(form.amountOff, {'attr': {'class': 'form-control' }}) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control' }}) }}
                         </div>
                         
-                        <div class="form-group">
-                            {{ form_label(form.currency, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            {{ form_widget(form.currency, {'attr': {'class': 'form-control' }}) }}
-                        </div>
                         
-                        <div class="form-group">
-                            {{ form_label(form.percentOff, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            {{ form_widget(form.percentOff, {'attr': {'class': 'form-control' }}) }}
-                        </div>
-                        
-                        <div class="form-group">
-                            {{ form_label(form.type, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            {{ form_widget(form.type, {'attr': {'class': 'form-control' }}) }}
-                        </div>
-                        
-                        <div class="form-group">
-                            {{ form_label(form.pricingPlan, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            {{ form_widget(form.pricingPlan, {'attr': {'class': 'form-control' }}) }}
-                        </div>
                         
                         {{ vs_form.buttons( form ) }}
                     {{ form_end(form, {'render_rest': false}) }}
