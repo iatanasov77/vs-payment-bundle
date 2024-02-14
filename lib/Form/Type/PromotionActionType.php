@@ -2,15 +2,15 @@
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-final class PromotionRuleType extends AbstractConfigurablePromotionElementType
+final class PromotionActionType extends AbstractConfigurablePromotionElementType
 {
     public function buildForm( FormBuilderInterface $builder, array $options = [] ): void
     {
         parent::buildForm( $builder, $options );
         
         $builder
-            ->add( 'type', PromotionRuleChoiceType::class, [
-                'label'                 => 'vs_payment.form.promotion.rule_type',
+            ->add( 'type', PromotionActionChoiceType::class, [
+                'label'                 => 'vs_payment.form.promotion.action_type',
                 'translation_domain'    => 'VSPaymentBundle',
                 'attr'                  => [
                     'data-form-collection' => 'update',
@@ -21,6 +21,6 @@ final class PromotionRuleType extends AbstractConfigurablePromotionElementType
     
     public function getBlockPrefix(): string
     {
-        return 'vs_payment_promotion_rule';
+        return 'vs_payment_promotion_action';
     }
 }

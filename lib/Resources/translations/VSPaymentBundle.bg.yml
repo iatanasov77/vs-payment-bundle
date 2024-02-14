@@ -95,6 +95,8 @@ vs_payment:
             coupon_based: Coupon Based
             rules: Rules
             actions: Actions
+            action_type: Action Type
+            rule_type: Rule Type
             
         coupon:
             valid: Valid

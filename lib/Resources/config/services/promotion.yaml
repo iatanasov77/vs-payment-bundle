@@ -1,3 +1,10 @@
+parameters:
+    vs_payment.form.type.promotion.validation_groups: ['sylius']
+    vs_payment.form.type.promotion_action.validation_groups: ['sylius']
+    vs_payment.form.type.promotion_rule.validation_groups: ['sylius']
+    vs_payment.form.type.promotion_coupon.validation_groups: ['sylius']
+
+
 services:
     _defaults:
         public: true
@@ -50,6 +57,18 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.promotion_rules%'
+            
+    vs_payment.form.type.promotion_action:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionActionType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion_action.class%'
+            - '%vs_payment.form.type.promotion_action.validation_groups%'
+            - '@vs_payment.form_registry.promotion_action'
+
+
+
 
 
 #         <service id="sylius.custom_factory.promotion_coupon" class="Sylius\Component\Promotion\Factory\PromotionCouponFactory" decorates="sylius.factory.promotion_coupon" decoration-priority="256" public="false">
