@@ -10,6 +10,7 @@ imports:
     - { resource: services/currency.yaml }
     - { resource: services/custom_gateways.yaml }
     - { resource: services/gateway_config.yaml }
+    - { resource: services/promotion.yaml }
 
 services:
     _defaults:

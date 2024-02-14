@@ -84,7 +84,18 @@ vs_payment:
             reciever: Reciever
             reason: Reason
             set_recurring_payments: Recurring Payments
-            
+           
+        promotion:
+            exclusive: Exclusive
+            usage_limit: Usage Limit
+            starts_at: Starts At
+            ends_at: Ends At
+            expires_at: Expires At
+            priority: Priority
+            coupon_based: Coupon Based
+            rules: Rules
+            actions: Actions
+         
         coupon:
             valid: Valid
             coupon_code: Coupon Code

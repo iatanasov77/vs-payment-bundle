@@ -91,11 +91,29 @@ vs_payment_coupon_index:
     options:
         expose: true
 
-vs_payment_coupon:
+# vs_payment_coupon:
+#     resource: |
+#         alias: vs_payment.coupon
+#         path: /payment/coupons
+#         templates: "@VSPayment/Pages/Coupons"
+#     type: sylius.resource
+#     options:
+#         expose: true
+        
+vs_payment_promotion:
     resource: |
-        alias: vs_payment.coupon
-        path: /payment/coupons
-        templates: "@VSPayment/Pages/Coupons"
+        alias: vs_payment.promotion
+        path: /promotions
+        templates: "@VSPayment/Pages/Promotions"
+    type: sylius.resource
+    options:
+        expose: true
+        
+vs_payment_promotion_coupon:
+    resource: |
+        alias: vs_payment.promotion_coupon
+        path: /promotion-coupons
+        templates: "@VSPayment/Pages/PromotionCoupons"
     type: sylius.resource
     options:
         expose: true

@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller\Coupons;
+<?php namespace Vankosoft\PaymentBundle\Controller\PromotionCoupons;
 
 use Symfony\Component\HttpFoundation\Request;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;

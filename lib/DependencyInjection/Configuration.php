@@ -37,9 +37,19 @@ use Vankosoft\PaymentBundle\Repository\ExchangeRateRepository;
 use Vankosoft\PaymentBundle\Form\ExchangeRateForm;
 use Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateController;
 
-use Vankosoft\PaymentBundle\Model\Coupon;
-use Vankosoft\PaymentBundle\Controller\Coupons\CouponsController;
-use Vankosoft\PaymentBundle\Form\CouponForm;
+// use Vankosoft\PaymentBundle\Model\Coupon;
+// use Vankosoft\PaymentBundle\Controller\PromotionCoupons\CouponsController;
+// use Vankosoft\PaymentBundle\Form\CouponForm;
+
+use Vankosoft\PaymentBundle\Model\Promotion;
+use Vankosoft\PaymentBundle\Repository\PromotionRepository;
+use Vankosoft\PaymentBundle\Controller\PromotionCoupons\PromotionsController;
+use Vankosoft\PaymentBundle\Form\PromotionForm;
+
+use Vankosoft\PaymentBundle\Model\PromotionCoupon;
+use Vankosoft\PaymentBundle\Repository\PromotionCouponRepository;
+use Vankosoft\PaymentBundle\Controller\PromotionCoupons\PromotionCouponsController;
+use Vankosoft\PaymentBundle\Form\PromotionCouponForm;
 
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
@@ -220,22 +230,60 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         
-                        ->arrayNode( 'coupon' )
+                        
+                        
+//                         ->arrayNode( 'coupon' )
+//                             ->addDefaultsIfNotSet()
+//                             ->children()
+//                                 ->variableNode( 'options' )->end()
+//                                 ->arrayNode( 'classes' )
+//                                     ->addDefaultsIfNotSet()
+//                                     ->children()
+//                                         ->scalarNode( 'model' )->defaultValue( Coupon::class )->cannotBeEmpty()->end()
+//                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+//                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+//                                         ->scalarNode( 'controller' )->defaultValue( CouponsController::class )->cannotBeEmpty()->end()
+//                                         ->scalarNode( 'form' )->defaultValue( CouponForm::class )->cannotBeEmpty()->end()
+//                                     ->end()
+//                                 ->end()
+//                             ->end()
+//                         ->end()
+                        
+                        ->arrayNode( 'promotion' )
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->variableNode( 'options' )->end()
                                 ->arrayNode( 'classes' )
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode( 'model' )->defaultValue( Coupon::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'model' )->defaultValue( Promotion::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( PromotionRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'controller' )->defaultValue( CouponsController::class )->cannotBeEmpty()->end()
-                                        ->scalarNode( 'form' )->defaultValue( CouponForm::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( PromotionsController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'form' )->defaultValue( PromotionForm::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
                         ->end()
+                        
+                        ->arrayNode( 'promotion_coupon' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode( 'model' )->defaultValue( PromotionCoupon::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( PromotionCouponRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( PromotionCouponsController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'form' )->defaultValue( PromotionCouponForm::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
+                        
                         
                     ->end()
                 ->end()
