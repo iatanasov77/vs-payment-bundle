@@ -31,4 +31,10 @@ vs_application:
         show_payment_details: Показване Детайли за Плащане
         clear_session: Изчисти Сесията
         discounts_coupouns: Отстъпки / Купони
+        promotions_listing: Promotions
+        create_promotion: Create Promotion
+        edit_promotion: Edit Promotion
+        promotion_coupons_listing: Promotion Coupons
+        create_promotion_coupon: Create Promotion Coupon
+        edit_promotion_coupon: Edit Promotion Coupon
 
