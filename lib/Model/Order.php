@@ -9,7 +9,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
+//use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
 
 class Order implements OrderInterface
 {
@@ -29,8 +29,8 @@ class Order implements OrderInterface
     /** @var PaymentMethodInterface */
     protected $paymentMethod;
     
-    /** @var CouponInterface */
-    protected $coupon;
+//     /** @var CouponInterface */
+//     protected $coupon;
     
     /** @var PaymentInterface */
     protected $payment;
