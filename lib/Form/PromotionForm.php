@@ -90,6 +90,6 @@ class PromotionForm extends AbstractForm
     
     public function getBlockPrefix(): string
     {
-        return 'vs_payment.promotion';
+        return 'vs_payment_promotion';
     }
 }
