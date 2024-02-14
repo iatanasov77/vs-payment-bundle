@@ -30,6 +30,20 @@ services:
     ##################################################################################
     # Forms
     ##################################################################################
+    vs_payment.form.promotion:
+        class: Vankosoft\PaymentBundle\Form\PromotionForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion.class%'
+            
+    vs_payment.form.promotion_coupon:
+        class: Vankosoft\PaymentBundle\Form\PromotionCouponForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion_coupon.class%'
+    
     vs_payment.form.type.promotion_action.collection:
         class: Vankosoft\PaymentBundle\Form\Type\PromotionActionCollectionType
         tags:
