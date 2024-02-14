@@ -51,16 +51,16 @@ services:
         arguments:
             - '@vs_payment_payment'
 
-    vs_payment.resources.coupon.form:
-        class: Vankosoft\PaymentBundle\Form\CouponForm
-        tags:
-            - { name: form.type }
-        arguments:
-            - '%vs_payment.model.coupon.class%'
-            - '@request_stack'
-            - '@vs_application.repository.locale'
-            - '@vs_payment_coupon'
-            - '%vs_payment.model.currency.class%'
-            - '@vs_payment.pricing_plans_bridge'
+#     vs_payment.resources.coupon.form:
+#         class: Vankosoft\PaymentBundle\Form\CouponForm
+#         tags:
+#             - { name: form.type }
+#         arguments:
+#             - '%vs_payment.model.coupon.class%'
+#             - '@request_stack'
+#             - '@vs_application.repository.locale'
+#             - '@vs_payment_coupon'
+#             - '%vs_payment.model.currency.class%'
+#             - '@vs_payment.pricing_plans_bridge'
 
 
