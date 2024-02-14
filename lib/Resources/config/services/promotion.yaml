@@ -80,6 +80,15 @@ services:
             - '%vs_payment.model.promotion_action.class%'
             - '%vs_payment.form.type.promotion_action.validation_groups%'
             - '@vs_payment.form_registry.promotion_action'
+            
+    sylius.form.type.promotion_rule:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionRuleType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion_rule.class%'
+            - '%vs_payment.form.type.promotion_rule.validation_groups%'
+            - '@vs_payment.form_registry.promotion_rule_checker'
 
 
 
