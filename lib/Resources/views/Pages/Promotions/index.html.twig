@@ -19,11 +19,7 @@
                             <th width="50">N</th>
                             <th data-sortable="true" data-field="code">{{ 'vs_payment.template.coupon_index_code' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th data-sortable="true" data-field="name">{{ 'vs_payment.template.coupon_index_name' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th data-sortable="true" data-field="type">{{ 'vs_payment.template.coupon_index_type' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.coupon_index_pricing_plan' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th data-sortable="true" data-field="amountОff">{{ 'vs_payment.template.coupon_index_amount_off' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th data-sortable="true" data-field="percentOff">{{ 'vs_payment.template.coupon_index_percent_off' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th data-sortable="true" data-field="enabled">{{ 'vs_payment.template.coupon_index_valid' | trans( {},'VSPaymentBundle' ) }}</th>
+                            
                             <th>{{ 'vs_application.template.items_index_row_translations' | trans( {},'VSApplicationBundle' ) }}</th>
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
@@ -34,28 +30,18 @@
                             <td>{{ loop.index }}</td>
                             <td>{{ item.code }}</td>
                             <td>{{ item.name }}</td>
-                            <td>{{ item.type }}</td>
-                            <td>{% if item.pricingPlan %}{{ item.pricingPlan.title }}{% endif %}</td>
-                            <td>{% if item.amountOff %}{{ item.amountOff }} {{ item.currency | vs_currency_symbol }}{% endif %}</td>
-                            <td>{% if item.percentOff %}{{ item.percentOff }} %{% endif %}</td>
-                            <td style="text-align: center;">
-                                {% if item.valid %}
-                                    <i class="fas fa-check" style="color: #82c91e;"></i>
-                                {% else %}
-                                    <i class="fas fa-times" style="color: #ff1e1e;"></i>
-                                {% endif %}
-                            </td>
+                            
                             <td>{{ vs_translations.flags( translations[item.id] ) }}</td>
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-primary"
-                                        href="{{ path('vs_payment_coupon_update', {'id': item.id}) }}"
+                                        href="{{ path('vs_payment_promotion_update', {'id': item.id}) }}"
                                         title="{{ 'vs_application.template.items_index_row_action_edit' | trans( {},'VSApplicationBundle' ) }}"
                                     >
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a class="btn btn-danger btnDeleteResource"
-                                        href="{{ path('vs_payment_coupon_delete', {'id': item.id}) }}" 
+                                        href="{{ path('vs_payment_promotion_delete', {'id': item.id}) }}" 
                                         data-csrfToken="{{ csrf_token( item.id ) }}" 
                                         title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
                                     >
@@ -66,7 +52,7 @@
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="3">
+                            <td colspan="5">
                                 {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
                             </td>
                         </tr>

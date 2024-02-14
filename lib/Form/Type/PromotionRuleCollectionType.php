@@ -13,6 +13,6 @@ final class PromotionRuleCollectionType extends AbstractConfigurationCollectionT
     
     public function getBlockPrefix(): string
     {
-        return 'sylius_promotion_rule_collection';
+        return 'vs_payment_promotion_rule_collection';
     }
 }

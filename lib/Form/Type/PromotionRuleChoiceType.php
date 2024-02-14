@@ -27,6 +27,6 @@ final class PromotionRuleChoiceType extends AbstractType
     
     public function getBlockPrefix(): string
     {
-        return 'sylius_promotion_rule_choice';
+        return 'vs_payment_promotion_rule_choice';
     }
 }
