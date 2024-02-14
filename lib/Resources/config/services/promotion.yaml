@@ -36,6 +36,8 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.model.promotion.class%'
+            - '@request_stack'
+            - '@vs_application.repository.locale'
             
     vs_payment.form.promotion_coupon:
         class: Vankosoft\PaymentBundle\Form\PromotionCouponForm
