@@ -53,10 +53,11 @@ abstract class AbstractConfigurationCollectionType extends AbstractType
     public function configureOptions( OptionsResolver $resolver ): void
     {
         $resolver->setDefaults([
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false,
-            'error_bubbling' => false,
+            'allow_add'         => true,
+            'allow_delete'      => true,
+            'prototype'         => true,
+            'by_reference'      => false,
+            'error_bubbling'    => false,
         ]);
     }
     
