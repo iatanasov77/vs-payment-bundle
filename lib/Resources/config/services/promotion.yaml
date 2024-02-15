@@ -36,7 +36,10 @@ services:
     vs_payment.promotion_rule_checker.cart_quantity:
         class: Sylius\Component\Promotion\Checker\Rule\CartQuantityRuleChecker
         tags:
-            - sylius.promotion_rule_checker: { type: 'cart_quantity', label: 'sylius.form.promotion_rule.cart_quantity', form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\CartQuantityConfigurationType' }
+            sylius.promotion_rule_checker:
+                type: 'cart_quantity'
+                label: 'sylius.form.promotion_rule.cart_quantity'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\CartQuantityConfigurationType'
         
         
     ##############################################################################
