@@ -144,11 +144,9 @@
                             <div class="attributesContainer"
                                 data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Promotions/partial/add-rule-prototype.html.twig' with {'form': form.rules.vars.prototype} %}{% endapply %}"
                             >
-                            {#
-                                {% for pictureForm in form.pictures %}
-                                    {% include '@VSPayment/Pages/Promotions/partial/add-rule-prototype.html.twig' with {'form': pictureForm} %}
+                                {% for ruleForm in form.rules %}
+                                    {% include '@VSPayment/Pages/Promotions/partial/add-rule-prototype.html.twig' with {'form': ruleForm} %}
                                 {% endfor %}
-                            #}
                             </div>
                             
                         </fieldset>
@@ -159,11 +157,9 @@
                             <div class="attributesContainer"
                                 data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Promotions/partial/add-action-prototype.html.twig' with {'form': form.actions.vars.prototype} %}{% endapply %}"
                             >
-                            {#
-                                {% for pictureForm in form.pictures %}
-                                    {% include '@VSPayment/Pages/Promotions/partial/add-action-prototype.html.twig' with {'form': pictureForm} %}
+                                {% for actionForm in form.actions %}
+                                    {% include '@VSPayment/Pages/Promotions/partial/add-action-prototype.html.twig' with {'form': actionForm} %}
                                 {% endfor %}
-                            #}
                             </div>
                         </fieldset>
                             
@@ -175,8 +171,14 @@
     </div>  
 {% endblock content %}
 
+{% block head_styles %}
+    {{ parent() }}
+    
+    {{ encore_entry_link_tags( 'js/promotions-edit' ) }}
+{% endblock %}
+
 {% block body_scripts %}
     {{ parent() }}
     
-    {{ encore_entry_script_tags( 'js/coupons-edit' ) }}
+    {{ encore_entry_script_tags( 'js/promotions-edit' ) }}
 {% endblock %}
