@@ -4,6 +4,7 @@ vs_payment:
         gateway: Gateway ID
         factory: Gateway Factory
         factory_placeholder: '-- Select Gateway Factory --'
+        code: Code
         title: Title
         name: Name
         price: Price
@@ -97,6 +98,11 @@ vs_payment:
             actions: Actions
             action_type: Action Type
             rule_type: Rule Type
+            coupons: Coupons
+            usage: Usage
+            options: Options
+            promotion_rules: Promotion Rules
+            promotion_actions: Promotion Actions
          
         coupon:
             valid: Valid

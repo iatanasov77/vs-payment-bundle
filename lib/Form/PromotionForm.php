@@ -44,6 +44,11 @@ class PromotionForm extends AbstractForm
                 'mapped'                => false,
             ])
         
+            ->add( 'code', TextType::class, [
+                'label'                 => 'vs_payment.form.code',
+                'translation_domain'    => 'VSPaymentBundle',
+            ])
+            
             ->add( 'name', TextType::class, [
                 'label'                 => 'vs_payment.form.name',
                 'translation_domain'    => 'VSPaymentBundle',

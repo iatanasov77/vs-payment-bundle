@@ -4,6 +4,7 @@ vs_payment:
         gateway: Гейтуей ID
         factory: Гейтуей Фактори
         factory_placeholder: '-- Избери Гейтуей Фактори --'
+        code: Код
         title: Заглавие
         name: Име
         price: Цена
@@ -97,6 +98,11 @@ vs_payment:
             actions: Actions
             action_type: Action Type
             rule_type: Rule Type
+            coupons: Coupons
+            usage: Usage
+            options: Options
+            promotion_rules: Promotion Rules
+            promotion_actions: Promotion Actions
             
         coupon:
             valid: Valid

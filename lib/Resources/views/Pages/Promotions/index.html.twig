@@ -17,9 +17,11 @@
                     <thead>
                         <tr>
                             <th width="50">N</th>
+                            <th>{{ 'vs_payment.form.promotion.priority' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th data-sortable="true" data-field="code">{{ 'vs_payment.template.coupon_index_code' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th data-sortable="true" data-field="name">{{ 'vs_payment.template.coupon_index_name' | trans( {},'VSPaymentBundle' ) }}</th>
-                            
+                            <th>{{ 'vs_payment.form.promotion.coupons' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.form.promotion.usage' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th>{{ 'vs_application.template.items_index_row_translations' | trans( {},'VSApplicationBundle' ) }}</th>
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
@@ -28,8 +30,17 @@
                     {% for item in resources %}
                         <tr>
                             <td>{{ loop.index }}</td>
+                            <td>{{ item.priority }}</td>
                             <td>{{ item.code }}</td>
                             <td>{{ item.name }}</td>
+                            <td>
+                                {% if item.couponBased %}
+                                    <i class="fas fa-check" style="color: #82c91e;">
+                                {% else %}
+                                    <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                                {% endif %}
+                            </td>
+                            <td> {{ item.used }} / {% if not item.usageLimit %}&infin;{% else %}{{ item.usageLimit }}{% endif %}</td>
                             
                             <td>{{ vs_translations.flags( translations[item.id] ) }}</td>
                             <td>

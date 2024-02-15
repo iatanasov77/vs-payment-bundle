@@ -48,8 +48,7 @@
                             
                             {{ form_widget(form.locale, {'attr': {'class': 'form-control'}}) }}
                         </div>
-                    
-                        {# 
+                        
                         <div class="form-group">
                             {{ form_label(form.code, null, {
                                 'label_attr': {'class': 'col-form-label'}
@@ -64,7 +63,6 @@
                                 </div>
                             </div>
                         </div>
-                        #}
                         
                         <div class="form-group">
                             {{ form_label(form.name, null, {
@@ -82,8 +80,93 @@
                             {{ form_widget(form.description, {'attr': {'class': 'form-control' }}) }}
                         </div>
                         
+                        <fieldset class="border border-dark rounded p-3 mb-4">
+                            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion.options' | trans( {},'VSPaymentBundle' ) }}</legend>
+                            
+                            <label class="custom-control custom-checkbox">  
+                                <input type="checkbox" id="promotion_form_couponBased"
+                                    class="custom-control-input form-check-input"
+                                    name="promotion_form[couponBased]"
+                                    value="{{ form.vars.value.couponBased }}"
+                                    {% if form.vars.value.couponBased %}checked="checked"{% endif %}
+                                />
+                                <span class="custom-control-label">{{ form.couponBased.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
+                            </label>
+                            
+                            <label class="custom-control custom-checkbox">  
+                                <input type="checkbox" id="promotion_form_exclusive"
+                                    class="custom-control-input form-check-input"
+                                    name="promotion_form[exclusive]"
+                                    value="{{ form.vars.value.exclusive }}"
+                                    {% if form.vars.value.exclusive %}checked="checked"{% endif %}
+                                />
+                                <span class="custom-control-label">{{ form.exclusive.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
+                            </label>
+
+                            <div class="form-group">
+                                {{ form_label(form.usageLimit, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                
+                                {{ form_widget(form.usageLimit, {'attr': {'class': 'form-control'}}) }}
+                            </div> 
+                            
+                            <div class="form-group">    
+                                {{ form_label(form.priority, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.priority, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            
+                            <div class="form-group">    
+                                {{ form_label(form.startsAt, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.startsAt, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            
+                            <div class="form-group">    
+                                {{ form_label(form.endsAt, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.endsAt, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            
+                        </fieldset>
                         
+                        <fieldset class="border border-dark rounded p-3 mb-4">
+                            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion.promotion_rules' | trans( {},'VSPaymentBundle' ) }}</legend>
+                            
+                            <div class="attributesContainer"
+                                data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Promotions/partial/add-rule-prototype.html.twig' with {'form': form.rules.vars.prototype} %}{% endapply %}"
+                            >
+                            {#
+                                {% for pictureForm in form.pictures %}
+                                    {% include '@VSPayment/Pages/Promotions/partial/add-rule-prototype.html.twig' with {'form': pictureForm} %}
+                                {% endfor %}
+                            #}
+                            </div>
+                            
+                        </fieldset>
                         
+                        <fieldset class="border border-dark rounded p-3 mb-4">
+                            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion.promotion_actions' | trans( {},'VSPaymentBundle' ) }}</legend>
+                            
+                            <div class="attributesContainer"
+                                data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Promotions/partial/add-action-prototype.html.twig' with {'form': form.actions.vars.prototype} %}{% endapply %}"
+                            >
+                            {#
+                                {% for pictureForm in form.pictures %}
+                                    {% include '@VSPayment/Pages/Promotions/partial/add-action-prototype.html.twig' with {'form': pictureForm} %}
+                                {% endfor %}
+                            #}
+                            </div>
+                        </fieldset>
+                            
                         {{ vs_form.buttons( form ) }}
                     {{ form_end(form, {'render_rest': false}) }}
                 </div>
