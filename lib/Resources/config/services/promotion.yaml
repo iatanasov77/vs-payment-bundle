@@ -10,6 +10,9 @@ services:
         public: true
         
     
+    ##############################################################################
+    # Sylius Registry
+    ##############################################################################
     vs_payment.registry_promotion_rule_checker:
         class: Sylius\Component\Registry\ServiceRegistry
         arguments:
@@ -27,11 +30,19 @@ services:
         class: Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
         
         
+    ##############################################################################
+    # Promotion Rules Types
+    ##############################################################################
     vs_payment.promotion_rule_checker.cart_quantity:
         class: Sylius\Component\Promotion\Checker\Rule\CartQuantityRuleChecker
         tags:
-            - { name: sylius.promotion_rule_checker, type: cart_quantity, label: sylius.form.promotion_rule.cart_quantity, form-type: Sylius\Bundle\PromotionBundle\Form\Type\Rule\CartQuantityConfigurationType }
+            - { name: sylius.promotion_rule_checker, type: cart_quantity, label: sylius.form.promotion_rule.cart_quantity, form-type: Vankosoft\PaymentBundle\Form\Type\Rule\CartQuantityConfigurationType }
         
+        
+    ##############################################################################
+    # Promotion Actions Types
+    ##############################################################################
+    
         
     ##################################################################################
     # Forms
@@ -97,6 +108,7 @@ services:
             - '%vs_payment.model.promotion_rule.class%'
             - '%vs_payment.form.type.promotion_rule.validation_groups%'
             - '@vs_payment.form_registry.promotion_rule_checker'
+
 
 
 

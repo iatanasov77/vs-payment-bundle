@@ -105,6 +105,15 @@ vs_payment:
             options: Options
             promotion_rules: Promotion Rules
             promotion_actions: Promotion Actions
+            price_range: Price Range
+            
+        promotion_rule:
+            item_total_configuration_amount: Amount
+            cart_quantity_configuration_count: Count
+            
+        promotion_action:
+            percentage_discount_configuration_percentage: Percentage
+            fixed_discount_configuration_amount: Amount
             
         coupon:
             valid: Valid
