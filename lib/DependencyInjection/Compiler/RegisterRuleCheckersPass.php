@@ -19,7 +19,7 @@ final class RegisterRuleCheckersPass implements CompilerPassInterface
         $promotionRuleCheckerFormTypeRegistry   = $container->getDefinition( 'vs_payment.form_registry.promotion_rule_checker' );
         
         $promotionRuleCheckerTypeToLabelMap = [];
-        foreach ( $container->findTaggedServiceIds( 'vs_payment.promotion_rule_checker' ) as $id => $attributes ) {
+        foreach ( $container->findTaggedServiceIds( 'sylius.promotion_rule_checker' ) as $id => $attributes ) {
             foreach ( $attributes as $attribute ) {
                 if ( ! isset( $attribute['type'], $attribute['label'], $attribute['form_type'] ) ) {
                     throw new \InvalidArgumentException( 'Tagged rule checker `' . $id . '` needs to have `type`, `form_type` and `label` attributes.' );

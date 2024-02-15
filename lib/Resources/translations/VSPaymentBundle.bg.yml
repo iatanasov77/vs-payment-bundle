@@ -97,7 +97,9 @@ vs_payment:
             rules: Rules
             actions: Actions
             action_type: Action Type
+            action_type_placeholder: '-- Select Action Type --'
             rule_type: Rule Type
+            rule_type_placeholder: '-- Select Rule Type --'
             coupons: Coupons
             usage: Usage
             options: Options

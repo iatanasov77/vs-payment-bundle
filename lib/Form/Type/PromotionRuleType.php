@@ -11,6 +11,7 @@ final class PromotionRuleType extends AbstractConfigurablePromotionElementType
         $builder
             ->add( 'type', PromotionRuleChoiceType::class, [
                 'label'                 => 'vs_payment.form.promotion.rule_type',
+                'placeholder'           => 'vs_payment.form.promotion.rule_type_placeholder',
                 'translation_domain'    => 'VSPaymentBundle',
                 'attr'                  => [
                     'data-form-collection' => 'update',

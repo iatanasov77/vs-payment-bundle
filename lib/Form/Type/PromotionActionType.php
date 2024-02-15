@@ -11,6 +11,7 @@ final class PromotionActionType extends AbstractConfigurablePromotionElementType
         $builder
             ->add( 'type', PromotionActionChoiceType::class, [
                 'label'                 => 'vs_payment.form.promotion.action_type',
+                'placeholder'           => 'vs_payment.form.promotion.action_type_placeholder',
                 'translation_domain'    => 'VSPaymentBundle',
                 'attr'                  => [
                     'data-form-collection' => 'update',
