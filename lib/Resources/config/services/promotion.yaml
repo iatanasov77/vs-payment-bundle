@@ -41,6 +41,14 @@ services:
                 type: 'cart_quantity'
                 label: 'vs_payment.form.promotion_rule.cart_quantity'
                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\CartQuantityConfigurationType'
+    vs_payment.promotion_rule_checker.item_total:
+        class: Sylius\Component\Promotion\Checker\Rule\ItemTotalRuleChecker
+        tags:
+            sylius.promotion_rule_checker:
+                name: 'sylius.promotion_rule_checker'
+                type: 'item_total'
+                label: 'vs_payment.form.promotion_rule.item_total'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\ItemTotalConfigurationType'
         
         
     ##############################################################################
