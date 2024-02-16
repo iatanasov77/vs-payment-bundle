@@ -1,13 +1,15 @@
 <?php namespace Vankosoft\PaymentBundle\Form\Type;
 
-use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Sylius\Component\Promotion\Model\ConfigurablePromotionElementInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
+
+use Sylius\Component\Promotion\Model\ConfigurablePromotionElementInterface;
 
 abstract class AbstractConfigurablePromotionElementType extends AbstractResourceType
 {
@@ -25,13 +27,13 @@ abstract class AbstractConfigurablePromotionElementType extends AbstractResource
         parent::buildForm( $builder, $options );
         
         $builder
-            ->addEventListener( FormEvents::PRE_SET_DATA, function ( FormEvent $event ): void {
+            ->addEventListener( FormEvents::PRE_SET_DATA, function ( FormEvent $event ) use ( $options ) {
                 $type = $this->getRegistryIdentifier( $event->getForm(), $event->getData() );
                 if ( null === $type ) {
                     return;
                 }
                 
-                $this->addConfigurationFields( $event->getForm(), $this->formTypeRegistry->get( $type, 'default' ) );
+                $this->addConfigurationFields( $event->getForm(), $this->formTypeRegistry->get( $type, 'default' ), $options );
             })
             
             ->addEventListener( FormEvents::POST_SET_DATA, function ( FormEvent $event ) {
@@ -43,14 +45,14 @@ abstract class AbstractConfigurablePromotionElementType extends AbstractResource
                 $event->getForm()->get( 'type' )->setData( $type );
             })
             
-            ->addEventListener( FormEvents::PRE_SUBMIT, function ( FormEvent $event ): void {
+            ->addEventListener( FormEvents::PRE_SUBMIT, function ( FormEvent $event ) use ( $options ) {
                 $data = $event->getData();
                 
                 if ( ! isset( $data['type'] ) ) {
                     return;
                 }
                 
-                $this->addConfigurationFields( $event->getForm(), $this->formTypeRegistry->get( $data['type'], 'default' ) );
+                $this->addConfigurationFields( $event->getForm(), $this->formTypeRegistry->get( $data['type'], 'default' ), $options );
             })
         ;
     }
@@ -62,13 +64,16 @@ abstract class AbstractConfigurablePromotionElementType extends AbstractResource
         $resolver
             ->setDefault( 'configuration_type', null )
             ->setAllowedTypes( 'configuration_type', ['string', 'null'] )
+            
+            ->setDefault( 'configuration_label', true )
+            ->setAllowedTypes( 'configuration_label', ['bool'] )
         ;
     }
     
-    protected function addConfigurationFields( FormInterface $form, string $configurationType ): void
+    protected function addConfigurationFields( FormInterface $form, string $configurationType, array $options ): void
     {
         $form->add( 'configuration', $configurationType, [
-            'label' => false,
+            'label' => $options['configuration_label'],
         ]);
     }
     
