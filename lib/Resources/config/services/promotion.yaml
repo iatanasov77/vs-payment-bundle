@@ -3,7 +3,9 @@ parameters:
     vs_payment.form.type.promotion_action.validation_groups: ['sylius']
     vs_payment.form.type.promotion_rule.validation_groups: ['sylius']
     vs_payment.form.type.promotion_coupon.validation_groups: ['sylius']
-
+    
+    # I Dont Know How to Configure This For Now
+    vs_payment.form.type.promotion.base_currency: 'EUR'
 
 services:
     _defaults:
@@ -33,6 +35,13 @@ services:
     ##############################################################################
     # Promotion Rules Types
     ##############################################################################
+    vs_payment.form.type.promotion_rule.item_total_configuration:
+        class: Vankosoft\PaymentBundle\Form\Type\Rule\ItemTotalConfigurationType
+        arguments:
+            - '%vs_payment.form.type.promotion.base_currency%'
+        tags:
+            - { name: form.type }
+    
     vs_payment.promotion_rule_checker.cart_quantity:
         class: Sylius\Component\Promotion\Checker\Rule\CartQuantityRuleChecker
         tags:
