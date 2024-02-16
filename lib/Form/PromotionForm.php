@@ -102,6 +102,7 @@ class PromotionForm extends AbstractForm
             ->add( 'rules', PromotionRuleCollectionType::class, [
                 'label'                 => 'vs_payment.form.promotion.rules',
                 'translation_domain'    => 'VSPaymentBundle',
+                'entry_options'         => ['currency' => 'EUR'],
                 'button_add_label'      => 'sylius.form.promotion.add_rule',
             ])
             
