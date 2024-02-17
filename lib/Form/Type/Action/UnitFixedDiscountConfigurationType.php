@@ -11,6 +11,14 @@ use Vankosoft\PaymentBundle\Form\Type\PromotionFilterCollectionType;
 
 final class UnitFixedDiscountConfigurationType extends AbstractType
 {
+    /** @var string */
+    private $baseCurrency;
+    
+    public function __construct( string $baseCurrency )
+    {
+        $this->baseCurrency = $baseCurrency;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -37,6 +45,10 @@ final class UnitFixedDiscountConfigurationType extends AbstractType
         $resolver
             ->setRequired( 'currency' )
             ->setAllowedTypes( 'currency', 'string' )
+            
+            ->setDefaults([
+                'currency'  => $this->baseCurrency,
+            ])
         ;
     }
     

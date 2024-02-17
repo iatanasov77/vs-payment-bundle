@@ -108,6 +108,8 @@ vs_payment:
             price_range: Price Range
             
         promotion_rule:
+            cart_quantity: Cart quantity
+            item_total: Item total
             item_total_configuration_amount: Amount
             cart_quantity_configuration_count: Count
             

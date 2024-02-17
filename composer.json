@@ -31,6 +31,7 @@
 		"plumtreesystems/payum-paysera-gateway": "^0.3",
         "vankosoft/borica-bundle": "^0.2",
         
+        "sylius/order": "^1.12",
 		"sylius/currency": "^1.12",
 		"sylius/promotion": "^1.12",
 		"sylius/money-bundle": "^1.12",

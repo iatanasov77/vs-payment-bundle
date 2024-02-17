@@ -10,6 +10,14 @@ use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 
 final class FixedDiscountConfigurationType extends AbstractType
 {
+    /** @var string */
+    private $baseCurrency;
+    
+    public function __construct( string $baseCurrency )
+    {
+        $this->baseCurrency = $baseCurrency;
+    }
+    
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
@@ -30,6 +38,10 @@ final class FixedDiscountConfigurationType extends AbstractType
         $resolver
             ->setRequired( 'currency' )
             ->setAllowedTypes( 'currency', 'string' )
+            
+            ->setDefaults([
+                'currency'  => $this->baseCurrency,
+            ])
         ;
     }
     
