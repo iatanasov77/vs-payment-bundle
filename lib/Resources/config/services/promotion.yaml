@@ -75,14 +75,14 @@ services:
                 label: 'vs_payment.form.promotion_rule.item_total'
                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\ItemTotalConfigurationType'
                 
-    vs_payment.promotion_rule_checker.application_item_total:
-        class: Sylius\Component\Promotion\Checker\Rule\ItemTotalRuleChecker
-        tags:
-            sylius.promotion_rule_checker:
-                name: 'sylius.promotion_rule_checker'
-                type: 'item_total'
-                label: 'vs_payment.form.promotion_rule.application_item_total'
-                form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\ApplicationBasedItemTotalConfigurationType'
+#     vs_payment.promotion_rule_checker.application_item_total:
+#         class: Sylius\Component\Promotion\Checker\Rule\ItemTotalRuleChecker
+#         tags:
+#             sylius.promotion_rule_checker:
+#                 name: 'sylius.promotion_rule_checker'
+#                 type: 'item_total'
+#                 label: 'vs_payment.form.promotion_rule.application_item_total'
+#                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\ApplicationBasedItemTotalConfigurationType'
                 
     vs_payment.promotion_rule_checker.total_of_items_from_taxon:
         class: Vankosoft\PaymentBundle\Component\Promotion\RuleChecker\TotalOfItemsFromTaxonRuleChecker
