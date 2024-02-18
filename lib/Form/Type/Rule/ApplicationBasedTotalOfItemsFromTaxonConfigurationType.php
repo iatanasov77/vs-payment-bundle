@@ -1,4 +1,4 @@
-<?php namespace Sylius\Bundle\CoreBundle\Form\Type\Promotion\Rule;
+<?php namespace Vankosoft\PaymentBundle\Form\Type\Rule;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
