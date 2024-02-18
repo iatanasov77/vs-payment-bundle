@@ -1,24 +1,36 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion\Action;
 
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Promotion\Applicator\UnitsPromotionAdjustmentsApplicatorInterface;
 use Sylius\Component\Promotion\Action\PromotionActionCommandInterface;
-use Sylius\Component\Promotion\Model\PromotionInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 use Webmozart\Assert\Assert;
 
-use Vankosoft\PaymentBundle\Component\Distributor\MinimumPriceDistributorInterface;
+use Vankosoft\PaymentBundle\Component\Promotion\Applicator\UnitsPromotionAdjustmentsApplicatorInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Component\Distributor\ProportionalIntegerDistributorInterface;
+use Vankosoft\CatalogBundle\Component\Distributor\MinimumPriceDistributorInterface;
 
 final class PercentageDiscountPromotionActionCommand extends DiscountPromotionActionCommand implements PromotionActionCommandInterface
 {
     public const TYPE = 'order_percentage_discount';
 
+    /** @var ProportionalIntegerDistributorInterface */
+    private $distributor;
+    
+    /** @var UnitsPromotionAdjustmentsApplicatorInterface */
+    private $unitsPromotionAdjustmentsApplicator;
+    
+    /** @var MinimumPriceDistributorInterface | null */
+    private $minimumPriceDistributor;
+    
     public function __construct(
-        private ProportionalIntegerDistributorInterface $distributor,
-        private UnitsPromotionAdjustmentsApplicatorInterface $unitsPromotionAdjustmentsApplicator,
-        private ?MinimumPriceDistributorInterface $minimumPriceDistributor = null,
+        ProportionalIntegerDistributorInterface $distributor,
+        UnitsPromotionAdjustmentsApplicatorInterface $unitsPromotionAdjustmentsApplicator,
+        ?MinimumPriceDistributorInterface $minimumPriceDistributor = null
     ) {
+        $this->distributor                          = $distributor;
+        $this->unitsPromotionAdjustmentsApplicator  = $unitsPromotionAdjustmentsApplicator;
+        $this->minimumPriceDistributor              = $minimumPriceDistributor;
     }
 
     public function execute( PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion ): bool
@@ -32,7 +44,7 @@ final class PercentageDiscountPromotionActionCommand extends DiscountPromotionAc
 
         try {
             $this->isConfigurationValid( $configuration );
-        } catch (\InvalidArgumentException) {
+        } catch ( \InvalidArgumentException $e ) {
             return false;
         }
 
@@ -54,12 +66,14 @@ final class PercentageDiscountPromotionActionCommand extends DiscountPromotionAc
                     continue;
                 }
 
-                $variant = $orderItem->getVariant();
-                if (!$variant->getAppliedPromotionsForChannel( $subject->getChannel())->isEmpty() ) {
+                /*
+                $product = $orderItem->getProduct();
+                if ( ! $product->getAppliedPromotionsForChannel( $subject->getApplication() )->isEmpty() ) {
                     $itemsTotal[] = 0;
 
                     continue;
                 }
+                */
 
                 $itemsTotal[] = $orderItem->getTotal();
             }

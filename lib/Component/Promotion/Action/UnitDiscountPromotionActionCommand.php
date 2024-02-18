@@ -1,28 +1,30 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion\Action;
 
 use Sylius\Component\Promotion\Action\PromotionActionCommandInterface;
-use Sylius\Component\Promotion\Model\PromotionInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 use Sylius\Component\Resource\Exception\UnexpectedTypeException;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
-use Sylius\Component\Core\Model\AdjustmentInterface;
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItemInterface;
-use Sylius\Component\Core\Model\OrderItemUnitInterface;
-use Sylius\Component\Core\Model\ProductVariantInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\AdjustmentInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Sylius\Component\Order\Model\AdjustmentInterface as OrderAdjustmentInterface;
 
 abstract class UnitDiscountPromotionActionCommand implements PromotionActionCommandInterface
 {
-    public function __construct( protected FactoryInterface $adjustmentFactory )
+    /** @var FactoryInterface */
+    protected $adjustmentFactory;
+    
+    public function __construct( FactoryInterface $adjustmentFactory )
     {
+        $this->adjustmentFactory    = $adjustmentFactory;
     }
 
     /**
      * @throws UnexpectedTypeException
      */
-    public function revert (PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion ): void
+    public function revert( PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion ): void
     {
         if ( ! $subject instanceof OrderInterface ) {
             throw new UnexpectedTypeException( $subject, OrderInterface::class );
@@ -42,8 +44,8 @@ abstract class UnitDiscountPromotionActionCommand implements PromotionActionComm
 
     protected function removeUnitOrderItemAdjustments( OrderItemUnitInterface $unit, PromotionInterface $promotion ): void
     {
-        foreach ($unit->getAdjustments(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT) as $adjustment) {
-            if ($promotion->getCode() === $adjustment->getOriginCode()) {
+        foreach ( $unit->getAdjustments( AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT) as $adjustment ) {
+            if ( $promotion->getCode() === $adjustment->getOriginCode() ) {
                 $unit->removeAdjustment($adjustment);
             }
         }
@@ -68,8 +70,9 @@ abstract class UnitDiscountPromotionActionCommand implements PromotionActionComm
 
         $channel        = $order->getChannel();
 
-        $minimumPrice   = $variant->getChannelPricingForChannel( $channel )->getMinimumPrice();
-
+        //$minimumPrice   = $variant->getChannelPricingForChannel( $channel )->getMinimumPrice();
+        $minimumPrice   = 0;
+        
         $adjustment->setAmount( $this->calculate( $unit->getTotal(), $minimumPrice, -$amount ) );
 
         $unit->addAdjustment( $adjustment );

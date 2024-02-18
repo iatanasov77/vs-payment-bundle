@@ -4,12 +4,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
+use Vankosoft\ApplicationBundle\Model\Interfaces\ApplicationInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
+
 //use Vankosoft\PaymentBundle\Model\Interfaces\CouponInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PromotionCouponInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\AdjustmentInterface;
 
 class Order implements OrderInterface
 {
@@ -26,16 +31,19 @@ class Order implements OrderInterface
     /** @var UserPaymentAwareInterface */
     protected $user;
     
+    /** @var UserPaymentAwareInterface */
+    protected $application;
+    
     /** @var PaymentMethodInterface */
     protected $paymentMethod;
-    
-//     /** @var CouponInterface */
-//     protected $coupon;
     
     /** @var PaymentInterface */
     protected $payment;
     
-    /** @var float */
+    /**
+     * @deprecated since Version 3.1, use $this->total instead.
+     * @var float
+     */
     protected $totalAmount;
     
     /** @var string */
@@ -47,11 +55,33 @@ class Order implements OrderInterface
     /** @var Collection|OrderItemInterface[] */
     protected $items;
     
+    /** @var int */
+    protected $itemsTotal = 0;
+    
+    /** @var PromotionCouponInterface */
+    protected $promotionCoupon;
+    
+    /** @var Collection<array-key, PromotionInterface> */
+    protected $promotions;
+    
+    /** @var Collection<array-key, AdjustmentInterface> */
+    protected $adjustments;
+    
+    /** @var int */
+    protected $adjustmentsTotal = 0;
+    
+    /**
+     * Items total + adjustments total.
+     *
+     * @var int
+     */
+    protected $total = 0;
+    
     /**
      * NEED THIS BECAUSE ORDER SHOULD BE CREATED BEFORE THE PAYMENT IS PRAPARED AND DONE
      * https://dev.to/qferrer/purging-expired-carts-building-a-shopping-cart-with-symfony-3eff
      * 
-     * @var enum
+     * @var string
      */
     protected $status;
     
@@ -64,6 +94,8 @@ class Order implements OrderInterface
     public function __construct()
     {
         $this->items        = new ArrayCollection();
+        
+        $this->adjustments  = new ArrayCollection();
         
         /** 
          * Set Default Values
@@ -89,6 +121,16 @@ class Order implements OrderInterface
         $this->user = $user;
         
         return $this;
+    }
+    
+    public function getApplication(): ?ApplicationInterface
+    {
+        return $this->application;
+    }
+    
+    public function setApplication(?ApplicationInterface $application): void
+    {
+        $this->application = $application;
     }
     
     public function getPaymentMethod()
@@ -178,10 +220,15 @@ class Order implements OrderInterface
     public function addItem( OrderItemInterface $item )
     {
         if( ! $this->items->contains( $item ) ) {
+            $this->itemsTotal += $item->getTotal();
+            
             $this->items->add( $item );
             $item->setOrder( $this );
             
+            /** @deprecated since Version 3.1, use $this->total instead. */
             $this->totalAmount += $item->getPrice();
+            
+            $this->recalculateTotal();
         }
     }
     
@@ -191,8 +238,32 @@ class Order implements OrderInterface
             $this->items->removeElement( $item );
             $item->setOrder( null );
             
+            /** @deprecated since Version 3.1, use $this->total instead. */
             $this->totalAmount -= $item->getPrice();
+            
+            $this->itemsTotal -= $item->getTotal();
+            $this->recalculateTotal();
         }
+    }
+    
+    public function hasItem( OrderItemInterface $item ): bool
+    {
+        return $this->items->contains($item);
+    }
+    
+    public function getItemsTotal(): int
+    {
+        return $this->itemsTotal;
+    }
+    
+    public function recalculateItemsTotal(): void
+    {
+        $this->itemsTotal = 0;
+        foreach ($this->items as $item) {
+            $this->itemsTotal += $item->getTotal();
+        }
+        
+        $this->recalculateTotal();
     }
     
     public function getStatus()
@@ -252,5 +323,188 @@ class Order implements OrderInterface
         }
         
         return $subscriptions;
+    }
+    
+    public function getTotalQuantity(): int
+    {
+        $quantity = 0;
+        
+        foreach ( $this->items as $item ) {
+            $quantity += $item->getQuantity();
+        }
+        
+        return $quantity;
+    }
+    
+    public function isEmpty(): bool
+    {
+        return $this->items->isEmpty();
+    }
+    
+    public function getPromotions(): Collection
+    {
+        return $this->promotions;
+    }
+    
+    public function addPromotion(PromotionInterface $promotion): void
+    {
+        if (!$this->hasPromotion($promotion)) {
+            $this->promotions->add($promotion);
+        }
+    }
+    
+    public function removePromotion(PromotionInterface $promotion): void
+    {
+        if ($this->hasPromotion($promotion)) {
+            $this->promotions->removeElement($promotion);
+        }
+    }
+    
+    public function hasPromotion(PromotionInterface $promotion): bool
+    {
+        return $this->promotions->contains($promotion);
+    }
+    
+    public function getAdjustments(?string $type = null): Collection
+    {
+        if (null === $type) {
+            return $this->adjustments;
+        }
+        
+        return $this->adjustments->filter(function (AdjustmentInterface $adjustment) use ($type) {
+            return $type === $adjustment->getType();
+        });
+    }
+    
+    public function getAdjustmentsRecursively(?string $type = null): Collection
+    {
+        $adjustments = clone $this->getAdjustments($type);
+        foreach ($this->items as $item) {
+            foreach ($item->getAdjustmentsRecursively($type) as $adjustment) {
+                $adjustments->add($adjustment);
+            }
+        }
+        
+        return $adjustments;
+    }
+    
+    public function addAdjustment(AdjustmentInterface $adjustment): void
+    {
+        if (!$this->hasAdjustment($adjustment)) {
+            $this->adjustments->add($adjustment);
+            $this->addToAdjustmentsTotal($adjustment);
+            $adjustment->setAdjustable($this);
+            $this->recalculateAdjustmentsTotal();
+        }
+    }
+    
+    public function removeAdjustment(AdjustmentInterface $adjustment): void
+    {
+        if (!$adjustment->isLocked() && $this->hasAdjustment($adjustment)) {
+            $this->adjustments->removeElement($adjustment);
+            $this->subtractFromAdjustmentsTotal($adjustment);
+            $adjustment->setAdjustable(null);
+            $this->recalculateAdjustmentsTotal();
+        }
+    }
+    
+    public function hasAdjustment(AdjustmentInterface $adjustment): bool
+    {
+        return $this->adjustments->contains($adjustment);
+    }
+    
+    public function getAdjustmentsTotal(?string $type = null): int
+    {
+        if (null === $type) {
+            return $this->adjustmentsTotal;
+        }
+        
+        $total = 0;
+        foreach ($this->getAdjustments($type) as $adjustment) {
+            if (!$adjustment->isNeutral()) {
+                $total += $adjustment->getAmount();
+            }
+        }
+        
+        return $total;
+    }
+    
+    public function getAdjustmentsTotalRecursively(?string $type = null): int
+    {
+        $total = 0;
+        foreach ($this->getAdjustmentsRecursively($type) as $adjustment) {
+            if (!$adjustment->isNeutral()) {
+                $total += $adjustment->getAmount();
+            }
+        }
+        
+        return $total;
+    }
+    
+    public function removeAdjustments(?string $type = null): void
+    {
+        foreach ($this->getAdjustments($type) as $adjustment) {
+            if ($adjustment->isLocked()) {
+                continue;
+            }
+            
+            $this->removeAdjustment($adjustment);
+        }
+        
+        $this->recalculateAdjustmentsTotal();
+    }
+    
+    public function removeAdjustmentsRecursively(?string $type = null): void
+    {
+        $this->removeAdjustments($type);
+        foreach ($this->items as $item) {
+            $item->removeAdjustmentsRecursively($type);
+        }
+    }
+    
+    public function recalculateAdjustmentsTotal(): void
+    {
+        $this->adjustmentsTotal = 0;
+        
+        foreach ($this->adjustments as $adjustment) {
+            if (!$adjustment->isNeutral()) {
+                $this->adjustmentsTotal += $adjustment->getAmount();
+            }
+        }
+        
+        $this->recalculateTotal();
+    }
+    
+    public function canBeProcessed(): bool
+    {
+        return $this->status === self::STATUS_SHOPPING_CART;
+    }
+    
+    /**
+     * Items total + Adjustments total.
+     */
+    protected function recalculateTotal(): void
+    {
+        $this->total = $this->itemsTotal + $this->adjustmentsTotal;
+        
+        if ($this->total < 0) {
+            $this->total = 0;
+        }
+    }
+    
+    protected function addToAdjustmentsTotal(AdjustmentInterface $adjustment): void
+    {
+        if (!$adjustment->isNeutral()) {
+            $this->adjustmentsTotal += $adjustment->getAmount();
+            $this->recalculateTotal();
+        }
+    }
+    
+    protected function subtractFromAdjustmentsTotal(AdjustmentInterface $adjustment): void
+    {
+        if (!$adjustment->isNeutral()) {
+            $this->adjustmentsTotal -= $adjustment->getAmount();
+            $this->recalculateTotal();
+        }
     }
 }

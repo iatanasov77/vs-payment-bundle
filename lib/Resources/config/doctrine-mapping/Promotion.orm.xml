@@ -41,6 +41,21 @@
                 <cascade-all />
             </cascade>
         </one-to-many>
+        
+        <many-to-many field="applications" target-entity="Vankosoft\ApplicationBundle\Model\Interfaces\ApplicationInterface">
+            <order-by>
+                <order-by-field name="id" />
+            </order-by>
+
+            <join-table name="VSPAY_Promotion_Applications">
+                <join-columns>
+                    <join-column name="promotion_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="application_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>

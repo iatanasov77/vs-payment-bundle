@@ -8,6 +8,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Resource\Factory\Factory;
 use Vankosoft\UsersBundle\Security\SecurityBridge;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Vankosoft\ApplicationBundle\Component\Context\ApplicationContextInterface;
 
 class OrderFactory
 {
@@ -28,19 +29,24 @@ class OrderFactory
     /** @var Factory */
     private $ordersFactory;
     
+    /** @var ApplicationContextInterface */
+    private $applicationContext;
+    
     public function __construct(
         RequestStack $requestStack,
         ManagerRegistry $doctrine,
         SecurityBridge $securityBridge,
         RepositoryInterface $ordersRepository,
-        Factory $ordersFactory
+        Factory $ordersFactory,
+        ApplicationContextInterface $applicationContext
     ) {
-        $this->doctrine         = $doctrine;
-        $this->securityBridge   = $securityBridge;
-        $this->ordersRepository = $ordersRepository;
-        $this->ordersFactory    = $ordersFactory;
+        $this->doctrine             = $doctrine;
+        $this->securityBridge       = $securityBridge;
+        $this->ordersRepository     = $ordersRepository;
+        $this->ordersFactory        = $ordersFactory;
+        $this->applicationContext   = $applicationContext;
         
-        $this->request          = $requestStack->getCurrentRequest();
+        $this->request              = $requestStack->getCurrentRequest();
     }
     
     public function getShoppingCart(): OrderInterface
@@ -57,6 +63,7 @@ class OrderFactory
         if ( ! $shoppingCart ) {
             $shoppingCart   = $this->ordersFactory->createNew();
             
+            $shoppingCart->setApplication( $this->applicationContext->getApplication() );
             $shoppingCart->setUser( $this->securityBridge->getUser() );
             $shoppingCart->setSessionId( $session->getId() );
             

@@ -1,19 +1,20 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion\Action;
 
-use Sylius\Component\Core\Model\AdjustmentInterface;
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItemUnitInterface;
 use Sylius\Component\Promotion\Action\PromotionActionCommandInterface;
-use Sylius\Component\Promotion\Model\PromotionInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 use Webmozart\Assert\Assert;
+
+use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\AdjustmentInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Sylius\Component\Core\Model\OrderItemUnitInterface;
 
 abstract class DiscountPromotionActionCommand implements PromotionActionCommandInterface
 {
     /**
      * @throws \InvalidArgumentException
      */
-    abstract protected function isConfigurationValid(array $configuration): void;
+    abstract protected function isConfigurationValid( array $configuration ): void;
 
     public function revert( PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion ): void
     {
@@ -24,11 +25,13 @@ abstract class DiscountPromotionActionCommand implements PromotionActionCommandI
             return;
         }
 
+        /*
         foreach ( $subject->getItems() as $item ) {
             foreach ( $item->getUnits() as $unit ) {
                 $this->removeUnitOrderPromotionAdjustmentsByOrigin( $unit, $promotion );
             }
         }
+        */
     }
 
     /**
@@ -42,6 +45,7 @@ abstract class DiscountPromotionActionCommand implements PromotionActionCommandI
         return 0 !== $subject->countItems();
     }
 
+    /*
     private function removeUnitOrderPromotionAdjustmentsByOrigin(
         OrderItemUnitInterface $unit,
         PromotionInterface $promotion,
@@ -52,4 +56,5 @@ abstract class DiscountPromotionActionCommand implements PromotionActionCommandI
             }
         }
     }
+    */
 }

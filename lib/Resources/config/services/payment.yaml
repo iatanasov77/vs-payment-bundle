@@ -49,6 +49,7 @@ services:
             - '@vs_users.security_bridge'
             - '@vs_payment.repository.order'
             - '@vs_payment.factory.order'
+            - '@vs_application.context.application'
     
     ########################################################################
     # Checkout Controllers

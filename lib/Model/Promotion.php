@@ -1,12 +1,19 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Webmozart\Assert\Assert;
 use Sylius\Component\Promotion\Model\Promotion as BasePromotion;
 use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
+use Vankosoft\ApplicationBundle\Model\Interfaces\ApplicationInterface;
 
 class Promotion extends BasePromotion implements PromotionInterface
 {
     /** @var string */
     protected $locale;
+    
+    /** @var Collection<array-key, PromotionInterface> */
+    protected $applications;
     
     public function getTranslatableLocale(): ?string
     {
@@ -18,5 +25,32 @@ class Promotion extends BasePromotion implements PromotionInterface
         $this->locale = $locale;
         
         return $this;
+    }
+    
+    public function getApplications(): Collection
+    {
+        /** @phpstan-ignore-next-line */
+        return $this->applications;
+    }
+    
+    public function addApplication(ApplicationInterface $application): void
+    {
+        Assert::isInstanceOf($application, ApplicationInterface::class);
+        if (!$this->hasApplication($application)) {
+            $this->applications->add($application);
+        }
+    }
+    
+    public function removeApplication(ApplicationInterface $application): void
+    {
+        Assert::isInstanceOf($application, ApplicationInterface::class);
+        if ($this->hasApplication($application)) {
+            $this->applications->removeElement($application);
+        }
+    }
+    
+    public function hasApplication(ApplicationInterface $application): bool
+    {
+        return $this->applications->contains($application);
     }
 }

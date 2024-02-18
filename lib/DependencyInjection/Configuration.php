@@ -57,6 +57,8 @@ use Vankosoft\PaymentBundle\Form\Type\PromotionActionType;
 use Vankosoft\PaymentBundle\Model\PromotionRule;
 use Vankosoft\PaymentBundle\Form\Type\PromotionRuleType;
 
+use Vankosoft\PaymentBundle\Model\Adjustment;
+
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
 /**
@@ -316,6 +318,21 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( PromotionRuleType::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
+                        ->arrayNode( 'adjustment' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode( 'model' )->defaultValue( Adjustment::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

@@ -133,12 +133,12 @@ services:
         tags:
             - { name: form.type }
             
-    vs_payment.form.type.promotion_action.unit_fixed_discount_configuration:
-        class: Vankosoft\PaymentBundle\Form\Type\Action\UnitFixedDiscountConfigurationType
-        arguments:
-            - '%vs_payment.form.type.promotion.base_currency%'
-        tags:
-            - { name: form.type }
+#     vs_payment.form.type.promotion_action.unit_fixed_discount_configuration:
+#         class: Vankosoft\PaymentBundle\Form\Type\Action\UnitFixedDiscountConfigurationType
+#         arguments:
+#             - '%vs_payment.form.type.promotion.base_currency%'
+#         tags:
+#             - { name: form.type }
     
     vs_payment.form.type.promotion_action.unit_percentage_discount_configuration:
         class: Vankosoft\PaymentBundle\Form\Type\Action\UnitPercentageDiscountConfigurationType
@@ -152,7 +152,7 @@ services:
         arguments:
             - '@vs_payment.proportional_integer_distributor'
             - '@vs_payment.promotion.units_promotion_adjustments_applicator'
-            - '@Vankosoft\PaymentBundle\Component\Distributor\MinimumPriceDistributorInterface'
+            - '@Vankosoft\CatalogBundle\Component\Distributor\MinimumPriceDistributorInterface'
             - '@vs_payment.currency_converter'
         tags:
             sylius.promotion_action:
@@ -180,7 +180,7 @@ services:
         arguments:
             - '@vs_payment.proportional_integer_distributor'
             - '@vs_payment.promotion.units_promotion_adjustments_applicator'
-            - '@Vankosoft\PaymentBundle\Component\Distributor\MinimumPriceDistributorInterface'
+            - '@Vankosoft\CatalogBundle\Component\Distributor\MinimumPriceDistributorInterface'
         tags:
             sylius.promotion_action:
                 name: 'sylius.promotion_action'
@@ -230,11 +230,6 @@ services:
         class: Vankosoft\PaymentBundle\Component\Distributor\ProportionalIntegerDistributor
     Vankosoft\PaymentBundle\Component\Distributor\ProportionalIntegerDistributorInterface:
         alias: vs_payment.proportional_integer_distributor
-
-    Vankosoft\PaymentBundle\Component\Distributor\MinimumPriceDistributorInterface:
-        class: Vankosoft\PaymentBundle\Component\Distributor\\MinimumPriceDistributor
-        arguments:
-            - '@vs_payment.proportional_integer_distributor'
 
     ##############################################################################
     # Order Ajustment
