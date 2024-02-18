@@ -341,6 +341,26 @@ class Order implements OrderInterface
         return $this->items->isEmpty();
     }
     
+    public function getPromotionCoupon(): ?PromotionCouponInterface
+    {
+        return $this->promotionCoupon;
+    }
+    
+    public function setPromotionCoupon(?PromotionCouponInterface $coupon): void
+    {
+        $this->promotionCoupon = $coupon;
+    }
+    
+    public function getPromotionSubjectTotal(): int
+    {
+        return $this->getItemsTotal();
+    }
+    
+    public function getPromotionSubjectCount(): int
+    {
+        return $this->getTotalQuantity();
+    }
+    
     public function getPromotions(): Collection
     {
         return $this->promotions;
