@@ -9,7 +9,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\AdjustmentInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
-use Sylius\Component\Order\Model\AdjustmentInterface as OrderAdjustmentInterface;
+use Sylius\Component\Promotion\Model\PromotionInterface as BasePromotionInterface;
 
 abstract class UnitDiscountPromotionActionCommand implements PromotionActionCommandInterface
 {
@@ -24,7 +24,7 @@ abstract class UnitDiscountPromotionActionCommand implements PromotionActionComm
     /**
      * @throws UnexpectedTypeException
      */
-    public function revert( PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion ): void
+    public function revert( PromotionSubjectInterface $subject, array $configuration, BasePromotionInterface $promotion ): void
     {
         if ( ! $subject instanceof OrderInterface ) {
             throw new UnexpectedTypeException( $subject, OrderInterface::class );
@@ -81,8 +81,8 @@ abstract class UnitDiscountPromotionActionCommand implements PromotionActionComm
     protected function createAdjustment(
         PromotionInterface $promotion,
         string $type = AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT,
-    ): OrderAdjustmentInterface {
-        /** @var OrderAdjustmentInterface $adjustment */
+    ): AdjustmentInterface {
+        /** @var AdjustmentInterface $adjustment */
         $adjustment = $this->adjustmentFactory->createNew();
         $adjustment->setType( $type );
         $adjustment->setLabel( $promotion->getName() );

@@ -7,6 +7,7 @@ use Webmozart\Assert\Assert;
 use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\AdjustmentInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Sylius\Component\Promotion\Model\PromotionInterface as BasePromotionInterface;
 use Sylius\Component\Core\Model\OrderItemUnitInterface;
 
 abstract class DiscountPromotionActionCommand implements PromotionActionCommandInterface
@@ -16,7 +17,7 @@ abstract class DiscountPromotionActionCommand implements PromotionActionCommandI
      */
     abstract protected function isConfigurationValid( array $configuration ): void;
 
-    public function revert( PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion ): void
+    public function revert( PromotionSubjectInterface $subject, array $configuration, BasePromotionInterface $promotion ): void
     {
         /** @var OrderInterface $subject */
         Assert::isInstanceOf( $subject, OrderInterface::class );
