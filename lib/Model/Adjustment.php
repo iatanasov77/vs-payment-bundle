@@ -2,6 +2,7 @@
 
 use Sylius\Component\Resource\Model\TimestampableTrait;
 use Vankosoft\PaymentBundle\Model\Interfaces\AdjustmentInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\AdjustableInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 

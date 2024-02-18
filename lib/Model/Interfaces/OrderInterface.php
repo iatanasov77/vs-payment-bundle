@@ -3,9 +3,11 @@
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Promotion\Model\CountablePromotionSubjectInterface;
 use Vankosoft\ApplicationBundle\Model\Interfaces\ApplicationRelationInterface;
+use AdjustableInterface
 
 interface OrderInterface extends
     ResourceInterface,
+    AdjustableInterface,
     ApplicationRelationInterface,
     CountablePromotionSubjectInterface
 {
