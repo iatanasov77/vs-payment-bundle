@@ -4,6 +4,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
+use Sylius\Component\Promotion\Model\PromotionInterface as BasePromotionInterface;
 use Vankosoft\ApplicationBundle\Model\Interfaces\ApplicationInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
@@ -366,21 +367,21 @@ class Order implements OrderInterface
         return $this->promotions;
     }
     
-    public function addPromotion(PromotionInterface $promotion): void
+    public function addPromotion(BasePromotionInterface $promotion): void
     {
         if (!$this->hasPromotion($promotion)) {
             $this->promotions->add($promotion);
         }
     }
     
-    public function removePromotion(PromotionInterface $promotion): void
+    public function removePromotion(BasePromotionInterface $promotion): void
     {
         if ($this->hasPromotion($promotion)) {
             $this->promotions->removeElement($promotion);
         }
     }
     
-    public function hasPromotion(PromotionInterface $promotion): bool
+    public function hasPromotion(BasePromotionInterface $promotion): bool
     {
         return $this->promotions->contains($promotion);
     }
