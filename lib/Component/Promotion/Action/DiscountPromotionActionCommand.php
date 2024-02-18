@@ -1,13 +1,13 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion\Action;
 
 use Sylius\Component\Promotion\Action\PromotionActionCommandInterface;
+use Sylius\Component\Promotion\Model\PromotionInterface as BasePromotionInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 use Webmozart\Assert\Assert;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\AdjustmentInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
-use Sylius\Component\Promotion\Model\PromotionInterface as BasePromotionInterface;
 use Sylius\Component\Core\Model\OrderItemUnitInterface;
 
 abstract class DiscountPromotionActionCommand implements PromotionActionCommandInterface

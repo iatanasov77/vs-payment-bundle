@@ -1,5 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion\Action;
 
+use Sylius\Component\Promotion\Model\PromotionInterface as BasePromotionInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 use Webmozart\Assert\Assert;
 
@@ -32,7 +33,7 @@ final class FixedDiscountPromotionActionCommand extends DiscountPromotionActionC
         $this->minimumPriceDistributor              = $minimumPriceDistributor;
     }
 
-    public function execute( PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion ): bool
+    public function execute( PromotionSubjectInterface $subject, array $configuration, BasePromotionInterface $promotion ): bool
     {
         /** @var OrderInterface $subject */
         Assert::isInstanceOf( $subject, OrderInterface::class );

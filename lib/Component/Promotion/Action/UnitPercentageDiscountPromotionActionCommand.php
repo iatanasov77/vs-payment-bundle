@@ -1,6 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion\Action;
 
-use Sylius\Component\Promotion\Model\PromotionInterface;
+use Sylius\Component\Promotion\Model\PromotionInterface as BasePromotionInterface;
 use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 use Sylius\Component\Resource\Exception\UnexpectedTypeException;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -30,7 +30,7 @@ final class UnitPercentageDiscountPromotionActionCommand extends UnitDiscountPro
         $this->productFilter    = $productFilter;
     }
 
-    public function execute( PromotionSubjectInterface $subject, array $configuration, PromotionInterface $promotion ): bool
+    public function execute( PromotionSubjectInterface $subject, array $configuration, BasePromotionInterface $promotion ): bool
     {
         if ( ! $subject instanceof OrderInterface ) {
             throw new UnexpectedTypeException( $subject, OrderInterface::class );
