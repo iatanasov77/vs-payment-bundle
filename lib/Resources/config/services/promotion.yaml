@@ -102,7 +102,7 @@ services:
             sylius.promotion_rule_checker:
                 name: 'sylius.promotion_rule_checker'
                 type: 'customer_group'
-                label: 'sylius.form.promotion_rule.customer_group'
+                label: 'vs_payment.form.promotion_rule.customer_group'
                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\CustomerGroupConfigurationType'
                 
     vs_payment.promotion_rule_checker.has_taxon:
@@ -111,7 +111,7 @@ services:
             sylius.promotion_rule_checker:
                 name: 'sylius.promotion_rule_checker'
                 type: 'has_taxon'
-                label: 'sylius.form.promotion_rule.has_at_least_one_from_taxons'
+                label: 'vs_payment.form.promotion_rule.has_at_least_one_from_taxons'
                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\HasTaxonConfigurationType'
                 
     vs_payment.promotion_rule_checker.nth_order:
@@ -121,7 +121,7 @@ services:
             sylius.promotion_rule_checker:
                 name: 'sylius.promotion_rule_checker'
                 type: 'nth_order'
-                label: 'sylius.form.promotion_rule.nth_order'
+                label: 'vs_payment.form.promotion_rule.nth_order'
                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\NthOrderConfigurationType'
         
     ##############################################################################
