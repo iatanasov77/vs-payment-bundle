@@ -83,25 +83,29 @@
                         <fieldset class="border border-dark rounded p-3 mb-4">
                             <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion.options' | trans( {},'VSPaymentBundle' ) }}</legend>
                             
-                            <label class="custom-control custom-checkbox">  
-                                <input type="checkbox" id="promotion_form_couponBased"
-                                    class="custom-control-input form-check-input"
-                                    name="promotion_form[couponBased]"
-                                    value="{{ form.vars.value.couponBased }}"
-                                    {% if form.vars.value.couponBased %}checked="checked"{% endif %}
-                                />
-                                <span class="custom-control-label">{{ form.couponBased.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
-                            </label>
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">  
+                                    <input type="checkbox" id="promotion_form_couponBased"
+                                        class="custom-control-input form-check-input"
+                                        name="promotion_form[couponBased]"
+                                        value="{{ form.vars.value.couponBased }}"
+                                        {% if form.vars.value.couponBased %}checked="checked"{% endif %}
+                                    />
+                                    <span class="custom-control-label">{{ form.couponBased.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
+                                </label>
+                            </div>
                             
-                            <label class="custom-control custom-checkbox">  
-                                <input type="checkbox" id="promotion_form_exclusive"
-                                    class="custom-control-input form-check-input"
-                                    name="promotion_form[exclusive]"
-                                    value="{{ form.vars.value.exclusive }}"
-                                    {% if form.vars.value.exclusive %}checked="checked"{% endif %}
-                                />
-                                <span class="custom-control-label">{{ form.exclusive.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
-                            </label>
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">  
+                                    <input type="checkbox" id="promotion_form_exclusive"
+                                        class="custom-control-input form-check-input"
+                                        name="promotion_form[exclusive]"
+                                        value="{{ form.vars.value.exclusive }}"
+                                        {% if form.vars.value.exclusive %}checked="checked"{% endif %}
+                                    />
+                                    <span class="custom-control-label">{{ form.exclusive.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
+                                </label>
+                            </div>
 
                             <div class="form-group">
                                 {{ form_label(form.usageLimit, null, {
