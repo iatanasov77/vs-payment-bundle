@@ -374,6 +374,7 @@ vs_payment:
         customer_groups_update_title: Update Customer Group
         customer_groups_create_title: Create Customer Group
         customer_groups_title: Customer Group
+        customer_groups_index_title: Customer Groups
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
