@@ -116,10 +116,15 @@ vs_payment:
             customer_group: Customer group
             has_at_least_one_from_taxons: Has at least one from taxons
             nth_order: Nth order
+            contains_product: Contains product
             
         promotion_action:
             percentage_discount_configuration_percentage: Percentage
             fixed_discount_configuration_amount: Amount
+            order_fixed_discount: Order fixed discount
+            item_fixed_discount: Item fixed discount
+            order_percentage_discount: Order percentage discount
+            item_percentage_discount: Item percentage discount
          
         coupon:
             valid: Valid
