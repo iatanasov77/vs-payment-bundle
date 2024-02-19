@@ -37,4 +37,8 @@ vs_application:
         promotion_coupons_listing: Promotion Coupons
         create_promotion_coupon: Create Promotion Coupon
         edit_promotion_coupon: Edit Promotion Coupon
+        customers: Customers
+        customer_groups_listing: Customer Groups
+        create_customer_group: Create Customer Group
+        edit_customer_group: Edit Customer Group
 
