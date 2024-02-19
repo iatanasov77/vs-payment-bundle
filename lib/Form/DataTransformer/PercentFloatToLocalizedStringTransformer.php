@@ -18,7 +18,7 @@ final class PercentFloatToLocalizedStringTransformer extends PercentToLocalizedS
     public function reverseTransform( mixed $value ): int|float|null
     {
         if ( '' === $value ) {
-            return;
+            return null;
         }
         
         return (float) parent::reverseTransform( $value );
