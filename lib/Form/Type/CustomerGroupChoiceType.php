@@ -10,8 +10,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CustomerGroupChoiceType extends AbstractType
 {
-    public function __construct( private RepositoryInterface $customerGroupRepository )
+    /** @var RepositoryInterface */
+    private $customerGroupRepository;
+    
+    public function __construct( RepositoryInterface $customerGroupRepository )
     {
+        $this->customerGroupRepository  = $customerGroupRepository;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options ): void
