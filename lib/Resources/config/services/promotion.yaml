@@ -218,6 +218,7 @@ services:
         arguments:
             - '@vs_payment.factory.adjustment'
             - '@vs_payment.integer_distributor'
+        autowire: false
     Vankosoft\PaymentBundle\Component\Promotion\Applicator\UnitsPromotionAdjustmentsApplicatorInterface:
         alias: vs_payment.promotion.units_promotion_adjustments_applicator
         

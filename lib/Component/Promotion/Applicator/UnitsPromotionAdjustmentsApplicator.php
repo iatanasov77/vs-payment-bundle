@@ -15,7 +15,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
 final class UnitsPromotionAdjustmentsApplicator implements UnitsPromotionAdjustmentsApplicatorInterface
 {
-    /** @var AdjustmentFactoryInterface */
+    /** @var FactoryInterface */
     private $adjustmentFactory;
     
     /** @var IntegerDistributorInterface */
