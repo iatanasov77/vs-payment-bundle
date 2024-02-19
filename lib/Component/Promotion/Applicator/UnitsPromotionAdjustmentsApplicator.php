@@ -2,6 +2,8 @@
 
 use Sylius\Component\Promotion\Exception\UnsupportedTypeException;
 use Sylius\Component\Promotion\Model\PromotionInterface;
+//use Sylius\Component\Order\Factory\AdjustmentFactoryInterface;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 use Webmozart\Assert\Assert;
 
 use Vankosoft\ApplicationBundle\Model\Interfaces\ApplicationInterface;
@@ -19,7 +21,7 @@ final class UnitsPromotionAdjustmentsApplicator implements UnitsPromotionAdjustm
     /** @var IntegerDistributorInterface */
     private $distributor;
     
-    public function __construct( AdjustmentFactoryInterface $adjustmentFactory, IntegerDistributorInterface $distributor )
+    public function __construct( FactoryInterface $adjustmentFactory, IntegerDistributorInterface $distributor )
     {
         $this->adjustmentFactory    = $adjustmentFactory;
         $this->distributor          = $distributor;
