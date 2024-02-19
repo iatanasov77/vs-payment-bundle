@@ -1,20 +1,28 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion\Applicator;
 
-use Vankosoft\PaymentBundle\Component\Distributor\IntegerDistributorInterface;
-use Sylius\Component\Core\Model\AdjustmentInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItemInterface;
-use Sylius\Component\Order\Factory\AdjustmentFactoryInterface;
-use Sylius\Component\Order\Model\OrderItemUnitInterface;
 use Sylius\Component\Promotion\Exception\UnsupportedTypeException;
 use Sylius\Component\Promotion\Model\PromotionInterface;
 use Webmozart\Assert\Assert;
 
+use Vankosoft\ApplicationBundle\Model\Interfaces\ApplicationInterface;
+use Vankosoft\PaymentBundle\Component\Distributor\IntegerDistributorInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\AdjustmentInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
+//use Sylius\Component\Order\Model\OrderItemUnitInterface;
+
 final class UnitsPromotionAdjustmentsApplicator implements UnitsPromotionAdjustmentsApplicatorInterface
 {
-    public function __construct( private AdjustmentFactoryInterface $adjustmentFactory, private IntegerDistributorInterface $distributor )
+    /** @var AdjustmentFactoryInterface */
+    private $adjustmentFactory;
+    
+    /** @var IntegerDistributorInterface */
+    private $distributor;
+    
+    public function __construct( AdjustmentFactoryInterface $adjustmentFactory, IntegerDistributorInterface $distributor )
     {
+        $this->adjustmentFactory    = $adjustmentFactory;
+        $this->distributor          = $distributor;
     }
 
     /**
@@ -31,7 +39,7 @@ final class UnitsPromotionAdjustmentsApplicator implements UnitsPromotionAdjustm
                 continue;
             }
 
-            $this->applyAdjustmentsOnItemUnits( $item, $promotion, $adjustmentAmount, $order->getChannel() );
+            //$this->applyAdjustmentsOnItemUnits( $item, $promotion, $adjustmentAmount, $order->getChannel() );
         }
     }
 
