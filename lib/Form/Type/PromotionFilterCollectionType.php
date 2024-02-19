@@ -8,6 +8,14 @@ use Vankosoft\PaymentBundle\Form\Type\PriceRangeFilterConfigurationType;
 
 final class PromotionFilterCollectionType extends AbstractType
 {
+    /** @var string */
+    private $baseCurrency;
+    
+    public function __construct( string $baseCurrency )
+    {
+        $this->baseCurrency = $baseCurrency;
+    }
+    
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder->add( 'price_range_filter', PriceRangeFilterConfigurationType::class, [
@@ -23,6 +31,10 @@ final class PromotionFilterCollectionType extends AbstractType
         $resolver
             ->setRequired( 'currency' )
             ->setAllowedTypes( 'currency', 'string' )
+            
+            ->setDefaults([
+                'currency'  => $this->baseCurrency,
+            ])
         ;
     }
     

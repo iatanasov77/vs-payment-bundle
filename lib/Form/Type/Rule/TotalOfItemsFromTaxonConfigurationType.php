@@ -15,9 +15,13 @@ final class TotalOfItemsFromTaxonConfigurationType extends AbstractType
     /** @var TaxonRepository */
     private $taxonRepository;
     
-    public function __construct( TaxonRepository $taxonRepository )
+    /** @var string */
+    private $baseCurrency;
+    
+    public function __construct( TaxonRepository $taxonRepository, string $baseCurrency )
     {
         $this->taxonRepository  = $taxonRepository;
+        $this->baseCurrency     = $baseCurrency;
     }
 
     public function buildForm( FormBuilderInterface $builder, array $options ): void
@@ -42,6 +46,10 @@ final class TotalOfItemsFromTaxonConfigurationType extends AbstractType
         $resolver
             ->setRequired( 'currency' )
             ->setAllowedTypes( 'currency', 'string' )
+            
+            ->setDefaults([
+                'currency'  => $this->baseCurrency,
+            ])
         ;
     }
 

@@ -8,6 +8,14 @@ use Symfony\Component\Validator\Constraints\Type;
 
 final class PriceRangeFilterConfigurationType extends AbstractType
 {
+    /** @var string */
+    private $baseCurrency;
+    
+    public function __construct( string $baseCurrency )
+    {
+        $this->baseCurrency = $baseCurrency;
+    }
+    
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
@@ -33,6 +41,10 @@ final class PriceRangeFilterConfigurationType extends AbstractType
         $resolver
             ->setRequired( 'currency' )
             ->setAllowedTypes( 'currency', 'string' )
+            
+            ->setDefaults([
+                'currency'  => $this->baseCurrency,
+            ])
         ;
     }
     

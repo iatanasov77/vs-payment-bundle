@@ -51,6 +51,7 @@ services:
         class: Vankosoft\PaymentBundle\Form\Type\Rule\TotalOfItemsFromTaxonConfigurationType
         arguments:
             - '@vs_application.repository.taxon'
+            - '%vs_payment.form.type.promotion.base_currency%'
         tags:
             - { name: form.type }
     
@@ -204,6 +205,21 @@ services:
     ##############################################################################
     # Promotion Filters
     ##############################################################################
+    vs_payment.form.type.price_range_filter_configuration:
+        class: Vankosoft\PaymentBundle\Form\Type\PriceRangeFilterConfigurationType
+        arguments:
+            - '%vs_payment.form.type.promotion.base_currency%'
+        tags:
+            - { name: form.type }
+            
+    vs_payment.form.type.promotion_filter_collection:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionFilterCollectionType
+        arguments:
+            - '%vs_payment.form.type.promotion.base_currency%'
+        tags:
+            - { name: form.type }
+    
+            
     vs_payment.promotion_filter.taxon:
         class: Vankosoft\PaymentBundle\Component\Promotion\Filter\TaxonFilter
     
