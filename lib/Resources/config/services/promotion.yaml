@@ -146,19 +146,19 @@ services:
                 label: 'vs_payment.form.promotion_action.order_fixed_discount'
                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Action\ApplicationBasedFixedDiscountConfigurationType'
                 
-    vs_payment.promotion_action.unit_fixed_discount:
-        class: Vankosoft\PaymentBundle\Component\Promotion\Action\UnitFixedDiscountPromotionActionCommand
-        arguments:
-            - '@vs_payment.factory.adjustment'
-            - '@vs_payment.promotion_filter.taxon'
-            - '@vs_payment.promotion_filter.product'
-            - '@vs_payment.currency_converter'
-        tags:
-            vs_payment.promotion_action:
-                name: 'vs_payment.promotion_action'
-                type: 'unit_fixed_discount'
-                label: 'vs_payment.form.promotion_action.item_fixed_discount'
-                form_type: 'Vankosoft\PaymentBundle\Form\Type\Action\ApplicationBasedUnitFixedDiscountConfigurationType'
+#     vs_payment.promotion_action.unit_fixed_discount:
+#         class: Vankosoft\PaymentBundle\Component\Promotion\Action\UnitFixedDiscountPromotionActionCommand
+#         arguments:
+#             - '@vs_payment.factory.adjustment'
+#             - '@vs_payment.promotion_filter.taxon'
+#             - '@vs_payment.promotion_filter.product'
+#             - '@vs_payment.currency_converter'
+#         tags:
+#             vs_payment.promotion_action:
+#                 name: 'vs_payment.promotion_action'
+#                 type: 'unit_fixed_discount'
+#                 label: 'vs_payment.form.promotion_action.item_fixed_discount'
+#                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Action\ApplicationBasedUnitFixedDiscountConfigurationType'
                 
     vs_payment.promotion_action.percentage_discount:
         class: Vankosoft\PaymentBundle\Component\Promotion\Action\PercentageDiscountPromotionActionCommand
