@@ -370,6 +370,10 @@ vs_payment:
         back_to_payments: Назад към плащанията
         
         obtain_coupon_code_title: Въведи Купон Код
+        
+        customer_groups_update_title: Update Customer Group
+        customer_groups_create_title: Create Customer Group
+        customer_groups_title: Customer Group
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

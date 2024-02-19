@@ -22,7 +22,7 @@
                     </thead>
                     <tbody>
                         {% for item in items %}
-                            <tr data-node-id="{{ item.id }}" {% if parentId %}data-node-pid="{{ item.parent.id }}"{% endif %}>
+                            <tr>
                                 <td>{{ item.name }}</td>
                                 <td>
                                     {% for locale in translations[item.id] %}
