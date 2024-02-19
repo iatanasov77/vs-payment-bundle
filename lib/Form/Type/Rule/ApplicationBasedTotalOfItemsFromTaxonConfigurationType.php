@@ -13,7 +13,7 @@ final class ApplicationBasedTotalOfItemsFromTaxonConfigurationType extends Abstr
         $resolver->setDefaults([
             'entry_type'    => TotalOfItemsFromTaxonConfigurationType::class,
             'entry_options' => fn ( ApplicationInterface $application ): array => [
-                'label'     => $application->getName(),
+                'label'     => $application->getTitle(),
                 
                 // I need to add Application Base Currency in Application Settings OR in Service Parameters
                 // ========================================================================================

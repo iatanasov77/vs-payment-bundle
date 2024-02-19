@@ -14,7 +14,7 @@ final class ApplicationBasedUnitPercentageDiscountConfigurationType extends Abst
         $resolver->setDefaults([
             'entry_type' => UnitPercentageDiscountConfigurationType::class,
             'entry_options' => fn ( ApplicationInterface $application ) => [
-                'label' => $application->getName(),
+                'label' => $application->getTitle(),
                 
                 // I need to add Application Base Currency in Application Settings OR in Service Parameters
                 // ========================================================================================
