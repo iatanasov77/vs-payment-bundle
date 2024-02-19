@@ -57,8 +57,11 @@ use Vankosoft\PaymentBundle\Form\Type\PromotionActionType;
 use Vankosoft\PaymentBundle\Model\PromotionRule;
 use Vankosoft\PaymentBundle\Form\Type\PromotionRuleType;
 
-use Vankosoft\PaymentBundle\Model\Adjustment;
 use Vankosoft\PaymentBundle\Model\CustomerGroup;
+use Vankosoft\PaymentBundle\Controller\Customers\CustomerGroupsController;
+use Vankosoft\PaymentBundle\Form\CustomerGroupForm;
+
+use Vankosoft\PaymentBundle\Model\Adjustment;
 
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
@@ -349,6 +352,8 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'model' )->defaultValue( CustomerGroup::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( CustomerGroupsController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'form' )->defaultValue( CustomerGroupForm::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

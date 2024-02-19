@@ -117,5 +117,13 @@ vs_payment_promotion_coupon:
     type: sylius.resource
     options:
         expose: true
+        
+vs_payment_customer_group:
+    resource: |
+        alias: vs_payment.customer_group
+        except: ['show']
+        path: /customer-groups
+        templates: "@VSPayment/Pages/CustomerGroups"
+    type: sylius.resource
 
 

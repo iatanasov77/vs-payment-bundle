@@ -50,6 +50,15 @@ services:
             - { name: form.type }
         arguments:
             - '@vs_payment_payment'
+            
+    vs_payment.resources.customer_group.form:
+        class: Vankosoft\PaymentBundle\Form\CustomerGroupForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.customer_group.class%'
+            - '@request_stack'
+            - '@vs_application.repository.locale'
 
 #     vs_payment.resources.coupon.form:
 #         class: Vankosoft\PaymentBundle\Form\CouponForm
