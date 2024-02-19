@@ -234,13 +234,13 @@ services:
     ##############################################################################
     # Order Ajustment
     ##############################################################################
-    vs_payment.custom_factory.adjustment:
-        class: Sylius\Component\Order\Factory\AdjustmentFactory
-        decorates: vs_payment.factory.adjustment
-        decoration_priority: 256
-        public: false
-    Sylius\Component\Order\Factory\AdjustmentFactoryInterface:
-        alias: vs_payment.factory.adjustment
+#     vs_payment.custom_factory.adjustment:
+#         class: Sylius\Component\Order\Factory\AdjustmentFactory
+#         decorates: vs_payment.factory.adjustment
+#         decoration_priority: 256
+#         public: false
+#     Sylius\Component\Order\Factory\AdjustmentFactoryInterface:
+#         alias: vs_payment.factory.adjustment
 
     ##################################################################################
     # Forms
