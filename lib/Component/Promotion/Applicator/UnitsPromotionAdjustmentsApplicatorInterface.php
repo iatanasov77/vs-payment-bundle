@@ -1,7 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion\Applicator;
 
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Promotion\Model\PromotionInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
 
 interface UnitsPromotionAdjustmentsApplicatorInterface
 {

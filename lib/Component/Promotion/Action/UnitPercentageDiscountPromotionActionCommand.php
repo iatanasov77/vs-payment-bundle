@@ -5,8 +5,8 @@ use Sylius\Component\Promotion\Model\PromotionSubjectInterface;
 use Sylius\Component\Resource\Exception\UnexpectedTypeException;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItemInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 use Vankosoft\PaymentBundle\Component\Promotion\Filter\FilterInterface;
 
 final class UnitPercentageDiscountPromotionActionCommand extends UnitDiscountPromotionActionCommand
