@@ -2,20 +2,20 @@
 
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Bundle\ResourceBundle\Form\DataTransformer\ResourceToIdentifierTransformer;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\ReversedTransformer;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Vankosoft\ApplicationBundle\Repository\TaxonRepository;
 use Vankosoft\ApplicationBundle\Form\Type\TaxonAutocompleteChoiceType;
 
 final class TotalOfItemsFromTaxonConfigurationType extends AbstractType
 {
-    /** @var RepositoryInterface */
+    /** @var TaxonRepository */
     private $taxonRepository;
     
-    public function __construct( RepositoryInterface $taxonRepository )
+    public function __construct( TaxonRepository $taxonRepository )
     {
         $this->taxonRepository  = $taxonRepository;
     }
