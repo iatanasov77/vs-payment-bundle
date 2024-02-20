@@ -3,9 +3,9 @@
 {% import "@VSApplication/Macros/form.html.twig" as vs_form %}
 
 {% if( item.id ) %}
-    {% set pageTitle = 'vs_payment.template.coupon_update_title' | trans( {},'VSPaymentBundle' ) %}
+    {% set pageTitle = 'vs_payment.template.promotion_update_title' | trans( {},'VSPaymentBundle' ) %}
 {% else %}
-    {% set pageTitle = 'vs_payment.template.coupon_create_title' | trans( {},'VSPaymentBundle' ) %}
+    {% set pageTitle = 'vs_payment.template.promotion_create_title' | trans( {},'VSPaymentBundle' ) %}
 {% endif %}
 
 {% block title %}{{ parent() }} :: {{ pageTitle }}{% endblock %}
@@ -22,10 +22,10 @@
         <!-- ============================================================== -->
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <h5 class="card-header">{{ 'vs_payment.template.coupon_title' | trans( {},'VSPaymentBundle' ) }}</h5>
+                <h5 class="card-header">{{ 'vs_payment.template.promotion_title' | trans( {},'VSPaymentBundle' ) }}</h5>
                 <div class="card-body">
                     {% if form_errors(form) is not empty %}
-                        <div class="alert alert-block alert-danger fade in">
+                        <div class="alert alert-block alert-danger fade in" id="FormErrors">
                             <button type="button" class="close close-sm" data-bs-dismiss="alert">
                                 <i class="icon-remove"></i>
                             </button>
