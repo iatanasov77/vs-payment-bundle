@@ -45,6 +45,14 @@
                             <td>{{ vs_translations.flags( translations[item.id] ) }}</td>
                             <td>
                                 <div class="btn-group">
+                                    {% if item.couponBased %}
+                                        <a class="btn btn-outline-primary" 
+                                            href="{{ path( 'vs_payment_promotion_coupon_index', {'promotionId': item.id} ) }}" 
+                                            title="{{ 'vs_payment.template.manage_coupons' | trans( {},'VSPaymentBundle' ) }}"
+                                        >
+                                            <i class="fas fa-code" style="color: #495057;"></i>
+                                        </a>
+                                    {% endif %}
                                     <a class="btn btn-primary"
                                         href="{{ path('vs_payment_promotion_update', {'id': item.id}) }}"
                                         title="{{ 'vs_application.template.items_index_row_action_edit' | trans( {},'VSApplicationBundle' ) }}"

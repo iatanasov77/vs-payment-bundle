@@ -109,14 +109,26 @@ vs_payment_promotion:
     options:
         expose: true
         
-vs_payment_promotion_coupon:
-    resource: |
-        alias: vs_payment.promotion_coupon
-        path: /promotion-coupons
-        templates: "@VSPayment/Pages/PromotionCoupons"
-    type: sylius.resource
-    options:
-        expose: true
+vs_payment_promotion_coupon_index:
+    path: /promotions/{promotionId}/coupons/
+    methods: [GET]
+    defaults:
+        _controller: vs_payment.controller.promotion_coupon::indexAction
+        _sylius:
+            template: "@VSPayment/Pages/PromotionCoupons/index.html.twig"
+            vars:
+                route:
+                    parameters:
+                        promotionId: $promotionId
+                
+# vs_payment_promotion_coupon:
+#     resource: |
+#         alias: vs_payment.promotion_coupon
+#         path: /promotion-coupons
+#         templates: "@VSPayment/Pages/PromotionCoupons"
+#     type: sylius.resource
+#     options:
+#         expose: true
         
 vs_payment_customer_group:
     resource: |

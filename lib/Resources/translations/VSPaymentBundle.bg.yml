@@ -391,6 +391,7 @@ vs_payment:
         promotion_title: Promotion Details
         promotion_index_code: Promotion Code
         promotion_index_name: Promotion Name
+        manage_coupons: Manage coupons
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
