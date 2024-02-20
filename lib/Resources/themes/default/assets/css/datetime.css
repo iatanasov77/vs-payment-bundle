@@ -1,18 +1,54 @@
 input[type="date"] {
-  background-color: red;
-  outline: none;
+	outline: none;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    appearance: none;
+    border-radius: var(--bs-border-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-right: 15px;
 }
 
 input[type="date"]::-webkit-clear-button {
-  font-size: 18px;
-  height: 30px;
-  position: relative;
+	font-size: 18px;
+	height: 30px;
+	position: relative;
 }
 
 input[type="date"]::-webkit-inner-spin-button {
-  height: 28px;
+    height: 28px;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  font-size: 15px;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+input[type="time"] {
+    outline: none;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    appearance: none;
+    border-radius: var(--bs-border-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type="time"]::-webkit-clear-button {
+    font-size: 18px;
+    height: 30px;
+    position: relative;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    font-size: 15px;
+    cursor: pointer;
 }
