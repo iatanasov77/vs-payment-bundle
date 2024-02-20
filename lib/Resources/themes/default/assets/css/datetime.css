@@ -10,6 +10,7 @@ input[type="date"] {
     appearance: none;
     border-radius: var(--bs-border-radius);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    padding: 0.375rem 0.75rem;
     margin-right: 15px;
 }
 
@@ -40,6 +41,7 @@ input[type="time"] {
     appearance: none;
     border-radius: var(--bs-border-radius);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    padding: 0.375rem 0.75rem;
 }
 
 input[type="time"]::-webkit-clear-button {
