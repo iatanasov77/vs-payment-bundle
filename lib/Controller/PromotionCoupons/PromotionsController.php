@@ -1,6 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\PromotionCoupons;
 
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
 
 class PromotionsController extends AbstractCrudController
@@ -16,7 +17,28 @@ class PromotionsController extends AbstractCrudController
     
     protected function prepareEntity( &$entity, &$form, Request $request )
     {
+        $formPost   = $request->request->all( 'vs_payment_promotion' );
         
+        $rules      = new ArrayCollection();
+        foreach ( $formPost['rules'] as $rule ) {
+            if ( empty( $rule['type'] ) ) {
+                continue;
+            }
+            
+            
+        }
+        
+        $actions    = new ArrayCollection();
+        foreach ( $formPost['actions'] as $action ) {
+            if ( empty( $action['type'] ) ) {
+                continue;
+            }
+            
+            
+        }
+        
+        $entity->setRules( $rules );
+        $entity->setActions( $actions );
     }
     
     private function getTranslations()

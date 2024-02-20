@@ -15,6 +15,14 @@ class Promotion extends BasePromotion implements PromotionInterface
     /** @var Collection<array-key, PromotionInterface> */
     protected $applications;
     
+    public function __construct()
+    {
+        parent::__construct();
+        
+        /** @var ArrayCollection<array-key, ApplicationInterface> $this->applications */
+        $this->applications = new ArrayCollection();
+    }
+    
     public function getTranslatableLocale(): ?string
     {
         return $this->locale;
@@ -52,5 +60,15 @@ class Promotion extends BasePromotion implements PromotionInterface
     public function hasApplication(ApplicationInterface $application): bool
     {
         return $this->applications->contains($application);
+    }
+    
+    public function setRules( Collection $rules )
+    {
+        $this->rules    = $rules;
+    }
+    
+    public function setActions( Collection $actions )
+    {
+        $this->actions  = $actions;
     }
 }
