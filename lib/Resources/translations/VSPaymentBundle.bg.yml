@@ -389,6 +389,8 @@ vs_payment:
         promotion_update_title: Edit Promotion
         promotion_create_title: Create New Promotion
         promotion_title: Promotion Details
+        promotion_index_code: Promotion Code
+        promotion_index_name: Promotion Name
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.
