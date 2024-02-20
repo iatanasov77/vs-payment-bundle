@@ -16,6 +16,8 @@ final class PromotionActionType extends AbstractConfigurablePromotionElementType
                 'attr'                  => [
                     'data-form-collection' => 'update',
                 ],
+                
+                'required'              => false,
             ])
         ;
     }

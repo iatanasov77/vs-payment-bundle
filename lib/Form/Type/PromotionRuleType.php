@@ -16,6 +16,8 @@ final class PromotionRuleType extends AbstractConfigurablePromotionElementType
                 'attr'                  => [
                     'data-form-collection' => 'update',
                 ],
+                
+                'required'              => false,
             ])
         ;
     }
