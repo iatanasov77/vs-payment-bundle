@@ -33,6 +33,30 @@
                         </div>
                     {% endif %}
                     
+                    {# Rule Prototypes #}
+                    <div class="d-none" id="RulePrototypes">
+                        {% for key, prototype in form.rules.vars.prototypes %}
+                            <div id="{{ key }}">
+                                {{ form_widget( prototype.configuration, {'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {# Action Prototypes #}
+                    <div class="d-none" id="ActionPrototypes">
+                        {% for key, prototype in form.actions.vars.prototypes %}
+                            <div id="{{ key }}">
+                                {{ form_widget( prototype.configuration, {'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
                     {% if( item.id ) %}
                         {% set method = "PUT" %}
                     {% else %}
@@ -145,17 +169,6 @@
                         <fieldset class="border border-dark rounded p-3 mb-4">
                             <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion.promotion_rules' | trans( {},'VSPaymentBundle' ) }}</legend>
                             
-                            <div class="d-none" id="RulePrototypes">
-                                {% for key, prototype in form.rules.vars.prototypes %}
-                                    <div id="{{ key }}">
-                                        {{ form_widget( prototype.configuration, {'attr': {
-                                                'class': 'form-control',
-                                            }
-                                        }) }}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            
                             <div class="RulesContainer"
                                 data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Promotions/partial/add-rule-prototype.html.twig' with {'form': form.rules.vars.prototype} %}{% endapply %}"
                             >
@@ -168,17 +181,6 @@
                         
                         <fieldset class="border border-dark rounded p-3 mb-4">
                             <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion.promotion_actions' | trans( {},'VSPaymentBundle' ) }}</legend>
-                            
-                            <div class="d-none" id="ActionPrototypes">
-                                {% for key, prototype in form.actions.vars.prototypes %}
-                                    <div id="{{ key }}">
-                                        {{ form_widget( prototype.configuration, {'attr': {
-                                                'class': 'form-control',
-                                            }
-                                        }) }}
-                                    </div>
-                                {% endfor %}
-                            </div>
                             
                             <div class="ActionsContainer"
                                 data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Promotions/partial/add-action-prototype.html.twig' with {'form': form.actions.vars.prototype} %}{% endapply %}"
