@@ -6,6 +6,7 @@ use Webmozart\Assert\Assert;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 use Sylius\Component\Promotion\Model\Promotion as BasePromotion;
+use Sylius\Component\Promotion\Model\PromotionTranslationInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
 use Vankosoft\ApplicationBundle\Model\Interfaces\ApplicationInterface;
 
@@ -88,8 +89,8 @@ class Promotion extends BasePromotion implements PromotionInterface
         return $translation;
     }
     
-    protected function createTranslation(): TranslationInterface
+    protected function createTranslation(): PromotionTranslationInterface
     {
-        
+        //return new PromotionTranslation();
     }
 }
