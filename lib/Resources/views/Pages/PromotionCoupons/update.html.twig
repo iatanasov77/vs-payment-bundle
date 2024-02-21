@@ -39,7 +39,6 @@
                         {% set method = "POST" %}
                     {% endif %}
                     {{ form_start(form, { 'attr': {'class': 'form-horizontal '}, 'method': method }) }}
-                        {{ form_widget(form.promotion) }}
                         
                         <div class="form-group">
                             {{ form_label(form.code, null, {

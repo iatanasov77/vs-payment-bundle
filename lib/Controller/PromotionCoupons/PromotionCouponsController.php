@@ -61,6 +61,7 @@ class PromotionCouponsController extends AbstractCrudController
     
     protected function prepareEntity( &$entity, &$form, Request $request )
     {
-        
+        $promotion  = $this->get( 'vs_payment.repository.promotion' )->find( $request->get( 'promotionId' ) );
+        $entity->setPromotion( $promotion );
     }
 }

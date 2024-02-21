@@ -16,8 +16,6 @@ final class PromotionCouponForm extends AbstractForm
         parent::buildForm( $builder, $options );
         
         $builder
-            ->add( 'promotion', HiddenType::class, ['data' => $options['promotionId'], 'property_path' => 'promotion.id'] )
-            
             ->add( 'code', TextType::class, [
                 'label'                 => 'vs_payment.form.code',
                 'translation_domain'    => 'VSPaymentBundle',
