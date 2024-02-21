@@ -53,7 +53,7 @@ final class PromotionCouponForm extends AbstractForm
                 'promotionId',
             ])
             
-            ->setAllowedTypes( 'promotionId', 'int' )
+            //->setAllowedTypes( 'promotionId', 'int' )
         ;
     }
     
