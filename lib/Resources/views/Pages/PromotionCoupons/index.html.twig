@@ -16,19 +16,19 @@
             <div style="float: right; margin-right: 30px; margin-bottom: 20px;">
                 <div style="float: left; margin-left: 30px; margin-bottom: 20px;">
                     <a class="btn btn-rounded btn-primary"
-                        href="{{ path( 'vs_application_widget_ext_refresh' ) }}"
-                        title="{{ 'vs_application.template.reload_current_user_registered_widgets' | trans( {},'VSApplicationBundle' ) }}"
+                        href="{{ path( 'vs_payment_promotion_coupon_generate', {'promotionId': promotion.id} ) }}"
+                        title="{{ 'vs_application.menu.generate_promotion_coupon' | trans( {},'VSApplicationBundle' ) }}"
                     >
-                        {{ 'vs_application.template.reload_current_user_registered_widgets' | trans( {},'VSApplicationBundle' ) }}
+                        {{ 'vs_application.menu.generate_promotion_coupon' | trans( {},'VSApplicationBundle' ) }}
                     </a>
                 </div>
                 
                 <div style="float: left; margin-left: 30px; margin-bottom: 20px;">
                     <a class="btn btn-rounded btn-primary"
-                        href="{{ path( 'vs_application_widget_ext_refresh', {'all': 1} ) }}"
-                        title="{{ 'vs_application.template.reload_current_user_all_widgets' | trans( {},'VSApplicationBundle' ) }}"
+                        href="{{ path( 'vs_payment_promotion_coupon_create', {'promotionId': promotion.id} ) }}"
+                        title="{{ 'vs_application.menu.create_promotion_coupon' | trans( {},'VSApplicationBundle' ) }}"
                     >
-                        {{ 'vs_application.template.reload_current_user_all_widgets' | trans( {},'VSApplicationBundle' ) }}
+                        {{ 'vs_application.menu.create_promotion_coupon' | trans( {},'VSApplicationBundle' ) }}
                     </a>
                 </div>
                 
