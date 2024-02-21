@@ -6,6 +6,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sylius\Component\Promotion\Generator\PromotionCouponGeneratorInterface;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
 use Vankosoft\PaymentBundle\Form\PromotionCouponGeneratorForm;
+use Vankosoft\PaymentBundle\Component\Promotion\PromotionCouponGeneratorInstruction;
 
 class PromotionCouponsController extends AbstractCrudController
 {
@@ -28,7 +29,10 @@ class PromotionCouponsController extends AbstractCrudController
         $form->handleRequest( $request );
         
         if ( $form->isSubmitted() && $form->isValid() ) {
-            $this->getGenerator()->generate( $promotion, $form->getData() );
+            //$instruction    = $form->getData();
+            $instruction    = new PromotionCouponGeneratorInstruction( $form );
+            
+            $this->getGenerator()->generate( $promotion, $instruction );
             $this->flashHelper->addSuccessFlash( $configuration, 'generate' );
             
             return $this->redirectHandler->redirectToResource( $configuration, $promotion );
