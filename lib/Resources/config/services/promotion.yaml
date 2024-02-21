@@ -243,6 +243,26 @@ services:
 #     Sylius\Component\Order\Factory\AdjustmentFactoryInterface:
 #         alias: vs_payment.factory.adjustment
 
+    
+    ##############################################################################
+    # Promotion Coupon Generator
+    ##############################################################################
+    vs_payment.promotion_coupon_generator:
+        class: Sylius\Component\Promotion\Generator\PromotionCouponGenerator
+        arguments:
+            - '@vs_payment.factory.promotion_coupon'
+            - '@vs_payment.repository.promotion_coupon'
+            #- '@sylius.manager.promotion_coupon'
+            - '@doctrine.orm.entity_manager'
+            - '@vs_payment.promotion_coupon_generator.percentage_policy'
+    Sylius\Component\Promotion\Generator\PromotionCouponGeneratorInterface:
+        alias: vs_payment.promotion_coupon_generator
+
+    vs_payment.promotion_coupon_generator.percentage_policy:
+        class: Sylius\Component\Promotion\Generator\PercentageGenerationPolicy
+        arguments:
+            - '@vs_payment.repository.promotion_coupon'
+
     ##################################################################################
     # Forms
     ##################################################################################
@@ -363,14 +383,3 @@ services:
 #         </service>
 #         <service id="Sylius\Component\Promotion\Provider\ActivePromotionsProvider" alias="sylius.active_promotions_provider" />
 # 
-#         <service id="sylius.promotion_coupon_generator" class="Sylius\Component\Promotion\Generator\PromotionCouponGenerator">
-#             <argument type="service" id="sylius.factory.promotion_coupon" />
-#             <argument type="service" id="sylius.repository.promotion_coupon" />
-#             <argument type="service" id="sylius.manager.promotion_coupon" />
-#             <argument type="service" id="sylius.promotion_coupon_generator.percentage_policy" />
-#         </service>
-#         <service id="Sylius\Component\Promotion\Generator\PromotionCouponGeneratorInterface" alias="sylius.promotion_coupon_generator" />
-# 
-#         <service id="sylius.promotion_coupon_generator.percentage_policy" class="Sylius\Component\Promotion\Generator\PercentageGenerationPolicy">
-#             <argument type="service" id="sylius.repository.promotion_coupon" />
-#         </service>

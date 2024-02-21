@@ -44,14 +44,7 @@ final class PromotionCouponForm extends AbstractForm
         $resolver
             ->setDefaults([
                 'csrf_protection'   => false,
-                'promotionId'       => null,
             ])
-            
-            ->setDefined([
-                'promotionId',
-            ])
-            
-            //->setAllowedTypes( 'promotionId', 'int' )
         ;
     }
     

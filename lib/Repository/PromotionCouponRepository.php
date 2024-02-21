@@ -3,7 +3,7 @@
 use Doctrine\ORM\QueryBuilder;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Promotion\Repository\PromotionCouponRepositoryInterface;
-use Vankosoft\PaymentBundle\Model\Interfaces\PromotionCouponInterface;
+use Sylius\Component\Promotion\Model\PromotionCouponInterface;
 
 class PromotionCouponRepository extends EntityRepository implements PromotionCouponRepositoryInterface
 {
