@@ -6,18 +6,5 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
 
 class PromotionCoupon extends BasePromotionCoupon implements PromotionCouponInterface
 {
-    /* @var PromotionInterface */
-    protected $promotion;
     
-    public function getPromotion(): PromotionInterface
-    {
-        return $this->promotion;
-    }
-    
-    public function setPromotion( PromotionInterface $promotion ): self
-    {
-        $this->promotion    = $promotion;
-        
-        return $this;
-    }
 }
