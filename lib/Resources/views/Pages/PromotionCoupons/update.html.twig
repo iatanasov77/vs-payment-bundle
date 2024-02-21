@@ -80,6 +80,12 @@
     </div>  
 {% endblock content %}
 
+{% block head_styles %}
+    {{ parent() }}
+    
+    {{ encore_entry_link_tags( 'js/coupons-edit' ) }}
+{% endblock %}
+
 {% block body_scripts %}
     {{ parent() }}
     
