@@ -10,7 +10,9 @@ use Vankosoft\ApplicationBundle\Model\Traits\TranslatableTrait;
 
 class Promotion extends BasePromotion implements PromotionInterface
 {
-    use TranslatableTrait;
+    use TranslatableTrait {
+        TranslatableTrait::createTranslation as vsCreateTranslation;
+    }
     
     /** @var string */
     protected $locale;
