@@ -39,28 +39,8 @@
                         {% set method = "POST" %}
                     {% endif %}
                     {{ form_start(form, { 'attr': {'class': 'form-horizontal '}, 'method': method }) }}
+                        {{ form_widget(form.promotion) }}
                         
-                        <div class="form-group">
-                            <label class="custom-control custom-checkbox">  
-                                <input type="checkbox" id="coupon_form_enabled"
-                                    class="custom-control-input form-check-input"
-                                    name="coupon_form[enabled]"
-                                    value="{{ item.enabled }}"
-                                    {% if item.enabled %}checked="checked"{% endif %}
-                                />
-                                <span class="custom-control-label">{{ 'vs_payment.form.coupon.valid' | trans( {},'VSPaymentBundle' ) }}</span>
-                            </label>
-                        </div>
-                        
-                        <div class="form-group">
-                            {{ form_label(form.locale, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            
-                            {{ form_widget(form.locale, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                    
                         <div class="form-group">
                             {{ form_label(form.code, null, {
                                 'label_attr': {'class': 'col-form-label'}
@@ -77,51 +57,19 @@
                         </div>
                         
                         <div class="form-group">
-                            {{ form_label(form.name, null, {
+                            {{ form_label(form.usageLimit, null, {
                                 'label_attr': {'class': 'col-form-label'}
                                 }) 
                             }}
-                            {{ form_widget(form.name, {'attr': {'class': 'form-control' }}) }}
+                            {{ form_widget(form.usageLimit, {'attr': {'class': 'form-control' }}) }}
                         </div>
                         
                         <div class="form-group">
-                            {{ form_label(form.amountOff, null, {
+                            {{ form_label(form.expiresAt, null, {
                                 'label_attr': {'class': 'col-form-label'}
                                 }) 
                             }}
-                            {{ form_widget(form.amountOff, {'attr': {'class': 'form-control' }}) }}
-                        </div>
-                        
-                        <div class="form-group">
-                            {{ form_label(form.currency, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            {{ form_widget(form.currency, {'attr': {'class': 'form-control' }}) }}
-                        </div>
-                        
-                        <div class="form-group">
-                            {{ form_label(form.percentOff, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            {{ form_widget(form.percentOff, {'attr': {'class': 'form-control' }}) }}
-                        </div>
-                        
-                        <div class="form-group">
-                            {{ form_label(form.type, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            {{ form_widget(form.type, {'attr': {'class': 'form-control' }}) }}
-                        </div>
-                        
-                        <div class="form-group">
-                            {{ form_label(form.pricingPlan, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            {{ form_widget(form.pricingPlan, {'attr': {'class': 'form-control' }}) }}
+                            {{ form_widget(form.expiresAt) }}
                         </div>
                         
                         {{ vs_form.buttons( form ) }}

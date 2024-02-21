@@ -63,6 +63,9 @@ vs_payment_promotion_coupon_create:
                 route:
                     parameters:
                         promotionId: $promotionId
+            form:
+                options:
+                    promotionId: $promotionId
 
 vs_payment_promotion_coupon_update:
     path: /promotions/{promotionId}/coupons/{id}/edit
