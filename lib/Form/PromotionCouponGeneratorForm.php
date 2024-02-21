@@ -18,36 +18,42 @@ final class PromotionCouponGeneratorForm extends AbstractForm
             ->add( 'amount', IntegerType::class, [
                 'label'                 => 'vs_payment.form.promotion_coupon_generator.amount',
                 'translation_domain'    => 'VSPaymentBundle',
+                'mapped'                => false,
             ])
             
             ->add( 'prefix', TextType::class, [
                 'label'                 => 'vs_payment.form.promotion_coupon_generator.prefix',
                 'translation_domain'    => 'VSPaymentBundle',
                 'required'              => false,
+                'mapped'                => false,
             ])
             
             ->add( 'codeLength', IntegerType::class, [
                 'label'                 => 'vs_payment.form.promotion_coupon_generator.code_length',
                 'translation_domain'    => 'VSPaymentBundle',
+                'mapped'                => false,
             ])
             
             ->add( 'suffix', TextType::class, [
                 'label'                 => 'vs_payment.form.promotion_coupon_generator.suffix',
                 'translation_domain'    => 'VSPaymentBundle',
                 'required'              => false,
+                'mapped'                => false,
             ])
             
             ->add( 'usageLimit', IntegerType::class, [
-                'required'              => false,
                 'label'                 => 'vs_payment.form.promotion_coupon_generator.usage_limit',
                 'translation_domain'    => 'VSPaymentBundle',
+                'required'              => false,
+                'mapped'                => false,
             ])
             
             ->add( 'expiresAt', DateType::class, [
-                'required'              => false,
                 'label'                 => 'vs_payment.form.promotion_coupon_generator.expires_at',
                 'translation_domain'    => 'VSPaymentBundle',
                 'widget'                => 'single_text',
+                'required'              => false,
+                'mapped'                => false,
             ])
         ;
     }
