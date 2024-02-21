@@ -1,6 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Controller\PromotionCoupons;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
 
 use Vankosoft\PaymentBundle\Form\PromotionCouponGeneratorForm;
