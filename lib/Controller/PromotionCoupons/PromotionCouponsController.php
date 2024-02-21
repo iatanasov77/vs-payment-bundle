@@ -2,8 +2,9 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sylius\Component\Promotion\Generator\PromotionCouponGeneratorInterface;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
-
 use Vankosoft\PaymentBundle\Form\PromotionCouponGeneratorForm;
 
 class PromotionCouponsController extends AbstractCrudController
