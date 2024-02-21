@@ -52,7 +52,7 @@ class PromotionCouponsController extends AbstractCrudController
     
     protected function customData( Request $request, $entity = null ): array
     {
-        $promotion  = $this->get( 'vs_payment.repository.promotion' )->find( $request->getParameter( 'promotionId' ) );
+        $promotion  = $this->get( 'vs_payment.repository.promotion' )->find( $request->get( 'promotionId' ) );
         
         return [
             'promotion' => $promotion,
