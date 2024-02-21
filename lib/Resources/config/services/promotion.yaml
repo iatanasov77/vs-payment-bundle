@@ -281,6 +281,13 @@ services:
             - { name: form.type }
         arguments:
             - '%vs_payment.model.promotion_coupon.class%'
+            
+    vs_payment.form.promotion_coupon_generator:
+        class: Vankosoft\PaymentBundle\Form\PromotionCouponGeneratorForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion_coupon.class%'
     
     vs_payment.form.type.promotion_action.collection:
         class: Vankosoft\PaymentBundle\Form\Type\PromotionActionCollectionType
