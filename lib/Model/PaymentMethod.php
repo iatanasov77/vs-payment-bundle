@@ -3,8 +3,7 @@
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ToggleableTrait;
-use Sylius\Component\Resource\Model\TranslatableTrait;
-use Sylius\Component\Resource\Model\TranslationInterface;
+use Vankosoft\ApplicationBundle\Model\Traits\TranslatableTrait;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
@@ -129,13 +128,5 @@ class PaymentMethod implements PaymentMethodInterface
             $this->orders->removeElement( $order );
             $order->setPaymentMethod( null );
         }
-    }
-    
-    /*
-     * @NOTE: Decalared abstract in TranslatableTrait
-     */
-    protected function createTranslation(): TranslationInterface
-    {
-        
     }
 }
