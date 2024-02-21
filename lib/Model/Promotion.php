@@ -6,14 +6,9 @@ use Webmozart\Assert\Assert;
 use Sylius\Component\Promotion\Model\Promotion as BasePromotion;
 use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
 use Vankosoft\ApplicationBundle\Model\Interfaces\ApplicationInterface;
-use Vankosoft\ApplicationBundle\Model\Traits\TranslatableTrait;
 
 class Promotion extends BasePromotion implements PromotionInterface
 {
-    use TranslatableTrait {
-        TranslatableTrait::createTranslation as vsCreateTranslation;
-    }
-    
     /** @var string */
     protected $locale;
     
@@ -75,5 +70,10 @@ class Promotion extends BasePromotion implements PromotionInterface
     public function setActions( Collection $actions )
     {
         $this->actions  = $actions;
+    }
+    
+    public function getTranslations(): Collection
+    {
+        return $this->translations ?: new ArrayCollection();
     }
 }
