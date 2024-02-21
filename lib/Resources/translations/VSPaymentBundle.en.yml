@@ -125,6 +125,15 @@ vs_payment:
             item_fixed_discount: Item fixed discount
             order_percentage_discount: Order percentage discount
             item_percentage_discount: Item percentage discount
+            
+        promotion_coupon_generator:
+            expiration_and_usage_limits: Expiration and usage limits
+            prefix: Prefix
+            suffix: Suffix
+            code_length: Code Length
+            amount: Amount
+            usage_limit: Usage limit
+            expires_at: Expires at
          
         coupon:
             valid: Valid
