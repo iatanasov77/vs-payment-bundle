@@ -1,45 +1,44 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion;
 
-use Symfony\Component\Form\FormInterface;
 use Sylius\Component\Promotion\Generator\ReadablePromotionCouponGeneratorInstructionInterface;
 
 final class PromotionCouponGeneratorInstruction implements ReadablePromotionCouponGeneratorInstructionInterface
 {
-    /** @var FormInterface */
-    private $form;
+    /** @var array */
+    private $params;
     
-    public function __construct( FormInterface $form )
+    public function __construct( array $params )
     {
-        $this->form = $form;
+        $this->params   = $params;
     }
     
     public function getAmount(): ?int
     {
-        return isset( $this->form['amount'] ) ? $this->form['amount']->getData() : null;
+        return isset( $this->params['amount'] ) ? $this->params['amount']->getData() : null;
     }
     
     public function getPrefix(): ?string
     {
-        return isset( $this->form['prefix'] ) ? $this->form['prefix']->getData() : null;
+        return isset( $this->params['prefix'] ) ? $this->params['prefix']->getData() : null;
     }
     
     public function getCodeLength(): ?int
     {
-        return isset( $this->form['codeLength'] ) ? $this->form['codeLength']->getData() : null;
+        return isset( $this->params['codeLength'] ) ? $this->params['codeLength']->getData() : null;
     }
     
     public function getSuffix(): ?string
     {
-        return isset( $this->form['suffix'] ) ? $this->form['suffix']->getData() : null;
+        return isset( $this->params['suffix'] ) ? $this->params['suffix']->getData() : null;
     }
     
     public function getExpiresAt(): ?\DateTimeInterface
     {
-        return isset( $this->form['expiresAt'] ) ? $this->form['expiresAt']->getData() : null;
+        return isset( $this->params['expiresAt'] ) ? $this->params['expiresAt']->getData() : null;
     }
     
     public function getUsageLimit(): ?int
     {
-        return isset( $this->form['usageLimit'] ) ? $this->form['usageLimit']->getData() : null;
+        return isset( $this->params['usageLimit'] ) ? $this->params['usageLimit']->getData() : null;
     }
 }

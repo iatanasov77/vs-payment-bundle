@@ -27,7 +27,7 @@ class PromotionCouponsController extends AbstractCrudController
         $form->handleRequest( $request );
         
         if ( $form->isSubmitted() && $form->isValid() ) {
-            $this->container->get( 'vs_payment.promotion_coupon_generator' )->generate( $promotion, $form );
+            $this->container->get( 'vs_payment.promotion_coupon_generator' )->generate( $promotion, $form->all() );
             $this->flashHelper->addSuccessFlash( $configuration, 'generate' );
             
             //return $this->redirectHandler->redirectToResource( $configuration, $promotion );

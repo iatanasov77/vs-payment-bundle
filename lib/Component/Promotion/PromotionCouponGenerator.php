@@ -1,6 +1,5 @@
 <?php namespace Vankosoft\PaymentBundle\Component\Promotion;
 
-use Symfony\Component\Form\FormInterface;
 use Sylius\Component\Promotion\Generator\PromotionCouponGeneratorInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PromotionCouponInterface;
@@ -17,10 +16,9 @@ class PromotionCouponGenerator
     /**
      * @return array|PromotionCouponInterface[]
      */
-    public function generate( PromotionInterface $promotion, FormInterface $form  ): array
+    public function generate( PromotionInterface $promotion, array $instructionParams  ): array
     {
-        //$instruction    = $form->getData();
-        $instruction    = new PromotionCouponGeneratorInstruction( $form );
+        $instruction    = new PromotionCouponGeneratorInstruction( $instructionParams );
         
         return $this->syliusPromotionCouponGenerator->generate( $promotion, $instruction );
     }
