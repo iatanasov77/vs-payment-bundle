@@ -70,7 +70,9 @@ class CustomerGroupsController extends AbstractCrudController
         $groupCustomers = $form['customers']->getData();
         foreach( $groupCustomers as $customer ) {
             $entity->addCustomer( $customer );
+            
             $em->persist( $customer );
+            $em->flush();
         }
     }
 }
