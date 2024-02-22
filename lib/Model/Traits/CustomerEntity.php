@@ -25,6 +25,6 @@ trait CustomerEntity
     
     public function getCustomerChoiceLabel(): string
     {
-        return $this->info->getFullName() . '( ' . $this->username . ' )';
+        return $this->info->getFullName() . ' ( ' . $this->username . ' )';
     }
 }
