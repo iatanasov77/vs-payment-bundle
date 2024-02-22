@@ -131,7 +131,7 @@ vs_payment:
             prefix: Prefix
             suffix: Suffix
             code_length: Code Length
-            amount: Amount
+            amount: Number of Coupons
             usage_limit: Usage limit
             expires_at: Expires at
             
@@ -401,6 +401,7 @@ vs_payment:
         promotion_index_code: Promotion Code
         promotion_index_name: Promotion Name
         manage_coupons: Manage coupons
+        coupon_generate_title: Generate Coupons
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

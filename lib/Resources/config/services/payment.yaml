@@ -112,6 +112,8 @@ services:
     Vankosoft\PaymentBundle\Controller\PromotionCoupons\CouponsExtController:
         tags: ['controller.service_arguments']
         autowire: false
+        arguments:
+            - '@vs_payment.promotion_coupon_generator'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
