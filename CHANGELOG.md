@@ -1,3 +1,54 @@
+3.2.0	|	Release date: **22.02.2024**
+============================================
+* New Features:
+  - Add a Sylius/Promotion Package.
+  - Add New Menu Translations.
+  - Create Promotion Resources.
+  - Update Promotion Form.
+  - Update Promotion Form View.
+  - Create Promotion Rule Checkers Registry.
+  - Create Mamny Promotion Rules and Actions.
+  - Improve Order Models About Using Promotions and Adjustments.
+  - Fix Adjestment Model
+  - Fix Order Model
+  - Fix Promotion Actions.
+  - Fix Promotion Rule Checker Services.
+  - Fix Form Types that Extending ApplicationCollectionType .
+  - Fix Promotion Form Types .
+  - Add a CustomerGroup Resource.
+  - Add CustomerGroups Controller and Form.
+  - Fix Form Types.
+  - Add Some Translations.
+  - Fix Promotion Actions Configs.
+  - Fix a Promotion Applicator,
+  - Move some Promotion Rule Checker to Catalog Bundle.
+  - Fix UnitsPromotionAdjustmentsApplicator .
+  - Fix Promotion Services .
+  - Add Promotion Rules and Actions Types Translations.
+  - Improve Promotion Create / Update .
+  - Improve Promotion Form.
+  - Fix AbstractConfigurablePromotionElementType .
+  - Improve Promotion Form.
+  - Disable csrf_protection of Promotion Form.
+  - Fix PromotionsController .
+  - Add Some Translations.
+  - Styling HTML5 DateTime Picker.
+  - Fix Initializing Promotion Translations.
+  - Fix Promotion Form View.
+  - Create Manage Coupons for Promotion.
+  - Improve Promotion Coupons Resource Actions.
+  - Use Extended TranslatableTrait.
+  - Fix Promotion Model.
+  - Fix Promotion Coupons Index Page.
+  - Create Promotion Coupon Generator Form.
+  - Create a Bridge Class for Sylius PromotionCouponGenerator.
+  - Improve PromotionCouponGenerator .
+  - Remove Old Coupon Resource.
+  - Add JS Scripts For Customer Groups Views.
+  - Improve Customer Groups.
+  - Move Custom HttplugClient Class From TelephoneCall Custom Gateway to Component Namespace.
+
+
 3.1.1	|	Release date: **12.02.2024**
 ============================================
 * Bug Fixes:
