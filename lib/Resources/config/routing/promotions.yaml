@@ -95,6 +95,7 @@ vs_payment_promotion_coupon_delete:
     defaults:
         _controller: vs_payment.controller.promotion_coupon::deleteAction
         _sylius:
+            redirect: referer
             vars:
                 route:
                     parameters:
