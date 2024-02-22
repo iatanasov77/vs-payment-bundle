@@ -20,5 +20,14 @@
         {{ form_widget(form.name, {'attr': {'class': 'form-control'}, 'value' : item.name}) }}
     </div>
     
+    <div class="form-group">
+        {{ form_label(form.customers, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.customers, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    
     {{ vs_form.buttons( form ) }}
 {{ form_end(form, {'render_rest': false}) }}
