@@ -1,0 +1,343 @@
+parameters:
+    vs_payment.form.type.promotion.validation_groups: ['sylius']
+    vs_payment.form.type.promotion_action.validation_groups: ['sylius']
+    vs_payment.form.type.promotion_rule.validation_groups: ['sylius']
+    vs_payment.form.type.promotion_coupon.validation_groups: ['sylius']
+    
+    # I Dont Know How to Configure This For Now
+    vs_payment.form.type.promotion.base_currency: 'EUR'
+
+services:
+    _defaults:
+        public: true
+        
+    ##############################################################################
+    # Sylius Registry
+    ##############################################################################
+    vs_payment.registry_promotion_rule_checker:
+        class: Sylius\Component\Registry\ServiceRegistry
+        arguments:
+            - 'Sylius\Component\Promotion\Checker\Rule\RuleCheckerInterface'
+            - 'rule checker'
+    vs_payment.form_registry.promotion_rule_checker:
+        class: Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+        
+    vs_payment.registry_promotion_action:
+        class: Sylius\Component\Registry\ServiceRegistry
+        arguments:
+            - 'Sylius\Component\Promotion\Action\PromotionActionCommandInterface'
+            - 'promotion action'
+    vs_payment.form_registry.promotion_action:
+        class: Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+        
+    ##############################################################################
+    # Promotion Rule Form Types
+    ##############################################################################
+    vs_payment.form.type.promotion_rule.item_total_configuration:
+        class: Vankosoft\PaymentBundle\Form\Type\Rule\ItemTotalConfigurationType
+        arguments:
+            - '%vs_payment.form.type.promotion.base_currency%'
+        tags:
+            - { name: form.type }
+            
+    vs_payment.form.type.promotion_rule.total_of_items_from_taxon_configuration:
+        class: Vankosoft\PaymentBundle\Form\Type\Rule\TotalOfItemsFromTaxonConfigurationType
+        arguments:
+            - '@vs_application.repository.taxon'
+            - '%vs_payment.form.type.promotion.base_currency%'
+        tags:
+            - { name: form.type }
+    
+    ##############################################################################
+    # Promotion Rules
+    ##############################################################################
+    vs_payment.promotion_rule_checker.cart_quantity:
+        class: Sylius\Component\Promotion\Checker\Rule\CartQuantityRuleChecker
+        tags:
+            vs_payment.promotion_rule_checker:
+                name: 'vs_payment.promotion_rule_checker'
+                type: 'cart_quantity'
+                label: 'vs_payment.form.promotion_rule.cart_quantity'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\CartQuantityConfigurationType'
+    
+    vs_payment.promotion_rule_checker.item_total:
+        class: Sylius\Component\Promotion\Checker\Rule\ItemTotalRuleChecker
+        tags:
+            vs_payment.promotion_rule_checker:
+                name: 'vs_payment.promotion_rule_checker'
+                type: 'item_total'
+                label: 'vs_payment.form.promotion_rule.item_total'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\ItemTotalConfigurationType'
+                
+#     vs_payment.promotion_rule_checker.application_item_total:
+#         class: Sylius\Component\Promotion\Checker\Rule\ItemTotalRuleChecker
+#         tags:
+#             vs_payment.promotion_rule_checker:
+#                 name: 'vs_payment.promotion_rule_checker'
+#                 type: 'item_total'
+#                 label: 'vs_payment.form.promotion_rule.application_item_total'
+#                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\ApplicationBasedItemTotalConfigurationType'
+                
+    vs_payment.promotion_rule_checker.total_of_items_from_taxon:
+        class: Vankosoft\PaymentBundle\Component\Promotion\RuleChecker\TotalOfItemsFromTaxonRuleChecker
+        arguments: ['@vs_application.repository.taxon']
+        tags:
+            vs_payment.promotion_rule_checker:
+                name: 'vs_payment.promotion_rule_checker'
+                type: 'total_of_items_from_taxon'
+                label: 'vs_payment.form.promotion_rule.total_of_items_from_taxon'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\ApplicationBasedTotalOfItemsFromTaxonConfigurationType'
+                
+    vs_payment.promotion_rule_checker.customer_group:
+        class: Vankosoft\PaymentBundle\Component\Promotion\RuleChecker\CustomerGroupRuleChecker
+        public: false
+        tags:
+            vs_payment.promotion_rule_checker:
+                name: 'vs_payment.promotion_rule_checker'
+                type: 'customer_group'
+                label: 'vs_payment.form.promotion_rule.customer_group'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\CustomerGroupConfigurationType'
+                
+    vs_payment.promotion_rule_checker.nth_order:
+        class: Vankosoft\PaymentBundle\Component\Promotion\RuleChecker\NthOrderRuleChecker
+        arguments: ['@vs_payment.repository.order']
+        tags:
+            vs_payment.promotion_rule_checker:
+                name: 'vs_payment.promotion_rule_checker'
+                type: 'nth_order'
+                label: 'vs_payment.form.promotion_rule.nth_order'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Rule\NthOrderConfigurationType'
+        
+    ##############################################################################
+    # Promotion Actions Types
+    ##############################################################################
+    vs_payment.form.type.promotion_action.fixed_discount_configuration:
+        class: Vankosoft\PaymentBundle\Form\Type\Action\FixedDiscountConfigurationType
+        arguments:
+            - '%vs_payment.form.type.promotion.base_currency%'
+        tags:
+            - { name: form.type }
+            
+#     vs_payment.form.type.promotion_action.unit_fixed_discount_configuration:
+#         class: Vankosoft\PaymentBundle\Form\Type\Action\UnitFixedDiscountConfigurationType
+#         arguments:
+#             - '%vs_payment.form.type.promotion.base_currency%'
+#         tags:
+#             - { name: form.type }
+    
+    vs_payment.form.type.promotion_action.unit_percentage_discount_configuration:
+        class: Vankosoft\PaymentBundle\Form\Type\Action\UnitPercentageDiscountConfigurationType
+        arguments:
+            - '%vs_payment.form.type.promotion.base_currency%'
+        tags:
+            - { name: form.type }
+            
+    vs_payment.promotion_action.fixed_discount:
+        class: Vankosoft\PaymentBundle\Component\Promotion\Action\FixedDiscountPromotionActionCommand
+        arguments:
+            - '@vs_payment.proportional_integer_distributor'
+            - '@vs_payment.promotion.units_promotion_adjustments_applicator'
+            - '@Vankosoft\CatalogBundle\Component\Distributor\MinimumPriceDistributorInterface'
+            - '@vs_payment.currency_converter'
+        tags:
+            vs_payment.promotion_action:
+                name: 'vs_payment.promotion_action'
+                type: 'order_fixed_discount'
+                label: 'vs_payment.form.promotion_action.order_fixed_discount'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Action\ApplicationBasedFixedDiscountConfigurationType'
+                
+#     vs_payment.promotion_action.unit_fixed_discount:
+#         class: Vankosoft\PaymentBundle\Component\Promotion\Action\UnitFixedDiscountPromotionActionCommand
+#         arguments:
+#             - '@vs_payment.factory.adjustment'
+#             - '@vs_payment.promotion_filter.taxon'
+#             - '@vs_payment.promotion_filter.product'
+#             - '@vs_payment.currency_converter'
+#         tags:
+#             vs_payment.promotion_action:
+#                 name: 'vs_payment.promotion_action'
+#                 type: 'unit_fixed_discount'
+#                 label: 'vs_payment.form.promotion_action.item_fixed_discount'
+#                 form_type: 'Vankosoft\PaymentBundle\Form\Type\Action\ApplicationBasedUnitFixedDiscountConfigurationType'
+                
+    vs_payment.promotion_action.percentage_discount:
+        class: Vankosoft\PaymentBundle\Component\Promotion\Action\PercentageDiscountPromotionActionCommand
+        arguments:
+            - '@vs_payment.proportional_integer_distributor'
+            - '@vs_payment.promotion.units_promotion_adjustments_applicator'
+            - '@Vankosoft\CatalogBundle\Component\Distributor\MinimumPriceDistributorInterface'
+        tags:
+            vs_payment.promotion_action:
+                name: 'vs_payment.promotion_action'
+                type: 'order_percentage_discount'
+                label: 'vs_payment.form.promotion_action.order_percentage_discount'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Action\PercentageDiscountConfigurationType'
+
+    vs_payment.promotion_action.unit_percentage_discount:
+        class: Vankosoft\PaymentBundle\Component\Promotion\Action\UnitPercentageDiscountPromotionActionCommand
+        arguments:
+            - '@vs_payment.factory.adjustment'
+            - '@vs_payment.promotion_filter.taxon'
+            - '@vs_payment.promotion_filter.product'
+        tags:
+            vs_payment.promotion_action:
+                name: 'vs_payment.promotion_action'
+                type: 'unit_percentage_discount'
+                label: 'vs_payment.form.promotion_action.item_percentage_discount'
+                form_type: 'Vankosoft\PaymentBundle\Form\Type\Action\ApplicationBasedUnitPercentageDiscountConfigurationType'
+
+    ##############################################################################
+    # Promotion Filters
+    ##############################################################################
+    vs_payment.form.type.price_range_filter_configuration:
+        class: Vankosoft\PaymentBundle\Form\Type\PriceRangeFilterConfigurationType
+        arguments:
+            - '%vs_payment.form.type.promotion.base_currency%'
+        tags:
+            - { name: form.type }
+            
+    vs_payment.form.type.promotion_filter_collection:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionFilterCollectionType
+        arguments:
+            - '%vs_payment.form.type.promotion.base_currency%'
+        tags:
+            - { name: form.type }
+    
+            
+    vs_payment.promotion_filter.taxon:
+        class: Vankosoft\PaymentBundle\Component\Promotion\Filter\TaxonFilter
+    
+    vs_payment.promotion_filter.product:
+        class: Vankosoft\PaymentBundle\Component\Promotion\Filter\ProductFilter
+    
+    ##############################################################################
+    # Promotion Applicators
+    ##############################################################################
+    vs_payment.promotion.units_promotion_adjustments_applicator:
+        class: Vankosoft\PaymentBundle\Component\Promotion\Applicator\UnitsPromotionAdjustmentsApplicator
+        arguments:
+            - '@vs_payment.factory.adjustment'
+            - '@vs_payment.integer_distributor'
+        autowire: false
+    Vankosoft\PaymentBundle\Component\Promotion\Applicator\UnitsPromotionAdjustmentsApplicatorInterface:
+        alias: vs_payment.promotion.units_promotion_adjustments_applicator
+        
+    vs_payment.integer_distributor:
+        class: Vankosoft\PaymentBundle\Component\Distributor\IntegerDistributor
+    Vankosoft\PaymentBundle\Component\Distributor\IntegerDistributorInterface:
+        alias: vs_payment.integer_distributor
+        
+    vs_payment.proportional_integer_distributor:
+        class: Vankosoft\PaymentBundle\Component\Distributor\ProportionalIntegerDistributor
+    Vankosoft\PaymentBundle\Component\Distributor\ProportionalIntegerDistributorInterface:
+        alias: vs_payment.proportional_integer_distributor
+
+    ##############################################################################
+    # Order Ajustment
+    ##############################################################################
+#     vs_payment.custom_factory.adjustment:
+#         class: Sylius\Component\Order\Factory\AdjustmentFactory
+#         decorates: vs_payment.factory.adjustment
+#         decoration_priority: 256
+#         public: false
+#     Sylius\Component\Order\Factory\AdjustmentFactoryInterface:
+#         alias: vs_payment.factory.adjustment
+
+    
+    ##############################################################################
+    # Promotion Coupon Generator
+    ##############################################################################
+    vs_payment.sylius_promotion_coupon_generator:
+        class: Sylius\Component\Promotion\Generator\PromotionCouponGenerator
+        arguments:
+            - '@vs_payment.factory.promotion_coupon'
+            - '@vs_payment.repository.promotion_coupon'
+            #- '@sylius.manager.promotion_coupon'
+            - '@doctrine.orm.entity_manager'
+            - '@vs_payment.promotion_coupon_generator.percentage_policy'
+    Sylius\Component\Promotion\Generator\PromotionCouponGeneratorInterface:
+        alias: vs_payment.sylius_promotion_coupon_generator
+
+    vs_payment.promotion_coupon_generator.percentage_policy:
+        class: Sylius\Component\Promotion\Generator\PercentageGenerationPolicy
+        arguments:
+            - '@vs_payment.repository.promotion_coupon'
+            
+    vs_payment.promotion_coupon_generator:
+        class: Vankosoft\PaymentBundle\Component\Promotion\PromotionCouponGenerator
+        arguments:
+            - '@vs_payment.sylius_promotion_coupon_generator'
+
+    ##################################################################################
+    # Forms
+    ##################################################################################
+    vs_payment.form.promotion:
+        class: Vankosoft\PaymentBundle\Form\PromotionForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion.class%'
+            - '@request_stack'
+            - '@vs_application.repository.locale'
+            
+    vs_payment.form.promotion_coupon:
+        class: Vankosoft\PaymentBundle\Form\PromotionCouponForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion_coupon.class%'
+            
+    vs_payment.form.promotion_coupon_generator:
+        class: Vankosoft\PaymentBundle\Form\PromotionCouponGeneratorForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion_coupon.class%'
+    
+    vs_payment.form.type.promotion_action.collection:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionActionCollectionType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@vs_payment.registry_promotion_action'
+            
+    vs_payment.form.type.promotion_rule.collection:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionRuleCollectionType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@vs_payment.registry_promotion_rule_checker'
+            
+    vs_payment.form.type.promotion_action_choice:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionActionChoiceType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.promotion_actions%'
+            
+    vs_payment.form.type.promotion_rule_choice:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionRuleChoiceType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.promotion_rules%'
+            
+    vs_payment.form.type.promotion_action:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionActionType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion_action.class%'
+            - '%vs_payment.form.type.promotion_action.validation_groups%'
+            - '@vs_payment.form_registry.promotion_action'
+            
+    sylius.form.type.promotion_rule:
+        class: Vankosoft\PaymentBundle\Form\Type\PromotionRuleType
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.promotion_rule.class%'
+            - '%vs_payment.form.type.promotion_rule.validation_groups%'
+            - '@vs_payment.form_registry.promotion_rule_checker'
+
+

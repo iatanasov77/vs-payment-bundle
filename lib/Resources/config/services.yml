@@ -10,6 +10,10 @@ imports:
     - { resource: services/currency.yaml }
     - { resource: services/custom_gateways.yaml }
     - { resource: services/gateway_config.yaml }
+    - { resource: services/promotion.yaml }
+    
+parameters:
+    vs_payment.customer_groups.taxonomy_code: 'customer-groups'
 
 services:
     _defaults:

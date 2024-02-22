@@ -1,0 +1,72 @@
+vs_payment_promotion:
+    resource: |
+        alias: vs_payment.promotion
+        path: /promotions
+        templates: "@VSPayment/Pages/Promotions"
+    type: sylius.resource
+    options:
+        expose: true
+
+vs_payment_promotion_coupon_index:
+    path: /promotions/{promotionId}/coupons/
+    methods: [GET]
+    defaults:
+        _controller: vs_payment.controller.promotion_coupon::indexAction
+        _sylius:
+            template: "@VSPayment/Pages/PromotionCoupons/index.html.twig"
+            vars:
+                route:
+                    parameters:
+                        promotionId: $promotionId
+                        
+vs_payment_promotion_coupon_create:
+    path: /promotions/{promotionId}/coupons/new
+    methods: [GET, POST]
+    defaults:
+        _controller: vs_payment.controller.promotion_coupon::createAction
+        _sylius:
+            template: "@VSPayment/Pages/PromotionCoupons/create.html.twig"
+            vars:
+                route:
+                    parameters:
+                        promotionId: $promotionId
+
+vs_payment_promotion_coupon_update:
+    path: /promotions/{promotionId}/coupons/{id}/edit
+    methods: [GET, PUT]
+    defaults:
+        _controller: vs_payment.controller.promotion_coupon::updateAction
+        _sylius:
+            template: "@VSPayment/Pages/PromotionCoupons/update.html.twig"
+            vars:
+                route:
+                    parameters:
+                        id: $id
+                        promotionId: $promotionId
+
+vs_payment_promotion_coupon_generate:
+    path: /promotions/{promotionId}/coupons/generate
+    methods: [GET, POST]
+    defaults:
+        _controller: vs_payment.controller.promotion_coupon::generateAction
+        _sylius:
+            template: "@VSPayment/Pages/PromotionCoupons/generate.html.twig"
+            vars:
+                route:
+                    parameters:
+                        promotionId: $promotionId
+
+vs_payment_promotion_coupon_delete:
+    path: /promotions/{promotionId}/coupons/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: vs_payment.controller.promotion_coupon::deleteAction
+        _sylius:
+            redirect: referer
+            vars:
+                route:
+                    parameters:
+                        id: $id
+                        promotionId: $promotionId
+
+                

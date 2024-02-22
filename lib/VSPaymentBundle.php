@@ -7,6 +7,9 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 
+use Vankosoft\PaymentBundle\DependencyInjection\Compiler\RegisterRuleCheckersPass;
+use Vankosoft\PaymentBundle\DependencyInjection\Compiler\RegisterPromotionActionsPass;
+
 class VSPaymentBundle extends AbstractResourceBundle
 {
     public function getSupportedDrivers(): array
@@ -30,6 +33,9 @@ class VSPaymentBundle extends AbstractResourceBundle
             //$container->addCompilerPass( DoctrineOrmMappingsPass::createYamlMappingDriver( $mappings ) );
             //$container->addCompilerPass( DoctrineOrmMappingsPass::createAnnotationMappingDriver( \array_values( $mappings ), \array_keys( $mappings ) ) );
         }
+        
+        $container->addCompilerPass( new RegisterRuleCheckersPass() );
+        $container->addCompilerPass( new RegisterPromotionActionsPass() );
     }
     
     /**

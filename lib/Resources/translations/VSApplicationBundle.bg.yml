@@ -4,6 +4,7 @@ vs_application:
         payment_core_models: Основни модели
         gateway_config: Гейтуей Конфигурация
         gateways: Гейтуей Списък
+        gateways_payment_methods: Гейтуей / Начини на Плащане
         create_new_gateway: Създай Нов Гейтуей
         edit_a_gateway: Редакция на Гейтуей
         payment_methods: Начини на Плащане
@@ -29,4 +30,16 @@ vs_application:
         edit_discount_coupon: Редакция Купон за отстъпка
         show_payment_details: Показване Детайли за Плащане
         clear_session: Изчисти Сесията
+        discounts_coupouns: Отстъпки / Купони
+        promotions_listing: Promotions
+        create_promotion: Create Promotion
+        edit_promotion: Edit Promotion
+        promotion_coupons_listing: Promotion Coupons
+        generate_promotion_coupon: Generate Promotion Coupon
+        create_promotion_coupon: Create Promotion Coupon
+        edit_promotion_coupon: Edit Promotion Coupon
+        customers: Customers
+        customer_groups_listing: Customer Groups
+        create_customer_group: Create Customer Group
+        edit_customer_group: Edit Customer Group
 

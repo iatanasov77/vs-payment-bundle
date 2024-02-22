@@ -1,5 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
 class OrderItem implements OrderItemInterface
@@ -24,10 +26,20 @@ class OrderItem implements OrderItemInterface
     protected $currencyCode;
     
     /** @var int */
-    protected $qty;
+    protected $qty = 1;
+    
+    /** @var int */
+    protected $total = 0;
+    
+    /** @var Collection<array-key, AdjustmentInterface> */
+    protected $adjustments;
+    
+    /** @var int */
+    protected $adjustmentsTotal = 0;
     
     public function __construct()
     {
+        $this->adjustments = new ArrayCollection();
         $this->qty  = 1;
     }
     
@@ -43,7 +55,26 @@ class OrderItem implements OrderItemInterface
     
     public function setOrder($order)
     {
+        $currentOrder = $this->getOrder();
+        if ($currentOrder === $order) {
+            return;
+        }
+        
+        $this->order = null;
+        
+        if (null !== $currentOrder) {
+            $currentOrder->removeItem($this);
+        }
+        
+        if (null === $order) {
+            return;
+        }
+        
         $this->order = $order;
+        
+        if (!$order->hasItem($this)) {
+            $order->addItem($this);
+        }
         
         return $this;
     }
@@ -94,5 +125,116 @@ class OrderItem implements OrderItemInterface
         $this->qty = $qty;
         
         return $this;
+    }
+    
+    public function getTotal(): int
+    {
+        return $this->total;
+    }
+    
+    public function recalculateAdjustmentsTotal(): void
+    {
+        $this->adjustmentsTotal = 0;
+        
+        foreach ($this->adjustments as $adjustment) {
+            if (!$adjustment->isNeutral()) {
+                $this->adjustmentsTotal += $adjustment->getAmount();
+            }
+        }
+        
+        $this->recalculateTotal();
+    }
+    
+    public function getAdjustments(?string $type = null): Collection
+    {
+        if (null === $type) {
+            return $this->adjustments;
+        }
+        
+        return $this->adjustments->filter(static function (AdjustmentInterface $adjustment) use ($type) {
+            return $type === $adjustment->getType();
+        });
+    }
+    
+    public function addAdjustment(AdjustmentInterface $adjustment): void
+    {
+        if (!$this->hasAdjustment($adjustment)) {
+            $this->adjustments->add($adjustment);
+            $this->addToAdjustmentsTotal($adjustment);
+            $adjustment->setAdjustable($this);
+            $this->recalculateAdjustmentsTotal();
+        }
+    }
+    
+    public function removeAdjustment(AdjustmentInterface $adjustment): void
+    {
+        if (!$adjustment->isLocked() && $this->hasAdjustment($adjustment)) {
+            $this->adjustments->removeElement($adjustment);
+            $this->subtractFromAdjustmentsTotal($adjustment);
+            $adjustment->setAdjustable(null);
+            $this->recalculateAdjustmentsTotal();
+        }
+    }
+    
+    public function hasAdjustment(AdjustmentInterface $adjustment): bool
+    {
+        return $this->adjustments->contains($adjustment);
+    }
+    
+    public function getAdjustmentsTotal(?string $type = null): int
+    {
+        if (null === $type) {
+            return $this->adjustmentsTotal;
+        }
+        
+        $total = 0;
+        foreach ($this->getAdjustments($type) as $adjustment) {
+            if (!$adjustment->isNeutral()) {
+                $total += $adjustment->getAmount();
+            }
+        }
+        
+        return $total;
+    }
+    
+    public function removeAdjustments(?string $type = null): void
+    {
+        foreach ($this->getAdjustments($type) as $adjustment) {
+            $this->removeAdjustment($adjustment);
+        }
+        
+        $this->recalculateAdjustmentsTotal();
+    }
+    
+    /**
+     * Recalculates total after units total or adjustments total change.
+     */
+    protected function recalculateTotal(): void
+    {
+        $this->total = $this->adjustmentsTotal;
+        
+        if ($this->total < 0) {
+            $this->total = 0;
+        }
+        
+        if (null !== $this->order) {
+            $this->order->recalculateItemsTotal();
+        }
+    }
+    
+    protected function addToAdjustmentsTotal(AdjustmentInterface $adjustment): void
+    {
+        if (!$adjustment->isNeutral()) {
+            $this->adjustmentsTotal += $adjustment->getAmount();
+            $this->recalculateTotal();
+        }
+    }
+    
+    protected function subtractFromAdjustmentsTotal(AdjustmentInterface $adjustment): void
+    {
+        if (!$adjustment->isNeutral()) {
+            $this->adjustmentsTotal -= $adjustment->getAmount();
+            $this->recalculateTotal();
+        }
     }
 }

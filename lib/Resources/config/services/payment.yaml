@@ -49,6 +49,7 @@ services:
             - '@vs_users.security_bridge'
             - '@vs_payment.repository.order'
             - '@vs_payment.factory.order'
+            - '@vs_application.context.application'
     
     ########################################################################
     # Checkout Controllers
@@ -103,14 +104,16 @@ services:
     ########################################################################
     # Coupons Controllers
     ########################################################################
-    Vankosoft\PaymentBundle\Controller\Coupons\:
-        resource: '../../../Controller/Coupons'
+    Vankosoft\PaymentBundle\Controller\PromotionCoupons\:
+        resource: '../../../Controller/PromotionCoupons'
         tags: ['controller.service_arguments']
         autowire: true
         
-    Vankosoft\PaymentBundle\Controller\Coupons\CouponsExtController:
+    Vankosoft\PaymentBundle\Controller\PromotionCoupons\CouponsExtController:
         tags: ['controller.service_arguments']
         autowire: false
+        arguments:
+            - '@vs_payment.promotion_coupon_generator'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             

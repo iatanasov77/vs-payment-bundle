@@ -10,7 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CurrencyChoiceType extends AbstractType
 {
-    private RepositoryInterface $currencyRepository;
+    /** @var RepositoryInterface */
+    private $currencyRepository;
     
     public function __construct( RepositoryInterface $currencyRepository )
     {

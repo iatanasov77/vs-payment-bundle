@@ -76,28 +76,12 @@ vs_payment_orders:
     options:
         expose: true
         
-vs_payment_coupon_index:
-    path: /payment/coupons/
-    methods: [GET]
-    defaults:
-        _controller: vs_payment.controller.coupon::indexAction
-        _sylius:
-            paginate: 10
-            sortable: true
-            sorting:
-                createdAt: desc
-            filterable: true
-            template: "@VSPayment/Pages/Coupons/index.html.twig"
-    options:
-        expose: true
-
-vs_payment_coupon:
+vs_payment_customer_group:
     resource: |
-        alias: vs_payment.coupon
-        path: /payment/coupons
-        templates: "@VSPayment/Pages/Coupons"
+        alias: vs_payment.customer_group
+        except: ['show']
+        path: /customer-groups
+        templates: "@VSPayment/Pages/CustomerGroups"
     type: sylius.resource
-    options:
-        expose: true
 
 

@@ -1,0 +1,105 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{% import "@VSApplication/Macros/form.html.twig" as vs_form %}
+
+{% set pageTitle = 'vs_payment.template.coupon_generate_title' | trans( {},'VSPaymentBundle' ) %}
+
+{% block title %}{{ parent() }} :: {{ pageTitle }}{% endblock %}
+
+{% block pageTitle %}
+    <h2 class="pageheader-title"><i class="icon_genius"></i> {{ pageTitle }}</h2>
+    <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <!-- ============================================================== -->
+        <!-- basic tabs  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">{{ 'vs_payment.template.coupon_title' | trans( {},'VSPaymentBundle' ) }}</h5>
+                <div class="card-body">
+                    {% if form_errors(form) is not empty %}
+                        <div class="alert alert-block alert-danger">
+                            <button type="button" class="close close-sm" data-bs-dismiss="alert">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <strong>{{ 'vs_application.form.errors_title' | trans( {},'VSApplicationBundle' ) }}</strong> {{ form_errors( form ) }}
+                        </div>
+                    {% endif %}
+                    
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
+                        
+                        <div class="form-group">
+                            {{ form_label(form.prefix, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.prefix, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.suffix, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.suffix, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.codeLength, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.codeLength, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.amount, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.amount, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <fieldset class="border border-dark rounded p-3 mb-4">
+                            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion_coupon_generator.expiration_and_usage_limits' | trans( {},'VSPaymentBundle' ) }}</legend>
+                            
+                            <div class="form-group">
+                                {{ form_label(form.usageLimit, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.usageLimit, {'attr': {'class': 'form-control' }}) }}
+                            </div>
+                            
+                            <div class="form-group">
+                                {{ form_label(form.expiresAt, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.expiresAt) }}
+                            </div>
+                            
+                        </fieldset>
+                        
+                        {{ vs_form.buttons( form ) }}
+                    {{ form_end(form, {'render_rest': false}) }}
+                </div>
+            </div>
+        </div>
+    </div>  
+{% endblock content %}
+
+{% block head_styles %}
+    {{ parent() }}
+    
+    {{ encore_entry_link_tags( 'js/coupons-edit' ) }}
+{% endblock %}
+
+{% block body_scripts %}
+    {{ parent() }}
+    
+    {{ encore_entry_script_tags( 'js/coupons-edit' ) }}
+{% endblock %}

@@ -5,6 +5,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
+use Vankosoft\PaymentBundle\Component\Payum\HttplugClient;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\AuthorizeAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\CaptureAction;
 use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\ObtainCouponCodeAction;
@@ -96,6 +97,6 @@ class TelephoneCallGatewayFactory extends GatewayFactory implements ContainerAwa
     {
         $httpClientConfig   = $this->container->getParameter( 'vs_payment.http_client' );
         
-        return new TelephoneCallHttplugClient( $httpClientConfig );
+        return new HttplugClient( $httpClientConfig );
     }
 }

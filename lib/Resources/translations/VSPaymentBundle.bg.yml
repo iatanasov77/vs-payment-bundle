@@ -4,6 +4,7 @@ vs_payment:
         gateway: Гейтуей ID
         factory: Гейтуей Фактори
         factory_placeholder: '-- Избери Гейтуей Фактори --'
+        code: Код
         title: Заглавие
         name: Име
         price: Цена
@@ -85,6 +86,55 @@ vs_payment:
             reason: Основание
             set_recurring_payments: Периодични плащания
             
+        promotion:
+            exclusive: Exclusive
+            usage_limit: Usage Limit
+            starts_at: Starts At
+            ends_at: Ends At
+            expires_at: Expires At
+            priority: Priority
+            coupon_based: Coupon Based
+            rules: Rules
+            actions: Actions
+            action_type: Action Type
+            action_type_placeholder: '-- Select Action Type --'
+            rule_type: Rule Type
+            rule_type_placeholder: '-- Select Rule Type --'
+            coupons: Coupons
+            usage: Usage
+            options: Options
+            promotion_rules: Promotion Rules
+            promotion_actions: Promotion Actions
+            price_range: Price Range
+            
+        promotion_rule:
+            cart_quantity: Cart quantity
+            item_total: Item total
+            item_total_configuration_amount: Amount
+            cart_quantity_configuration_count: Count
+            total_of_items_from_taxon: Total price of items from taxon
+            customer_group: Customer group
+            has_at_least_one_from_taxons: Has at least one from taxons
+            nth_order: Nth order
+            contains_product: Contains product
+            
+        promotion_action:
+            percentage_discount_configuration_percentage: Percentage
+            fixed_discount_configuration_amount: Amount
+            order_fixed_discount: Order fixed discount
+            item_fixed_discount: Item fixed discount
+            order_percentage_discount: Order percentage discount
+            item_percentage_discount: Item percentage discount
+            
+        promotion_coupon_generator:
+            expiration_and_usage_limits: Expiration and usage limits
+            prefix: Prefix
+            suffix: Suffix
+            code_length: Code Length
+            amount: Number of Coupons
+            usage_limit: Usage limit
+            expires_at: Expires at
+            
         coupon:
             valid: Valid
             coupon_code: Coupon Code
@@ -120,6 +170,11 @@ vs_payment:
             comment: Comment
             comment_placeholder: Write a comment
             submit: Send
+            
+        customer_group:
+            count_users: Count users
+            users: Users
+            users_placeholder: '-- Add / Remove Users --'
     
     template:
         gateway: Гейтуей
@@ -338,6 +393,20 @@ vs_payment:
         back_to_payments: Назад към плащанията
         
         obtain_coupon_code_title: Въведи Купон Код
+        
+        customer_groups_update_title: Update Customer Group
+        customer_groups_create_title: Create Customer Group
+        customer_groups_title: Customer Group
+        customer_groups_index_title: Customer Groups
+        
+        promotion_index_title: Promotions
+        promotion_update_title: Edit Promotion
+        promotion_create_title: Create New Promotion
+        promotion_title: Promotion Details
+        promotion_index_code: Promotion Code
+        promotion_index_name: Promotion Name
+        manage_coupons: Manage coupons
+        coupon_generate_title: Generate Coupons
     
     validation:
         currency_code_unique: Кодът на валутата трябва да бъде уникален.

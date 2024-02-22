@@ -1,0 +1,212 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{% import "@VSApplication/Macros/form.html.twig" as vs_form %}
+
+{% if( item.id ) %}
+    {% set pageTitle = 'vs_payment.template.promotion_update_title' | trans( {},'VSPaymentBundle' ) %}
+{% else %}
+    {% set pageTitle = 'vs_payment.template.promotion_create_title' | trans( {},'VSPaymentBundle' ) %}
+{% endif %}
+
+{% block title %}{{ parent() }} :: {{ pageTitle }}{% endblock %}
+
+{% block pageTitle %}
+    <h2 class="pageheader-title"><i class="icon_genius"></i> {{ pageTitle }}</h2>
+    <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <!-- ============================================================== -->
+        <!-- basic tabs  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">{{ 'vs_payment.template.promotion_title' | trans( {},'VSPaymentBundle' ) }}</h5>
+                <div class="card-body">
+                    {% if form_errors(form) is not empty %}
+                        <div class="alert alert-block alert-danger">
+                            <button type="button" class="close close-sm" data-bs-dismiss="alert">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <strong>{{ 'vs_application.form.errors_title' | trans( {},'VSApplicationBundle' ) }}</strong> {{ form_errors( form ) }}
+                        </div>
+                    {% endif %}
+                    
+                    {# Rule Prototypes #}
+                    <div class="d-none" id="RulePrototypes">
+                        {% for key, prototype in form.rules.vars.prototypes %}
+                            <div id="{{ key }}">
+                                {{ form_widget( prototype.configuration, {'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {# Action Prototypes #}
+                    <div class="d-none" id="ActionPrototypes">
+                        {% for key, prototype in form.actions.vars.prototypes %}
+                            <div id="{{ key }}">
+                                {{ form_widget( prototype.configuration, {'attr': {
+                                        'class': 'form-control',
+                                    }
+                                }) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {% if( item.id ) %}
+                        {% set method = "PUT" %}
+                    {% else %}
+                        {% set method = "POST" %}
+                    {% endif %}
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal '}, 'method': method }) }}
+                        
+                        <div class="form-group">
+                            {{ form_label(form.locale, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            
+                            {{ form_widget(form.locale, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.code, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            <div class="input-group mb-3">
+                                {{ form_widget(form.code, {'attr': {'class': 'form-control' }}) }}
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" id="btnGenerateCode">
+                                        {{ 'vs_payment.form.generate_code' | trans( {},'VSPaymentBundle' ) }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.name, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.description, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <fieldset class="border border-dark rounded p-3 mb-4">
+                            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion.options' | trans( {},'VSPaymentBundle' ) }}</legend>
+                            
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">  
+                                    <input type="checkbox" id="vs_payment_promotion_couponBased"
+                                        class="custom-control-input form-check-input"
+                                        name="vs_payment_promotion[couponBased]"
+                                        value="{{ form.vars.value.couponBased }}"
+                                        {% if form.vars.value.couponBased %}checked="checked"{% endif %}
+                                    />
+                                    <span class="custom-control-label">{{ form.couponBased.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">  
+                                    <input type="checkbox" id="vs_payment_promotion_exclusive"
+                                        class="custom-control-input form-check-input"
+                                        name="vs_payment_promotion[exclusive]"
+                                        value="{{ form.vars.value.exclusive }}"
+                                        {% if form.vars.value.exclusive %}checked="checked"{% endif %}
+                                    />
+                                    <span class="custom-control-label">{{ form.exclusive.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_label(form.usageLimit, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                
+                                {{ form_widget(form.usageLimit, {'attr': {'class': 'form-control'}}) }}
+                            </div> 
+                            
+                            <div class="form-group">    
+                                {{ form_label(form.priority, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.priority, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            
+                            <div class="form-group">    
+                                {{ form_label(form.startsAt, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.startsAt) }}
+                            </div>
+                            
+                            <div class="form-group">    
+                                {{ form_label(form.endsAt, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.endsAt) }}
+                            </div>
+                            
+                        </fieldset>
+                        
+                        <fieldset class="border border-dark rounded p-3 mb-4">
+                            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion.promotion_rules' | trans( {},'VSPaymentBundle' ) }}</legend>
+                            
+                            <div class="RulesContainer"
+                                data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Promotions/partial/add-rule-prototype.html.twig' with {'form': form.rules.vars.prototype} %}{% endapply %}"
+                            >
+                                {% for ruleForm in form.rules %}
+                                    {% include '@VSPayment/Pages/Promotions/partial/add-rule-prototype.html.twig' with {'form': ruleForm} %}
+                                {% endfor %}
+                            </div>
+                            
+                        </fieldset>
+                        
+                        <fieldset class="border border-dark rounded p-3 mb-4">
+                            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.form.promotion.promotion_actions' | trans( {},'VSPaymentBundle' ) }}</legend>
+                            
+                            <div class="ActionsContainer"
+                                data-prototype="{% apply escape %}{% include '@VSPayment/Pages/Promotions/partial/add-action-prototype.html.twig' with {'form': form.actions.vars.prototype} %}{% endapply %}"
+                            >
+                                {% for actionForm in form.actions %}
+                                    {% include '@VSPayment/Pages/Promotions/partial/add-action-prototype.html.twig' with {'form': actionForm} %}
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+                            
+                        {{ vs_form.buttons( form ) }}
+                    {{ form_end(form, {'render_rest': false}) }}
+                </div>
+            </div>
+        </div>
+    </div>  
+{% endblock content %}
+
+{% block head_styles %}
+    {{ parent() }}
+    
+    {{ encore_entry_link_tags( 'js/promotions-edit' ) }}
+{% endblock %}
+
+{% block body_scripts %}
+    {{ parent() }}
+    
+    {{ encore_entry_script_tags( 'js/promotions-edit' ) }}
+{% endblock %}

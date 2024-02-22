@@ -31,8 +31,10 @@
 		"plumtreesystems/payum-paysera-gateway": "^0.3",
         "vankosoft/borica-bundle": "^0.2",
         
+        "sylius/customer": "^1.12",
 		"sylius/currency": "^1.12",
-		"iwouldrathercode/php-simple-coupons": "^2.0"
+		"sylius/promotion": "^1.13",
+		"sylius/money-bundle": "^1.12"
     },
     "conflict": {
         "doctrine/doctrine-bundle": "<1.3",
