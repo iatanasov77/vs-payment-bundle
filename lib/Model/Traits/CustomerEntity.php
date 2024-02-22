@@ -22,4 +22,9 @@ trait CustomerEntity
     {
         $this->group = $group;
     }
+    
+    public function getCustomerChoiceLabel(): string
+    {
+        return $this->info->getFullName() . '( ' . $this->username . ' )';
+    }
 }

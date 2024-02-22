@@ -9,15 +9,21 @@ use Sylius\Component\Customer\Model\CustomerGroupInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CustomerGroupForm extends AbstractForm
 {
+    /** @var string */
+    private $customerClass;
+    
     public function __construct(
         string $dataClass,
+        string $customerClass,
         RequestStack $requestStack,
         RepositoryInterface $localesRepository
     ) {
         parent::__construct( $dataClass );
+        $this->customerClass        = $customerClass;
         
         $this->requestStack         = $requestStack;
         $this->localesRepository    = $localesRepository;
@@ -44,6 +50,17 @@ class CustomerGroupForm extends AbstractForm
                 'label'                 => 'vs_payment.form.name',
                 'translation_domain'    => 'VSPaymentBundle',
                 'mapped'                => false,
+            ])
+            
+            ->add( 'customers', EntityType::class, [
+                'class'                 => $this->customerClass,
+                'choice_label'          => 'customerChoiceLabel',
+                'label'                 => 'vs_payment.form.customer_group.users',
+                'placeholder'           => 'vs_payment.form.customer_group.users_placeholder',
+                'translation_domain'    => 'VSPaymentBundle',
+                'multiple'              => true,
+                //'mapped'                => false,
+                'required'              => false,
             ])
         ;
     }
