@@ -1,25 +1,23 @@
-<?php  namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
+<?php namespace Vankosoft\PaymentBundle\Component\Payum;
 
 use Payum\Core\HttpClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpClient\HttplugClient;
+use Symfony\Component\HttpClient\HttplugClient as SymfonyHttplugClient;
 
 /**
  * This is a HttpClient that support Httplug.
  * This is an adapter class that make sure we can use Httplug without breaking
  */
-class TelephoneCallHttplugClient implements HttpClientInterface
+class HttplugClient implements HttpClientInterface
 {
-    /**
-     * @var HttplugClien
-     */
+    /** @var SymfonyHttplugClient */
     private $client;
 
     public function __construct( array $httpClientOptions = [] )
     {
-        $this->client   = new HttplugClient( HttpClient::create( $httpClientOptions ) );
+        $this->client   = new SymfonyHttplugClient( HttpClient::create( $httpClientOptions ) );
     }
 
     /**
@@ -27,6 +25,6 @@ class TelephoneCallHttplugClient implements HttpClientInterface
      */
     public function send( RequestInterface $request )
     {
-        return $this->client->sendRequest($request);
+        return $this->client->sendRequest( $request );
     }
 }
