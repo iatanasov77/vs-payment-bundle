@@ -247,7 +247,7 @@ services:
     ##############################################################################
     # Promotion Coupon Generator
     ##############################################################################
-    vs_payment.promotion_coupon_generator:
+    vs_payment.sylius_promotion_coupon_generator:
         class: Sylius\Component\Promotion\Generator\PromotionCouponGenerator
         arguments:
             - '@vs_payment.factory.promotion_coupon'
@@ -256,12 +256,17 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@vs_payment.promotion_coupon_generator.percentage_policy'
     Sylius\Component\Promotion\Generator\PromotionCouponGeneratorInterface:
-        alias: vs_payment.promotion_coupon_generator
+        alias: vs_payment.sylius_promotion_coupon_generator
 
     vs_payment.promotion_coupon_generator.percentage_policy:
         class: Sylius\Component\Promotion\Generator\PercentageGenerationPolicy
         arguments:
             - '@vs_payment.repository.promotion_coupon'
+            
+    vs_payment.promotion_coupon_generator:
+        class: Vankosoft\PaymentBundle\Component\Promotion\PromotionCouponGenerator
+        arguments:
+            - '@vs_payment.sylius_promotion_coupon_generator'
 
     ##################################################################################
     # Forms

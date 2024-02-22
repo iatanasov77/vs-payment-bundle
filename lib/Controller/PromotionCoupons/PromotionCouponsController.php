@@ -3,10 +3,8 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sylius\Component\Promotion\Generator\PromotionCouponGeneratorInterface;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
 use Vankosoft\PaymentBundle\Form\PromotionCouponGeneratorForm;
-use Vankosoft\PaymentBundle\Component\Promotion\PromotionCouponGeneratorInstruction;
 
 class PromotionCouponsController extends AbstractCrudController
 {
@@ -29,10 +27,7 @@ class PromotionCouponsController extends AbstractCrudController
         $form->handleRequest( $request );
         
         if ( $form->isSubmitted() && $form->isValid() ) {
-            //$instruction    = $form->getData();
-            $instruction    = new PromotionCouponGeneratorInstruction( $form );
-            
-            $this->getGenerator()->generate( $promotion, $instruction );
+            $this->container->get( 'vs_payment.promotion_coupon_generator' )->generate( $promotion, $form );
             $this->flashHelper->addSuccessFlash( $configuration, 'generate' );
             
             //return $this->redirectHandler->redirectToResource( $configuration, $promotion );
@@ -48,11 +43,6 @@ class PromotionCouponsController extends AbstractCrudController
                 'form'          => $form->createView(),
             ]
         );
-    }
-    
-    protected function getGenerator(): PromotionCouponGeneratorInterface
-    {
-        return $this->container->get( 'vs_payment.promotion_coupon_generator' );
     }
     
     protected function customData( Request $request, $entity = null ): array
