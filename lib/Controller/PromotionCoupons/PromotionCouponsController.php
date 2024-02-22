@@ -36,7 +36,7 @@ class PromotionCouponsController extends AbstractCrudController
             $this->flashHelper->addSuccessFlash( $configuration, 'generate' );
             
             //return $this->redirectHandler->redirectToResource( $configuration, $promotion );
-            return $this->redirect( $this->generateUrl( 'vs_payment_promotion_coupon_index', ['promotionId', $promotionId] ) );
+            return $this->redirect( $this->generateUrl( 'vs_payment_promotion_coupon_index', ['promotionId' => $promotionId] ) );
         }
         
         return $this->render(
