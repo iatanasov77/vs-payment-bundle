@@ -66,9 +66,11 @@ class CustomerGroupsController extends AbstractCrudController
             $entity->setTaxon( $newTaxon );
         }
         
+        $em = $this->get( 'doctrine.orm.entity_manager' );
         $groupCustomers = $form['customers']->getData();
         foreach( $groupCustomers as $customer ) {
             $entity->addCustomer( $customer );
+            $em->persist( $customer );
         }
     }
 }
