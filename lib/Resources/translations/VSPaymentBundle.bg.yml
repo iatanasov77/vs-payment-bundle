@@ -22,6 +22,7 @@ vs_payment:
         generate_code: Генерирай Код
         pricing_plan_label: Pricing Plan
         pricing_plan_placeholder: '-- Select Pricing Plan --'
+        count_users: Count users
         
         gateway_config:
             use_sandbox: Използвай Сенд-бокс
