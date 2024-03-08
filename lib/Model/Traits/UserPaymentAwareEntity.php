@@ -3,13 +3,14 @@
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 
-trait UserPaymentAwareTrait
+trait UserPaymentAwareEntity
 {
     /**
      * @var array
      * 
      * @ORM\Column(name="payment_details", type="json")
      */
+    #[ORM\Column(name: "payment_details", type: "json")]
     protected $paymentDetails   = [];
     
     /**
@@ -17,6 +18,7 @@ trait UserPaymentAwareTrait
      * 
      * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface", mappedBy="user", cascade={"persist", "remove"})
      */
+    #[ORM\OneToMany(targetEntity: "Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface", mappedBy: "user", cascade: ["persist", "remove"], orphanRemoval: true)]
     protected $orders;
     
     public function getPaymentDetails(): array
