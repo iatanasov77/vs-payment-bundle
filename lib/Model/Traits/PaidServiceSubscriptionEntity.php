@@ -2,6 +2,7 @@
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
 trait PaidServiceSubscriptionEntity
 {
@@ -10,7 +11,7 @@ trait PaidServiceSubscriptionEntity
      *
      * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface", mappedBy="paidServiceSubscription")
      */
-    #[ORM\OneToMany(targetEntity: "Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface", mappedBy: "paidServiceSubscription", cascade: ["persist", "remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: OrderItemInterface::class, mappedBy: "paidServiceSubscription")]
     protected $orderItems;
     
     /**
