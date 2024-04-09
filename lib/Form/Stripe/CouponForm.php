@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CouponForm extends AbstractType
 {
-    public function buildForm( FormBuilderInterface $builder, array $options )
+    public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
             ->add( 'duration', ChoiceType::class, [
@@ -50,7 +50,7 @@ class CouponForm extends AbstractType
         ;
     }
     
-    public function configureOptions( OptionsResolver $resolver ) : void
+    public function configureOptions( OptionsResolver $resolver ): void
     {
         parent::configureOptions( $resolver );
         

@@ -12,7 +12,7 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
 class WebhookEndpointForm extends AbstractType
 {
-    public function buildForm( FormBuilderInterface $builder, array $options )
+    public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
             ->add( 'enabled_events', ChoiceType::class, [
@@ -38,7 +38,7 @@ class WebhookEndpointForm extends AbstractType
         ;
     }
     
-    public function configureOptions( OptionsResolver $resolver ) : void
+    public function configureOptions( OptionsResolver $resolver ): void
     {
         parent::configureOptions( $resolver );
         

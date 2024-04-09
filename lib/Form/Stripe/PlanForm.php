@@ -23,7 +23,7 @@ class PlanForm extends AbstractType
         $this->currencyClass    = $currencyClass;
     }
     
-    public function buildForm( FormBuilderInterface $builder, array $options )
+    public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
             ->add( 'id', TextType::class, [
@@ -82,7 +82,7 @@ class PlanForm extends AbstractType
         ;
     }
     
-    public function configureOptions( OptionsResolver $resolver ) : void
+    public function configureOptions( OptionsResolver $resolver ): void
     {
         parent::configureOptions( $resolver );
         

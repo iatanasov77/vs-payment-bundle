@@ -20,7 +20,7 @@ class PaymentMethodType extends AbstractType
         $this->vsPayment    = $vsPayment;
     }
     
-    public function buildForm( FormBuilderInterface $builder, array $options )
+    public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
             ->add( 'setRecurringPayments', CheckboxType::class, [
@@ -48,7 +48,7 @@ class PaymentMethodType extends AbstractType
         ;
     }
     
-    public function configureOptions( OptionsResolver $resolver ) : void
+    public function configureOptions( OptionsResolver $resolver ): void
     {
         parent::configureOptions( $resolver );
         
