@@ -23,7 +23,7 @@ class PaymentForm extends AbstractType
         $this->paymentMethodClass   = $paymentMethodClass;
     }
     
-    public function buildForm( FormBuilderInterface $builder, array $options )
+    public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
             ->add( 'paymentDescription', HiddenType::class )
@@ -39,7 +39,7 @@ class PaymentForm extends AbstractType
         ;
     }
     
-    public function configureOptions( OptionsResolver $resolver ) : void
+    public function configureOptions( OptionsResolver $resolver ): void
     {
         $resolver
             ->setDefaults([

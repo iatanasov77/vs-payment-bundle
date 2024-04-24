@@ -58,7 +58,7 @@ final class PromotionCouponGeneratorForm extends AbstractForm
         ;
     }
     
-    public function configureOptions( OptionsResolver $resolver ) : void
+    public function configureOptions( OptionsResolver $resolver ): void
     {
         parent::configureOptions( $resolver );
         

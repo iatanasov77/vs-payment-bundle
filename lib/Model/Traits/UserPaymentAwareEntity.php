@@ -8,9 +8,9 @@ trait UserPaymentAwareEntity
     /**
      * @var array
      * 
-     * @ORM\Column(name="payment_details", type="json")
+     * @ORM\Column(name="payment_details", type="json", nullable=true)
      */
-    #[ORM\Column(name: "payment_details", type: "json")]
+    #[ORM\Column(name: "payment_details", type: "json", nullable: true)]
     protected $paymentDetails   = [];
     
     /**

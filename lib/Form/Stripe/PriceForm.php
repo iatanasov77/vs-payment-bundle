@@ -37,7 +37,7 @@ class PriceForm extends AbstractType
         $this->pricingPlansBridge   = $pricingPlansBridge;
     }
     
-    public function buildForm( FormBuilderInterface $builder, array $options )
+    public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
             /*
@@ -119,7 +119,7 @@ class PriceForm extends AbstractType
         }
     }
     
-    public function configureOptions( OptionsResolver $resolver ) : void
+    public function configureOptions( OptionsResolver $resolver ): void
     {
         parent::configureOptions( $resolver );
         
