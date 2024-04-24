@@ -1,3 +1,10 @@
+3.2.3	|	Release date: **24.04.2024**
+============================================
+* Bug-Fixes:
+  - Update All Forms about New Symfony Interfaces.
+  - Fix Model Trait UserPaymentAwareEntity .
+
+
 3.2.2	|	Release date: **15.03.2024**
 ============================================
 * New Features:
