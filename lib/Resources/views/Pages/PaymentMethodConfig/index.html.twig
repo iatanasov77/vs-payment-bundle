@@ -24,7 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for item in items %}
+                    {% for item in resources %}
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ item.name }}</td>
@@ -70,7 +70,7 @@
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="5">
+                            <td colspan="7">
                                 {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
                             </td>
                         </tr>
