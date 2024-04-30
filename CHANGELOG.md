@@ -1,3 +1,9 @@
+3.2.6	|	Release date: **30.04.2024**
+============================================
+* Bug-Fixes:
+  - Fix Promotion Coupons Generate Code Button.
+
+
 3.2.5	|	Release date: **30.04.2024**
 ============================================
 * Bug-Fixes:
