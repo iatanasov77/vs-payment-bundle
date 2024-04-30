@@ -37,6 +37,7 @@ class CouponsExtController extends AbstractController
         return new JsonResponse([
             'status'    => Status::STATUS_OK,
             'code'      => $coupon->getCode(),
+            'couponId'  => $coupon->getId()
         ]);
     }
 }
