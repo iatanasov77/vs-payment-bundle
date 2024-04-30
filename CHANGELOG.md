@@ -1,3 +1,11 @@
+3.2.8	|	Release date: **30.04.2024**
+============================================
+* New Features:
+  - Create a Generate Promotion Coupons Command.
+* Bug-Fixes:
+  - Fix PromotionCouponGeneratorInstruction .
+
+
 3.2.7	|	Release date: **30.04.2024**
 ============================================
 * Bug-Fixes:
