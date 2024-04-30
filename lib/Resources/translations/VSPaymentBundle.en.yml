@@ -125,6 +125,7 @@ vs_payment:
             item_fixed_discount: Item fixed discount
             order_percentage_discount: Order percentage discount
             item_percentage_discount: Item percentage discount
+            filters: Filters
             
         promotion_coupon_generator:
             expiration_and_usage_limits: Expiration and usage limits
