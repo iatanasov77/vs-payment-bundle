@@ -339,5 +339,15 @@ services:
             - '%vs_payment.model.promotion_rule.class%'
             - '%vs_payment.form.type.promotion_rule.validation_groups%'
             - '@vs_payment.form_registry.promotion_rule_checker'
-
+            
+            
+    ##############################################################################
+    # Promotion Console Commands
+    ##############################################################################
+    Vankosoft\PaymentBundle\Console\Command\GenerateCouponsCommand:
+        tags:
+            - 'console.command'
+        arguments:
+            - '@vs_payment.repository.promotion'
+            - '@vs_payment.sylius_promotion_coupon_generator'
 
