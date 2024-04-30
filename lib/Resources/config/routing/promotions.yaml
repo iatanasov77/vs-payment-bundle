@@ -18,6 +18,8 @@ vs_payment_promotion_coupon_index:
                 route:
                     parameters:
                         promotionId: $promotionId
+    options:
+        expose: true
                         
 vs_payment_promotion_coupon_create:
     path: /promotions/{promotionId}/coupons/new
@@ -30,6 +32,8 @@ vs_payment_promotion_coupon_create:
                 route:
                     parameters:
                         promotionId: $promotionId
+    options:
+        expose: true
 
 vs_payment_promotion_coupon_update:
     path: /promotions/{promotionId}/coupons/{id}/edit
@@ -43,6 +47,8 @@ vs_payment_promotion_coupon_update:
                     parameters:
                         id: $id
                         promotionId: $promotionId
+    options:
+        expose: true
 
 vs_payment_promotion_coupon_generate:
     path: /promotions/{promotionId}/coupons/generate
@@ -55,6 +61,8 @@ vs_payment_promotion_coupon_generate:
                 route:
                     parameters:
                         promotionId: $promotionId
+    options:
+        expose: true
 
 vs_payment_promotion_coupon_delete:
     path: /promotions/{promotionId}/coupons/{id}
@@ -68,5 +76,7 @@ vs_payment_promotion_coupon_delete:
                     parameters:
                         id: $id
                         promotionId: $promotionId
+    options:
+        expose: true
 
                 

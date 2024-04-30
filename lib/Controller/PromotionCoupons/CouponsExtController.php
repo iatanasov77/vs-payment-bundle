@@ -31,11 +31,13 @@ class CouponsExtController extends AbstractController
             'codeLength'    => 6,
         ];
         
-        $coupons        = $this->generator->generate( $promotion, $generatorParams );
+        $coupons    = $this->generator->generate( $promotion, $generatorParams );
+        $coupon     = \array_shift( $coupons );
         
         return new JsonResponse([
             'status'    => Status::STATUS_OK,
-            'code'      => $coupons[0]->getCode(),
+            'code'      => $coupon->getCode(),
+            'couponId'  => $coupon->getId()
         ]);
     }
 }

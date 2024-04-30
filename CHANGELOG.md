@@ -1,3 +1,9 @@
+3.2.9	|	Release date: **30.04.2024**
+============================================
+* Bug-Fixes:
+  - Fix Generate Promotion Coupon Controller Action.
+
+
 3.2.8	|	Release date: **30.04.2024**
 ============================================
 * New Features:
