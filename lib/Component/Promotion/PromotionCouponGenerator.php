@@ -6,6 +6,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PromotionCouponInterface;
 
 class PromotionCouponGenerator
 {
+    /** @var PromotionCouponGeneratorInterface */
     protected $syliusPromotionCouponGenerator;
     
     public function __construct( PromotionCouponGeneratorInterface $syliusPromotionCouponGenerator )

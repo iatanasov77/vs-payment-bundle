@@ -114,6 +114,7 @@ services:
         autowire: false
         arguments:
             - '@vs_payment.promotion_coupon_generator'
+            - '@vs_payment.repository.promotion'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
