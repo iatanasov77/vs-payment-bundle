@@ -26,21 +26,14 @@ final class UnitPercentageDiscountConfigurationType extends AbstractType
             ->add( 'percentage', PercentType::class, [
                 'label'                 => 'vs_payment.form.promotion_action.percentage_discount_configuration_percentage',
                 'translation_domain'    => 'VSPaymentBundle',
-                'constraints'           => [
-                    new NotBlank( ['groups' => ['sylius']] ),
-                    new Type( ['type' => 'numeric', 'groups' => ['sylius']] ),
-                    new Range( [
-                        'min' => 0,
-                        'max' => 1,
-                        'minMessage' => 'sylius.promotion_action.percentage_discount_configuration.min',
-                        'maxMessage' => 'sylius.promotion_action.percentage_discount_configuration.max',
-                        'groups' => ['sylius'],
-                    ]),
-                ],
+                'html5'                 => true,
+                'scale'                 => 2,
             ])
             ->add( 'filters', PromotionFilterCollectionType::class, [
-                'required' => false,
-                'currency' => $options['currency'],
+                'label'                 => 'vs_payment.form.promotion_action.filters',
+                'translation_domain'    => 'VSPaymentBundle',
+                'required'              => false,
+                'currency'              => $options['currency'],
             ])
         ;
     }
