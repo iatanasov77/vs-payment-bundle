@@ -48,7 +48,10 @@
                             <div class="input-group mb-3">
                                 {{ form_widget(form.code, {'attr': {'class': 'form-control' }}) }}
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" id="btnGenerateCode">
+                                    <button type="button" class="btn btn-primary"
+                                        id="btnGenerateCode"
+                                        data-promotionId="{{ promotion.id }}"
+                                    >
                                         {{ 'vs_payment.form.generate_code' | trans( {},'VSPaymentBundle' ) }}
                                     </button>
                                 </div>
@@ -68,7 +71,7 @@
                                 'label_attr': {'class': 'col-form-label'}
                                 }) 
                             }}
-                            {{ form_widget(form.expiresAt) }}
+                            {{ form_widget(form.expiresAt, {'attr': {'class': 'form-control' }}) }}
                         </div>
                         
                         {{ vs_form.buttons( form ) }}
