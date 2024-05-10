@@ -7,6 +7,6 @@ interface PayableObjectInterface
 {
     public function getPrice();
     public function getCurrency(): CurrencyInterface;
-    public function getCurrencyCode(): string;
+    public function getCurrencyCode(): ?string;
     public function getOrderItems(): Collection;
 }
