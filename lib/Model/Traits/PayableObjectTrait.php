@@ -22,9 +22,11 @@ trait PayableObjectTrait
         return $this->price;
     }
     
-    public function setPrice( $price )
+    public function setPrice( $price ): self
     {
         $this->price = $price;
+        
+        return $this;
     }
     
     public function getCurrency(): CurrencyInterface
@@ -32,12 +34,14 @@ trait PayableObjectTrait
         return $this->currency;
     }
     
-    public function setCurrency( CurrencyInterface $currency )
+    public function setCurrency( CurrencyInterface $currency ): self
     {
         $this->currency = $currency;
+        
+        return $this;
     }
     
-    public function getCurrencyCode(): string
+    public function getCurrencyCode(): ?string
     {
         if ( $this->currency ) {
             return $this->currency->getCode();
@@ -52,5 +56,23 @@ trait PayableObjectTrait
     public function getOrderItems(): Collection
     {
         return $this->orderItems;
+    }
+    
+    public function addOrderItem( OrderItemInterface $orderItem ): self
+    {
+        if ( ! $this->orderItems->contains( $orderItem ) ) {
+            $this->orderItems[] = $orderItem;
+        }
+        
+        return $this;
+    }
+    
+    public function removeOrderItem( OrderItemInterface $orderItem ): self
+    {
+        if ( $this->orderItems->contains( $orderItem ) ) {
+            $this->orderItems->removeElement( $orderItem );
+        }
+        
+        return $this;
     }
 }
