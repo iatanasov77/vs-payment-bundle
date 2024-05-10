@@ -1,3 +1,9 @@
+3.3.1	|	Release date: **10.05.2024**
+============================================
+* Bug-Fixes:
+  - Fix PayableObjectInterface about PayableObjectTrait .
+
+
 3.3.0	|	Release date: **10.05.2024**
 ============================================
 * New Features and Improvements:
