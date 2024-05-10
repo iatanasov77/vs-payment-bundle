@@ -1,3 +1,9 @@
+3.3.0	|	Release date: **10.05.2024**
+============================================
+* New Features and Improvements:
+  - Improve PayableObjectTrait .
+
+
 3.2.9	|	Release date: **30.04.2024**
 ============================================
 * Bug-Fixes:
