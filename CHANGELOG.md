@@ -1,3 +1,10 @@
+3.3.2	|	Release date: **12.05.2024**
+============================================
+* New Features:
+  - Use Twig Macros to Display Form Errors.
+  - Some VS Application Bundle Provided Traits Namespace was Changed.
+
+
 3.3.1	|	Release date: **10.05.2024**
 ============================================
 * Bug-Fixes:
