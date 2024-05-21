@@ -36,7 +36,11 @@
         "sylius/customer": "^1.12",
 		"sylius/currency": "^1.12",
 		"sylius/promotion": "^1.13",
-		"sylius/money-bundle": "^1.12"
+		"sylius/money-bundle": "^1.12",
+		
+		"php-http/message-factory": "^1.1",
+        "php-http/discovery": "^1.19",
+        "php-http/async-client-implementation": "*"
     },
     "conflict": {
         "doctrine/doctrine-bundle": "<1.3",
