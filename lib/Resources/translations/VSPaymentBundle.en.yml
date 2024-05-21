@@ -79,7 +79,7 @@ vs_payment:
             name_placeholder: Full name
             email: Email
             choose_plan: Choose plan
-            payment_method: Payment method
+            payment_method: Select Payment method
             submit: Proceed
             bank: Bank
             reciever: Reciever
