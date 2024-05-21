@@ -1,3 +1,9 @@
+3.3.4	|	Release date: **21.05.2024**
+============================================
+* New Features:
+  - Add Some Package Requirements for Payum.
+
+
 3.3.3	|	Release date: **21.05.2024**
 ============================================
 * New Features:
