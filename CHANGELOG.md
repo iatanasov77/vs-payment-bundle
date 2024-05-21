@@ -1,3 +1,9 @@
+3.3.3	|	Release date: **21.05.2024**
+============================================
+* New Features:
+  - Improve Some Form Label Translations.
+
+
 3.3.2	|	Release date: **12.05.2024**
 ============================================
 * New Features:
