@@ -11,6 +11,7 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetProducts;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateProduct;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPrices;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreatePrice;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetCustomers;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetSubscriptions;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetWebhookEndpoints;
@@ -130,6 +131,16 @@ final class Api
         $this->gateway->execute( $createPriceRequest = new CreatePrice( $price ) );
         
         return $createPriceRequest->getFirstModel()->getArrayCopy();
+    }
+    
+    public function getCustomers( array $params = [] )
+    {
+        $stripeRequest      = new \ArrayObject( $params );
+        $this->gateway->execute( $getCustomersRequest = new GetCustomers( $stripeRequest ) );
+        
+        $availableCustomers = $getCustomersRequest->getFirstModel()->getArrayCopy();
+        
+        return isset( $availableCustomers["data"] ) ? $availableCustomers["data"] : [];
     }
     
     public function getSubscriptions( array $params = [] )
