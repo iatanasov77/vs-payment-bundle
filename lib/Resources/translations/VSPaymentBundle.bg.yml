@@ -264,7 +264,7 @@ vs_payment:
             interval_count: Interval Count
             interval_count_info: The number of intervals between subscription billings. For example, interval=month and interval_count=3 bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
             
-            stripe_customers: Stripe Subscriptions
+            stripe_customers: Stripe Customers
             email: Email
             balance: Balance
             
