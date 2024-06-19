@@ -1,3 +1,9 @@
+3.3.8	|	Release date: **19.06.2024**
+============================================
+* New Features:
+  - Create a Stripe GetCustomers Request.
+
+
 3.3.7	|	Release date: **19.06.2024**
 ============================================
 * New Features:
