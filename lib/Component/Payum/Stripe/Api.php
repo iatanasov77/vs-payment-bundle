@@ -60,7 +60,7 @@ final class Api
         
         $availablePlans = $getPlansRequest->getFirstModel()->getArrayCopy();
         
-        return $availablePlans["data"];
+        return isset( $availablePlans["data"] ) ? $availablePlans["data"] : [];
     }
     
     public function createPlan( array $formData )
@@ -88,7 +88,7 @@ final class Api
         
         $availableProducts  = $getProductsRequest->getFirstModel()->getArrayCopy();
         
-        return $availableProducts["data"];
+        return isset( $availableProducts["data"] ) ? $availableProducts["data"] : [];
     }
     
     public function createProduct( array $formData )
@@ -110,7 +110,7 @@ final class Api
         
         $availablePrices    = $getPricesRequest->getFirstModel()->getArrayCopy();
         
-        return $availablePrices["data"];
+        return isset( $availablePrices["data"] ) ? $availablePrices["data"] : [];
     }
     
     public function createPrice( array $formData )
@@ -139,7 +139,7 @@ final class Api
         
         $availableSubscriptions = $getSubscriptionsRequest->getFirstModel()->getArrayCopy();
         
-        return $availableSubscriptions["data"];
+        return isset( $availableSubscriptions["data"] ) ? $availableSubscriptions["data"] : [];
     }
     
     public function cancelSubscription( $id )
@@ -157,7 +157,7 @@ final class Api
         
         $availableWebhookEndpoints  = $getWebhookEndpointsRequest->getFirstModel()->getArrayCopy();
         
-        return $availableWebhookEndpoints["data"];
+        return isset( $availableWebhookEndpoints["data"] ) ? $availableWebhookEndpoints["data"] : [];
     }
     
     public function createWebhookEndpoint( array $formData )
