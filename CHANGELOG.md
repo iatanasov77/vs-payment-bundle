@@ -1,3 +1,9 @@
+3.3.6	|	Release date: **19.06.2024**
+============================================
+* Bug-Fixes and Improvements:
+  - Improve Custom Stripe API Component.
+
+
 3.3.5	|	Release date: **26.05.2024**
 ============================================
 * Bug-Fixes:
