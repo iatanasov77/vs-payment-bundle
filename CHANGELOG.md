@@ -1,3 +1,10 @@
+3.3.10	|	Release date: **20.06.2024**
+============================================
+* New Features:
+  - Create a Stripe GetCustomers Request.
+  - Create Stripe GetPaymentMethods API Request.
+
+
 3.3.9	|	Release date: **19.06.2024**
 ============================================
 * New Features:
