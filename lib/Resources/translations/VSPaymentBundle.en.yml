@@ -267,8 +267,10 @@ vs_payment:
             stripe_customers: Stripe Customers
             email: Email
             balance: Balance
+            default_payment_method: Default Payment Method
             
             stripe_payment_methods: Stripe Payment Methods
+            type: Type
             card_brand: Card Brand
             card_expire: Card Expire
             
