@@ -37,8 +37,11 @@ class StripeSubscriptionPlansController extends AbstractController
         $availablePrices            = $this->stripeApi->getPrices();
 //         echo "<pre>"; var_dump( $availablePrices ); die;
 
-        $availableCustomers     = $this->stripeApi->getCustomers();
+        $availableCustomers         = $this->stripeApi->getCustomers();
 //         echo "<pre>"; var_dump( $availableCustomers ); die;
+
+        $availablePaymentMethods    = $this->stripeApi->getPaymentMethods();
+//         echo "<pre>"; var_dump( $availablePaymentMethods ); die;
 
         $availableSubscriptions     = $this->stripeApi->getSubscriptions();
 //         echo "<pre>"; var_dump( $availableSubscriptions ); die;
@@ -51,6 +54,7 @@ class StripeSubscriptionPlansController extends AbstractController
             'availableProducts'         => $availableProducts,
             'availablePrices'           => $availablePrices,
             'availableCustomers'        => $availableCustomers,
+            'availablePaymentMethods'   => $availablePaymentMethods,
             'availableSubscriptions'    => $availableSubscriptions,
             'availableWebhookEndpoints' => $availableWebhookEndpoints,
         ]);
