@@ -25,6 +25,10 @@ gateway_config_stripe_subscription_objects_create_webhook_endpoint:
     path: /vs_payment/gateway-config/stripe-subscriptions/create-webhook-endpoint
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createWebhookEndpointAction
 
+gateway_config_stripe_customer_payment_methods:
+    path: /vs_payment/gateway-config/stripe-subscriptions/customer-payment-methods/{customerId}
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::showCustomerPaymentMethods
+
 ##############################
 # Stripe Coupons
 ##############################

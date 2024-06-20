@@ -3,7 +3,10 @@
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\Persistence\ManagerRegistry;
+use Twig\Environment;
+use Vankosoft\ApplicationBundle\Component\Status;
 use Vankosoft\PaymentBundle\Form\Stripe\PlanForm;
 use Vankosoft\PaymentBundle\Form\Stripe\ProductForm;
 use Vankosoft\PaymentBundle\Form\Stripe\PriceForm;
@@ -15,15 +18,20 @@ class StripeSubscriptionPlansController extends AbstractController
     /** @var ManagerRegistry */
     private $doctrine;
     
+    /** @var Environment */
+    private $templatingEngine;
+    
     /** @var StripeApi */
     private $stripeApi;
     
     public function __construct(
         ManagerRegistry $doctrine,
+        Environment $templatingEngine,
         StripeApi $stripeApi
     ) {
-        $this->doctrine     = $doctrine;
-        $this->stripeApi    = $stripeApi;
+        $this->doctrine         = $doctrine;
+        $this->templatingEngine = $templatingEngine;
+        $this->stripeApi        = $stripeApi;
     }
     
     public function indexAction( Request $request ): Response
@@ -147,6 +155,22 @@ class StripeSubscriptionPlansController extends AbstractController
         
         return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_webhook_endpoint.html.twig', [
             'form'  => $form->createView(),
+        ]);
+    }
+    
+    public function showCustomerPaymentMethods( $customerId, Request $request ): Response
+    {
+        $availablePaymentMethods    = $this->stripeApi->getPaymentMethods([
+            'customer' => $customerId,
+        ]);
+        
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/stripe-payment-methods-table.html.twig', [
+            'availablePaymentMethods'   => $availablePaymentMethods,
+        ]);
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+            'data'      => $data,
         ]);
     }
 }
