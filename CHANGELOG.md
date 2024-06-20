@@ -1,3 +1,9 @@
+3.3.12	|	Release date: **20.06.2024**
+============================================
+* New Features:
+  - Create a Modal to Show Stripe Customer Payment Methods.
+
+
 3.3.11	|	Release date: **20.06.2024**
 ============================================
 * New Features:
