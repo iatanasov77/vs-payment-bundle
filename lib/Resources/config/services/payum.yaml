@@ -58,6 +58,11 @@ services:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetCustomersAction
         tags:
             - { name: payum.action, factory: stripe_js }
+            
+    vs_payment.stripe_list_payment_methods:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetPaymentMethodsAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
     
     vs_payment.stripe_list_subscriptions:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetSubscriptionsAction
