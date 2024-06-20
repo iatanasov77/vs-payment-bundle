@@ -1,3 +1,9 @@
+3.3.11	|	Release date: **20.06.2024**
+============================================
+* New Features:
+  - Improve Stripe Objects View Page.
+
+
 3.3.10	|	Release date: **20.06.2024**
 ============================================
 * New Features:
