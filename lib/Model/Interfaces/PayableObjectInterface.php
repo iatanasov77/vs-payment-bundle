@@ -6,7 +6,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 interface PayableObjectInterface
 {
     public function getPrice();
-    public function getCurrency(): CurrencyInterface;
+    public function getCurrency(): ?CurrencyInterface;
     public function getCurrencyCode(): ?string;
     public function getOrderItems(): Collection;
 }

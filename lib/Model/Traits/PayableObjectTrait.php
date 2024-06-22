@@ -29,7 +29,7 @@ trait PayableObjectTrait
         return $this;
     }
     
-    public function getCurrency(): CurrencyInterface
+    public function getCurrency(): ?CurrencyInterface
     {
         return $this->currency;
     }
