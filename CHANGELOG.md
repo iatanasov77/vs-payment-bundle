@@ -1,3 +1,9 @@
+3.3.16	|	Release date: **22.08.2024**
+============================================
+* New Features:
+  - Use New Namespace of UsersBundle Model Interfaces.
+
+
 3.3.15	|	Release date: **22.06.2024**
 ============================================
 * Bug-Fixes:

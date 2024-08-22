@@ -1,7 +1,7 @@
 <?php namespace Vankosoft\PaymentBundle\Model\Interfaces;
 
 use Doctrine\Common\Collections\Collection;
-use Vankosoft\UsersBundle\Model\UserInterface;
+use Vankosoft\UsersBundle\Model\Interfaces\UserInterface;
 
 interface UserPaymentAwareInterface extends UserInterface
 {
