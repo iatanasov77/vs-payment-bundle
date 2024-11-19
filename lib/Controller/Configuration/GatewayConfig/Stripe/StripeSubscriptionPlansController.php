@@ -57,7 +57,8 @@ class StripeSubscriptionPlansController extends AbstractController
         $availableWebhookEndpoints  = $this->stripeApi->getWebhookEndpoints();
 //         echo "<pre>"; var_dump( $availableWebhookEndpoints ); die;
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_index.html.twig', [
+        //return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_index.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/index.html.twig', [
             'availablePlans'            => $availablePlans,
             'availableProducts'         => $availableProducts,
             'availablePrices'           => $availablePrices,

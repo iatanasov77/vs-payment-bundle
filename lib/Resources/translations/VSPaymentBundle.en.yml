@@ -242,6 +242,13 @@ vs_payment:
             stop_recurring: Cancel Recurring Payments
             
         payum_stripe_objects:
+            pricing_plans: Pricing Plans
+            coupons: Coupons
+            subscriptions: Subscriptions
+            customers: Customers
+            accounts: Accounts
+            webhook_endpoints: Webhook Endpoints
+            
             stripe_subscription_objects: Stripe Subscription Objects
             stripe_plans: Stripe Plans
             create_stripe_plan: Create Stripe Plan
