@@ -29,13 +29,13 @@ vs_payment_methods_config:
         id: 0 # To Can be Added in the Menu
         
 vs_payment_set_order_status_paid:
-    path: /vs_payment/set-order-status-paid/{orderId}
+    path: /set-order-status-paid/{orderId}
     controller: Vankosoft\PaymentBundle\Controller\Checkout\OrderActionsController::setOrderStatusPaid
     options:
         expose: true
         
 vs_payment_generate_coupon_code:
-    path: /vs_payment/generate-coupon-code/{promotionId}
+    path: /generate-coupon-code/{promotionId}
     controller: Vankosoft\PaymentBundle\Controller\PromotionCoupons\CouponsExtController::generateCouponCodeJson
     options:
         expose: true
