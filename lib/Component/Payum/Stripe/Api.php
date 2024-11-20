@@ -3,6 +3,7 @@
 use Payum\Core\Payum;
 use Payum\Core\Gateway;
 use Payum\Stripe\Request\Api\CreatePlan;
+use Payum\Stripe\Request\Api\CreateCustomer;
 use Stripe\Event as StripeEvent;
 use Http\Discovery\NotFoundException;
 
@@ -142,6 +143,17 @@ final class Api
         $availableCustomers = $getCustomersRequest->getFirstModel()->getArrayCopy();
         
         return isset( $availableCustomers["data"] ) ? $availableCustomers["data"] : [];
+    }
+    
+    public function createCustomer( array $formData )
+    {
+        $custommer  = new \ArrayObject([
+            'name'  => $formData['name'],
+            'email' => $formData['email'],
+        ]);
+        $this->gateway->execute( $createCustommerRequest = new CreateCustomer( $custommer ) );
+        
+        return $createCustommerRequest->getFirstModel()->getArrayCopy();
     }
     
     public function getPaymentMethods( array $params = [] )
