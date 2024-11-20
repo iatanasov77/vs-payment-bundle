@@ -74,7 +74,7 @@ class StripeObjectsController extends AbstractController
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Forms/subscription_objects_create_plan.html.twig', [
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/subscription_objects_create_plan.html.twig', [
             'form'  => $form->createView(),
         ]);
         
@@ -97,7 +97,7 @@ class StripeObjectsController extends AbstractController
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Forms/subscription_objects_create_product.html.twig', [
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/subscription_objects_create_product.html.twig', [
             'form'  => $form->createView(),
         ]);
         
@@ -128,7 +128,7 @@ class StripeObjectsController extends AbstractController
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Forms/subscription_objects_create_price.html.twig', [
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/subscription_objects_create_price.html.twig', [
             'form'  => $form->createView(),
         ]);
         
@@ -166,7 +166,7 @@ class StripeObjectsController extends AbstractController
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Forms/subscription_objects_create_webhook_endpoint.html.twig', [
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/subscription_objects_create_webhook_endpoint.html.twig', [
             'form'  => $form->createView(),
         ]);
         
