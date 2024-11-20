@@ -205,7 +205,7 @@ class StripeObjectsController extends AbstractController
             return $this->redirectToRoute( 'gateway_config_stripe_coupon_objects_index' );
         }
         
-        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/coupon_objects_create.html.twig', [
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/coupon_objects_create.html.twig', [
             'form'  => $form->createView(),
         ]);
         
@@ -219,7 +219,7 @@ class StripeObjectsController extends AbstractController
     {
         $couponData = $this->stripeApi->retrieveCoupon( $id );
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/coupon_objects_retrieve.html.twig', [
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/coupon_objects_retrieve.html.twig', [
             'coupon'    => $couponData,
         ]);
     }

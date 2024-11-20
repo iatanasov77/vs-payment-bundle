@@ -270,6 +270,7 @@ vs_payment:
             default_payment_method: Default Payment Method
             show_payment_methods: Show Payment Methods
             customer_payment_methods: Customer Payment Methods
+            create_stripe_customer: Create Stripe Customer
             
             stripe_payment_methods: Stripe Payment Methods
             type: Type
