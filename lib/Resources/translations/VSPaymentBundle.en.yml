@@ -289,6 +289,10 @@ vs_payment:
             price: Price
             cancel_subscription: Cancel/Delete Subscription
             
+            stripe_connected_accounts: Connected Accounts
+            country: Country
+            default_currency: Default Currency
+            
             stripe_webhook_endpoints: Webhook Endpoints
             create_webhook_endpoint: Create Webhook Endpoint
             enabled_events: Enabled Events
