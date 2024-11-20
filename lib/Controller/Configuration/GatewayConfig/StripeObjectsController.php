@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe;
+<?php namespace Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,9 +11,10 @@ use Vankosoft\PaymentBundle\Form\Stripe\PlanForm;
 use Vankosoft\PaymentBundle\Form\Stripe\ProductForm;
 use Vankosoft\PaymentBundle\Form\Stripe\PriceForm;
 use Vankosoft\PaymentBundle\Form\Stripe\WebhookEndpointForm;
+use Vankosoft\PaymentBundle\Form\Stripe\CouponForm;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
-class StripeSubscriptionPlansController extends AbstractController
+class StripeObjectsController extends AbstractController
 {
     /** @var ManagerRegistry */
     private $doctrine;
@@ -37,25 +38,15 @@ class StripeSubscriptionPlansController extends AbstractController
     public function indexAction( Request $request ): Response
     {
         $availablePlans             = $this->stripeApi->getPlans();
-//         echo "<pre>"; var_dump( $availablePlans ); die;
-        
         $availableProducts          = $this->stripeApi->getProducts();
-//         echo "<pre>"; var_dump( $availableProducts ); die;
-        
         $availablePrices            = $this->stripeApi->getPrices();
-//         echo "<pre>"; var_dump( $availablePrices ); die;
-
         $availableCustomers         = $this->stripeApi->getCustomers();
-//         echo "<pre>"; var_dump( $availableCustomers ); die;
-
         $availablePaymentMethods    = $this->stripeApi->getPaymentMethods();
-//         echo "<pre>"; var_dump( $availablePaymentMethods ); die;
-
         $availableSubscriptions     = $this->stripeApi->getSubscriptions();
-//         echo "<pre>"; var_dump( $availableSubscriptions ); die;
-        
         $availableWebhookEndpoints  = $this->stripeApi->getWebhookEndpoints();
 //         echo "<pre>"; var_dump( $availableWebhookEndpoints ); die;
+
+        $availableCoupons           = $this->stripeApi->getCoupons();
         
         //return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_index.html.twig', [
         return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/index.html.twig', [
@@ -66,6 +57,7 @@ class StripeSubscriptionPlansController extends AbstractController
             'availablePaymentMethods'   => $availablePaymentMethods,
             'availableSubscriptions'    => $availableSubscriptions,
             'availableWebhookEndpoints' => $availableWebhookEndpoints,
+            'availableCoupons'          => $availableCoupons,
         ]);
     }
     
@@ -82,8 +74,13 @@ class StripeSubscriptionPlansController extends AbstractController
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_plan.html.twig', [
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Forms/subscription_objects_create_plan.html.twig', [
             'form'  => $form->createView(),
+        ]);
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+            'data'      => $data,
         ]);
     }
     
@@ -100,8 +97,13 @@ class StripeSubscriptionPlansController extends AbstractController
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_product.html.twig', [
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Forms/subscription_objects_create_product.html.twig', [
             'form'  => $form->createView(),
+        ]);
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+            'data'      => $data,
         ]);
     }
     
@@ -126,8 +128,13 @@ class StripeSubscriptionPlansController extends AbstractController
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_price.html.twig', [
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Forms/subscription_objects_create_price.html.twig', [
             'form'  => $form->createView(),
+        ]);
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+            'data'      => $data,
         ]);
     }
     
@@ -154,8 +161,13 @@ class StripeSubscriptionPlansController extends AbstractController
             return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
         }
         
-        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/subscription_objects_create_webhook_endpoint.html.twig', [
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Forms/subscription_objects_create_webhook_endpoint.html.twig', [
             'form'  => $form->createView(),
+        ]);
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+            'data'      => $data,
         ]);
     }
     
@@ -173,5 +185,44 @@ class StripeSubscriptionPlansController extends AbstractController
             'status'    => Status::STATUS_OK,
             'data'      => $data,
         ]);
+    }
+    
+    public function createCouponAction( Request $request ): Response
+    {
+        $form   = $this->createForm( CouponForm::class, null, ['method' => 'POST'] );
+        
+        $form->handleRequest( $request );
+        if ( $form->isSubmitted() ) {
+            $formData       = $form->getData();
+            
+            $this->stripeApi->createCoupon( $formData );
+            
+            return $this->redirectToRoute( 'gateway_config_stripe_coupon_objects_index' );
+        }
+        
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/coupon_objects_create.html.twig', [
+            'form'  => $form->createView(),
+        ]);
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+            'data'      => $data,
+        ]);
+    }
+    
+    public function retrieveCouponAction( $id, Request $request ): Response
+    {
+        $couponData = $this->stripeApi->retrieveCoupon( $id );
+        
+        return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/coupon_objects_retrieve.html.twig', [
+            'coupon'    => $couponData,
+        ]);
+    }
+    
+    public function deleteCouponAction( $id, Request $request ): Response
+    {
+        $this->stripeApi->deleteCoupon( $id );
+        
+        return $this->redirectToRoute( 'gateway_config_stripe_coupon_objects_index' );
     }
 }

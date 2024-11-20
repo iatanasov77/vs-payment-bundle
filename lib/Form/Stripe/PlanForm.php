@@ -8,7 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 
@@ -73,11 +72,6 @@ class PlanForm extends AbstractType
                 'attr'  => [
                     'placeholder' => 'vs_payment.template.payum_stripe_objects.product_name'
                 ],
-            ])
-            
-            ->add( 'btnSubmit', SubmitType::class, [
-                'label' => 'vs_application.form.save',
-                'translation_domain' => 'VSApplicationBundle'
             ])
         ;
     }
