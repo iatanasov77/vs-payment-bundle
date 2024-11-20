@@ -16,6 +16,7 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetCustomers;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPaymentMethods;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetSubscriptions;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetConnectedAccounts;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetWebhookEndpoints;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateWebhookEndpoint;
 
@@ -182,6 +183,16 @@ final class Api
             "id"    => $id,
         ]);
         $this->gateway->execute( new CancelSubscription( $subscription ) );
+    }
+    
+    public function getConnectedAccounts()
+    {
+        $stripeRequest  = new \ArrayObject( [] );
+        $this->gateway->execute( $getAccountsRequest = new GetConnectedAccounts( $stripeRequest ) );
+        
+        $availableAccounts = $getAccountsRequest->getFirstModel()->getArrayCopy();
+        
+        return isset( $availableAccounts["data"] ) ? $availableAccounts["data"] : [];
     }
     
     public function getWebhookEndpoints()

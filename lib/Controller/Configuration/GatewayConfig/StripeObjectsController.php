@@ -44,21 +44,20 @@ class StripeObjectsController extends AbstractController
         $availableCustomers         = $this->stripeApi->getCustomers();
         $availablePaymentMethods    = $this->stripeApi->getPaymentMethods();
         $availableSubscriptions     = $this->stripeApi->getSubscriptions();
+        $availableConnectedAccounts = $this->stripeApi->getConnectedAccounts();
         $availableWebhookEndpoints  = $this->stripeApi->getWebhookEndpoints();
-//         echo "<pre>"; var_dump( $availableWebhookEndpoints ); die;
-
         $availableCoupons           = $this->stripeApi->getCoupons();
         
-        //return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/index.html.twig', [
         return $this->render( '@VSPayment/Pages/GatewayConfig/Stripe/index.html.twig', [
-            'availablePlans'            => $availablePlans,
-            'availableProducts'         => $availableProducts,
-            'availablePrices'           => $availablePrices,
-            'availableCustomers'        => $availableCustomers,
-            'availablePaymentMethods'   => $availablePaymentMethods,
-            'availableSubscriptions'    => $availableSubscriptions,
-            'availableWebhookEndpoints' => $availableWebhookEndpoints,
-            'availableCoupons'          => $availableCoupons,
+            'availablePlans'                => $availablePlans,
+            'availableProducts'             => $availableProducts,
+            'availablePrices'               => $availablePrices,
+            'availableCustomers'            => $availableCustomers,
+            'availablePaymentMethods'       => $availablePaymentMethods,
+            'availableSubscriptions'        => $availableSubscriptions,
+            'availableConnectedAccounts'    => $availableConnectedAccounts,
+            'availableWebhookEndpoints'     => $availableWebhookEndpoints,
+            'availableCoupons'              => $availableCoupons,
         ]);
     }
     
