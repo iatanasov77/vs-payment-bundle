@@ -72,7 +72,7 @@ class StripeObjectsController extends AbstractController
             
             $this->stripeApi->createPlan( $formData );
             
-            return $this->redirectToRoute( 'gateway_config_stripe_index' );
+            return $this->redirectToRoute( 'gateway_config_stripe_objects_index' );
         }
         
         $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/create_plan.html.twig', [
@@ -95,7 +95,7 @@ class StripeObjectsController extends AbstractController
             
             $this->stripeApi->createProduct( $formData );
             
-            return $this->redirectToRoute( 'gateway_config_stripe_index' );
+            return $this->redirectToRoute( 'gateway_config_stripe_objects_index' );
         }
         
         $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/create_product.html.twig', [
@@ -126,7 +126,7 @@ class StripeObjectsController extends AbstractController
             $this->doctrine->getManager()->persist( $formData['pricingPlan'] );
             $this->doctrine->getManager()->flush();
             
-            return $this->redirectToRoute( 'gateway_config_stripe_index' );
+            return $this->redirectToRoute( 'gateway_config_stripe_objects_index' );
         }
         
         $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/create_price.html.twig', [
@@ -143,7 +143,7 @@ class StripeObjectsController extends AbstractController
     {
         $this->stripeApi->cancelSubscription( $id );
         
-        return $this->redirectToRoute( 'gateway_config_stripe_index' );
+        return $this->redirectToRoute( 'gateway_config_stripe_objects_index' );
     }
     
     public function createCustomerAction( Request $request ): Response
@@ -155,7 +155,7 @@ class StripeObjectsController extends AbstractController
             $formData       = $form->getData();
             $this->stripeApi->createCustomer( $formData );
             
-            return $this->redirectToRoute( 'gateway_config_stripe_index' );
+            return $this->redirectToRoute( 'gateway_config_stripe_objects_index' );
         }
         
         $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/create_customer.html.twig', [
@@ -197,7 +197,7 @@ class StripeObjectsController extends AbstractController
             
             $this->stripeApi->createWebhookEndpoint( $formData );
             
-            return $this->redirectToRoute( 'gateway_config_stripe_index' );
+            return $this->redirectToRoute( 'gateway_config_stripe_objects_index' );
         }
         
         $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/create_webhook_endpoint.html.twig', [
