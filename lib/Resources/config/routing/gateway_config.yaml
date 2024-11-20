@@ -21,6 +21,10 @@ gateway_config_stripe_subscription_objects_cancel_subscription:
     path: /gateway-config/stripe-subscriptions/cancel-subscription/{id}
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::cancelSubscriptionAction
 
+gateway_config_stripe_subscription_objects_create_customer:
+    path: /gateway-config/stripe-subscriptions/create-customer
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::createCustomerAction
+
 gateway_config_stripe_subscription_objects_create_webhook_endpoint:
     path: /gateway-config/stripe-subscriptions/create-webhook-endpoint
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::createWebhookEndpointAction

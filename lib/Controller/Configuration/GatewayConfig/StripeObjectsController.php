@@ -145,6 +145,11 @@ class StripeObjectsController extends AbstractController
         return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
     }
     
+    public function createCustomerAction( Request $request ): Response
+    {
+        return $this->redirectToRoute( 'gateway_config_stripe_subscription_objects_index' );
+    }
+    
     public function createWebhookEndpointAction( Request $request ): Response
     {
         $form   = $this->createForm( WebhookEndpointForm::class, null, ['method' => 'POST'] );
