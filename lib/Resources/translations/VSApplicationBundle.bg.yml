@@ -21,6 +21,7 @@ vs_application:
         exchange_rates: Валутни Курсове
         create_new_exchange_rate: Създаване Валутен Курс
         edit_exchange_rate: Редакция Валутен Курс
+        stripe_objects: Страйп Обекти
         stripe_subscription_plans: Страйп Абонаментни Обекти
         stripe_coupons: Страйп Ваучери
         developement: Разработка

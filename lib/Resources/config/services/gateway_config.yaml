@@ -7,17 +7,10 @@ services:
     ##############################
     # Stripe
     ##############################
-    Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController:
+    Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController:
         tags: ['controller.service_arguments']
         autowire: true
         arguments:
             - '@doctrine'
             - '@twig'
-            - '@vs_payment.stripe_api'
-            
-    Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeCouponsController:
-        tags: ['controller.service_arguments']
-        autowire: true
-        arguments:
-            - '@doctrine'
             - '@vs_payment.stripe_api'

@@ -1,52 +1,49 @@
 ##############################
-# Stripe Subscriptions
+# Stripe Objects
 ##############################
-gateway_config_stripe_subscription_objects_index:
-    path: /vs_payment/gateway-config/stripe-subscriptions/index
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::indexAction
+gateway_config_stripe_objects_index:
+    path: /gateway-config/stripe-objects/index
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::indexAction
 
-gateway_config_stripe_subscription_objects_create_plan:
-    path: /vs_payment/gateway-config/stripe-subscriptions/create-plan
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createPlanAction
+gateway_config_stripe_objects_create_plan:
+    path: /gateway-config/stripe-objects/create-plan
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::createPlanAction
     
-gateway_config_stripe_subscription_objects_create_product:
-    path: /vs_payment/gateway-config/stripe-subscriptions/create-product
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createProductAction
+gateway_config_stripe_objects_create_product:
+    path: /gateway-config/stripe-objects/create-product
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::createProductAction
     
-gateway_config_stripe_subscription_objects_create_price:
-    path: /vs_payment/gateway-config/stripe-subscriptions/create-price
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createPriceAction
+gateway_config_stripe_objects_create_price:
+    path: /gateway-config/stripe-objects/create-price
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::createPriceAction
     
-gateway_config_stripe_subscription_objects_cancel_subscription:
-    path: /vs_payment/gateway-config/stripe-subscriptions/cancel-subscription/{id}
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::cancelSubscriptionAction
+gateway_config_stripe_objects_cancel_subscription:
+    path: /gateway-config/stripe-objects/cancel-subscription/{id}
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::cancelSubscriptionAction
 
-gateway_config_stripe_subscription_objects_create_webhook_endpoint:
-    path: /vs_payment/gateway-config/stripe-subscriptions/create-webhook-endpoint
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::createWebhookEndpointAction
+gateway_config_stripe_objects_create_customer:
+    path: /gateway-config/stripe-objects/create-customer
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::createCustomerAction
+
+gateway_config_stripe_objects_create_webhook_endpoint:
+    path: /gateway-config/stripe-objects/create-webhook-endpoint
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::createWebhookEndpointAction
 
 gateway_config_stripe_customer_payment_methods:
-    path: /vs_payment/gateway-config/stripe-subscriptions/customer-payment-methods/{customerId}
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeSubscriptionPlansController::showCustomerPaymentMethods
+    path: /gateway-config/stripe-objects/customer-payment-methods/{customerId}
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::showCustomerPaymentMethods
 
-##############################
-# Stripe Coupons
-##############################
-gateway_config_stripe_coupon_objects_index:
-    path: /vs_payment/gateway-config/stripe-coupons/index
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeCouponsController::indexAction
-
-gateway_config_stripe_coupon_objects_create_coupon:
-    path: /vs_payment/gateway-config/stripe-coupons/create-coupon
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeCouponsController::createCouponAction
+gateway_config_stripe_objects_create_coupon:
+    path: /gateway-config/stripe-objects/create-coupon
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::createCouponAction
     
-gateway_config_stripe_coupon_objects_retrieve_coupon:
-    path: /vs_payment/gateway-config/stripe-coupons/retrieve-coupon/{id}
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeCouponsController::retrieveCouponAction
+gateway_config_stripe_objects_retrieve_coupon:
+    path: /gateway-config/stripe-objects/retrieve-coupon/{id}
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::retrieveCouponAction
     
-gateway_config_stripe_coupon_objects_delete_coupon:
-    path: /vs_payment/gateway-config/stripe-coupons/delete-coupon/{id}
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\Stripe\StripeCouponsController::deleteCouponAction
+gateway_config_stripe_objects_delete_coupon:
+    path: /gateway-config/stripe-objects/delete-coupon/{id}
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::deleteCouponAction
 
 
 

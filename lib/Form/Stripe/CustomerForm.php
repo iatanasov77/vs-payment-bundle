@@ -5,27 +5,26 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
-class ProductForm extends AbstractType
+class CustomerForm extends AbstractType
 {
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
-            /*
-            ->add( 'id', TextType::class, [
-                'label' => 'ID',
-                'translation_domain' => 'VSPaymentBundle',
-                'attr'  => [
-                    'placeholder' => 'ID'
-                ],
-            ])
-            */
-        
             ->add( 'name', TextType::class, [
                 'label' => 'vs_payment.template.payum_stripe_objects.name',
                 'translation_domain' => 'VSPaymentBundle',
                 'attr'  => [
                     'placeholder' => 'vs_payment.template.payum_stripe_objects.name'
+                ],
+            ])
+            
+            ->add( 'email', EmailType::class, [
+                'label' => 'vs_payment.template.payum_stripe_objects.email',
+                'translation_domain' => 'VSPaymentBundle',
+                'attr'  => [
+                    'placeholder' => 'vs_payment.template.payum_stripe_objects.email'
                 ],
             ])
         ;
@@ -44,6 +43,6 @@ class ProductForm extends AbstractType
     
     public function getName()
     {
-        return 'vs_payment.stripe_subscription_product';
+        return 'vs_payment.stripe_subscription_customer';
     }
 }

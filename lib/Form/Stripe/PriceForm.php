@@ -8,7 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
@@ -96,11 +95,6 @@ class PriceForm extends AbstractType
                 'translation_domain'    => 'VSPaymentBundle',
                 'placeholder'           => 'vs_payment.template.payum_stripe_objects.product_placeholder',
                 'choices'               => \array_flip( $this->stripeApi->getProductPairs() ),
-            ])
-            
-            ->add( 'btnSubmit', SubmitType::class, [
-                'label' => 'vs_application.form.save',
-                'translation_domain' => 'VSApplicationBundle'
             ])
         ;
             

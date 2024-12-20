@@ -11,7 +11,7 @@ payum_notify:
 # Credit Card Routes
 ###############################################################################################
 vs_payment_show_credit_card_form:
-    path: /vs_payment/credit-card/{formAction}
+    path: /credit-card/{formAction}
     controller: Vankosoft\PaymentBundle\Controller\Checkout\CreditCardController::showCreditCardFormAction
     defaults:
         formAction: ''

@@ -6,7 +6,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
@@ -29,11 +28,6 @@ class WebhookEndpointForm extends AbstractType
                 'attr'  => [
                     'placeholder' => 'vs_payment.template.payum_stripe_objects.url'
                 ],
-            ])
-            
-            ->add( 'btnSubmit', SubmitType::class, [
-                'label' => 'vs_application.form.save',
-                'translation_domain' => 'VSApplicationBundle'
             ])
         ;
     }

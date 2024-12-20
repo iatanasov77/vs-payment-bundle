@@ -7,7 +7,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CouponForm extends AbstractType
 {
@@ -41,11 +40,6 @@ class CouponForm extends AbstractType
                     'placeholder' => 'vs_payment.template.payum_stripe_objects.coupon_percent_off'
                 ],
                 'required'  => false,
-            ])
-            
-            ->add( 'btnSubmit', SubmitType::class, [
-                'label' => 'vs_application.form.save',
-                'translation_domain' => 'VSApplicationBundle'
             ])
         ;
     }

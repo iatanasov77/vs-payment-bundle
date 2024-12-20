@@ -242,6 +242,13 @@ vs_payment:
             stop_recurring: Cancel Recurring Payments
             
         payum_stripe_objects:
+            pricing_plans: Pricing Plans
+            coupons: Coupons
+            subscriptions: Subscriptions
+            customers: Customers
+            accounts: Accounts
+            webhook_endpoints: Webhook Endpoints
+            
             stripe_subscription_objects: Stripe Subscription Objects
             stripe_plans: Stripe Plans
             create_stripe_plan: Create Stripe Plan
@@ -270,6 +277,7 @@ vs_payment:
             default_payment_method: Default Payment Method
             show_payment_methods: Show Payment Methods
             customer_payment_methods: Customer Payment Methods
+            create_stripe_customer: Create Stripe Customer
             
             stripe_payment_methods: Stripe Payment Methods
             type: Type
@@ -280,6 +288,10 @@ vs_payment:
             customer: Customer
             price: Price
             cancel_subscription: Cancel/Delete Subscription
+            
+            stripe_connected_accounts: Connected Accounts
+            country: Country
+            default_currency: Default Currency
             
             stripe_webhook_endpoints: Webhook Endpoints
             create_webhook_endpoint: Create Webhook Endpoint

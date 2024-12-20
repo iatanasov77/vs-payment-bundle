@@ -108,6 +108,14 @@ services:
             - { name: payum.action, factory: stripe_js }
             
     #######################################################
+    # Stripe Accounts
+    #######################################################
+    vs_payment.stripe_list_accounts:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetConnectedAccountsAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+    
+    #######################################################
     # TelephoneCall Services
     #######################################################
     payum.action.obtain_coupon_code:

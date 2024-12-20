@@ -21,6 +21,7 @@ vs_application:
         exchange_rates: Exchange Rates
         create_new_exchange_rate: Create Exchange Rate
         edit_exchange_rate: Edit Exchange Rate
+        stripe_objects: Stripe Objects
         stripe_subscription_plans: Stripe Subscription Objects
         stripe_coupons: Stripe Coupons
         developement: Developement

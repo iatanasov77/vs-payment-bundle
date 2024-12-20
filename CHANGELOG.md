@@ -1,3 +1,15 @@
+3.4.0	|	Release date: **21.12.2024**
+============================================
+* New Features and Improvements:
+  - Remove 'vs_payment' prefix from routes paths.
+  - Create Stripe Objects Page with Scrollable Tabs.
+  - Use Modal Dialogs for All Stripe Objects Forms.
+  - Handle Submit of Stripe Objects Forms.
+  - Add a 'CreateCustomer' Action into Stripe Objects Actions.
+  - Create a 'GetConnectedAccountsAction' Payum Action.
+  - Add Some Translations.
+
+
 3.3.16	|	Release date: **22.08.2024**
 ============================================
 * New Features:
