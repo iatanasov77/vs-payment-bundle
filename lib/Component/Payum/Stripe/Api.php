@@ -238,7 +238,7 @@ final class Api
         
         $availableCoupons = $getCouponsRequest->getFirstModel()->getArrayCopy();
         
-        return $availableCoupons["data"];
+        return isset( $availableCoupons["data"] ) ? $availableCoupons["data"] : [];
     }
     
     public function createCoupon( array $formData )
