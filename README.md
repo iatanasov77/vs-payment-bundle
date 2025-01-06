@@ -1,4 +1,4 @@
-# VankoSoft Payment Bundle
+# VankoSoft Symfony Application Extension - Payment Bundle
 
 I. Register/Initialize Payment Bundle
 -------------------------------------

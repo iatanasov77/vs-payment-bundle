@@ -1,7 +1,7 @@
 {
 	"name": "vankosoft/payment-bundle",
     "type": "symfony-bundle",
-    "description": "Vankosoft Application PaymentBundle",
+    "description": "VankoSoft Symfony Application Extension - Payment Bundle",
     "keywords": [
         "symfony",
         "vankosoft",
