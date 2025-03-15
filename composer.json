@@ -23,6 +23,7 @@
        	
        	"payum/payum-bundle": "^2.5",
        	"php-http/discovery": "^1.20",
+       	"guzzlehttp/psr7": "^2.7",
        	
         "payum/offline": "^1.7",
         "payum/paypal-express-checkout-nvp": "^1.7",
