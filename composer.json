@@ -21,7 +21,6 @@
     "require": {
         "php": "^8.2",
        	
-       	"payum/core": "^1.7",
        	"payum/payum-bundle": "^2.5",
        	
         "payum/offline": "^1.7",
@@ -36,11 +35,7 @@
         "sylius/customer": "^2.0",
 		"sylius/currency": "^2.0",
 		"sylius/promotion": "^2.0",
-		"sylius/money-bundle": "^2.0",
-		
-		"php-http/message-factory": "^1.1",
-        "php-http/discovery": "^1.19",
-        "php-http/async-client-implementation": "*"
+		"sylius/money-bundle": "^2.0"
     },
     "autoload": {
         "psr-4": {
