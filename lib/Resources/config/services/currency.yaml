@@ -42,17 +42,9 @@ services:
 # ========================
 # See SyliusCurrencyBundle: https://github.com/Sylius/SyliusCurrencyBundle
 ################################################################################################
-    vs_payment.templating.helper.currency:
-        class: Vankosoft\PaymentBundle\Templating\Helper\CurrencyHelper
-        lazy: true
-        tags:
-            - { name: form.type, alias: vs_payment_currency }
-
     vs_payment.twig.extension.currency:
         class: Vankosoft\PaymentBundle\Twig\CurrencyExtension
         public: false
-        arguments:
-            - '@vs_payment.templating.helper.currency'
         tags:
             - { name: twig.extension }
 
