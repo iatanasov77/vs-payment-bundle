@@ -22,9 +22,6 @@
         "php": "^8.2",
        	
        	"payum/payum-bundle": "^2.5",
-       	"php-http/discovery": "^1.20",
-       	"php-http/message": "^1.16",
-       	"guzzlehttp/psr7": "^2.7",
        	
         "payum/offline": "^1.7",
         "payum/paypal-express-checkout-nvp": "^1.7",
@@ -38,7 +35,11 @@
         "sylius/customer": "^2.0",
 		"sylius/currency": "^2.0",
 		"sylius/promotion": "^2.0",
-		"sylius/money-bundle": "^2.0"
+		"sylius/money-bundle": "^2.0",
+		
+		"php-http/message-factory": "^1.1",
+        "php-http/discovery": "^1.20",
+        "php-http/async-client-implementation": "*"
     },
     "autoload": {
         "psr-4": {
