@@ -1,3 +1,9 @@
+4.0.1	|	Release date: **15.03.2025**
+============================================
+* Bug-Fixes:
+  - Fix Some Deprecations
+
+
 4.0.0	|	Release date: **15.03.2025**
 ============================================
 * New Features , Updates and Improvements:
