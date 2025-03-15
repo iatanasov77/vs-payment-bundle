@@ -1,3 +1,13 @@
+4.0.0	|	Release date: **15.03.2025**
+============================================
+* New Features , Updates and Improvements:
+  - Add Some Improvement on Stripe API Component.
+  - Update Package Title and Description.
+  - Fix Some deprecations and clear some debugging and comments in DI Extension Class..
+  - Update Composer Requirements.
+  - Remove Composer Requirements of 'php-http/message-factory' , 'php-http/discovery' , 'php-http/async-client-implementation' .
+
+
 3.4.0	|	Release date: **21.12.2024**
 ============================================
 * New Features and Improvements:
