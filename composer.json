@@ -1,7 +1,7 @@
 {
 	"name": "vankosoft/payment-bundle",
     "type": "symfony-bundle",
-    "description": "Vankosoft Application PaymentBundle",
+    "description": "VankoSoft Symfony Application Extension - Payment Bundle",
     "keywords": [
         "symfony",
         "vankosoft",
@@ -19,9 +19,8 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
        	
-       	"payum/core": "^1.7",
        	"payum/payum-bundle": "^2.5",
        	
         "payum/offline": "^1.7",
@@ -33,18 +32,14 @@
 		"plumtreesystems/payum-paysera-gateway": "^0.3",
         "vankosoft/borica-bundle": "^0.2",
         
-        "sylius/customer": "^1.12",
-		"sylius/currency": "^1.12",
-		"sylius/promotion": "^1.13",
-		"sylius/money-bundle": "^1.12",
+        "sylius/customer": "^2.0",
+		"sylius/currency": "^2.0",
+		"sylius/promotion": "^2.0",
+		"sylius/money-bundle": "^2.0",
 		
 		"php-http/message-factory": "^1.1",
-        "php-http/discovery": "^1.19",
+        "php-http/discovery": "^1.20",
         "php-http/async-client-implementation": "*"
-    },
-    "conflict": {
-        "doctrine/doctrine-bundle": "<1.3",
-        "symfony/doctrine-bridge": "<2.7"
     },
     "autoload": {
         "psr-4": {

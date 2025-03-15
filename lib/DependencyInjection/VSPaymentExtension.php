@@ -14,12 +14,11 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 class VSPaymentExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
     use PrependPayumTrait;
-    //use PrependDoctrineMigrationsTrait;
     
     /**
      * {@inheritDoc}
      */
-    public function load( array $configs, ContainerBuilder $container )
+    public function load( array $configs, ContainerBuilder $container ): void
     {
         $config = $this->processConfiguration( $this->getConfiguration( [], $container ), $configs );
         
@@ -38,17 +37,5 @@ class VSPaymentExtension extends AbstractResourceExtension implements PrependExt
         $config = $this->processConfiguration( $this->getConfiguration( [], $container ), $config );
         
         $this->prependPayum( $container, $config );
-        //$this->prependDoctrineMigrations( $container );
-    }
-    
-    private function debugExtensionConfig( ContainerBuilder $container, string $extension )
-    {
-        $debugArray = $container->getExtensionConfig( $extension );
-        
-        $fileLocator = new FileLocator( $container->getParameter( 'kernel.project_dir' ) );
-        //$debugArray['MigrationsPath'] = $fileLocator->locate("@VSApplicationBundle/DoctrineMigrations");
-        $debugArray['MigrationsPath'] = $fileLocator->locate("@VSPaymentBundle/DoctrineMigrations");
-        
-        return $debugArray;
     }
 }
