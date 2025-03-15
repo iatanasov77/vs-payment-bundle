@@ -97,7 +97,7 @@
                                     {% include '@VSPayment/Pages/GatewayConfigExt/config_options.html.twig' with { 'sandbox': true, 'options': gateway.getConfig( true, true ) } %}
                                 </div>
 		                        
-		                        {{ vs_form.buttons( form ) }}
+		                        {{ vs_form.buttons( form, metadata is defined ? metadata : null ) }}
                             {{ form_end(form, {'render_rest': false}) }}
 	                    </div>
 	                </section>  

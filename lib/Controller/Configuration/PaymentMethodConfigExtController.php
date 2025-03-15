@@ -4,7 +4,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Doctrine\Persistence\ManagerRegistry;
 
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 use Sylius\Component\Resource\Factory\Factory;
 
 use Vankosoft\PaymentBundle\Form\PaymentMethodForm;
