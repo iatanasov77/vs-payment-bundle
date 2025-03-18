@@ -1,3 +1,9 @@
+4.0.2	|	Release date: **18.03.2025**
+============================================
+* Bug-Fixes:
+  - Fix PromotionRule Model Doctrine Mapping.
+
+
 4.0.1	|	Release date: **15.03.2025**
 ============================================
 * Bug-Fixes:
