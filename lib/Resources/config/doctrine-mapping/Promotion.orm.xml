@@ -19,6 +19,7 @@
         <field name="priority" type="integer">
             <gedmo:sortable-position/>
         </field>
+        
         <field name="exclusive" type="boolean" />
         <field name="usageLimit" column="usage_limit" type="integer" nullable="true" />
         <field name="used" type="integer" />
@@ -31,11 +32,13 @@
                 <cascade-all />
             </cascade>
         </one-to-many>
+        
         <one-to-many field="rules" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PromotionRuleInterface" mapped-by="promotion" orphan-removal="true">
             <cascade>
                 <cascade-all />
             </cascade>
         </one-to-many>
+        
         <one-to-many field="actions" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PromotionActionInterface" mapped-by="promotion" orphan-removal="true">
             <cascade>
                 <cascade-all />
@@ -60,6 +63,7 @@
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
         </field>
+        
         <field name="updatedAt" column="updated_at" type="datetime" nullable="true">
             <gedmo:timestampable on="update"/>
         </field>
