@@ -5,6 +5,7 @@ vs_payment:
         factory: Gateway Factory
         factory_placeholder: '-- Select Gateway Factory --'
         code: Code
+        service_id: Service ID
         title: Title
         name: Name
         price: Price
@@ -22,6 +23,9 @@ vs_payment:
         generate_code: Generate Code
         pricing_plan_label: Pricing Plan
         pricing_plan_placeholder: '-- Select Pricing Plan --'
+        
+        service_option_key_placeholder: Option Key
+        service_option_value_placeholder: Option Value
         
         gateway_config:
             use_sandbox: Use Sandbox

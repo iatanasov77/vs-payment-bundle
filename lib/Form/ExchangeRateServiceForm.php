@@ -22,7 +22,7 @@ class ExchangeRateServiceForm extends AbstractForm
             ])
             
             ->add( 'serviceId', TextType::class, [
-                'required'              => false,
+                'required'              => true,
                 'label'                 => 'vs_payment.form.service_id',
                 'translation_domain'    => 'VSPaymentBundle',
             ])

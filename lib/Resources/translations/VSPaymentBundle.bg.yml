@@ -5,6 +5,7 @@ vs_payment:
         factory: Гейтуей Фактори
         factory_placeholder: '-- Избери Гейтуей Фактори --'
         code: Код
+        service_id: Service ID
         title: Заглавие
         name: Име
         price: Цена
@@ -22,6 +23,9 @@ vs_payment:
         generate_code: Генерирай Код
         pricing_plan_label: Pricing Plan
         pricing_plan_placeholder: '-- Select Pricing Plan --'
+        
+        service_option_key_placeholder: Option Key
+        service_option_value_placeholder: Option Value
         
         gateway_config:
             use_sandbox: Използвай Сенд-бокс

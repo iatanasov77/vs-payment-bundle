@@ -11,20 +11,20 @@ class ExchangeRateServiceOptionsType extends AbstractType
     {
         $builder
             ->add( 'key', TextType::class, [
-                'required'              => true,
+                'required'              => false,
                 'translation_domain'    => 'VSPaymentBundle',
                 'label'                 => 'vs_payment.form.paid_service.attribute_name',
                 'attr'                  => [
-                    'placeholder'   => 'vs_users_subscriptions.form.paid_service.attribute_name_placeholder',
+                    'placeholder'   => 'vs_payment.form.service_option_key_placeholder',
                 ],
             ])
             
             ->add( 'value', TextType::class, [
-                'required'              => true,
+                'required'              => false,
                 'translation_domain'    => 'VSPaymentBundle',
                 'label'                 => 'vs_payment.form.paid_service.attribute_value',
                 'attr'                  => [
-                    'placeholder'   => 'vs_users_subscriptions.form.paid_service.attribute_value_placeholder',
+                    'placeholder'   => 'vs_payment.form.service_option_value_placeholder',
                 ],
             ])
         ;
