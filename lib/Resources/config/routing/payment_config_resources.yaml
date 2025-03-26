@@ -7,7 +7,7 @@ vs_payment_gateway_config:
 
 vs_payment_method_config:
     resource: |
-        alias: vs_payment.payment_method
+        alias: vs_payment.payment-method
         path: /payment/payment-method
         templates: "@VSPayment/Pages/PaymentMethodConfig"
     type: sylius.resource
@@ -22,8 +22,15 @@ vs_payment_currency:
 vs_payment_exchange_rate:
     resource: |
         alias: vs_payment.exchange_rate
-        path: /payment/exchange_rate
+        path: /payment/exchange-rate
         templates: "@VSPayment/Pages/ExchangeRate"
+    type: sylius.resource
+
+vs_payment_exchange_rate_service:
+    resource: |
+        alias: vs_payment.exchange_rate_service
+        path: /payment/exchange-rate-service
+        templates: "@VSPayment/Pages/ExchangeRateService"
     type: sylius.resource
 
 vs_payment_recieved_payments_index:

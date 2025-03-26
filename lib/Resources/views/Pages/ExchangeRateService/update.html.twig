@@ -1,0 +1,63 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{% import "@VSApplication/Macros/form.html.twig" as vs_form %}
+
+{% if( item.id ) %}
+    {% set pageTitle = 'vs_payment.template.exchange_rate_update_title' | trans( {},'VSPaymentBundle' ) %}
+{% else %}
+    {% set pageTitle = 'vs_payment.template.exchange_rate_create_title' | trans( {},'VSPaymentBundle' ) %}
+{% endif %}
+
+{% block title %}{{ parent() }} :: {{ pageTitle }}{% endblock %}
+
+{% block pageTitle %}
+    <h2 class="pageheader-title"><i class="icon_genius"></i> {{ pageTitle }}</h2>
+    <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <!-- ============================================================== -->
+        <!-- basic tabs  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">{{ 'vs_payment.template.exchange_rate_title' | trans( {},'VSPaymentBundle' ) }}</h5>
+                <div class="card-body">
+                    {% if formErrors is defined %}
+                        {{ vs_form.errors( formErrors ) }}     
+                    {% endif %}
+                    
+                    {% if(item.id) %}{% set method = "PUT" %}{% else %}{% set method = "POST" %}{% endif %}
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal '}, 'method': method }) }}
+                        <div class="form-group">
+                            {{ form_label(form.sourceCurrency, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.sourceCurrency, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.targetCurrency, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.targetCurrency, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form_label(form.ratio, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            {{ form_widget(form.ratio, {'attr': {'class': 'form-control' }}) }}
+                        </div>
+                        
+                        {{ vs_form.buttons( form, metadata is defined ? metadata : null ) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>  
+{% endblock content %}
