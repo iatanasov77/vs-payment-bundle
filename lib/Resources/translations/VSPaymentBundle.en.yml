@@ -351,6 +351,7 @@ vs_payment:
         exchange_rate_service_update_title: Edit Exchange Rate Service
         exchange_rate_service_create_title: Create Exchange Rate Service
         exchange_rate_service_title: Exchange Rate Service
+        exchange_rate_service_options: Service Options
         
         checkout_done_title: Payment Done
         checkout_done_subtitle: Payment Success
