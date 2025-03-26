@@ -63,6 +63,10 @@ use Vankosoft\PaymentBundle\Form\CustomerGroupForm;
 
 use Vankosoft\PaymentBundle\Model\Adjustment;
 
+use Vankosoft\PaymentBundle\Model\ExchangeRateService;
+use Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateServiceController;
+use Vankosoft\PaymentBundle\Form\ExchangeRateServiceForm;
+
 use Vankosoft\PaymentBundle\Component\Payment\Payment as ComponentPayment;
 
 /**
@@ -335,6 +339,23 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'controller' )->defaultValue( CustomerGroupsController::class )->cannotBeEmpty()->end()
                                         ->scalarNode( 'form' )->defaultValue( CustomerGroupForm::class )->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        
+                        ->arrayNode( 'exchange_rate_service' )
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode( 'options' )->end()
+                                ->arrayNode( 'classes' )
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode( 'model' )->defaultValue( ExchangeRateService::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'repository' )->defaultValue( EntityRepository::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'factory' )->defaultValue( Factory::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'controller' )->defaultValue( ExchangeRateServiceController::class )->cannotBeEmpty()->end()
+                                        ->scalarNode( 'form' )->defaultValue( ExchangeRateServiceForm::class )->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
