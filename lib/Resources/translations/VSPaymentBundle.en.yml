@@ -26,6 +26,7 @@ vs_payment:
         
         service_option_key_placeholder: Option Key
         service_option_value_placeholder: Option Value
+        get_exchange_rate_ratio: Update Ratio
         
         gateway_config:
             use_sandbox: Use Sandbox
