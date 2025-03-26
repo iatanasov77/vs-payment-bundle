@@ -30,13 +30,18 @@ class ExchangeRateServiceExtController extends AbstractController
         if ( ! $service ) {
             throw new \Exception( 'The Exchange Rate Service Not Found !!!' );
         }
-        var_dump( $service->getOptions() ); die;
+        
+        $serviceOptions = [];
+        foreach ( $service->getOptions() as $option ) {
+            if ( $option['key'] && $option['value'] ) {
+                $serviceOptions[$option['key']] = $option['value'];
+            }
+        }
         
         /** @var Swap */
-        $swap = $this->swapBuilder->add( 'european_central_bank' )->build();
-        //$rate = $swap->latest( 'EUR/BGN' );
-        
+        $swap = $this->swapBuilder->add( 'european_central_bank', $serviceOptions )->build();
         //$swap = $this->swapBuilder->add( 'apilayer_exchange_rates_data', ['api_key' => '35d60a160b1c2e7c4565d6cc976f7871'] )->build();
+        
         $rate = $swap->latest( 'EUR/USD' );
         
         return new JsonResponse([
