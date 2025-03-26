@@ -30,9 +30,10 @@ class ExchangeRateServiceExtController extends AbstractController
         $this->swapBuilder = new SwapBuilder();
     }
     
-    public function getExchangeRate( $exchangeRateId, Request $request ): Response
+    public function getExchangeRate( $serviceId, $exchangeRateId, Request $request ): Response
     {
-        $service    = $this->exchangeRateServiceRepository->findOneBy(['serviceId' => 'european_central_bank']);
+        // Ex. european_central_bank
+        $service    = $this->exchangeRateServiceRepository->findOneBy(['serviceId' => $serviceId]);
         if ( ! $service ) {
             throw new \Exception( 'The Exchange Rate Service Not Found !!!' );
         }
@@ -45,7 +46,7 @@ class ExchangeRateServiceExtController extends AbstractController
         }
         
         /** @var Swap */
-        $swap           = $this->swapBuilder->add( 'european_central_bank', $serviceOptions )->build();
+        $swap           = $this->swapBuilder->add( $service->getServiceId(), $serviceOptions )->build();
         $exchangeRate   = $this->exchangeRateRepository->find( $exchangeRateId );
         
         $rate = $swap->latest( \sprintf( '%s/%s',
