@@ -4,9 +4,9 @@
 {% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
 {% from "@VSApplication/Macros/pagination.html.twig" import pagination %}
 
-{% block title %}{{ parent() }} :: {{ 'vs_payment.template.exchange_rate_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.exchange_rate_service_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
-{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.exchange_rate_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.exchange_rate_service_index_title' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
 
 {% block content %}
     <div class="row">   
@@ -16,9 +16,8 @@
                     <thead>
                         <tr>
                             <th width="50">N</th>
-                            <th>{{ 'vs_payment.template.exchange_rate_index_source_currency' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.exchange_rate_index_target_currency' | trans( {},'VSPaymentBundle' ) }}</th>
-                            <th>{{ 'vs_payment.template.exchange_rate_index_ratio' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.exchange_rate_service_index_service_title' | trans( {},'VSPaymentBundle' ) }}</th>
+                            <th>{{ 'vs_payment.template.exchange_rate_service_index_service_id' | trans( {},'VSPaymentBundle' ) }}</th>
                             <th width="150">{{ 'vs_payment.template.action' | trans( {},'VSPaymentBundle' ) }}</th>
                         </tr>
                     </thead>
@@ -26,19 +25,18 @@
                     {% for item in resources %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ item.sourceCurrency.code }}</td>
-                            <td>{{ item.targetCurrency.code }}</td>
-                            <td>{{ item.ratio }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.serviceId }}</td>
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-primary"
-                                        href="{{ path('vs_payment_exchange_rate_update', {'id': item.id}) }}"
+                                        href="{{ path('vs_payment_exchange_rate_service_update', {'id': item.id}) }}"
                                         title="{{ 'vs_application.template.items_index_row_action_edit' | trans( {},'VSApplicationBundle' ) }}"
                                     >
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a class="btn btn-danger btnDeleteResource"
-                                        href="{{ path('vs_payment_exchange_rate_delete', {'id': item.id}) }}" 
+                                        href="{{ path('vs_payment_exchange_rate_service_delete', {'id': item.id}) }}" 
                                         data-csrfToken="{{ csrf_token( item.id ) }}" 
                                         title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
                                     >

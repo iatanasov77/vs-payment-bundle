@@ -337,6 +337,11 @@ vs_payment:
         exchange_rate_update_title: Редакция Обменен курс
         exchange_rate_create_title: Създаване Обменен курс
         exchange_rate_title: Обменен курс
+        
+        exchange_rate_service_index_title: Exchange Rate Services
+        exchange_rate_service_index_service_title: Title
+        exchange_rate_service_index_service_id: Service ID
+        
         checkout_done_title: Приключено Плащане
         checkout_done_subtitle: Успешно Плащане
         checkout_done_message: Вие платихте успешно! Може да се върнете към приложението
