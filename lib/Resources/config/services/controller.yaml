@@ -23,7 +23,7 @@ services:
             - '@vs_payment.repository.payment_method'
             - '@vs_payment.factory.payment_method'
     
-    Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateServiceController:
+    Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateServiceExtController:
         tags: ['controller.service_arguments']
         autowire: true
         arguments:
