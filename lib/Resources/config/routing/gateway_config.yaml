@@ -50,4 +50,4 @@ gateway_config_stripe_objects_delete_coupon:
 ##############################
 vs_payment_exchange_rate_service_ext:
     path: /exchange-rate-service/get
-    controller: Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateServiceController::getExchangeRate
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateServiceExtController::getExchangeRate
