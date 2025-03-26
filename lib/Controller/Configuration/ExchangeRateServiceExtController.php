@@ -12,19 +12,25 @@ use Vankosoft\ApplicationBundle\Component\Status;
 class ExchangeRateServiceExtController extends AbstractController
 {
     /** @var RepositoryInterface */
+    private $exchangeRateRepository;
+    
+    /** @var RepositoryInterface */
     private $exchangeRateServiceRepository;
     
     /** @var SwapBuilder */
     private $swapBuilder;
     
-    public function __construct( RepositoryInterface $exchangeRateServiceRepository )
-    {
+    public function __construct(
+        RepositoryInterface $exchangeRateRepository,
+        RepositoryInterface $exchangeRateServiceRepository
+    ) {
+        $this->exchangeRateRepository           = $exchangeRateRepository;
         $this->exchangeRateServiceRepository    = $exchangeRateServiceRepository;
         
         $this->swapBuilder = new SwapBuilder();
     }
     
-    public function getExchangeRate( Request $request ): Response
+    public function getExchangeRate( $exchangeRateId, Request $request ): Response
     {
         $service    = $this->exchangeRateServiceRepository->findOneBy(['serviceId' => 'european_central_bank']);
         if ( ! $service ) {
@@ -39,10 +45,13 @@ class ExchangeRateServiceExtController extends AbstractController
         }
         
         /** @var Swap */
-        $swap = $this->swapBuilder->add( 'european_central_bank', $serviceOptions )->build();
-        //$swap = $this->swapBuilder->add( 'apilayer_exchange_rates_data', ['api_key' => '35d60a160b1c2e7c4565d6cc976f7871'] )->build();
+        $swap           = $this->swapBuilder->add( 'european_central_bank', $serviceOptions )->build();
+        $exchangeRate   = $this->exchangeRateRepository->find( $exchangeRateId );
         
-        $rate = $swap->latest( 'EUR/USD' );
+        $rate = $swap->latest( \sprintf( '%s/%s',
+            $exchangeRate->getSourceCurrency()->getCode(),
+            $exchangeRate->getTargetCurrency()->getCode()
+        ));
         
         return new JsonResponse([
             'status'    => Status::STATUS_OK,

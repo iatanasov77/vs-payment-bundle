@@ -27,6 +27,7 @@ services:
         tags: ['controller.service_arguments']
         autowire: true
         arguments:
+            - '@vs_payment.repository.exchange_rate'
             - '@vs_payment.repository.exchange_rate_service'
             
     Vankosoft\PaymentBundle\Controller\Checkout\OrderActionsController:
