@@ -46,16 +46,21 @@
                             {{ form_widget(form.serviceId, {'attr': {'class': 'form-control' }}) }}
                         </div>
                         
-                        <div class="form-group">
-                            {{ form_label(form.ratio, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            {{ form_widget(form.ratio, {'attr': {'class': 'form-control' }}) }}
-                        </div>
+                        <fieldset class="border border-dark rounded p-3 mb-4">
+                            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_payment.template.exchange_rate_service_options' | trans( {},'VSPaymentBundle' ) }}</legend>
+                            
+                            <div class="ExchangeRateServiceOptionsContainer"
+                                data-prototype="{% apply escape %}{% include '@VSPayment/Pages/ExchangeRateService/partial/add-service-option-prototype.html.twig' with {'form': form.options.vars.prototype} %}{% endapply %}"
+                            >
+                                {% for optionForm in form.options %}
+                                    {% include '@VSPayment/Pages/ExchangeRateService/partial/add-service-option-prototype.html.twig' with {'form': optionForm} %}
+                                {% endfor %}
+                            </div>
+                            
+                        </fieldset>
                         
                         {{ vs_form.buttons( form, metadata is defined ? metadata : null ) }}
-                    {{ form_end(form) }}
+                    {{ form_end(form, {'render_rest': false}) }}
                 </div>
             </div>
         </div>
@@ -64,11 +69,11 @@
 
 {% block head_styles %}
     {{ parent() }}
-    {{ encore_entry_link_tags( 'js/exchange-rates', null, 'VelzonTheme' ) }}
+    {{ encore_entry_link_tags( 'js/exchange-rates' ) }}
 {% endblock %}
 
 {% block body_scripts %}
     {{ parent() }}
     
-    {{ encore_entry_script_tags( 'js/exchange-rates', null, 'VelzonTheme' ) }}
+    {{ encore_entry_script_tags( 'js/exchange-rates' ) }}
 {% endblock %}
