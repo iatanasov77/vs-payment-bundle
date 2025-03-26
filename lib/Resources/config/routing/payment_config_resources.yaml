@@ -7,7 +7,7 @@ vs_payment_gateway_config:
 
 vs_payment_method_config:
     resource: |
-        alias: vs_payment.payment-method
+        alias: vs_payment.payment_method
         path: /payment/payment-method
         templates: "@VSPayment/Pages/PaymentMethodConfig"
     type: sylius.resource
