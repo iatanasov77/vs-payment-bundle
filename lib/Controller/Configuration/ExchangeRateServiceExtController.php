@@ -26,6 +26,12 @@ class ExchangeRateServiceExtController extends AbstractController
     
     public function getExchangeRate( Request $request ): Response
     {
+        $service    = $this->exchangeRateServiceRepository->findOneBy(['serviceId' => 'european_central_bank']);
+        if ( ! $service ) {
+            throw new \Exception( 'The Exchange Rate Service Not Found !!!' );
+        }
+        var_dump( $service->getOptions() ); die;
+        
         /** @var Swap */
         $swap = $this->swapBuilder->add( 'european_central_bank' )->build();
         //$rate = $swap->latest( 'EUR/BGN' );

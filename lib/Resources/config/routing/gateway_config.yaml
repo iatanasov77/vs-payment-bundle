@@ -45,5 +45,9 @@ gateway_config_stripe_objects_delete_coupon:
     path: /gateway-config/stripe-objects/delete-coupon/{id}
     controller: Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController::deleteCouponAction
 
-
-
+##############################
+# Exchange Rate Services
+##############################
+vs_payment_exchange_rate_service_ext:
+    path: /exchange-rate-service/get
+    controller: Vankosoft\PaymentBundle\Controller\Configuration\ExchangeRateServiceController::getExchangeRate
