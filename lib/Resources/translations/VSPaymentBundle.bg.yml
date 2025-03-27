@@ -28,6 +28,9 @@ vs_payment:
         service_option_value_placeholder: Option Value
         get_exchange_rate_ratio: Update Ratio
         
+        payment_description: Описание на Плащането
+        payment_description_help: Текстът, който ще бъде предаден на Гейтуей като Описание на плащането към този ценови план.
+        
         gateway_config:
             use_sandbox: Използвай Сенд-бокс
             support_recurring: Поддържа периодично плащане

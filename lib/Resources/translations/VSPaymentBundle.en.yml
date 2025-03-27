@@ -28,6 +28,9 @@ vs_payment:
         service_option_value_placeholder: Option Value
         get_exchange_rate_ratio: Update Ratio
         
+        payment_description: Payment Description
+        payment_description_help: The text that will be pass to Payment Gateway as Description of the payment to this Pricing Plan.
+        
         gateway_config:
             use_sandbox: Use Sandbox
             support_recurring: Support Recurring Payment
