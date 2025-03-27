@@ -15,7 +15,7 @@
         
         <one-to-many field="customers" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\CustomerInterface" mapped-by="group">
             <cascade>
-                <cascade-all/>
+                <cascade-persist />
             </cascade>
         </one-to-many>
         
