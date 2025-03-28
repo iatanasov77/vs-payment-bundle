@@ -240,6 +240,7 @@ vs_payment:
             
         my_profile:
             service: Service
+            pricing_plan: Pricing Plan
             paid: Paid
             recurring: Recurring
             expires_at: Expires At
