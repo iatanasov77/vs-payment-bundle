@@ -256,6 +256,8 @@ class PaypalExpressCheckoutController extends AbstractCheckoutRecurringControlle
     protected function prepareRecurringPaymentDetails( OrderInterface $cart, $agreement, $subscription ): \ArrayObject
     {
         $user                   = $this->securityBridge->getUser();
+        
+        /** @deprecated 5.0.0 No longer used by internal code and not recommended. */
         $previousSubscription   = $user ? $user->getActivePricingPlanSubscriptionByService(
             $subscription->getPricingPlan()->getPaidService()->getPayedService()
         ) : null;
