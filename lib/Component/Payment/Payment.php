@@ -321,7 +321,7 @@ final class Payment
             $subscriptions  = $order->getSubscriptions();
             if ( ! empty( $subscriptions ) ) {
                 foreach ( $subscriptions as $subscription ) {
-                    /** @deprecated 5.0.0 No longer used by internal code and not recommended. */
+                    /** @deprecated 4.1.0 No longer used by internal code and not recommended. */
                     $previousSubscription   = $order->getUser()->getActivePricingPlanSubscriptionByService(
                         $subscription->getPricingPlan()->getPaidService()->getPayedService()
                     );
