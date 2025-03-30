@@ -43,4 +43,6 @@ vs_application:
         customer_groups_listing: Customer Groups
         create_customer_group: Create Customer Group
         edit_customer_group: Edit Customer Group
-
+        exchange_rate_services: Exchange Rate Services
+        create_exchange_rate_service: Create Exchange Rate Service
+        edit_exchange_rate_service: Edit Exchange Rate Service

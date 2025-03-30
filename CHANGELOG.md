@@ -1,3 +1,18 @@
+4.1.0	|	Release date: **30.03.2025**
+============================================
+* New Features:
+  - Add a Requirement of Symfony Swap Package , that can get Currency Exchange Rates from different services.
+  - Create a ExchangeRateService Resource for Service Options.
+  - Create Routes and Templates for ExchangeRateService Resource.
+  - Create Templates for ExchangeRateService Resource.
+  - Create a Controller to Get Currency Exchange Rates From Service.
+  - Add Button on Exchange Rate Form to Get Ratio From Swap Service.
+  - Add Some Translations for new Form Field.
+  - Improve Some Doctrine Mappings.
+  - Add Some Translations.
+  - Update Deprecation Version.
+
+
 4.0.2	|	Release date: **18.03.2025**
 ============================================
 * Bug-Fixes:

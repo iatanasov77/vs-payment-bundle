@@ -4,10 +4,11 @@ use Payum\Core\Model\GatewayConfig as BaseGatewayConfig;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
+use Vankosoft\PaymentBundle\Model\Interfaces\GatewayConfigInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\PaymentMethodInterface;
 use Vankosoft\PaymentBundle\Model\Interfaces\CurrencyInterface;
 
-class GatewayConfig extends BaseGatewayConfig implements Interfaces\GatewayConfigInterface
+class GatewayConfig extends BaseGatewayConfig implements GatewayConfigInterface
 {
     /** @var int */
     protected $id;

@@ -5,6 +5,7 @@ vs_payment:
         factory: Гейтуей Фактори
         factory_placeholder: '-- Избери Гейтуей Фактори --'
         code: Код
+        service_id: Service ID
         title: Заглавие
         name: Име
         price: Цена
@@ -22,6 +23,13 @@ vs_payment:
         generate_code: Генерирай Код
         pricing_plan_label: Pricing Plan
         pricing_plan_placeholder: '-- Select Pricing Plan --'
+        
+        service_option_key_placeholder: Option Key
+        service_option_value_placeholder: Option Value
+        get_exchange_rate_ratio: Update Ratio
+        
+        payment_description: Описание на Плащането
+        payment_description_help: Текстът, който ще бъде предаден на Гейтуей като Описание на плащането към този ценови план.
         
         gateway_config:
             use_sandbox: Използвай Сенд-бокс
@@ -232,6 +240,7 @@ vs_payment:
             
         my_profile:
             service: Service
+            pricing_plan: Pricing Plan
             paid: Paid
             recurring: Recurring
             expires_at: Expires At
@@ -337,6 +346,15 @@ vs_payment:
         exchange_rate_update_title: Редакция Обменен курс
         exchange_rate_create_title: Създаване Обменен курс
         exchange_rate_title: Обменен курс
+        
+        exchange_rate_service_index_title: Exchange Rate Services
+        exchange_rate_service_index_service_title: Title
+        exchange_rate_service_index_service_id: Service ID
+        exchange_rate_service_update_title: Edit Exchange Rate Service
+        exchange_rate_service_create_title: Create Exchange Rate Service
+        exchange_rate_service_title: Exchange Rate Service
+        exchange_rate_service_options: Service Options
+        
         checkout_done_title: Приключено Плащане
         checkout_done_subtitle: Успешно Плащане
         checkout_done_message: Вие платихте успешно! Може да се върнете към приложението

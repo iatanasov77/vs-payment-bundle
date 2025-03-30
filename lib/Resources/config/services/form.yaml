@@ -73,6 +73,17 @@ services:
         arguments:
             - '@vs_payment.repository.customer_group'
 
+    vs_payment.resources.exchange_rate_service.form:
+        class: Vankosoft\PaymentBundle\Form\ExchangeRateServiceForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.exchange_rate_service.class%'
+    
+    Vankosoft\PaymentBundle\Form\Type\ExchangeRateServiceOptionsType:
+        tags:
+            - { name: form.type }
+            
 #     vs_payment.resources.coupon.form:
 #         class: Vankosoft\PaymentBundle\Form\CouponForm
 #         tags:
