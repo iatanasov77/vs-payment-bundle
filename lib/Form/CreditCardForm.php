@@ -15,6 +15,8 @@ class CreditCardForm extends AbstractType
 {
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
+        $currentYear    = \intval( date( "Y" ) );
+        
         $builder
             ->add( 'captureUrl', HiddenType::class, ['empty_data' => $options['captureUrl']] )
             
@@ -35,14 +37,17 @@ class CreditCardForm extends AbstractType
             ])
             
             ->add( 'ccmonth', ChoiceType::class, [
-                'choices'               => array_combine( range( 1, 12 ), range( 1, 12 ) ),
+                'choices'               => \array_combine( \range( 1, 12 ), \range( 1, 12 ) ),
                 'mapped'                => false,
                 'label'                 => 'vs_payment.form.credit_card.exp_date_month',
                 'translation_domain'    => 'VSPaymentBundle',
             ])
             
             ->add( 'ccyear', ChoiceType::class, [
-                'choices'               => array_combine( range( 2014, 2025 ), range( 2014, 2025 ) ),
+                'choices'               => \array_combine(
+                    \range( $currentYear, $currentYear + 10 ),
+                    \range( $currentYear, $currentYear + 10 )
+                ),
                 'mapped'                => false,
                 'label'                 => 'vs_payment.form.credit_card.exp_date_year',
                 'translation_domain'    => 'VSPaymentBundle',
