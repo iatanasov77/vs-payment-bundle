@@ -1,3 +1,9 @@
+4.1.2	|	Release date: **29.04.2025**
+============================================
+* New Features:
+  - Move Some Pricing Plan Resource Translations Into Catalog Bundle.
+
+
 4.1.1	|	Release date: **31.03.2025**
 ============================================
 * New Features:
