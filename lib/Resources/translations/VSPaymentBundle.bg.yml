@@ -68,20 +68,6 @@ vs_payment:
             target_currency: Целева валута
             ratio: Съотношение
             
-        pricing_plan:
-            paid_service_period: Paid Service Subscription
-            set_as_premium: Set as Premium
-            premium: Премиум
-            discount: Отстъпка
-            price: Цена
-            currency: Валута
-            currency_placeholder: '-- Избери Валута --'
-            paid_services: Paid Services
-            paid_services_placeholder: '-- Select Paid Services --'
-            paid_service: Paid Service
-            paid_service_placeholder: '-- Select Paid Service --'
-            recurring_payment: Периодично Плащане
-            
         select_pricing_plan:
             name: Name
             name_placeholder: Full name
