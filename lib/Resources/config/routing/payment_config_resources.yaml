@@ -1,40 +1,40 @@
 vs_payment_gateway_config:
     resource: |
         alias: vs_payment.gateway_config
-        path: /payment/gateway-config
+        path: /gateway-config
         templates: "@VSPayment/Pages/GatewayConfig"
     type: sylius.resource
 
 vs_payment_method_config:
     resource: |
         alias: vs_payment.payment_method
-        path: /payment/payment-method
+        path: /payment-method
         templates: "@VSPayment/Pages/PaymentMethodConfig"
     type: sylius.resource
 
 vs_payment_currency:
     resource: |
         alias: vs_payment.currency
-        path: /payment/currency
+        path: /currency
         templates: "@VSPayment/Pages/Currency"
     type: sylius.resource
 
 vs_payment_exchange_rate:
     resource: |
         alias: vs_payment.exchange_rate
-        path: /payment/exchange-rate
+        path: /exchange-rate
         templates: "@VSPayment/Pages/ExchangeRate"
     type: sylius.resource
 
 vs_payment_exchange_rate_service:
     resource: |
         alias: vs_payment.exchange_rate_service
-        path: /payment/exchange-rate-service
+        path: /exchange-rate-service
         templates: "@VSPayment/Pages/ExchangeRateService"
     type: sylius.resource
 
 vs_payment_recieved_payments_index:
-    path: /payment/recieved-payments/
+    path: /recieved-payments/
     methods: [GET]
     defaults:
         _controller: vs_payment.controller.payment::indexAction
@@ -52,14 +52,14 @@ vs_payment_recieved_payments:
     resource: |
         alias: vs_payment.payment
         except: ['create', 'update']
-        path: /payment/recieved-payments
+        path: /recieved-payments
         templates: "@VSPayment/Pages/RecievedPayments"
     type: sylius.resource
     options:
         expose: true
 
 vs_payment_orders_index:
-    path: /payment/orders/
+    path: /orders/
     methods: [GET]
     defaults:
         _controller: vs_payment.controller.order::indexAction
@@ -77,7 +77,7 @@ vs_payment_orders:
     resource: |
         alias: vs_payment.order
         except: ['create', 'update', 'show']
-        path: /payment/orders
+        path: /orders
         templates: "@VSPayment/Pages/Orders"
     type: sylius.resource
     options:
