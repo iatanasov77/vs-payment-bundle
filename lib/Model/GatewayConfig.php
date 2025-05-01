@@ -25,9 +25,7 @@ class GatewayConfig extends BaseGatewayConfig implements GatewayConfigInterface
     /** @var array */
     protected $sandboxConfig;
     
-    /**
-     * @var Collection|PaymentMethodInterface[]
-     */
+    /** @var Collection | PaymentMethodInterface[] */
     protected $paymentMethods;
     
     /** @var string */
@@ -54,8 +52,9 @@ class GatewayConfig extends BaseGatewayConfig implements GatewayConfigInterface
      */
     public function getConfig( $fromParent = false, $forSandbox = false ) 
     {
-        if( $fromParent )
+        if( $fromParent ) {
             return parent::getConfig();
+        }
         
         $config = $this->useSandbox || $forSandbox ? $this->sandboxConfig : $this->config;
         

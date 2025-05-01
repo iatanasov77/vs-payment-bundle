@@ -1,3 +1,11 @@
+4.1.4	|	Release date: **01.05.2025**
+============================================
+* New Features and Improvements:
+  - Improve GatewayConfig Model.
+* Bug-Fixes:
+  - Fix GatewayConfig Twig Template.
+
+
 4.1.3	|	Release date: **30.04.2025**
 ============================================
 * New Features and Improvements:
