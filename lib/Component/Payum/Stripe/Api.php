@@ -26,6 +26,7 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\RetrieveCoupon;
 
 final class Api
 {
+    const PRODUCT_ATTRIBUTE_KEY         = 'stripe_product_id';
     const PRICING_PLAN_ATTRIBUTE_KEY    = 'stripe_plan_id';
     const SUBSCRIPTION_ATTRIBUTE_KEY    = 'stripe_subscription_id';
     const CUSTOMER_ATTRIBUTE_KEY        = 'stripe_customer_id';
