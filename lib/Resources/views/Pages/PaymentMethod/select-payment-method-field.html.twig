@@ -3,7 +3,7 @@
         'label_attr': {'class': 'control-label'}
         }) 
     }}
-    <div id="select_pricing_plan_form_paymentMethod" class="controls" style="width: 100%">
+    <div id="select_payment_method_form_paymentMethod" class="controls" style="width: 100%">
         {% for paymentMethod in form.paymentMethod.paymentMethod %}
             {{ form_widget( paymentMethod, { 'attr': { 'class': 'rPaymentMethod', 'style': 'float: left; margin-right: 5px;', 'checked': loop.index == 1 } } ) }}
             {{ form_label( paymentMethod ) }}
@@ -34,8 +34,8 @@
 
 <div id="SetRecurringPayments">
     <label class="custom-control custom-checkbox">  
-        <input type="checkbox" id="select_pricing_plan_form_paymentMethod_setRecurringPayments"
-            name="select_pricing_plan_form[paymentMethod][setRecurringPayments]"
+        <input type="checkbox" id="select_payment_method_form_paymentMethod_setRecurringPayments"
+            name="select_payment_method_form[paymentMethod][setRecurringPayments]"
             value="0"
             {#checked="checked"#}
         >
