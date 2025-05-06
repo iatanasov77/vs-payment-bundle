@@ -84,7 +84,6 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         
         $subscription   = $subscriptionsRepository->find( $subscriptionId );
         $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
-        $redirectRoute  = null;
         
         if ( ! \is_array( $gtAttributes ) ) {
             $redirectRoute  = 'vs_payment_pricing_plans';
@@ -94,23 +93,12 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             $redirectRoute  = 'vs_payment_pricing_plans';
         }
         
-        if ( $redirectRoute && $request->isXmlHttpRequest() ) {
-            return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
-        } else {
-            return $this->redirectToRoute( $redirectRoute );
-        }
-        
         $this->_createRecurringPayment( $subscription, $gtAttributes );
         
         $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_create_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
-        if ( $this->routeRedirectOnPricingPlanDone ) {
-            $redirectRoute  = $this->routeRedirectOnPricingPlanDone;
-        } else {
-            $redirectRoute  = 'vs_payment_pricing_plans';
-        }
-        
+        $redirectRoute  = $this->routeRedirectOnSubscriptionActionDone ?: 'vs_payment_pricing_plans';
         if ( $redirectRoute && $request->isXmlHttpRequest() ) {
             return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
         } else {
@@ -274,9 +262,6 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     private function _createRecurringPayment( PricingPlanSubscriptionInterface $subscription, array $gtAttributes ): void
     {
         $cart           = $this->orderFactory->getShoppingCart();
-        //$payment        = $this->preparePayment( $cart );
-        
-        //$gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
         $gateway        = $this->payum->getGateway( $subscription->getGatewayFactory() );
         
         $stripeRequest  = new \ArrayObject([
