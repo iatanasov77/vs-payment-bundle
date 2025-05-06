@@ -34,10 +34,9 @@
 
 <div id="SetRecurringPayments">
     <label class="custom-control custom-checkbox">  
-        <input type="checkbox" id="select_payment_method_form_paymentMethod_setRecurringPayments"
-            name="select_payment_method_form[paymentMethod][setRecurringPayments]"
+        <input type="checkbox" id="{{ formName }}_paymentMethod_setRecurringPayments"
+            name="{{ formName }}[paymentMethod][setRecurringPayments]"
             value="0"
-            {#checked="checked"#}
         >
         <span class="custom-control-label">{{ 'vs_payment.form.select_pricing_plan.set_recurring_payments' | trans( {},'VSPaymentBundle' ) }}</span>
     </label>
