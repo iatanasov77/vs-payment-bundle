@@ -1,3 +1,16 @@
+4.2.0	|	Release date: **06.05.2025**
+============================================
+* New Features:
+  - Add Shopping Cart Routes in this Bundle.
+  - Improve StripeCheckoutController for Recurring Payments.
+  - Set Stripe Customer ID on User Payment Details.
+* Bug-Fixes and Improvements:
+  - Fix Stripe Checkout Controller of Recurring Payments.
+  - Remove Total Amount Field from Order Model.
+  - Fix a Select Payment Method Form View.
+  - Add a Missing Setter of OrderItem Model.
+
+
 4.1.4	|	Release date: **01.05.2025**
 ============================================
 * New Features and Improvements:

@@ -85,9 +85,9 @@
         <field name="adjustmentsTotal" column="adjustments_total" type="integer" />
         <field name="total" column="total" type="integer" />
         
-        <!-- @deprecated since Version 3.1, use $this->total instead. -->
+        <!-- @deprecated since Version 3.1, use $this->total instead. 
         <field name="totalAmount" column="total_amount" type="float" nullable="false" />
-        
+        -->
         
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>

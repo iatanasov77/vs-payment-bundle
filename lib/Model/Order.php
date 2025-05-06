@@ -41,12 +41,6 @@ class Order implements OrderInterface
     /** @var PaymentInterface */
     protected $payment;
     
-    /**
-     * @deprecated since Version 3.1, use $this->total instead.
-     * @var float
-     */
-    protected $totalAmount;
-    
     /** @var string */
     protected $currencyCode;
     
@@ -101,7 +95,6 @@ class Order implements OrderInterface
         /** 
          * Set Default Values
          */
-        $this->totalAmount  = 0;
         $this->currencyCode = 'EUR';
         $this->description  = 'VankoSoft Payment';
         $this->status       = self::STATUS_SHOPPING_CART;
@@ -172,12 +165,12 @@ class Order implements OrderInterface
     
     public function getTotalAmount()
     {
-        return $this->totalAmount;
+        return $this->total;
     }
     
     public function setTotalAmount($totalAmount)
     {
-        $this->totalAmount = $totalAmount;
+        $this->total = $totalAmount;
         
         return $this;
     }
@@ -226,8 +219,7 @@ class Order implements OrderInterface
             $this->items->add( $item );
             $item->setOrder( $this );
             
-            /** @deprecated since Version 3.1, use $this->total instead. */
-            $this->totalAmount += $item->getPrice();
+            $this->total += $item->getPrice();
             
             $this->recalculateTotal();
         }
@@ -239,9 +231,7 @@ class Order implements OrderInterface
             $this->items->removeElement( $item );
             $item->setOrder( null );
             
-            /** @deprecated since Version 3.1, use $this->total instead. */
-            $this->totalAmount -= $item->getPrice();
-            
+            $this->total -= $item->getPrice();
             $this->itemsTotal -= $item->getTotal();
             $this->recalculateTotal();
         }

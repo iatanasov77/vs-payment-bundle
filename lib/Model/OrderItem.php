@@ -133,6 +133,13 @@ class OrderItem implements OrderItemInterface
         return $this->total;
     }
     
+    public function setTotal($total)
+    {
+        $this->total = $total;
+        
+        return $this;
+    }
+    
     public function recalculateAdjustmentsTotal(): void
     {
         $this->adjustmentsTotal = 0;
