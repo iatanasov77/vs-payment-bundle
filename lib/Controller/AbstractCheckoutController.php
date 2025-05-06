@@ -19,6 +19,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\PaymentInterface;
 use Vankosoft\CatalogBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 use Vankosoft\PaymentBundle\Component\Catalog\CatalogBridgeInterface;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
@@ -130,6 +131,36 @@ abstract class AbstractCheckoutController extends AbstractController
         ]);
     }
     
+    protected function setUserPaymentDetails( PaymentInterface $payment ): void
+    {
+        $user   = $this->securityBridge->getUser();
+        if ( $user ) {
+            $userPaymentDetails = $user->getPaymentDetails();
+            $paymentDetails     = $payment->getDetails();
+            $factory            = $payment->getFactoryName();
+            
+            switch ( $factory ) {
+                case 'stripe_checkout':
+                case 'stripe_js':
+                    if (
+                        isset ( $userPaymentDetails[StripeApi::CUSTOMER_ATTRIBUTE_KEY] ) &&
+                        $userPaymentDetails[StripeApi::CUSTOMER_ATTRIBUTE_KEY] == $paymentDetails['customer']
+                    ) {
+                        return;
+                    }
+                    
+                    $userPaymentDetails[StripeApi::CUSTOMER_ATTRIBUTE_KEY] = $paymentDetails['customer'];
+                    $user->setPaymentDetails( $userPaymentDetails );
+                    
+                    $em = $this->doctrine->getManager();
+                    $em->persist( $user );
+                    $em->flush();
+                    
+                    break;
+            }
+        }
+    }
+    
     protected function paymentSuccess( Request $request, $paymentStatus ): Response
     {
         $payment        = $this->_setPaymentSuccess( $paymentStatus );
@@ -145,6 +176,8 @@ abstract class AbstractCheckoutController extends AbstractController
         if ( ! $hasPricingPlan && $this->routeRedirectOnShoppingCartDone ) {
             $response   = $this->_setShoppingCartPaymentDone( $request );
         }
+        
+        $this->setUserPaymentDetails( $payment );
         
         if ( $response ) {
             return $response;
@@ -167,6 +200,8 @@ abstract class AbstractCheckoutController extends AbstractController
         $payment->getOrder()->setStatus( Order::STATUS_FAILED_ORDER );
         $storage->update( $payment );
         $request->getSession()->remove( OrderFactory::SESSION_BASKET_KEY );
+        
+        $this->setUserPaymentDetails( $payment );
         
         if ( $this->throwExceptionOnPaymentDone ) {
             throw new CheckoutException(
