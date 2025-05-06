@@ -20,6 +20,7 @@ use Vankosoft\CatalogBundle\EventSubscriber\Event\SubscriptionsPaymentDoneEvent;
 use Vankosoft\PaymentBundle\Component\Exception\CheckoutException;
 use Vankosoft\PaymentBundle\Component\Catalog\CatalogBridgeInterface;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
 
 abstract class AbstractCheckoutController extends AbstractController
 {
@@ -67,6 +68,13 @@ abstract class AbstractCheckoutController extends AbstractController
      */
     protected $routeRedirectOnPricingPlanDone;
     
+    /**
+     * If is set, Subscription Done Action will redirect to this url
+     *
+     * @var string | null
+     */
+    protected $routeRedirectOnSubscriptionActionDone;
+    
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         TranslatorInterface $translator,
@@ -79,21 +87,23 @@ abstract class AbstractCheckoutController extends AbstractController
         string $paymentClass,
         bool $throwExceptionOnPaymentDone,
         ?string $routeRedirectOnShoppingCartDone,
-        ?string $routeRedirectOnPricingPlanDone
+        ?string $routeRedirectOnPricingPlanDone,
+        ?string $routeRedirectOnSubscriptionActionDone
     ) {
-        $this->eventDispatcher                  = $eventDispatcher;
-        $this->translator                       = $translator;
-        $this->doctrine                         = $doctrine;
-        $this->payum                            = $payum;
-        $this->securityBridge                   = $securityBridge;
-        $this->vsPayment                        = $vsPayment;
-        $this->orderFactory                     = $orderFactory;
-        $this->subscriptionsBridge              = $subscriptionsBridge;
+        $this->eventDispatcher                          = $eventDispatcher;
+        $this->translator                               = $translator;
+        $this->doctrine                                 = $doctrine;
+        $this->payum                                    = $payum;
+        $this->securityBridge                           = $securityBridge;
+        $this->vsPayment                                = $vsPayment;
+        $this->orderFactory                             = $orderFactory;
+        $this->subscriptionsBridge                      = $subscriptionsBridge;
         
-        $this->paymentClass                     = $paymentClass;
-        $this->throwExceptionOnPaymentDone      = $throwExceptionOnPaymentDone;
-        $this->routeRedirectOnShoppingCartDone  = $routeRedirectOnShoppingCartDone;
-        $this->routeRedirectOnPricingPlanDone   = $routeRedirectOnPricingPlanDone;
+        $this->paymentClass                             = $paymentClass;
+        $this->throwExceptionOnPaymentDone              = $throwExceptionOnPaymentDone;
+        $this->routeRedirectOnShoppingCartDone          = $routeRedirectOnShoppingCartDone;
+        $this->routeRedirectOnPricingPlanDone           = $routeRedirectOnPricingPlanDone;
+        $this->routeRedirectOnSubscriptionActionDone    = $routeRedirectOnSubscriptionActionDone;
     }
     
     abstract public function prepareAction( Request $request ): Response;
