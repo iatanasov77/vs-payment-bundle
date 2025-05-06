@@ -219,7 +219,6 @@ class Order implements OrderInterface
             $this->items->add( $item );
             $item->setOrder( $this );
             
-            /** @deprecated since Version 3.1, use $this->total instead. */
             $this->total += $item->getPrice();
             
             $this->recalculateTotal();
