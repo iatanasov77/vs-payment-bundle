@@ -180,14 +180,14 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
                 $cart->hasRecurringPayment() &&
                 \array_key_exists( StripeApi::PRICING_PLAN_ATTRIBUTE_KEY, $gtAttributes )
             ) {
-                if ( isset( $gtAttributes[StripeApi::PRODUCT_ATTRIBUTE_KEY] ) ) {
-                    // Subscribing a customer to a product
-                    $paymentDetails['local']['product'] = $gtAttributes[StripeApi::PRODUCT_ATTRIBUTE_KEY];
-                } else {
+                if ( isset( $gtAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY] ) ) {
                     // Subscribing a customer to a plan
                     $paymentDetails['local']['customer']    = [
                         'plan' => $gtAttributes[StripeApi::PRICING_PLAN_ATTRIBUTE_KEY]
                     ];
+                } else {
+                    // Subscribing a customer to a product
+                    $paymentDetails['product'] = $gtAttributes[StripeApi::PRODUCT_ATTRIBUTE_KEY];
                 }
             }
         }
