@@ -2,6 +2,7 @@ parameters:
     vs_payment.checkout.throw_exception_on_payment_done: false
     vs_payment.shopping_cart_redirect_on_payment_done: null
     vs_payment.pricing_plans_redirect_on_payment_done: null
+    vs_payment.subscription_redirect_on_payment_done: null
 
 services:
     _defaults:
@@ -26,6 +27,7 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
@@ -43,6 +45,7 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -63,6 +66,7 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
@@ -83,6 +87,7 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -103,6 +108,8 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
+            - '@vs_payment.stripe_api'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
@@ -120,6 +127,7 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -140,6 +148,7 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -160,6 +169,7 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
     
@@ -180,6 +190,7 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
             
@@ -200,6 +211,7 @@ services:
             - '%vs_payment.checkout.throw_exception_on_payment_done%'
             - '%vs_payment.shopping_cart_redirect_on_payment_done%'
             - '%vs_payment.pricing_plans_redirect_on_payment_done%'
+            - '%vs_payment.subscription_redirect_on_payment_done%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
 
