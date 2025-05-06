@@ -1,3 +1,10 @@
+4.2.2	|	Release date: **06.05.2025**
+============================================
+* New Features:
+  - Remove Some Comments.
+  - Add Create Recurring Payment Action for StripeCheckoutController.
+
+
 4.2.1	|	Release date: **06.05.2025**
 ============================================
 * New Features:

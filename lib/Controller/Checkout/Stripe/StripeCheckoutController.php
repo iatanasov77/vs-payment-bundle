@@ -19,30 +19,6 @@ use Vankosoft\PaymentBundle\Component\Catalog\CatalogBridgeInterface;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Api as StripeApi;
 use Vankosoft\CatalogBundle\Model\Interfaces\PricingPlanSubscriptionInterface;
 
-/**
- * USED MANUALS:
- * =============
- * https://stackoverflow.com/questions/34908805/create-a-recurring-or-subscription-payment-using-payum-stripe-on-symfony-2
- * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
- * https://github.com/Payum/PayumBundle
- *
- * MANUALS for Overriding Payum Stripe Bundle templates
- * =====================================================
- * https://github.com/Payum/PayumBundle/issues/326
- * https://stackoverflow.com/questions/28452317/stripe-checkout-with-custom-form-symfony
- * https://github.com/makasim/PayumBundleSandbox/blob/ffea27445d6774dfdc8e646b914e9b58cbfa9765/src/Acme/PaymentBundle/Controller/SimplePurchaseStripeViaOmnipayController.php#L36
- *
- * https://github.com/Payum/Payum/blob/master/docs/stripe/store-card-and-use-later.md
- * 
- * Create Stripe Recurring Payments
- * =================================
- * https://github.com/Payum/Payum/blob/master/docs/stripe/subscription-billing.md
- * 
- * 
- * OmnipayBridge is Very Old
- * ==========================
- * https://github.com/Payum/OmnipayBridge/blob/master/composer.json
- */
 class StripeCheckoutController extends AbstractCheckoutRecurringController
 {
     /** @var StripeApi */
@@ -108,7 +84,6 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         
         $subscription   = $subscriptionsRepository->find( $subscriptionId );
         $gtAttributes   = $this->checkSubscriptionAttributes( $request, $subscription );
-        $redirectRoute  = null;
         
         if ( ! \is_array( $gtAttributes ) ) {
             $redirectRoute  = 'vs_payment_pricing_plans';
@@ -118,23 +93,12 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
             $redirectRoute  = 'vs_payment_pricing_plans';
         }
         
-        if ( $redirectRoute && $request->isXmlHttpRequest() ) {
-            return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
-        } else {
-            return $this->redirectToRoute( $redirectRoute );
-        }
-        
         $this->_createRecurringPayment( $subscription, $gtAttributes );
         
         $flashMessage   = $this->translator->trans( 'vs_payment.template.pricing_plan_create_subscription_recurring_success', [], 'VSPaymentBundle' );
         $request->getSession()->getFlashBag()->add( 'notice', $flashMessage );
         
-        if ( $this->routeRedirectOnPricingPlanDone ) {
-            $redirectRoute  = $this->routeRedirectOnPricingPlanDone;
-        } else {
-            $redirectRoute  = 'vs_payment_pricing_plans';
-        }
-        
+        $redirectRoute  = $this->routeRedirectOnSubscriptionActionDone ?: 'vs_payment_pricing_plans';
         if ( $redirectRoute && $request->isXmlHttpRequest() ) {
             return $this->jsonResponse( Status::STATUS_ERROR, $redirectRoute );
         } else {
@@ -298,9 +262,6 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
     private function _createRecurringPayment( PricingPlanSubscriptionInterface $subscription, array $gtAttributes ): void
     {
         $cart           = $this->orderFactory->getShoppingCart();
-        //$payment        = $this->preparePayment( $cart );
-        
-        //$gateway        = $this->payum->getGateway( $cart->getPaymentMethod()->getGateway()->getFactoryName() );
         $gateway        = $this->payum->getGateway( $subscription->getGatewayFactory() );
         
         $stripeRequest  = new \ArrayObject([
