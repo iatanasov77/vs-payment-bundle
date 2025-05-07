@@ -275,7 +275,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY]    = $subscriptionModel['id'];
         
         $subscription->setGatewayAttributes( $gtAttributes );
-        $subscription->setRecurringPayment( true );
+        $subscription->setRecurringPaymentCancelled( false );
         
         $this->doctrine->getManager()->persist( $subscription );
         $this->doctrine->getManager()->flush();
@@ -294,7 +294,7 @@ class StripeCheckoutController extends AbstractCheckoutRecurringController
         unset( $gtAttributes[StripeApi::SUBSCRIPTION_ATTRIBUTE_KEY] );
         
         $subscription->setGatewayAttributes( $gtAttributes );
-        $subscription->setRecurringPayment( false );
+        $subscription->setRecurringPaymentCancelled( true );
         
         $this->doctrine->getManager()->persist( $subscription );
         $this->doctrine->getManager()->flush();
