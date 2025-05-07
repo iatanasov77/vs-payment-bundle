@@ -1,3 +1,9 @@
+4.2.3	|	Release date: **07.05.2025**
+============================================
+* Bug-Fixes and Improvements:
+  - Improve StripeCheckoutController about Recurring Payments.
+
+
 4.2.2	|	Release date: **06.05.2025**
 ============================================
 * New Features:
