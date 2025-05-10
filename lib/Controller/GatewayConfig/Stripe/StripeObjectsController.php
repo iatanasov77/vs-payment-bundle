@@ -1,4 +1,4 @@
-<?php namespace Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig;
+<?php namespace Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

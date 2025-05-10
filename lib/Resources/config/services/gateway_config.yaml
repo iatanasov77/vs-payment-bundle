@@ -7,7 +7,7 @@ services:
     ##############################
     # Stripe
     ##############################
-    Vankosoft\PaymentBundle\Controller\Configuration\GatewayConfig\StripeObjectsController:
+    Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController:
         tags: ['controller.service_arguments']
         autowire: true
         arguments:
