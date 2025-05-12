@@ -7,10 +7,59 @@ services:
     ##############################
     # Stripe
     ##############################
+    vs_payment.stripe_api:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Api
+        arguments:
+            - '@payum'
+    
     Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController:
         tags: ['controller.service_arguments']
         autowire: true
         arguments:
+            - '@vs_payment.stripe_api'
+    
+    Vankosoft\PaymentBundle\Form\Stripe\PlanForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_payment.model.currency.class%'
+    
+    Vankosoft\PaymentBundle\Form\Stripe\PriceForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@vs_payment.stripe_api'
+            - '%vs_payment.model.currency.class%'
+            - '@vs_payment.pricing_plans_bridge'
+    
+    Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\PricingPlansController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
             - '@doctrine'
+            - '@twig'
+            - '@vs_payment.stripe_api'
+    
+    Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\CouponsController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
+            - '@twig'
+            - '@vs_payment.stripe_api'
+    
+    Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\CustomersController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
+            - '@vs_payment.stripe_api'
+    
+    Vankosoft\PaymentBundle\Form\Stripe\WebhookEndpointForm:
+        tags:
+            - { name: form.type }
+    
+    Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\WebhooksController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
             - '@twig'
             - '@vs_payment.stripe_api'

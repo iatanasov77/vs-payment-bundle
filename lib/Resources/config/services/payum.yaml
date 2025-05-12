@@ -4,28 +4,6 @@ services:
         autoconfigure: true
         public: true
         
-    ########################################################################
-    # Custom Stripe Actions
-    ########################################################################
-    Vankosoft\PaymentBundle\Form\Stripe\PlanForm:
-        tags:
-            - { name: form.type }
-        arguments:
-            - '%vs_payment.model.currency.class%'
-            
-    Vankosoft\PaymentBundle\Form\Stripe\PriceForm:
-        tags:
-            - { name: form.type }
-        arguments:
-            - '@vs_payment.stripe_api'
-            - '%vs_payment.model.currency.class%'
-            - '@vs_payment.pricing_plans_bridge'
-    
-    vs_payment.stripe_api:
-        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Api
-        arguments:
-            - '@payum'
-            
     #######################################################
     # Stripe Subscriptions
     #######################################################
@@ -114,7 +92,7 @@ services:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetConnectedAccountsAction
         tags:
             - { name: payum.action, factory: stripe_js }
-    
+
     #######################################################
     # TelephoneCall Services
     #######################################################
@@ -133,5 +111,3 @@ services:
         class: Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\ActionBuilder\CouponCodeForm
         tags:
             - { name: form.type }
-
-

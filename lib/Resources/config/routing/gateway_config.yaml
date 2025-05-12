@@ -14,40 +14,40 @@ gateway_config_stripe_objects_index:
 
 gateway_config_stripe_objects_create_plan:
     path: /gateway-config/stripe-objects/create-plan
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::createPlanAction
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\PricingPlansController::createPlanAction
     
 gateway_config_stripe_objects_create_product:
     path: /gateway-config/stripe-objects/create-product
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::createProductAction
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\PricingPlansController::createProductAction
     
 gateway_config_stripe_objects_create_price:
     path: /gateway-config/stripe-objects/create-price
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::createPriceAction
-    
-gateway_config_stripe_objects_cancel_subscription:
-    path: /gateway-config/stripe-objects/cancel-subscription/{id}
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::cancelSubscriptionAction
-
-gateway_config_stripe_objects_create_customer:
-    path: /gateway-config/stripe-objects/create-customer
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::createCustomerAction
-
-gateway_config_stripe_objects_create_webhook_endpoint:
-    path: /gateway-config/stripe-objects/create-webhook-endpoint
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::createWebhookEndpointAction
-
-gateway_config_stripe_customer_payment_methods:
-    path: /gateway-config/stripe-objects/customer-payment-methods/{customerId}
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::showCustomerPaymentMethods
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\PricingPlansController::createPriceAction
 
 gateway_config_stripe_objects_create_coupon:
     path: /gateway-config/stripe-objects/create-coupon
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::createCouponAction
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\CouponsController::createCouponAction
     
 gateway_config_stripe_objects_retrieve_coupon:
     path: /gateway-config/stripe-objects/retrieve-coupon/{id}
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::retrieveCouponAction
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\CouponsController::retrieveCouponAction
+
+gateway_config_stripe_objects_cancel_subscription:
+    path: /gateway-config/stripe-objects/cancel-subscription/{id}
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\CustomersController::cancelSubscriptionAction
+
+gateway_config_stripe_objects_create_customer:
+    path: /gateway-config/stripe-objects/create-customer
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\CustomersController::createCustomerAction
+
+gateway_config_stripe_customer_payment_methods:
+    path: /gateway-config/stripe-objects/customer-payment-methods/{customerId}
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\CustomersController::showCustomerPaymentMethods
     
 gateway_config_stripe_objects_delete_coupon:
     path: /gateway-config/stripe-objects/delete-coupon/{id}
-    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\StripeObjectsController::deleteCouponAction
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\CouponsController::deleteCouponAction
+
+gateway_config_stripe_objects_create_webhook_endpoint:
+    path: /gateway-config/stripe-objects/create-webhook-endpoint
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\WebhooksController::createWebhookEndpointAction
