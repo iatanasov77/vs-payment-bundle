@@ -1,0 +1,45 @@
+{# Import Macros #}
+{% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="float-start">
+            {{ 'vs_payment.template.payum_stripe_objects.stripe_webhook_endpoints' | trans( {},'VSPaymentBundle' ) }}
+        </h5>
+        <a class="btn btn-primary float-end btnShowStripeObject"
+            href="javascript:void(0);"
+            data-url="{{ path( 'gateway_config_stripe_objects_create_webhook_endpoint' ) }}"
+        >
+            {{ 'vs_payment.template.payum_stripe_objects.create_webhook_endpoint' | trans( {},'VSPaymentBundle' ) }}
+        </a>
+    </div>
+    
+    <div class="card-body">
+        <table class="table table-striped table-advance table-hover">
+            <thead>
+                <tr>
+                    <th width="50">N</th>
+                    <th>ID</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.enabled_events' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.url' | trans( {},'VSPaymentBundle' ) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in availableWebhookEndpoints %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.enabled_events | join( ', ' ) }}</td>
+                    <td>{{ item.url }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">
+                        {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

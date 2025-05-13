@@ -1,0 +1,154 @@
+{# Import Macros #}
+{% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="float-start">
+            {{ 'vs_payment.template.payum_stripe_objects.stripe_plans' | trans( {},'VSPaymentBundle' ) }}
+        </h5>
+        <a class="btn btn-primary float-end btnShowStripeObject"
+            href="javascript:void(0);"
+            data-url="{{ path( 'gateway_config_stripe_objects_create_plan' ) }}"
+        >
+            {{ 'vs_payment.template.payum_stripe_objects.create_stripe_plan' | trans( {},'VSPaymentBundle' ) }}
+        </a>
+    </div>
+    
+    <div class="card-body">
+        <table class="table table-striped table-advance table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th width="50">N</th>
+                    <th>ID</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.amount' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.interval' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.product' | trans( {},'VSPaymentBundle' ) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in availablePlans %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.id }}</td>
+                        <td>{{ ( item.amount / 100 ) | number_format( 2 ) }} {{ item.currency }}</td>
+                        <td>{{ item.interval }}</td>
+                        <td>{{ item.product }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">
+                            {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="float-start">
+            {{ 'vs_payment.template.payum_stripe_objects.stripe_products' | trans( {},'VSPaymentBundle' ) }}
+        </h5>
+        <a class="btn btn-primary float-end btnShowStripeObject"
+            href="javascript:void(0);"
+            data-url="{{ path( 'gateway_config_stripe_objects_create_product' ) }}"
+        >
+            {{ 'vs_payment.template.payum_stripe_objects.create_stripe_product' | trans( {},'VSPaymentBundle' ) }}
+        </a>
+    </div>
+    
+    <div class="card-body">
+        <table class="table table-striped table-advance table-hover">
+            <thead>
+                <tr>
+                    <th width="50">N</th>
+                    <th>ID</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.name' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.default_price' | trans( {},'VSPaymentBundle' ) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in availableProducts %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.default_price }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">
+                        {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="float-start">
+            {{ 'vs_payment.template.payum_stripe_objects.stripe_prices' | trans( {},'VSPaymentBundle' ) }}
+        </h5>
+        <a class="btn btn-primary float-end btnShowStripeObject"
+            href="javascript:void(0);"
+            data-url="{{ path( 'gateway_config_stripe_objects_create_price' ) }}"
+        >
+            {{ 'vs_payment.template.payum_stripe_objects.create_stripe_price' | trans( {},'VSPaymentBundle' ) }}
+        </a>
+    </div>
+    
+    <div class="card-body">
+        <table class="table table-striped table-advance table-hover">
+            <thead>
+                <tr>
+                    <th width="50">N</th>
+                    <th>ID</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.product' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.amount' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.interval' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.trial_period_days' | trans( {},'VSPaymentBundle' ) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in availablePrices %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.product }}</td>
+                    <td>{{ ( item.unit_amount / 100 ) | number_format( 2 ) }} {{ item.currency }}</td>
+                    <td>{{ item.recurring.interval_count }} {{ item.recurring.interval }}</td>
+                    <td>{{ item.recurring.trial_period_days }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">
+                        {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="float-start">
+            {{ 'vs_payment.template.payum_stripe_objects.stripe_payment_methods' | trans( {},'VSPaymentBundle' ) }}
+        </h5>
+        {#
+        <a href="{{ path( 'gateway_config_stripe_objects_create_customer' ) }}" class="btn btn-primary float-end">
+            {{ 'vs_payment.template.payum_stripe_objects.create_stripe_customer' | trans( {},'VSPaymentBundle' ) }}
+        </a>
+        #}
+    </div>
+    
+    <div class="card-body">
+        {% include '@VSPayment/Pages/GatewayConfig/Stripe/Partial/stripe-payment-methods-table.html.twig' %}
+    </div>
+</div>
