@@ -22,7 +22,7 @@ class WebhookEndpointForm extends AbstractType
             ->add( 'enabled_events', ChoiceType::class, [
                 'label'                 => 'vs_payment.template.payum_stripe_objects.enabled_events',
                 'translation_domain'    => 'VSPaymentBundle',
-                'choices'               => \array_combine( StripeApi::STRIPE_EVENTS, StripeApi::STRIPE_EVENTS ),
+                'choices'               => \array_flip( StripeApi::STRIPE_EVENTS ),
                 'multiple'              => true,
                 'required'              => false,
             ])

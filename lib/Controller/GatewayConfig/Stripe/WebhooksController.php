@@ -54,11 +54,17 @@ class WebhooksController extends AbstractController
     public function updateWebhookEndpointAction( $id, Request $request ): Response
     {
         $webhookEndpoint    = $this->stripeApi->retrieveWebhookEndpoint( $id );
+        
+        $enabledEvents  = [];
+        foreach ( $webhookEndpoint['enabled_events'] as $event ) {
+            $enabledEvents[]    = \array_search ( $event, StripeApi::STRIPE_EVENTS );
+        }
+        
         $form               = $this->createForm( WebhookEndpointForm::class, null, [
             'method' => 'POST',
             
             'endpointId'        => $webhookEndpoint['id'],
-            'endpointEvents'    => $webhookEndpoint['enabled_events'],
+            'endpointEvents'    => $enabledEvents,
             'endpointUrl'       => $webhookEndpoint['url'],
         ]);
         

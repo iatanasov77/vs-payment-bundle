@@ -37,16 +37,16 @@ final class Api
     const PRICE_ATTRIBUTE_KEY           = 'stripe_price_id';
     
     const STRIPE_EVENTS                 = [
-        'charge.succeeded',
-        'charge.failed',
-        'invoice.finalized',
-        'invoice.finalization_failed',
-        'invoice.paid',
-        'invoice.payment_failed',
-        'invoice.payment_succeeded',
-        'subscription_schedule.canceled',
-        'subscription_schedule.created',
-        'subscription_schedule.completed',
+        1 => 'charge.succeeded',
+        2 => 'charge.failed',
+        3 => 'invoice.finalized',
+        4 => 'invoice.finalization_failed',
+        5 => 'invoice.paid',
+        6 => 'invoice.payment_failed',
+        7 => 'invoice.payment_succeeded',
+        8 => 'subscription_schedule.canceled',
+        9 => 'subscription_schedule.created',
+        10 => 'subscription_schedule.completed',
     ];
     
     /** @var Gateway */
@@ -220,8 +220,13 @@ final class Api
     
     public function createWebhookEndpoint( array $formData )
     {
+        $enabledEvents  = [];
+        foreach ( $formData['enabled_events'] as $event ) {
+            $enabledEvents[]    = self::STRIPE_EVENTS[$event];
+        }
+        
         $webhookEndpoint    = new \ArrayObject([
-            'enabled_events'    => $formData['enabled_events'],
+            'enabled_events'    => $enabledEvents,
             'url'               => $formData['url'],
         ]);
         $this->gateway->execute( new CreateWebhookEndpoint( $webhookEndpoint ) );
@@ -229,9 +234,14 @@ final class Api
     
     public function updateWebhookEndpoint( array $formData )
     {
+        $enabledEvents  = [];
+        foreach ( $formData['enabled_events'] as $event ) {
+            $enabledEvents[]    = self::STRIPE_EVENTS[$event];
+        }
+        
         $webhookEndpoint    = new \ArrayObject([
             'id'                => $formData['id'],
-            'enabled_events'    => $formData['enabled_events'],
+            'enabled_events'    => $enabledEvents,
             'url'               => $formData['url'],
         ]);
         $this->gateway->execute( new UpdateWebhookEndpoint( $webhookEndpoint ) );
