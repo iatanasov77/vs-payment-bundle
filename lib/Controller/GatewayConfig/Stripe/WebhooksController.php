@@ -50,4 +50,42 @@ class WebhooksController extends AbstractController
             'data'      => $data,
         ]);
     }
+    
+    public function updateWebhookEndpointAction( $id, Request $request ): Response
+    {
+        $webhookEndpoint    = $this->stripeApi->retrieveWebhookEndpoint( $id );
+        echo '<pre>'; var_dump( $webhookEndpoint ); die;
+        $form               = $this->createForm( WebhookEndpointForm::class, null, [
+            'method' => 'POST'
+            
+        ]);
+        
+        $form->handleRequest( $request );
+        if ( $form->isSubmitted() ) {
+            $formData       = $form->getData();
+            if ( empty( $formData['enabled_events'] ) ) {
+                throw new \RuntimeException( 'Enabled Events field cannot be empty !!!' );
+            }
+            
+            $this->stripeApi->createWebhookEndpoint( $formData );
+            
+            return $this->redirectToRoute( 'gateway_config_stripe_objects_index' );
+        }
+        
+        $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/update_webhook_endpoint.html.twig', [
+            'form'  => $form->createView(),
+        ]);
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+            'data'      => $data,
+        ]);
+    }
+    
+    public function deleteWebhookEndpointAction( $id, Request $request ): Response
+    {
+        $this->stripeApi->deleteWebhookEndpoint( $id );
+        
+        return $this->redirectToRoute( 'gateway_config_stripe_objects_index' );
+    }
 }

@@ -51,3 +51,11 @@ gateway_config_stripe_objects_delete_coupon:
 gateway_config_stripe_objects_create_webhook_endpoint:
     path: /gateway-config/stripe-objects/create-webhook-endpoint
     controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\WebhooksController::createWebhookEndpointAction
+
+gateway_config_stripe_objects_update_webhook_endpoint:
+    path: /gateway-config/stripe-objects/update-webhook-endpoint/{id}
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\WebhooksController::updateWebhookEndpointAction
+
+gateway_config_stripe_objects_delete_webhook_endpoint:
+    path: /gateway-config/stripe-objects/delete-webhook-endpoint/{id}
+    controller: Vankosoft\PaymentBundle\Controller\GatewayConfig\Stripe\WebhooksController::deleteWebhookEndpointAction
