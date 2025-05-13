@@ -17,8 +17,12 @@ use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetPaymentMethods
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetSubscriptions;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CancelSubscription;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetConnectedAccounts;
+
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetWebhookEndpoints;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\RetrieveWebhookEndpoint;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateWebhookEndpoint;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\UpdateWebhookEndpoint;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\DeleteWebhookEndpoint;
 
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\GetCoupons;
 use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\CreateCoupon;
@@ -206,6 +210,14 @@ final class Api
         return isset( $availableWebhookEndpoints["data"] ) ? $availableWebhookEndpoints["data"] : [];
     }
     
+    public function retrieveWebhookEndpoint( string $id )
+    {
+        $webhookEndpoint = new \ArrayObject( ['id' => $id] );
+        $this->gateway->execute( $retrieveWebhookEndpointRequest = new RetrieveWebhookEndpoint( $webhookEndpoint ) );
+        
+        return $retrieveWebhookEndpointRequest->getFirstModel()->getArrayCopy();
+    }
+    
     public function createWebhookEndpoint( array $formData )
     {
         $webhookEndpoint    = new \ArrayObject([
@@ -213,6 +225,24 @@ final class Api
             'url'               => $formData['url'],
         ]);
         $this->gateway->execute( new CreateWebhookEndpoint( $webhookEndpoint ) );
+    }
+    
+    public function updateWebhookEndpoint( array $formData )
+    {
+        $webhookEndpoint    = new \ArrayObject([
+            'id'                => $formData['id'],
+            'enabled_events'    => $formData['enabled_events'],
+            'url'               => $formData['url'],
+        ]);
+        $this->gateway->execute( new UpdateWebhookEndpoint( $webhookEndpoint ) );
+    }
+    
+    public function deleteWebhookEndpoint( $id )
+    {
+        $webhookEndpoint   = new \ArrayObject([
+            "id"    => $id,
+        ]);
+        $this->gateway->execute( new DeleteWebhookEndpoint( $webhookEndpoint ) );
     }
     
     public function getEvent( $eventId )

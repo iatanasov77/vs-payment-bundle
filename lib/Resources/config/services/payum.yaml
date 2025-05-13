@@ -51,14 +51,32 @@ services:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\CancelSubscriptionAction
         tags:
             - { name: payum.action, factory: stripe_js }
-            
+    
+    #######################################################
+    # Stripe Webhook Endpoints
+    #######################################################
     vs_payment.stripe_list_webhook_endpoints:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\GetWebhookEndpointsAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+    
+    vs_payment.stripe_retrieve_webhook_endpoint:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\RetrieveWebhookEndpointAction
         tags:
             - { name: payum.action, factory: stripe_js }
             
     vs_payment.stripe_create_webhook_endpoint:
         class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\CreateWebhookEndpointAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+    
+    vs_payment.stripe_update_webhook_endpoint:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\UpdateWebhookEndpointAction
+        tags:
+            - { name: payum.action, factory: stripe_js }
+    
+    vs_payment.stripe_delete_webhook_endpoint:
+        class: Vankosoft\PaymentBundle\Component\Payum\Stripe\Action\Api\DeleteWebhookEndpointAction
         tags:
             - { name: payum.action, factory: stripe_js }
             

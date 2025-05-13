@@ -12,10 +12,10 @@ use Payum\Stripe\Constants;
 use Payum\Stripe\Keys;
 use Stripe\Stripe;
 use Stripe\Exception;
-use Stripe\Coupon;
-use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\RetrieveCoupon;
+use Stripe\WebhookEndpoint;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\RetrieveWebhookEndpoint;
 
-class RetrieveCouponAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
+class RetrieveWebhookEndpointAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
     use ApiAwareTrait {
         setApi as _setApi;
@@ -50,7 +50,7 @@ class RetrieveCouponAction implements ActionInterface, GatewayAwareInterface, Ap
      */
     public function execute( $request )
     {
-        /** @var $request RetrieveCoupon */
+        /** @var $request RetrieveWebhookEndpoint */
         RequestNotSupportedException::assertSupports( $this, $request );
         
         $model = ArrayObject::ensureArrayObject( $request->getModel() );
@@ -67,9 +67,9 @@ class RetrieveCouponAction implements ActionInterface, GatewayAwareInterface, Ap
             }
             
             $requestModel   = $model->toUnsafeArrayWithoutLocal();
-            $coupon         = Coupon::retrieve( $requestModel['id'] );
+            $endpoint       = WebhookEndpoint::retrieve( $requestModel['id'] );
             
-            $model->replace( $coupon->toArray( true ) );
+            $model->replace( $endpoint->toArray( true ) );
         } catch ( Exception\ApiErrorException $e ) {
             $model->replace( $e->getJsonBody() );
         }
@@ -81,7 +81,7 @@ class RetrieveCouponAction implements ActionInterface, GatewayAwareInterface, Ap
     public function supports( $request ): bool
     {
         return
-            $request instanceof RetrieveCoupon &&
+            $request instanceof RetrieveWebhookEndpoint &&
             $request->getModel() instanceof \ArrayAccess
         ;
     }
