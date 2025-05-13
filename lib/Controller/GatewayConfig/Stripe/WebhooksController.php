@@ -75,7 +75,7 @@ class WebhooksController extends AbstractController
                 throw new \RuntimeException( 'Enabled Events field cannot be empty !!!' );
             }
             
-            $this->stripeApi->createWebhookEndpoint( $formData );
+            $this->stripeApi->updateWebhookEndpoint( $formData );
             
             return $this->redirectToRoute( 'gateway_config_stripe_objects_index' );
         }
