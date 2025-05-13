@@ -1,3 +1,9 @@
+4.2.6	|	Release date: **13.05.2025**
+============================================
+* New Features:
+  - Remove an Alert from Js Script.
+
+
 4.2.5	|	Release date: **13.05.2025**
 ============================================
 * New Features:
