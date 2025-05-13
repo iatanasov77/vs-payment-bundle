@@ -76,6 +76,7 @@ class WebhooksController extends AbstractController
         
         $data   = $this->templatingEngine->render( '@VSPayment/Pages/GatewayConfig/Stripe/Partial/update_webhook_endpoint.html.twig', [
             'form'  => $form->createView(),
+            'webhookEndpointId' => $id,
         ]);
         
         return new JsonResponse([
