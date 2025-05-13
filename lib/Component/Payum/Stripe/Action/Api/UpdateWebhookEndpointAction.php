@@ -67,7 +67,11 @@ class UpdateWebhookEndpointAction implements ActionInterface, GatewayAwareInterf
             }
             
             $requestModel       = $model->toUnsafeArrayWithoutLocal();
-            $webhookEndpoint    = WebhookEndpoint::update( $requestModel['id'], $requestModel );
+            $endpointId         = $requestModel['id'];
+            $webhookEndpoint    = WebhookEndpoint::update( $endpointId, [
+                'enabled_events'    => $requestModel['enabled_events'],
+                'url'               => $requestModel['url'],
+            ]);
             
             $model->replace( $webhookEndpoint->toArray( true ) );
         } catch ( Exception\ApiErrorException $e ) {
