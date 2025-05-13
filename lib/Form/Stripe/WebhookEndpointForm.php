@@ -16,6 +16,8 @@ class WebhookEndpointForm extends AbstractType
     {
         $builder
             ->add( 'id', HiddenType::class, ['data' => $options['endpointId']] )
+            
+            ->add( 'selectedEvents', HiddenType::class, ['data' => \json_encode( $options['endpointEvents'] )] )
         
             ->add( 'enabled_events', ChoiceType::class, [
                 'label'                 => 'vs_payment.template.payum_stripe_objects.enabled_events',
@@ -43,7 +45,7 @@ class WebhookEndpointForm extends AbstractType
                 'csrf_protection'   => false,
                 
                 'endpointId'        => null,
-                'endpointEvents'    => null,
+                'endpointEvents'    => [],
                 'endpointUrl'       => '',
             ])
         ;
