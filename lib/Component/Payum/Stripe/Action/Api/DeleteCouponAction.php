@@ -51,7 +51,7 @@ class DeleteCouponAction implements ActionInterface, GatewayAwareInterface, ApiA
      */
     public function execute( $request )
     {
-        /** @var $request CancelSubscription */
+        /** @var $request DeleteCoupon */
         RequestNotSupportedException::assertSupports( $this, $request );
         
         $model = ArrayObject::ensureArrayObject( $request->getModel() );

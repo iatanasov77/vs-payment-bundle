@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h5 class="modal-title">
+        {{ 'vs_payment.template.payum_stripe_objects.create_stripe_customer' | trans( {},'VSPaymentBundle' ) }}
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+</div>
+
+<div class="modal-body">
+    <div class="card alert mb-2">
+        <div class="card-body">
+            {% if formErrors is defined %}
+                {{ vs_form.errors( formErrors ) }}
+            {% endif %}
+            
+            {{ form_start(form, { 'action': path( 'gateway_config_stripe_objects_create_customer' ), 'attr': {'class': 'form-horizontal '} }) }}
+                <div class="form-group">
+                    {{ form_label(form.name, null, {
+                        'label_attr': {'class': 'form-label'}
+                        }) 
+                    }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control' }}) }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.email, null, {
+                        'label_attr': {'class': 'form-label'}
+                        }) 
+                    }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control' }}) }}
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" id="imContainer">
+    <button type="button" class="btn btn-primary StripeObjectSubmit">
+        {{ 'vs_application.form.save' | trans( {},'VSApplicationBundle' ) }}
+    </button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        {{ 'vs_application.form.cancel' | trans( {},'VSApplicationBundle' ) }}
+    </button>
+</div>

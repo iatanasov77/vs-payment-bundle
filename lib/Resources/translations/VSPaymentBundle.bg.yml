@@ -283,6 +283,7 @@ vs_payment:
             
             stripe_webhook_endpoints: Webhook Endpoints
             create_webhook_endpoint: Create Webhook Endpoint
+            update_webhook_endpoint: Update Webhook Endpoint
             enabled_events: Enabled Events
             url: Url
             

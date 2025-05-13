@@ -12,10 +12,10 @@ use Payum\Stripe\Constants;
 use Payum\Stripe\Keys;
 use Stripe\Stripe;
 use Stripe\Exception;
-use Stripe\Coupon;
-use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\RetrieveCoupon;
+use Stripe\WebhookEndpoint;
+use Vankosoft\PaymentBundle\Component\Payum\Stripe\Request\Api\UpdateWebhookEndpoint;
 
-class RetrieveCouponAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
+class UpdateWebhookEndpointAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
     use ApiAwareTrait {
         setApi as _setApi;
@@ -50,7 +50,7 @@ class RetrieveCouponAction implements ActionInterface, GatewayAwareInterface, Ap
      */
     public function execute( $request )
     {
-        /** @var $request RetrieveCoupon */
+        /** @var $request UpdateWebhookEndpoint */
         RequestNotSupportedException::assertSupports( $this, $request );
         
         $model = ArrayObject::ensureArrayObject( $request->getModel() );
@@ -66,10 +66,14 @@ class RetrieveCouponAction implements ActionInterface, GatewayAwareInterface, Ap
                 );
             }
             
-            $requestModel   = $model->toUnsafeArrayWithoutLocal();
-            $coupon         = Coupon::retrieve( $requestModel['id'] );
+            $requestModel       = $model->toUnsafeArrayWithoutLocal();
+            $endpointId         = $requestModel['id'];
+            $webhookEndpoint    = WebhookEndpoint::update( $endpointId, [
+                'enabled_events'    => $requestModel['enabled_events'],
+                'url'               => $requestModel['url'],
+            ]);
             
-            $model->replace( $coupon->toArray( true ) );
+            $model->replace( $webhookEndpoint->toArray( true ) );
         } catch ( Exception\ApiErrorException $e ) {
             $model->replace( $e->getJsonBody() );
         }
@@ -81,7 +85,7 @@ class RetrieveCouponAction implements ActionInterface, GatewayAwareInterface, Ap
     public function supports( $request ): bool
     {
         return
-            $request instanceof RetrieveCoupon &&
+            $request instanceof UpdateWebhookEndpoint &&
             $request->getModel() instanceof \ArrayAccess
         ;
     }

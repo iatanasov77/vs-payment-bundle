@@ -1,0 +1,91 @@
+{% extends "@VSApplication/layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: {{ 'vs_payment.template.payum_stripe_objects.stripe_subscription_objects' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_payment.template.payum_stripe_objects.stripe_subscription_objects' | trans( {},'VSPaymentBundle' ) }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="scroller scroller-left float-start mt-2"><i class="bi bi-caret-left-fill"></i></div>
+                    <div class="scroller scroller-right float-end mt-2"><i class="bi bi-caret-right-fill"></i></div>
+                    <div class="wrapper-nav">
+                        <ul class="nav nav-tabs mb-3" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#nav-pricing-plans" role="tab" aria-selected="true">
+                                    {{ 'vs_payment.template.payum_stripe_objects.pricing_plans' | trans( {},'VSPaymentBundle' ) }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#nav-coupons" role="tab" aria-selected="false">
+                                    {{ 'vs_payment.template.payum_stripe_objects.coupons' | trans( {},'VSPaymentBundle' ) }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#nav-subscriptions" role="tab" aria-selected="false">
+                                    {{ 'vs_payment.template.payum_stripe_objects.subscriptions' | trans( {},'VSPaymentBundle' ) }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#nav-customers" role="tab" aria-selected="false">
+                                        {{ 'vs_payment.template.payum_stripe_objects.customers' | trans( {},'VSPaymentBundle' ) }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#nav-accounts" role="tab" aria-selected="false">
+                                    {{ 'vs_payment.template.payum_stripe_objects.accounts' | trans( {},'VSPaymentBundle' ) }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#nav-webhook-endpoints" role="tab" aria-selected="false">
+                                    {{ 'vs_payment.template.payum_stripe_objects.webhook_endpoints' | trans( {},'VSPaymentBundle' ) }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+            
+                    <!-- Tab panes -->
+                    <div class="tab-content  text-muted">
+                        <div class="tab-pane active" id="nav-pricing-plans" role="tabpanel">
+                            {% include '@VSPayment/Pages/GatewayConfig/Stripe/Tabs/pricing_plans.html.twig' %}
+                        </div>
+                        <div class="tab-pane" id="nav-coupons" role="tabpanel">
+                            {% include '@VSPayment/Pages/GatewayConfig/Stripe/Tabs/coupons.html.twig' %}
+                        </div>
+                        <div class="tab-pane" id="nav-subscriptions" role="tabpanel">
+                            {% include '@VSPayment/Pages/GatewayConfig/Stripe/Tabs/subscriptions.html.twig' %}
+                        </div>
+                        <div class="tab-pane" id="nav-customers" role="tabpanel">
+                            {% include '@VSPayment/Pages/GatewayConfig/Stripe/Tabs/customers.html.twig' %}
+                        </div>
+                        <div class="tab-pane" id="nav-accounts" role="tabpanel">
+                            {% include '@VSPayment/Pages/GatewayConfig/Stripe/Tabs/accounts.html.twig' %}
+                        </div>
+                        <div class="tab-pane" id="nav-webhook-endpoints" role="tabpanel">
+                            {% include '@VSPayment/Pages/GatewayConfig/Stripe/Tabs/webhook_endpoints.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% include '@VSApplication/Partial/resource-delete.html.twig' %}
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+    
+    {% include '@VSPayment/Pages/GatewayConfig/Stripe/stripe_object.html.twig' %}
+{% endblock %}
+
+{% block head_styles %}
+    {{ parent() }}
+    {{ encore_entry_link_tags( 'js/stripe-objects' ) }}
+{% endblock %}
+
+{% block body_scripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags( 'js/stripe-objects' ) }}
+{% endblock %}

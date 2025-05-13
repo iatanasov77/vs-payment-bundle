@@ -1,3 +1,13 @@
+4.2.4	|	Release date: **13.05.2025**
+============================================
+* New Features:
+  - Create GatewayConfig Controllers Namespace.
+  - Refactoring of StripeObjects Controllers and Services.
+  - Create (Retrieve , Update , Delete ) Payum Actions for Webhook Endpoints.
+  - Add All Missing Stripe Objects Templates in Default Theme.
+  - Add Update and Delete Butons on Stripe Webhook Endpoints Table.
+
+
 4.2.3	|	Release date: **07.05.2025**
 ============================================
 * Bug-Fixes and Improvements:

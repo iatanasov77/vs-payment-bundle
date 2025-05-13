@@ -21,7 +21,7 @@ class CreditCard extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {        
         $builder
-            ->add('acct', TextType::class, array('label' => 'form.credit_card.acct', 'translation_domain' => 'IAPaymentBundle'))
+            ->add('acct', TextType::class, array('label' => 'form.credit_card.acct', 'translation_domain' => 'VSPaymentBundle'))
             ->add('exp_date', DateType::class, array(
                 'label' => 'form.credit_card.expire_date', 
                 'translation_domain' => 'VSPaymentBundle',
@@ -30,7 +30,7 @@ class CreditCard extends AbstractType
                 'years' => range(date('Y'), date('Y')+12),
                 'days' => array(1)
             ))
-            ->add('cvv', TextType::class, array('label' => 'form.credit_card.cvv2', 'translation_domain' => 'IAPaymentBundle'))
+            ->add('cvv', TextType::class, array('label' => 'form.credit_card.cvv2', 'translation_domain' => 'VSPaymentBundle'))
             ->add( 'amt', HiddenType::class, [
                 'data' => '1.00',
             ])
@@ -43,9 +43,7 @@ class CreditCard extends AbstractType
 
     public function configureOptions( OptionsResolver $resolver ): void
     {
-//        $resolver->setDefaults(array(
-//            'data_class' => 'IA\Bundle\UsersBundle\Entity\User'
-//        ));
+        
     }
 
     public function getName()
