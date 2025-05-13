@@ -15,7 +15,7 @@ class WebhookEndpointForm extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         $builder
-            ->add( 'id', HiddenType::class, ['empty_data' => $options['endpointId']] )
+            ->add( 'id', HiddenType::class, ['data' => $options['endpointId']] )
         
             ->add( 'enabled_events', ChoiceType::class, [
                 'label'                 => 'vs_payment.template.payum_stripe_objects.enabled_events',
@@ -29,7 +29,7 @@ class WebhookEndpointForm extends AbstractType
                 'label'                 => 'vs_payment.template.payum_stripe_objects.url',
                 'attr'                  => ['placeholder' => 'vs_payment.template.payum_stripe_objects.url'],
                 'translation_domain'    => 'VSPaymentBundle',
-                'empty_data'            => $options['endpointUrl']
+                'data'                  => $options['endpointUrl']
             ])
         ;
     }
