@@ -17,7 +17,7 @@ class UniqueCurrencyPairValidator extends ConstraintValidator
         $this->exchangeRateRepository   = $exchangeRateRepository;
     }
     
-    public function validate( $value, Constraint $constraint )
+    public function validate( $value, Constraint $constraint ): void
     {
         /** @var UniqueCurrencyPair $constraint */
         Assert::isInstanceOf( $constraint, UniqueCurrencyPair::class );

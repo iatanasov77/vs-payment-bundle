@@ -20,8 +20,9 @@
                 <tr>
                     <th width="50">N</th>
                     <th>ID</th>
-                    <th>{{ 'vs_payment.template.payum_stripe_objects.enabled_events' | trans( {},'VSPaymentBundle' ) }}</th>
                     <th>{{ 'vs_payment.template.payum_stripe_objects.url' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <th>{{ 'vs_payment.template.payum_stripe_objects.enabled_events' | trans( {},'VSPaymentBundle' ) }}</th>
+                    <th>{{ 'vs_payment.template.active' | trans( {},'VSPaymentBundle' ) }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,8 +30,15 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ item.id }}</td>
-                    <td>{{ item.enabled_events | join( ', ' ) }}</td>
                     <td>{{ item.url }}</td>
+                    <td>{{ item.enabled_events | join( ', ' ) }}</td>
+                    <td>
+                        {% if item.status == 'enabled' %}
+                            <i class="fas fa-check" style="color: #82c91e;">
+                        {% else %}
+                            <i class="fas fa-times" style="color: #ff1e1e;"></i>
+                        {% endif %}
+                    </td>
                     
                     <td>
                         <div class="btn-group">

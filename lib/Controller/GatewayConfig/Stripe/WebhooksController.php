@@ -64,6 +64,7 @@ class WebhooksController extends AbstractController
             'method' => 'POST',
             
             'endpointId'        => $webhookEndpoint['id'],
+            'endpointStatus'    => $webhookEndpoint['status'],
             'endpointEvents'    => $enabledEvents,
             'endpointUrl'       => $webhookEndpoint['url'],
         ]);
