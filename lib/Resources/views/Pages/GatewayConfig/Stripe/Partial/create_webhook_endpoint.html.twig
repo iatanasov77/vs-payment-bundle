@@ -15,6 +15,16 @@
             {% endif %}
             
             {{ form_start(form, { 'action': path( 'gateway_config_stripe_objects_create_webhook_endpoint' ), 'attr': {'class': 'form-horizontal '} }) }}
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" id="webhook_endpoint_form_enabled"
+                        class="custom-control-input form-check-input"
+                        name="webhook_endpoint_form[enabled]"
+                        value="{{ form.vars.value.enabled }}"
+                        {% if form.vars.value.enabled %}checked="checked"{% endif %}
+                    />
+                    <span class="custom-control-label">{{ form.enabled.vars.label | trans( {},'VSPaymentBundle' ) }}</span>
+                </label>
+                
                 <div class="form-group">
                     {{ form_label(form.enabled_events, null, {
                         'label_attr': {'class': 'form-label required'}
