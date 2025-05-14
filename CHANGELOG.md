@@ -1,3 +1,9 @@
+4.3.1	|	Release date: **14.05.2025**
+============================================
+* Bug-Fixes:
+  - Improve Stripe Object - Webhook Endpoint Create and Update.
+
+
 4.3.0	|	Release date: **14.05.2025**
 ============================================
 * New Features and Improvements:

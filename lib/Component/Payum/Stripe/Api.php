@@ -226,7 +226,6 @@ final class Api
         }
         
         $webhookEndpoint    = new \ArrayObject([
-            'status'            => isset( $formData['enabled'] ) ? 'enabled' : 'disabled',
             'enabled_events'    => $enabledEvents,
             'url'               => $formData['url'],
         ]);
@@ -242,7 +241,7 @@ final class Api
         
         $webhookEndpoint    = new \ArrayObject([
             'id'                => $formData['id'],
-            'status'            => isset( $formData['enabled'] ) ? 'enabled' : 'disabled',
+            'status'            => isset( $formData['enabled'] ) && $formData['enabled'] ? 'enabled' : 'disabled',
             'enabled_events'    => $enabledEvents,
             'url'               => $formData['url'],
         ]);
