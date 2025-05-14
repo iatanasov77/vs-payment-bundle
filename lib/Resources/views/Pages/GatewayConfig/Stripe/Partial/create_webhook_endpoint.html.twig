@@ -15,6 +15,8 @@
             {% endif %}
             
             {{ form_start(form, { 'action': path( 'gateway_config_stripe_objects_create_webhook_endpoint' ), 'attr': {'class': 'form-horizontal '} }) }}
+                {{ form_widget(form.selectedEvents) }}
+                
                 <div class="form-group">
                     {{ form_label(form.enabled_events, null, {
                         'label_attr': {'class': 'form-label required'}
@@ -30,7 +32,7 @@
                     }}
                     {{ form_widget(form.url, {'attr': {'class': 'form-control' }}) }}
                 </div>
-            {{ form_end(form) }}
+            {{ form_end(form, {'render_rest': false}) }}
         </div>
     </div>
 </div>
