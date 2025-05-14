@@ -239,9 +239,10 @@ final class Api
             $enabledEvents[]    = self::STRIPE_EVENTS[$event];
         }
         
+        $endpointDisabled   = isset( $formData['enabled'] ) && $formData['enabled'] ? false : true;
         $webhookEndpoint    = new \ArrayObject([
             'id'                => $formData['id'],
-            'status'            => isset( $formData['enabled'] ) && $formData['enabled'] ? 'enabled' : 'disabled',
+            'disabled'          => $endpointDisabled,
             'enabled_events'    => $enabledEvents,
             'url'               => $formData['url'],
         ]);
