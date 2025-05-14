@@ -1,3 +1,9 @@
+4.3.2	|	Release date: **14.05.2025**
+============================================
+* Bug-Fixes:
+  - Fix Disabled Stripe Webhooks Endpoints.
+
+
 4.3.1	|	Release date: **14.05.2025**
 ============================================
 * Bug-Fixes:
