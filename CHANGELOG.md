@@ -1,3 +1,10 @@
+4.4.0	|	Release date: **06.06.2025**
+============================================
+* New Features:
+  - Remove 'cascade-merge' option Doctrine Mapping Files.
+  - Remove Annotations from All Model Traits.
+
+
 4.3.2	|	Release date: **14.05.2025**
 ============================================
 * Bug-Fixes:
