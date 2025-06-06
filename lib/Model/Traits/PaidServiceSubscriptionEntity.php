@@ -6,11 +6,7 @@ use Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface;
 
 trait PaidServiceSubscriptionEntity
 {
-    /**
-     * @var Collection
-     *
-     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\OrderItemInterface", mappedBy="paidServiceSubscription")
-     */
+    /** @var Collection | OrderItem[] */
     #[ORM\OneToMany(targetEntity: OrderItemInterface::class, mappedBy: "paidServiceSubscription")]
     protected $orderItems;
     
