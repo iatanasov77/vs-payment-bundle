@@ -5,19 +5,11 @@ use Doctrine\Common\Collections\Collection;
 
 trait UserPaymentAwareEntity
 {
-    /**
-     * @var array
-     * 
-     * @ORM\Column(name="payment_details", type="json", nullable=true)
-     */
+    /** @var array */
     #[ORM\Column(name: "payment_details", type: "json", nullable: true)]
     protected $paymentDetails   = [];
     
-    /**
-     * @var Collection
-     * 
-     * @ORM\OneToMany(targetEntity="Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface", mappedBy="user", cascade={"persist", "remove"})
-     */
+    /** @var Collection | Order[] */
     #[ORM\OneToMany(targetEntity: "Vankosoft\PaymentBundle\Model\Interfaces\OrderInterface", mappedBy: "user", cascade: ["persist", "remove"], orphanRemoval: true)]
     protected $orders;
     
