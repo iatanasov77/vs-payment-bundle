@@ -77,7 +77,7 @@ final class Payment
                 $route  = 'vs_payment_paysera_prepare';
                 break;
             case 'borica':
-                $route  = 'vs_payment_borica_prepare';
+                $route  = 'vs_borica_prepare';
                 break;
             case 'authorize_net_aim':
                 $route  = 'vs_payment_authorize_net_prepare';

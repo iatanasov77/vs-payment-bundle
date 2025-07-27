@@ -8,7 +8,7 @@
         </id>
 
         <field name="type" type="string" />
-        <field name="configuration" type="array" />
+        <field name="configuration" type="json" />
 
         <many-to-one field="promotion" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface" inversed-by="actions">
             <join-column name="promotion_id" referenced-column-name="id" nullable="true" />

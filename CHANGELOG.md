@@ -1,3 +1,10 @@
+4.4.1	|	Release date: **27.07.2025**
+============================================
+* Bug-Fixes and Improvements:
+  - Move Borica Checkout Controller to the Borica Bundle.
+  - Remove Using Symfony ContainerAwareTrait .
+
+
 4.4.0	|	Release date: **06.06.2025**
 ============================================
 * New Features:

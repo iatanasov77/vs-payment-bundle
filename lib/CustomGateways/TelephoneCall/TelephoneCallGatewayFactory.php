@@ -1,7 +1,6 @@
 <?php namespace Vankosoft\PaymentBundle\CustomGateways\TelephoneCall;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Psr\Container\ContainerInterface;
 use Payum\Core\GatewayFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
@@ -30,9 +29,10 @@ use Vankosoft\PaymentBundle\CustomGateways\TelephoneCall\Action\Api\DoCaptureAct
  * Payment by phone/call: https://www.micropayment.ch/products/call2pay/
  *
  */
-class TelephoneCallGatewayFactory extends GatewayFactory implements ContainerAwareInterface
+class TelephoneCallGatewayFactory extends GatewayFactory
 {
-    use ContainerAwareTrait;
+    /** @var ContainerInterface */
+    private $container;
     
     /**
      * {@inheritDoc}
