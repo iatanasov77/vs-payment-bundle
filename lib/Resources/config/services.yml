@@ -6,7 +6,6 @@ imports:
     - { resource: services/payum.yaml }
     - { resource: services/payment.yaml }
     - { resource: services/checkout.yaml }
-    - { resource: services/paysera.yaml }
     - { resource: services/currency.yaml }
     - { resource: services/custom_gateways.yaml }
     - { resource: services/gateway_config.yaml }

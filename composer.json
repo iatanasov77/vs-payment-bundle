@@ -28,8 +28,6 @@
         "payum/paypal-pro-checkout-nvp": "^1.7",
 		"payum/stripe": "^1.7",
 		"payum/authorize-net-aim": "^1.7",
-		
-		"plumtreesystems/payum-paysera-gateway": "^0.3",
         
         "sylius/customer": "^2.0",
 		"sylius/currency": "^2.0",
