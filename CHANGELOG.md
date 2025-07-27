@@ -1,3 +1,10 @@
+4.4.2	|	Release date: **27.07.2025**
+============================================
+* New Features and Improvements:
+  - Remove BoricaBundle From Composer Requirements.
+  - Add Support for VendoSdkBundle.
+
+
 4.4.1	|	Release date: **27.07.2025**
 ============================================
 * Bug-Fixes and Improvements:

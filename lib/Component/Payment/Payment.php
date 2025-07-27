@@ -79,6 +79,9 @@ final class Payment
             case 'borica':
                 $route  = 'vs_borica_prepare';
                 break;
+            case 'vendo_sdk':
+                $route  = 'vs_vendo_sdk_prepare';
+                break;
             case 'authorize_net_aim':
                 $route  = 'vs_payment_authorize_net_prepare';
                 break;
@@ -116,6 +119,9 @@ final class Payment
                 $route  = '';
                 break;
             case 'borica':
+                $route  = '';
+                break;
+            case 'vendo_sdk':
                 $route  = '';
                 break;
             case 'authorize_net_aim':
@@ -157,6 +163,9 @@ final class Payment
             case 'borica':
                 $route  = '';
                 break;
+            case 'vendo_sdk':
+                $route  = '';
+                break;
             case 'authorize_net_aim':
                 $route  = '';
                 break;
@@ -193,6 +202,9 @@ final class Payment
                 return false;
                 break;
             case 'borica':
+                return false;
+                break;
+            case 'vendo_sdk':
                 return false;
                 break;
             case 'authorize_net_aim':
@@ -239,6 +251,9 @@ final class Payment
                 return false;
                 break;
             case 'borica':
+                return false;
+                break;
+            case 'vendo_sdk':
                 return false;
                 break;
             case 'authorize_net_aim':
