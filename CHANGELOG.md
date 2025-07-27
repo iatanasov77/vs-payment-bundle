@@ -1,3 +1,9 @@
+4.4.4	|	Release date: **27.07.2025**
+============================================
+* Bug-Fixes:
+  - Fix TelephoneCallGatewayFactory .
+
+
 4.4.3	|	Release date: **27.07.2025**
 ============================================
 * New Features and Improvements:

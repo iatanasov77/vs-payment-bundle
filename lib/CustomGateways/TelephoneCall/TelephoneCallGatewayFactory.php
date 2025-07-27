@@ -35,6 +35,14 @@ class TelephoneCallGatewayFactory extends GatewayFactory
     private $container;
     
     /**
+     * @param ContainerInterface $container
+     */
+    public function setContainer( ContainerInterface $container )
+    {
+        $this->container    = $container;
+    }
+    
+    /**
      * {@inheritDoc}
      */
     protected function populateConfig( ArrayObject $config )

@@ -15,7 +15,7 @@ class TelephoneCallGatewayFactoryBuilder extends GatewayFactoryBuilder
      */
     public function __invoke()
     {
-        $gatewayFactory = call_user_func_array([$this, 'build'], func_get_args());
+        $gatewayFactory = call_user_func_array( [$this, 'build'], func_get_args() );
         $gatewayFactory->setContainer( $this->container );
         
         return $gatewayFactory;
