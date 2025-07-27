@@ -140,18 +140,6 @@ vs_payment_paysera_done:
     path:     /paysera/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\PayseraController::doneAction
 
-# Borica
-#######################################################################################
-vs_payment_borica_prepare:
-    path:     /borica/prepare
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\BoricaController::prepareAction
-    options:
-        expose: true
-
-vs_payment_borica_done:
-    path:     /borica/done
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\BoricaController::doneAction
-
 # AuthorizeNet
 #######################################################################################
 vs_payment_authorize_net_prepare:
