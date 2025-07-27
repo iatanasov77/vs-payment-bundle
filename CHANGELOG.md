@@ -1,3 +1,9 @@
+4.4.3	|	Release date: **27.07.2025**
+============================================
+* New Features and Improvements:
+  - Move Paysera Gateway Configs and Controller to the Paysera Bundle.
+
+
 4.4.2	|	Release date: **27.07.2025**
 ============================================
 * New Features and Improvements:
