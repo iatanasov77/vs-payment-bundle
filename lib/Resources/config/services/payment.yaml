@@ -7,6 +7,7 @@ parameters:
         - 'paypal_pro_checkout'
         - 'stripe_checkout'
         - 'stripe_js'
+        - 'vendo_sdk'
         - 'paysera'
         - 'borica'
         - 'authorize_net_aim'
