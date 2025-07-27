@@ -74,7 +74,7 @@ final class Payment
                 $route  = 'vs_payment_paypal_pro_checkout_prepare';
                 break;
             case 'paysera':
-                $route  = 'vs_payment_paysera_prepare';
+                $route  = 'vs_paysera_prepare';
                 break;
             case 'borica':
                 $route  = 'vs_borica_prepare';

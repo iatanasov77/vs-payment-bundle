@@ -128,18 +128,6 @@ vs_payment_paypal_pro_checkout_done:
     path:     /paypal-pro-checkout/done
     controller: Vankosoft\PaymentBundle\Controller\Checkout\Paypal\PaypalProCheckoutController::doneAction
 
-# Paysera
-#######################################################################################
-vs_payment_paysera_prepare:
-    path:     /paysera/prepare
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PayseraController::prepareAction
-    options:
-        expose: true
-
-vs_payment_paysera_done:
-    path:     /paysera/done
-    controller: Vankosoft\PaymentBundle\Controller\Checkout\PayseraController::doneAction
-
 # AuthorizeNet
 #######################################################################################
 vs_payment_authorize_net_prepare:
