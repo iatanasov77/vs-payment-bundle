@@ -18,7 +18,9 @@ class CreditCardForm extends AbstractType
         $currentYear    = \intval( date( "Y" ) );
         
         $builder
+        ->add( 'captureUrl', HiddenType::class, ['empty_data' => $options['captureUrl']] )
             ->add( 'captureUrl', HiddenType::class, ['empty_data' => $options['captureUrl']] )
+            ->add( 'factoryName', HiddenType::class, ['empty_data' => $options['factoryName']] )
             
             ->add( 'name', TextType::class, [
                 'label' => 'vs_payment.form.credit_card.holder_name_label',
@@ -81,6 +83,7 @@ class CreditCardForm extends AbstractType
             ->setDefaults([
                 'csrf_protection'   => false,
                 'captureUrl'        => null,
+                'factoryName'       => null,
             ])
         ;
     }

@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 
+use Payum\Core\Model\GatewayConfigInterface;
 use Vankosoft\PaymentBundle\Component\OrderFactory;
 use Vankosoft\PaymentBundle\Component\Exception\ShoppingCartException;
 use Vankosoft\PaymentBundle\Form\CreditCardForm;
@@ -38,12 +39,7 @@ class CreditCardController extends AbstractController
         }
         
         $paymentMethod  = $cart->getPaymentMethod();
-//         $gatewayConfig  = (
-//                             $paymentMethod->getGateway()->getFactoryName() == 'stripe_checkout' || 
-//                             $paymentMethod->getGateway()->getFactoryName() == 'stripe_js'
-//                           ) ? $paymentMethod->getGateway()->getConfig() : '';
-        
-        $form           = $this->getCreditCardForm( base64_decode( $formAction ) );
+        $form           = $this->getCreditCardForm( $paymentMethod->getGateway(), \base64_decode( $formAction ) );
         
         if( $request->isXmlHttpRequest() ) {
             
@@ -51,7 +47,6 @@ class CreditCardController extends AbstractController
             return $this->render( '@VSPayment/Pages/CreditCard/Partial/StripeJsV3Form.html.twig', [
                 'form'          => $form->createView(),
                 'paymentMethod' => $paymentMethod,
-                //'captureKey'    => $gatewayConfig['publishable_key'],
                 'formAction'    => '',
                 'formMethod'    => 'POST',
             ]);
@@ -59,7 +54,6 @@ class CreditCardController extends AbstractController
             return $this->render( '@VSPayment/Pages/CreditCard/Partial/CreditCardForm.html.twig', [
                 'form'          => $form->createView(),
                 'paymentMethod' => $paymentMethod,
-                //'captureKey'    => $gatewayConfig['publishable_key'],
                 'formAction'    => '',
                 'formMethod'    => 'POST',
             ]);
@@ -68,15 +62,15 @@ class CreditCardController extends AbstractController
             return $this->render( '@VSPayment/Pages/CreditCard/credit_card.html.twig', [
                 'form'          => $form->createView(),
                 'paymentMethod' => $paymentMethod,
-                //'captureKey'    => $gatewayConfig['publishable_key'],
             ]);
         }
     }
     
-    protected function getCreditCardForm( $captureUrl )
+    protected function getCreditCardForm( GatewayConfigInterface $gateway, $captureUrl )
     {
         return $this->createForm( CreditCardForm::class, [
-            'captureUrl' => $captureUrl,
+            'captureUrl'    => $captureUrl,
+            'factoryName'   => $gateway->getFactoryName(),
         ]);
     }
 }
