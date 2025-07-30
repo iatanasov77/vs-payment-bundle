@@ -1,3 +1,9 @@
+4.5.1	|	Release date: **30.07.2025**
+============================================
+* New Features and Improvements:
+  - Refactoring of JS References.
+
+
 4.5.0	|	Release date: **30.07.2025**
 ============================================
 * Bug-Fixes and Improvements:
