@@ -1,3 +1,9 @@
+4.4.7	|	Release date: **30.07.2025**
+============================================
+* Bug-Fixes and Improvements:
+  - Fix CreaditCardForm to Can be Used for Different Payment Gateways.
+
+
 4.4.6	|	Release date: **30.07.2025**
 ============================================
 * Bug-Fixes:
