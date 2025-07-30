@@ -38,10 +38,10 @@ class CreditCardController extends AbstractController
         }
         
         $paymentMethod  = $cart->getPaymentMethod();
-        $gatewayConfig  = (
-                            $paymentMethod->getGateway()->getFactoryName() == 'stripe_checkout' || 
-                            $paymentMethod->getGateway()->getFactoryName() == 'stripe_js'
-                          ) ? $paymentMethod->getGateway()->getConfig() : '';
+//         $gatewayConfig  = (
+//                             $paymentMethod->getGateway()->getFactoryName() == 'stripe_checkout' || 
+//                             $paymentMethod->getGateway()->getFactoryName() == 'stripe_js'
+//                           ) ? $paymentMethod->getGateway()->getConfig() : '';
         
         $form           = $this->getCreditCardForm( base64_decode( $formAction ) );
         
@@ -51,7 +51,7 @@ class CreditCardController extends AbstractController
             return $this->render( '@VSPayment/Pages/CreditCard/Partial/StripeJsV3Form.html.twig', [
                 'form'          => $form->createView(),
                 'paymentMethod' => $paymentMethod,
-                'captureKey'    => $gatewayConfig['publishable_key'],
+                //'captureKey'    => $gatewayConfig['publishable_key'],
                 'formAction'    => '',
                 'formMethod'    => 'POST',
             ]);
@@ -59,7 +59,7 @@ class CreditCardController extends AbstractController
             return $this->render( '@VSPayment/Pages/CreditCard/Partial/CreditCardForm.html.twig', [
                 'form'          => $form->createView(),
                 'paymentMethod' => $paymentMethod,
-                'captureKey'    => $gatewayConfig['publishable_key'],
+                //'captureKey'    => $gatewayConfig['publishable_key'],
                 'formAction'    => '',
                 'formMethod'    => 'POST',
             ]);
@@ -68,7 +68,7 @@ class CreditCardController extends AbstractController
             return $this->render( '@VSPayment/Pages/CreditCard/credit_card.html.twig', [
                 'form'          => $form->createView(),
                 'paymentMethod' => $paymentMethod,
-                'captureKey'    => $gatewayConfig['publishable_key'],
+                //'captureKey'    => $gatewayConfig['publishable_key'],
             ]);
         }
     }
