@@ -4,13 +4,21 @@
 
 {% if paymentMethod.gateway.factoryName == 'stripe_checkout' or paymentMethod.gateway.factoryName == 'stripe_js' %}
     {% set formId = 'credit_card_form' %}
+    {% set formAction = '' %}
+    {% set captureKey = paymentMethod.gateway.config.publishable_key %}
+{% elseif paymentMethod.gateway.factoryName == 'vendo_sdk' %}
+    {% set formId = 'vendo_credit_card_form' %}
+    {% set formAction = form.vars.value.captureUrl %}
+    {% set captureKey = '' %}
 {% else %}
     {% set formId = 'payum_credit_card_form' %}
+    {% set formAction = '' %}
+    {% set captureKey = '' %}
 {% endif %}
 
 {{ form_start( form, {
     'action': formAction,
-    'method': formMethod,
+    'method': 'POST',
     'attr': {
         'class': formClass,
         'id': formId

@@ -62,6 +62,8 @@ class CreditCardController extends AbstractController
             return $this->render( '@VSPayment/Pages/CreditCard/credit_card.html.twig', [
                 'form'          => $form->createView(),
                 'paymentMethod' => $paymentMethod,
+                'formAction'    => '',
+                'formMethod'    => 'POST',
             ]);
         }
     }
