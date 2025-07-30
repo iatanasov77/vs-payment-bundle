@@ -1,3 +1,9 @@
+4.4.6	|	Release date: **30.07.2025**
+============================================
+* Bug-Fixes:
+  - Fix CreditCardController to Can Used For Gateways Different From Stripe.
+
+
 4.4.5	|	Release date: **27.07.2025**
 ============================================
 * Bug-Fixes:
