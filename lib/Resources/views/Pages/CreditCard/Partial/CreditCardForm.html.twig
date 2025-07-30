@@ -4,8 +4,10 @@
 
 {% if paymentMethod.gateway.factoryName == 'stripe_checkout' or paymentMethod.gateway.factoryName == 'stripe_js' %}
     {% set formId = 'credit_card_form' %}
+    {% set captureKey = paymentMethod.gateway.config.publishable_key %}
 {% else %}
     {% set formId = 'payum_credit_card_form' %}
+    {% set captureKey = '' %}
 {% endif %}
 
 {{ form_start( form, {
