@@ -1,0 +1,21 @@
+imports:
+    - { resource: services/catalog_bridge.yaml }
+    - { resource: services/controller.yaml }
+    - { resource: services/form.yaml }
+    - { resource: services/menu.yaml }
+    - { resource: services/payum.yaml }
+    - { resource: services/payment.yaml }
+    - { resource: services/checkout.yaml }
+    - { resource: services/currency.yaml }
+    - { resource: services/custom_gateways.yaml }
+    - { resource: services/gateway_config.yaml }
+    - { resource: services/promotion.yaml }
+    
+parameters:
+    vs_payment.customer_groups.taxonomy_code: 'customer-groups'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
