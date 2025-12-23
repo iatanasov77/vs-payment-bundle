@@ -1,3 +1,9 @@
+4.5.4	|	Release date: **23.12.2025**
+============================================
+* Bug-Fixes and Improvements:
+  - Improve Add to Shopping Cart Method.
+
+
 4.5.3	|	Release date: **23.12.2025**
 ============================================
 * Bug-Fixes and Improvements:
