@@ -1,3 +1,10 @@
+4.5.3	|	Release date: **23.12.2025**
+============================================
+* Bug-Fixes and Improvements:
+  - Fix ShoppingCartCheckoutController
+  - Change config services etension.
+
+
 4.5.2	|	Release date: **20.08.2025**
 ============================================
 * New Features:
