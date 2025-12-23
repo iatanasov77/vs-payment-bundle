@@ -23,7 +23,7 @@ class VSPaymentExtension extends AbstractResourceExtension implements PrependExt
         $config = $this->processConfiguration( $this->getConfiguration( [], $container ), $configs );
         
         $loader = new Loader\YamlFileLoader( $container, new FileLocator( __DIR__.'/../Resources/config' ) );
-        $loader->load( 'services.yml' );
+        $loader->load( 'services.yaml' );
         
         // Register resources
         $this->registerResources( 'vs_payment', $config['orm_driver'], $config['resources'], $container );
