@@ -162,6 +162,9 @@ class ShoppingCartController extends AbstractController
             $cart->addItem( $orderItem );
         }
         
+        $cart->recalculateItemsTotal();
+        $cart->recalculateTotal();
+        
         $em->persist( $cart );
         $em->flush();
         
