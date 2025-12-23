@@ -62,12 +62,13 @@ class ShoppingCartCheckoutController extends AbstractController
             $em         = $this->doctrine->getManager();
             $formData   = $form->getData();
             
-            $cart->setPaymentMethod( $formData['paymentMethod'] );
+            $paymentMethod  = $formData['paymentMethod']['paymentMethod'];
+            $cart->setPaymentMethod( $paymentMethod );
             $cart->setDescription( $formData['paymentDescription'] );
             $em->persist( $cart );
             $em->flush();
             
-            $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute( $formData['paymentMethod']->getGateway() );
+            $paymentPrepareUrl  = $this->vsPayment->getPaymentPrepareRoute( $paymentMethod->getGateway() );
             if( $request->isXmlHttpRequest() ) {
                 return new JsonResponse([
                     'status'    => Status::STATUS_OK,
