@@ -163,7 +163,6 @@ class ShoppingCartController extends AbstractController
         }
         
         $cart->recalculateItemsTotal();
-        $cart->recalculateTotal();
         
         $em->persist( $cart );
         $em->flush();
