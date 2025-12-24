@@ -1,3 +1,9 @@
+4.5.6	|	Release date: **24.12.2025**
+============================================
+* Bug-Fixes and Improvements:
+  - Update Order Item Total on Update Shopping Cart.
+
+
 4.5.5	|	Release date: **23.12.2025**
 ============================================
 * Bug-Fixes and Improvements:
