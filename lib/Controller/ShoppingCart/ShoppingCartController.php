@@ -148,7 +148,9 @@ class ShoppingCartController extends AbstractController
         }
         
         if ( $orderItem ) {
-            $orderItem->setQty( $orderItem->getQty() + $qty );
+            $newQty = $orderItem->getQty() + $qty;
+            $orderItem->setQty( $newQty );
+            $orderItem->setTotal( $newQty * $orderItem->getPrice() );
         } else {
             $orderItem          = $this->orderItemsFactory->createNew();
             
@@ -158,6 +160,7 @@ class ShoppingCartController extends AbstractController
             $orderItem->setProduct( $payableObject );
             $orderItem->setPrice( $payableObject->getPrice() );
             $orderItem->setCurrencyCode( $payableObject->getCurrencyCode() );
+            $orderItem->setTotal( $orderItem->getQty() * $orderItem->getPrice() );
             
             $cart->addItem( $orderItem );
         }
