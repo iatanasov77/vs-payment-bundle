@@ -15,7 +15,7 @@ class PromotionsController extends AbstractCrudController
         ];
     }
     
-    protected function prepareEntity( &$entity, &$form, Request $request )
+    protected function prepareEntity( &$entity, &$form, Request $request ): void
     {
         $formPost   = $request->request->all( 'vs_payment_promotion' );
         
@@ -39,17 +39,5 @@ class PromotionsController extends AbstractCrudController
         
         $entity->setRules( $rules );
         $entity->setActions( $actions );
-    }
-    
-    private function getTranslations()
-    {
-        $translations   = [];
-        $transRepo      = $this->get( 'vs_application.repository.translation' );
-        
-        foreach ( $this->getRepository()->findAll() as $pricingPlan ) {
-            $translations[$pricingPlan->getId()] = array_keys( $transRepo->findTranslations( $pricingPlan ) );
-        }
-        
-        return $translations;
     }
 }
