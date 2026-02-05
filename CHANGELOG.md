@@ -1,3 +1,10 @@
+4.5.8	|	Release date: **05.02.2026**
+============================================
+* Bug-Fixes:
+  - Fix a deprecated atribute in Doctrine Mappings.
+  - Fix Deprecations in Validator Constraints.
+
+
 4.5.7	|	Release date: **18.01.2026**
 ============================================
 * New Features:
