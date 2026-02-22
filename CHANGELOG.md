@@ -1,3 +1,9 @@
+4.5.9	|	Release date: **22.02.2026**
+============================================
+* Bug-Fixes:
+  - Fix PaymentToken Doctrine Mapping.
+
+
 4.5.8	|	Release date: **05.02.2026**
 ============================================
 * Bug-Fixes:
