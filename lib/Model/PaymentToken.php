@@ -4,7 +4,7 @@ use Payum\Core\Model\Token;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
-class PaymentToken extends Token implements ResourceInterface
+class PaymentToken extends PayumToken implements ResourceInterface // extends Token
 {
     use TimestampableTrait;
     
