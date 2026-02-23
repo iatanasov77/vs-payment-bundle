@@ -1,3 +1,9 @@
+4.5.10	|	Release date: **23.02.2026**
+============================================
+* Bug-Fixes:
+  - Fix PaymentToken Doctrine Mapping To Support Doctrine/ORM 2.
+
+
 4.5.9	|	Release date: **22.02.2026**
 ============================================
 * Bug-Fixes:
