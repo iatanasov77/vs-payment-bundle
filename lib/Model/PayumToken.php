@@ -49,7 +49,7 @@ class PayumToken implements TokenInterface
     /**
      * {@inheritDoc}
      */
-    public function setDetails($details)
+    public function setDetails($details): void
     {
         $this->details = $details;
     }
@@ -57,7 +57,7 @@ class PayumToken implements TokenInterface
     /**
      * {@inheritDoc}
      */
-    public function getHash()
+    public function getHash(): string
     {
         return $this->hash;
     }
@@ -73,7 +73,7 @@ class PayumToken implements TokenInterface
     /**
      * {@inheritDoc}
      */
-    public function getTargetUrl()
+    public function getTargetUrl(): string
     {
         return $this->targetUrl;
     }
@@ -89,7 +89,7 @@ class PayumToken implements TokenInterface
     /**
      * {@inheritDoc}
      */
-    public function getAfterUrl()
+    public function getAfterUrl(): string
     {
         return $this->afterUrl;
     }
@@ -105,7 +105,7 @@ class PayumToken implements TokenInterface
     /**
      * {@inheritDoc}
      */
-    public function getGatewayName()
+    public function getGatewayName(): string
     {
         return $this->gatewayName;
     }
