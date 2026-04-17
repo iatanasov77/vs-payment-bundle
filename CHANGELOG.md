@@ -1,3 +1,10 @@
+4.6.0	|	Release date: **17.04.2026**
+============================================
+* Bug-Fixes and Improvements:
+  - Fix Some Deprecations.
+  - Update Composer Dependencies.
+
+
 4.5.11	|	Release date: **23.02.2026**
 ============================================
 * Bug-Fixes:
