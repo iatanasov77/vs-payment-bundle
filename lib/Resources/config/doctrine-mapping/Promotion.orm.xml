@@ -6,13 +6,13 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="code" type="string" unique="true" />
+        <field name="code" type="string" length="255" unique="true" />
         
-        <field name="name" type="string">
+        <field name="name" type="string" length="255">
             <gedmo:translatable />
         </field>
         
-        <field name="description" type="string" nullable="true">
+        <field name="description" type="string" length="255" nullable="true">
             <gedmo:translatable />
         </field>
         

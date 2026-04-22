@@ -15,7 +15,7 @@
             Use Validation on Form Submit
         --> 
         <!-- 
-        <field name="gatewayName" column="gateway_name" type="string" unique="true" />
+        <field name="gatewayName" column="gateway_name" type="string" length="255" unique="true" />
         -->
         
         <field name="title" type="string" length="255" nullable="false" >
