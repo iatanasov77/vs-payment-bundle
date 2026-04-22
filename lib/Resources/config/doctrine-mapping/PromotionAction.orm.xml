@@ -7,7 +7,7 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="type" type="string" />
+        <field name="type" type="string" length="255" />
         <field name="configuration" type="json" />
 
         <many-to-one field="promotion" target-entity="Vankosoft\PaymentBundle\Model\Interfaces\PromotionInterface" inversed-by="actions">
