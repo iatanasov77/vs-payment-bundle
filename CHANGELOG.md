@@ -1,3 +1,9 @@
+4.6.1	|	Release date: **22.04.2026**
+============================================
+* Bug-Fixes:
+  - Fix Doctrine Mappings of String Fields.
+
+
 4.6.0	|	Release date: **17.04.2026**
 ============================================
 * Bug-Fixes and Improvements:
